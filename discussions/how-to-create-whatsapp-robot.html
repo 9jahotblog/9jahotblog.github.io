@@ -1,3 +1,6 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">var scrolltotop={setting:{startline:100,scrollto:0,scrollduration:1e3,fadeduration:[500,100]},controlHTML:'<img src="https://lh3.googleusercontent.com/pw/AM-JKLXPa7fWJN4Teou0Fc9pBITH61w5fajuqdyC36I1e5rQLIqwZhFxN-VGlLvAyLmoyK9JnfQS5PWZAAcvqGTINQehP9zMBQP38n9RcjH_nbH2xhoQzlPepWmm8-gqghurLBKuPK8Ksl9Mqcd-0R62sIoD=s48-no" />',controlattrs:{offsetx:5,offsety:5},anchorkeyword:"#top",state:{isvisible:!1,shouldvisible:!1},scrollup:function(){this.cssfixedsupport||this.$control.css({opacity:0});var t=isNaN(this.setting.scrollto)?this.setting.scrollto:parseInt(this.setting.scrollto);t="string"==typeof t&&1==jQuery("#"+t).length?jQuery("#"+t).offset().top:0,this.$body.animate({scrollTop:t},this.setting.scrollduration)},keepfixed:function(){var t=jQuery(window),o=t.scrollLeft()+t.width()-this.$control.width()-this.controlattrs.offsetx,s=t.scrollTop()+t.height()-this.$control.height()-this.controlattrs.offsety;this.$control.css({left:o+"px",top:s+"px"})},togglecontrol:function(){var t=jQuery(window).scrollTop();this.cssfixedsupport||this.keepfixed(),this.state.shouldvisible=t>=this.setting.startline?!0:!1,this.state.shouldvisible&&!this.state.isvisible?(this.$control.stop().animate({opacity:1},this.setting.fadeduration[0]),this.state.isvisible=!0):0==this.state.shouldvisible&&this.state.isvisible&&(this.$control.stop().animate({opacity:0},this.setting.fadeduration[1]),this.state.isvisible=!1)},init:function(){jQuery(document).ready(function(t){var o=scrolltotop,s=document.all;o.cssfixedsupport=!s||s&&"CSS1Compat"==document.compatMode&&window.XMLHttpRequest,o.$body=t(window.opera?"CSS1Compat"==document.compatMode?"html":"body":"html,body"),o.$control=t('<div id="topcontrol">'+o.controlHTML+"</div>").css({position:o.cssfixedsupport?"fixed":"absolute",bottom:o.controlattrs.offsety,right:o.controlattrs.offsetx,opacity:0,cursor:"pointer"}).attr({title:"Scroll to Top"}).click(function(){return o.scrollup(),!1}).appendTo("body"),document.all&&!window.XMLHttpRequest&&""!=o.$control.text()&&o.$control.css({width:o.$control.width()}),o.togglecontrol(),t('a[href="'+o.anchorkeyword+'"]').click(function(){return o.scrollup(),!1}),t(window).bind("scroll resize",function(t){o.togglecontrol()})})}};scrolltotop.init();</script>
+<noscript>Not seeing a <a href="https://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>
 
 <!DOCTYPE html>
 <html>
@@ -320,7 +323,7 @@ Marketing Bot GIT you don't own for money, making it available or having any mat
 ıt is strictly forbidden to offer it for sale with anything. All legal investigations that may arise
 the user is responsible.
 
-     <p style="color:#0000FF"> Thank you for staying with me throughout, more helpful discussions like this coming up!! Sharing is caring, please share this writeup. </p>
+     <p style="color:#0000FF"> Thank you for staying with me throughout, more helpful discussions like this coming up!! Sharing is caring, please share this writeup. DON'T forget to drop your comment below</p>
 
 </div>
 
@@ -381,21 +384,41 @@ body {font-family: "Open Sans"}
       </div>
       <hr>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript">var scrolltotop={setting:{startline:100,scrollto:0,scrollduration:1e3,fadeduration:[500,100]},controlHTML:'<img src="https://lh3.googleusercontent.com/pw/AM-JKLXPa7fWJN4Teou0Fc9pBITH61w5fajuqdyC36I1e5rQLIqwZhFxN-VGlLvAyLmoyK9JnfQS5PWZAAcvqGTINQehP9zMBQP38n9RcjH_nbH2xhoQzlPepWmm8-gqghurLBKuPK8Ksl9Mqcd-0R62sIoD=s48-no" />',controlattrs:{offsetx:5,offsety:5},anchorkeyword:"#top",state:{isvisible:!1,shouldvisible:!1},scrollup:function(){this.cssfixedsupport||this.$control.css({opacity:0});var t=isNaN(this.setting.scrollto)?this.setting.scrollto:parseInt(this.setting.scrollto);t="string"==typeof t&&1==jQuery("#"+t).length?jQuery("#"+t).offset().top:0,this.$body.animate({scrollTop:t},this.setting.scrollduration)},keepfixed:function(){var t=jQuery(window),o=t.scrollLeft()+t.width()-this.$control.width()-this.controlattrs.offsetx,s=t.scrollTop()+t.height()-this.$control.height()-this.controlattrs.offsety;this.$control.css({left:o+"px",top:s+"px"})},togglecontrol:function(){var t=jQuery(window).scrollTop();this.cssfixedsupport||this.keepfixed(),this.state.shouldvisible=t>=this.setting.startline?!0:!1,this.state.shouldvisible&&!this.state.isvisible?(this.$control.stop().animate({opacity:1},this.setting.fadeduration[0]),this.state.isvisible=!0):0==this.state.shouldvisible&&this.state.isvisible&&(this.$control.stop().animate({opacity:0},this.setting.fadeduration[1]),this.state.isvisible=!1)},init:function(){jQuery(document).ready(function(t){var o=scrolltotop,s=document.all;o.cssfixedsupport=!s||s&&"CSS1Compat"==document.compatMode&&window.XMLHttpRequest,o.$body=t(window.opera?"CSS1Compat"==document.compatMode?"html":"body":"html,body"),o.$control=t('<div id="topcontrol">'+o.controlHTML+"</div>").css({position:o.cssfixedsupport?"fixed":"absolute",bottom:o.controlattrs.offsety,right:o.controlattrs.offsetx,opacity:0,cursor:"pointer"}).attr({title:"Scroll to Top"}).click(function(){return o.scrollup(),!1}).appendTo("body"),document.all&&!window.XMLHttpRequest&&""!=o.$control.text()&&o.$control.css({width:o.$control.width()}),o.togglecontrol(),t('a[href="'+o.anchorkeyword+'"]').click(function(){return o.scrollup(),!1}),t(window).bind("scroll resize",function(t){o.togglecontrol()})})}};scrolltotop.init();</script>
-<noscript>Not seeing a <a href="https://www.scrolltotop.com/">Scroll to Top Button</a>? Go to our FAQ page for more info.</noscript>
+<!-- Posts -->
+  <div class="w3-card w3-margin">
+    <div class="w3-container w3-padding">
+      <h4>Trending Now (Click Image)</h4>
+    </div>
+    <ul class="w3-ul w3-hoverable w3-white">
+      <li class="w3-padding-16">
+        <a href="https://9jahotblog.github.io/entertainment/will.html"><img src="https://i.postimg.cc/d1kdrLkx/FB-IMG-1648751901570.jpg" alt="Will Smith" class="w3-left w3-margin-right" style="width:100px"></a>
+<span class="w3-large">Will Smith gets Banned for 10 years </span><br>
+        <span> American Actor Will Smith gets banned from the Oscars for 10 years for hitting Chris Rock......</span>
+      </li>
+      <li class="w3-padding-16">
+        <a href="https://9jahotblog.github.io/Education/citizenship-topic.html"><img src="https://i.postimg.cc/rFpQ7bMM/Ephoto360-com-16219090b89a51.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
+        <span class="w3-large">Citizenship Education Full Topic</span><br>
+        <span>Definition, Rights, Limits, who is a citizen? 6 things you don't know about acquiring citizenship.</span>
+      </li>  
+      <li class="w3-padding-16">
+        <a href="https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html"><img src="https://i.postimg.cc/1XCvkWbG/affidavit9jahotblog.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
+   <span class="w3-large">Change & Correction of names by mere Affidavit is no longer Valid</span><br>
+        <span>By Jerome Kalu. For instance, when one loses a Sim Card, certain details about the person is required,......</span>
+      </li>   
+      </ul>
+  </div>
+  <hr> 
 
-<div> 
 
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+<script src="https://cdn.fastcomments.com/js/embed.min.js"></script>
+<div id="fastcomments-widget"></div>
+<script>
+    FastCommentsUI(document.getElementById('fastcomments-widget'), {
+        tenantId: 'AC6VPRnrDyH'
+    });
+</script>
+
+
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -407,4 +430,14 @@ body {font-family: "Open Sans"}
   gtag('config', 'G-38V179JCWD');
 </script>
 
+
+<!-- Footer -->
+<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html">Previous »</button></a>
+  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Next »</button></a>
+  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
+</footer>
+</body>
+</html>
+</div>
 
