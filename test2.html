@@ -1,0 +1,639 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title> Applinic</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <link rel="stylesheet" href="css/vendor.css">
+         <link rel="stylesheet" id="theme-style" href="css/app.css">
+          <link rel="stylesheet" id="theme-style" href="css/now-ui-kit.css">
+          <style>
+              .title{
+                  font-weight: 300;
+              }
+          </style>
+    </head>
+
+    <body>
+                    <nav class="header" style="height:70px; margin-top:-.5em; z-index:1000;">
+                           <div class="brand" style="margin-left:3em;">
+                                <div class="logo"> <span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span> <span class="l l4"></span> <span class="l l5"></span> </div> Applinic </div>
+                    <div class="header-block header-block-collapse hidden-lg-up"> <button class="collapse-btn" id="sidebar-collapse-btn">
+    			<i class="fa fa-bars"></i>
+    		</button>
+                         </div>
+                             <div class="header-block header-block-search hidden-sm-down">
+                        
+                        <form role="search">
+                            <div class="input-container"> <i class="fa fa-search"></i> <input type="search" placeholder="Search">
+                                <div class="underline"></div>
+                            </div>
+                        </form>
+                    </div>
+                   
+                    <div class="header-block header-block-nav">
+                        <ul class="nav-profile">
+                            <li class="notifications new"> <a href="" data-toggle="dropdown">
+    			    <i class="fa fa-bell-o"></i>
+    			    <sup>
+    			      <span class="counter">8</span>
+    			    </sup>
+    			  </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <footer>
+                                        <ul>
+                                            <li> <a href="">
+    			            View All
+    			          </a> </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </li>
+
+                               <li class="notifications new"> <a href="" data-toggle="dropdown">
+    			    <i class="fa fa-envelope-o"></i>
+    			    <sup>
+    			      <span class="counter">8</span>
+    			    </sup>
+    			  </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <footer>
+                                        <ul>
+                                            <li> <a href="">
+    			            View All
+    			          </a> </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </li>
+
+                               <li class="notifications new"> <a href="" data-toggle="dropdown">
+    			    <i class="fa fa-calendar"></i>
+    			    <sup>
+    			      <span class="counter">8</span>
+    			    </sup>
+    			  </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <footer>
+                                        <ul>
+                                            <li> <a href="">
+    			            View All
+    			          </a> </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </li>
+
+                               <li class="notifications new"> <a href="" data-toggle="dropdown">
+    			    <i class="fa fa-video-camera"></i>
+    			    <sup>
+    			      <span class="counter">8</span>
+    			    </sup>
+    			  </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <footer>
+                                        <ul>
+                                            <li> <a href="">
+    			            View All
+    			          </a> </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </li>
+
+                               <li class="notifications new"> <a href="" data-toggle="dropdown">
+    			    <i class="fa fa-phone"></i>
+    			    <sup>
+    			      <span class="counter">4</span>
+    			    </sup>
+    			  </a>
+                                <div class="dropdown-menu notifications-dropdown-menu">
+                                    <ul class="notifications-container">
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/3.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Zack Alien</span> pushed new commit: <span class="accent">Fix page load performance issue</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/5.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Amaya Hatsumi</span> started new task: <span class="accent">Dashboard UI design.</span>. </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" class="notification-item">
+                                                <div class="img-col">
+                                                    <div class="img" style="background-image: url('assets/faces/8.jpg')"></div>
+                                                </div>
+                                                <div class="body-col">
+                                                    <p> <span class="accent">Andy Nouman</span> deployed new version of <span class="accent">NodeJS REST Api V3</span> </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <footer>
+                                        <ul>
+                                            <li> <a href="">
+    			            View All
+    			          </a> </li>
+                                        </ul>
+                                    </footer>
+                                </div>
+                            </li>
+
+
+                            <li class="profile dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div> 
+                                    <span class="name">
+    			      John Doe
+    			    </span> </a>
+                                <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1"> <a class="dropdown-item" href="#">
+    			      <i class="fa fa-user icon"></i>
+    			      Profile
+    			    </a> <a class="dropdown-item" href="#">
+    			      <i class="fa fa-user icon"></i>
+    			      ID gcamon4540
+    			    </a> <a class="dropdown-item" href="#">
+    			      <i class="fa fa-gear icon"></i>
+    			      Settings
+    			    </a>
+                                    <div class="dropdown-divider"></div> <a class="dropdown-item" href="login.html">
+    			      <i class="fa fa-power-off icon"></i>
+    			      Logout
+    			    </a> </div>
+                            </li>
+
+                             <li class="dropdown">
+                                                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                                                    <i class="fa fa-cog" aria-hidden="true"></i> More
+                                                </a>
+                                                <div class="okd dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                                    <a class="dropdown-item" href="#">Find a Doctor</a>
+                                                    <a class="dropdown-item" href="#">Find Drug</a>
+                                                    <a class="dropdown-item" href="#">Find Scan</a>
+                                                    <a class="dropdown-item" href="#">Find Test</a>
+                                                   </div>
+                                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clearfix"></div>
+        <div class="main-wrapper">
+             <div class="clearfix"></div>
+              <!-- Navbar -->
+    <nav class="navbar navbar-toggleable-md" style="margin:-9px 0;">
+       
+    </nav>
+    <!-- End Navbar -->
+     <div class="clearfix"></div>
+            <div class="app" id="app">
+                <header class="container text-center" style="background:#fff; border-bottom:1px solid #f2f2f2; min-height:70px; line-height:70px; padding:5px;">
+                       		<div class="col-md-7 col-sm-12 col-xs-12">
+
+                                      <ul class="nav nav-tabs" role="tablist">
+  
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><i class="fa fa-github-alt"></i>
+    			<span>Need Help</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><i class="fa fa-star"></i>
+    			<span>Need a Doctor</span></a>
+  </li>
+</ul>
+ </div>
+
+         
+
+
+            <div class="col-md-4">	<a href="#" class="btn btn-info btn-sm header-btn"><i class="fa fa-money"></i>
+    			<span>Available Balance |  N3200 </span>
+    		</a>  </div>
+
+                     </header>
+                     <div class="clearfix"></div>
+
+                <aside class="sidebar" style="top:.4em;">
+                    <div class="sidebar-container">
+                        <div class="sidebar-header">
+                           <!-- <div class="brand">
+                                <div class="logo"> <span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span> <span class="l l4"></span> <span class="l l5"></span> </div> Applinic </div>-->
+                        </div>
+                        <nav class="menu">
+                            <ul class="nav metismenu" id="sidebar-menu">
+
+                                 <li class="no-show"> <a href="">
+    					
+                                    <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&s=40')"> </div> 
+                                    <span class="name">
+    			      John Doe
+    			    </span>
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                  
+                                         <li> <a href="#"> <i class="fa fa-user icon"></i> Profile </a> </li>
+
+                                  <li><a href="#"> <i class="fa fa-user icon"></i> ID gcamon4540</a> </li>
+
+                                  <li>
+    								 <a href="#"><i class="fa fa-gear icon"></i> Settings </a> </li>
+
+ <li><a href="login.html"><i class="fa fa-power-off icon"></i> Logout </a>
+    						 </li>
+                                    </ul>
+                                </li>
+
+                                
+                                <li class="active"> <a href="index.html">
+    						<i class="fa fa-home"></i>Patient's Dashboard
+    					</a> </li>
+
+                            <li class="bg-white no-show" style="height:40px;"> 
+                        <form role="search" style="height:40px;">
+                            <div class="input-container"> <i class="fa fa-search"></i> <input type="search" placeholder="Search" style="border:0; width:90%; height:40px;">
+                                <div class="underline"></div>
+                            </div>
+                        </form></li>
+
+                                <li> <a href="">
+    						<i class="fa fa-user-md"></i> My Doctors
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                        <li> <a href="">
+    								Doctor Micheal Eze <span class="online"></span>
+    							</a>  </li>
+                                         <li> <a href="">
+    								Doctor patrick igwe
+    							</a> </li>
+                                    </ul>
+                                </li>
+                                <li> <a href="">
+    						<i class="fa fa-bar-chart"></i>TREATMENT
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                        <li> <a href="#">
+    							some TREATMENT
+    							</a> </li>
+                                        </ul>
+                                </li>
+                                <li> <a href="">
+    						<i class="fa fa-table"></i>PRESCRIPTION(0)
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                        <li> <a href="#">
+    								Some prescriptions
+    							</a> </li>
+                                        <li> <a href="#">
+    									Some prescriptions
+    							</a> </li>
+                                    </ul>
+                                </li>
+                                <li> <a href="#">
+    						<i class="fa fa-pencil-square-o"></i> LABORATORY(0)<i class="fa arrow"></i>
+    					</a>
+                        
+                                    <ul>
+                                        <li> <a href="#">
+    								All Lab tests
+    							</a> </li>
+                                        <li> <a href="#">
+    								Awaiting Lab test result
+    							</a> </li>
+                                    </ul> </li>
+                                <li> <a href="">
+    						<i class="fa fa-desktop"></i> RADIOLOGY(0)
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                        <li> <a href="#">
+    								All Scan tests
+    							</a> </li>
+                                        <li> <a href="#">
+    								Awaiting scan test result
+    							</a> </li>
+                                       </ul>
+                                </li>
+                                <li> <a href="">
+    						<i class="fa fa-file-text-o"></i> PAYMENT & WALLET
+    						<i class="fa arrow"></i>
+    					</a>
+                                    <ul>
+                                        <li> <a href="login.html">
+    								Fund Wallet
+    							</a> </li>
+
+                                 <li> <a href="login.html">
+    								Transfer funds
+    							</a> </li>
+
+                                 <li> <a href="login.html">
+    								View Transactions
+    							</a> </li>
+                                       
+                                    </ul>
+                                </li>
+                                <li> <a href="#">
+    						<i class="fa fa-github-alt"></i> Contact Us
+    					</a> </li>
+                            </ul>
+                        </nav>
+                    </div>
+                 </aside>
+                <div class="sidebar-overlay" id="sidebar-overlay"></div>
+              <div class="col-md-12">
+<!-- Nav tabs -->
+
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel">
+      <div class="container">
+    <div class="row">
+        
+<div class="display-4">Getting started!</div><br>
+
+<div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="title">Fund your wallet now!</div>
+
+    Make payments to gain access to our all services
+    Call your doctor at your free time.
+    Request for in-person consultation
+    Book a video chat appointment with you doctor
+    Enter live chat with your doctor
+    View your medical records at all times
+    Download your prescriptions
+    Share files with your doctor
+
+    <br><br><br>
+    <div class="title">
+Find a phamarcy close to you!</div>
+
+    Just few click you can locate a Phamarcy nearby to buy drug
+    All are verified and certified by us
+    You are sure to buy quality drugs
+    You can purchase drugs and pay online with our easy services
+    We can deliver at your door step if so desired</div>
+
+<div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="title">
+Find a diagnostic center close to you!</div>
+
+    Make payments to gain access to our all services
+    Call your doctor at your free time.
+    Request for in-person consultation
+
+     <br><br><br> <br><br>
+    <div class="title">
+Quick guild</div>
+
+    Request for in-person consultation
+    Book a video chat appointment with you doctor
+    Enter live chat with you doctor
+    Reach out to all our diagnostic centers in one click</div>
+
+<div class="col-md-12 col-sm-12 col-xs-12 card" style="margin-top:2em; padding:2em;">
+    <div class="title">
+DO YOU HAVE A QUESTION?</div>
+
+Why not search through the list of available doctors and ask one!
+Learn more about our products and services | Proceed to fund your wallet"  | Get in touch with us</div>
+
+    </div>
+</div>
+  </div>
+  <div class="tab-pane" id="profile" role="tabpanel">
+      <div class="container">
+          <div style="font-weight:300; font-size:2em;">How may we help you?</div><br>
+          <label>Briefly describe what you need *(e.g I am looking for a center for dialysis.Please I need your help.)</label>
+          <textarea class="form-control formm" placeholder="Briefly describe what you need *(e.g I am looking for a center for dialysis.Please I need your help.)"></textarea>
+      <button class="btn btn-success">Request Help</button></div>
+  </div>
+  <div class="tab-pane" id="messages" role="tabpanel">...</div>
+ 
+</div>
+
+
+                  </div>
+                <footer class="footer bg-white text-muted">
+                    <div class="footer-block buttons"> <iframe class="footer-github-btn" src="#" frameborder="0" scrolling="0" width="140px" height="20px"></iframe> </div>
+                    <div class="footer-block author">
+                        <ul>
+                            <li>Applinic</a> </li>
+                            <li> <a href="#">Contact Us</a> </li>
+                        </ul>
+                    </div>
+                </footer>
+                <div class="modal fade" id="modal-media">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    					<span aria-hidden="true">&times;</span>
+    					<span class="sr-only">Close</span>
+    				</button>
+                                <h4 class="modal-title">Media Library</h4>
+                            </div>
+                            <div class="modal-body modal-tab-container">
+                                <ul class="nav nav-tabs modal-tabs" role="tablist">
+                                    <li class="nav-item"> <a class="nav-link" href="#gallery" data-toggle="tab" role="tab">Gallery</a> </li>
+                                    <li class="nav-item"> <a class="nav-link active" href="#upload" data-toggle="tab" role="tab">Upload</a> </li>
+                                </ul>
+                                <div class="tab-content modal-tab-content">
+                                    <div class="tab-pane fade" id="gallery" role="tabpanel">
+                                        <div class="images-container">
+                                            <div class="row"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade active in" id="upload" role="tabpanel">
+                                        <div class="upload-container">
+                                            <div id="dropzone">
+                                                <form action="/" method="POST" enctype="multipart/form-data" class="dropzone needsclick dz-clickable" id="demo-upload">
+                                                    <div class="dz-message-block">
+                                                        <div class="dz-message needsclick"> Drop files here or click to upload. </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Insert Selected</button> </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <div class="modal fade" id="confirm-modal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    					<span aria-hidden="true">&times;</span>
+    				</button>
+                                <h4 class="modal-title"><i class="fa fa-warning"></i> Alert</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure want to do this?</p>
+                            </div>
+                            <div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">Yes</button> <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button> </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            </div>
+        </div>
+        <!-- Reference block for JS -->
+      
+        <script src="js/vendor.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+
+</html>
