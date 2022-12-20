@@ -277,66 +277,76 @@ This book was inspired by people and their actions, read and enjoy. There's no l
   </div>
 </div>
 
-<!doctype html>
-<html>
- <head>
-  <meta charset="UTF-8">
-  <title>Create an FAQ Page with Show and Hide Questions and Answers using jQuery</title>
-  
-  <!-- jQuery -->
-  <script type="text/javascript" src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-  
-  <script>
- $(document).ready(function() {
- 
-    $('.faq_question').click(function() {
- 
-        if ($(this).parent().is('.open')){
-            $(this).closest('.faq').find('.faq_answer_container').animate({'height':'0'},500);
-            $(this).closest('.faq').removeClass('open');
- 
-            }else{
-                var newHeight =$(this).closest('.faq').find('.faq_answer').height() +'px';
-                $(this).closest('.faq').find('.faq_answer_container').animate({'height':newHeight},500);
-                $(this).closest('.faq').addClass('open');
-            }
-    });
-});
-</script>
-  
-<!-- CSS -->
-<style>
- 
-/*FAQS*/
-.faq_question {
-    margin: 0px;
-    padding: 0px 0px 5px 0px;
-    display: inline-block;
-    cursor: pointer;
-    font-weight: bold;
-}
- 
-.faq_answer_container {
-    height: 0px;
-    overflow: hidden;
-    padding: 0px;
-}
-</style>
-  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ PAGE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
 </head>
-  <body>
 
-   <!-- HTML -->
-   <div class="faq_container">
-    <div class="faq">
-       <div class="faq_question">Question goes here</div>
-            <div class="faq_answer_container">
-               <div class="faq_answer">Answer goes here</div>
-            </div>        
-     </div>
-  </div>
+<body>
+    <main>
 
- </body>
+        <h1 class="faq-heading">FAQ'S</h1>
+        <section class="faq-container">
+            <div class="faq-one">
+
+                <!-- faq question -->
+                <h1 class="faq-page">What is an FAQ Page?</h1>
+
+                <!-- faq answer -->
+                <div class="faq-body">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit saepe sequi, illum facere
+                        necessitatibus cum aliquam id illo omnis maxime, totam soluta voluptate amet ut sit ipsum
+                        aperiam.
+                        Perspiciatis, porro!</p>
+                </div>
+            </div>
+            <hr class="hr-line">
+
+            <div class="faq-two">
+
+                <!-- faq question -->
+                <h1 class="faq-page">Why do you need an FAQ page?</h1>
+
+                <!-- faq answer -->
+
+                <div class="faq-body">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit saepe sequi, illum facere
+                        necessitatibus cum aliquam id illo omnis maxime, totam soluta voluptate amet ut sit ipsum
+                        aperiam.
+                        Perspiciatis, porro!</p>
+                </div>
+            </div>
+            <hr class="hr-line">
+
+
+            <div class="faq-three">
+
+                <!-- faq question -->
+                <h1 class="faq-page">Does it improves the user experience of a website?</h1>
+
+                <!-- faq answer -->
+                <div class="faq-body">
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Velit saepe sequi, illum facere
+                        necessitatibus cum aliquam id illo omnis maxime, totam soluta voluptate amet ut sit ipsum
+                        aperiam.
+                        Perspiciatis, porro!</p>
+                </div>
+            </div>
+
+        </section>
+    </main>
+    <script src="main.js"></script>
+</body>
+
+
 </html>
 
 <!-- Image of location/map -->
