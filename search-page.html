@@ -1,0 +1,133 @@
+
+
+<!DOCTYPE html>
+<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9jahotblog OFFICIAL SEARCH PAGE (SEARCH FOR ARTICLES/NEWS)..</title>
+    <html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+#myInput {
+      background-image: url('/css/searchicon.png');
+      background-position: 10px 12px;
+      background-repeat: no-repeat;
+      width: 100%;
+      font-size: 16px;
+      padding: 12px 20px 12px 40px;
+      border: 1px solid #ddd;
+      margin-bottom: 12px;
+    }
+#myUL {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+#myUL li a {
+      border: 1px solid #ddd;
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6;
+      padding: 12px;
+      text-decoration: none;
+      font-size: 18px;
+      color: black;
+      display: block
+    }
+#myUL li a:hover:not(.header) {
+      background-color: #eee;
+    }
+    </style>
+    </head>
+    <body>
+
+Can't find what you're looking for? Give us a topic, & we'll write on it for you. 
+<a href="https://9jahotblog.github.io">Click here to Return to 9jahotblog Homepage</a>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Articles..">
+
+<ul id="myUL">
+  <li><a href="https://9jahotblog.github.io/entertainment/will.html">Will Smith gets banned from the Oscars!</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html">CHANGE & CORRECTION OF NAME IN NIGERIA BY MERE AFFIDAVIT IS NO LONGER VALID.</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Citizenship Education Full Topic</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/rare-personalities-creativity-concept.html">Concept of Creativity (Rare personalities)</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/olympus-12-greek-gods.html">GREEK GODS 12 OLYMPIC SUMMARY</a></li>
+  <li><a href="https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom.html">Big 4 ways to financial Freedom</a></li>
+  <li><a href="https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom-us-bank-stocks.html">Big 4 roads to financial freedom 2</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/nigerian-army-harrases-nysc-member.html">NIGERIAN ARMY OFFICER HARASSES NATION YOUTH SERVICE CORP MEMBER.</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/functions-of-movie-production-project.html">Movie Production Project Roles & Functions</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/the-sustainable-development-goals.html">17 Sustainable development goals & the 8 millennium goals.</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/personality-traits.html">Personality Traits</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/word-classes.html">Word Classes</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/random-news-stories.html">10 Random news stories</a></li>
+  <li><a href="https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html">The indecisiveness of a teenager</a></li>
+  <li><a href="https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html">The uncertainty of Life</a></li>
+  <li><a href="https://9jahotblog.github.io/entertainment/impact-making.html">Impact Making</a></li>
+  <li><a href="https://9jahotblog.github.io/discussions/what-is-affiliate-marketing.html">Affiliate Marketing</a></li>
+  <li><a href="https://9jahotblog.github.io/documentary/animal-mixup.html">Hybrid Animals</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/policeman-killed-by-suspected-cyclist.html">Policeman Killed by suspected cyclist</a></li>
+  <li><a href="https://9jahotblog.github.io/discussions/what-is-autism.html">Autism</a></li>
+  <li><a href="https://9jahotblog.github.io/Education/why-I-hate-the-word-dreams.html">Why I hate the word Dreams</a></li>
+  <li><a href="https://9jahotblog.github.io/entertainment/we-are-all-clueless.html">We are all Clueless</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html">Prices of Staple Increasing</a></li>
+  <li><a href="https://9jahotblog.github.io/Articles/charcoal-becoming-imminent.html">Use of Charcoal Becoming Imminent</a></li>
+</ul>
+
+<script>
+    function myFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+    </script>
+   </body>
+    </html>
+ <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top" data-go-top>
+    <ion-icon name="chevron-up"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
