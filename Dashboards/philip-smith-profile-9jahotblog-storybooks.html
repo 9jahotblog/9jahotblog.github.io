@@ -680,8 +680,7 @@ He sourced for every Information he could find   about Keji.
               </div>
 
 
-<script type="text/javascript" src="https://files.fm/embed/playerv2?hash=e839ax7q5&autoplay=off&autoload=off&w=100%&h=auto&poster_src=https://files.fm/thumb_video_picture.php?i=e839ax7q5" id="filesfm_embed_js__e839ax7q5"></script>
-</div>
+
 <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
         <p>I love you</p>
       </div>
@@ -700,6 +699,8 @@ He sourced for every Information he could find   about Keji.
 <!-- End Page Container -->
 </div>
 <br>
+
+<script type="text/javascript" src="https://files.fm/embed/playerv2?hash=e839ax7q5&autoplay=off&autoload=off&w=100%&h=auto&poster_src=https://files.fm/thumb_video_picture.php?i=e839ax7q5" id="filesfm_embed_js__e839ax7q5"></script>
 
 <!-- Footer -->
 <footer class="w3-container w3-theme-d3 w3-padding-16">
@@ -880,7 +881,42 @@ function likeFunction(x) {
 </body>
 </html>
 
+<script>
+// Automatic Slideshow - change image every 4 seconds
+var myIndex = 0;
+carousel();
 
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+}
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 4000);    
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+</body>
+</html>
 
 
 
