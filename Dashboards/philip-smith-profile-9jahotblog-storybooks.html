@@ -678,57 +678,31 @@ He sourced for every Information he could find   about Keji.
 </footer>
  
 <script>
-var openInbox = document.getElementById("myBtn");
-openInbox.click(); function w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-  document.getElementById("myOverlay").style.display = "bfunction w3_open() {
-  document.getElementById("mySidebar").style.display = "block";
-  document.getElementById("myOverlay").style.display = "block";
-}
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-  document.getElementById("myOverlay").style.display = "none";
-}
-lock";
-}
-function w3_close() {
-  document.getElementById("mySidebar").style.display = "none";
-document.getElementById("myOverlay").style.display = "none";
-}
-function myFunc(id) {
+// Accordion
+function myFunction(id) {
   var x = document.getElementById(id);
   if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show"; 
-    x.previousElementSibling.className += " w3-red";
-} else { 
-    x.className = x.className.replace(" w3-show", "");
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-theme-d1";
+  } else { 
+    x.className = x.className.replace("w3-show", "");
     x.previousElementSibling.className = 
-    x.previousElementSibling.className.replace(" w3-red", "");
+    x.previousElementSibling.className.replace(" w3-theme-d1", "");
   }
 }
 
-openMail("Borge")
-function openMail(personName) {
-  var i;
-  var x = document.getElementsByClassName("person");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
   }
-x = document.getElementsByClassName("test");
-  for (i = 0; i < x.length; i++) {
-    x[i].className = x[i].className.replace(" w3-light-grey", "");
-}
-  document.getElementById(personName).style.display = "block";
-  event.currentTarget.className += " w3-light-grey";
 }
 </script>
-<script>
-var openTab = document.getElementById("firstTab");
-openTab.click();
-</script>
+
 </body>
-</html> 
-
+</html>
 
 <script>
 // Accordion
@@ -778,42 +752,6 @@ function likeFunction(x) {
 </body>
 </html>
 
-<script>
-// Automatic Slideshow - change image every 4 seconds
-var myIndex = 0;
-carousel();
-
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
-}
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}    
-  x[myIndex-1].style.display = "block";  
-  setTimeout(carousel, 4000);    
-}
-
-// Used to toggle the menu on small screens when clicking on the menu button
-function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-// When the user clicks anywhere outside of the modal, close it
-var modal = document.getElementById('ticketModal');
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
-</body>
-</html>
 
 
 
