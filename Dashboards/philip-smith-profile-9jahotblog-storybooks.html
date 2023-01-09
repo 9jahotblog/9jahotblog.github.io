@@ -83,8 +83,188 @@ function closeNav() {
    </body>
 </html> 
 
+<h6>Welcome to this profile!♥️</h6>
+
+<!DOCTYPE html> 
+
+<html lang="en"> 
+
+  
+
+<body> 
+     
+       <p>Philip will guess your battery percentage..</p> 
+
+    <div class="battery-info"> 
+
+        <p> 
+
+            <b>Your Battery Percentage is:</b> 
+
+            <span id="battery-percentage">0</span> 
+
+        </p> 
+
+  
+
+        <p> 
+
+            <b>Is Your Battery Charging? :</b> 
+
+            <span id="is-battery-charging">No</span> 
+
+        </p> 
+
+  
+
+        <p> 
+
+            <b>Your Battery Charging Time:</b> 
+
+            <span id="chargingtime"></span> 
+
+        </p> 
+
+  
+
+        <p> 
+
+            <b>Your Battery discharging Time:</b> 
+
+            <span id="dischargingtime"></span> 
+
+        </p> 
+
+    </div> 
+
+  
+
+    <script> 
+
+        navigator.getBattery().then(function (battery) { 
+
+            function showAllBatteryInfo() { 
+
+                editChargeInfo(); 
+
+                editLevelInfo(); 
+
+                editChargingInfo(); 
+
+                editDischargingInfo(); 
+
+            } 
+
+            showAllBatteryInfo(); 
+
+  
+
+            battery.addEventListener('chargingchange', 
+
+                function () { 
+
+                    editChargeInfo(); 
+
+                }); 
+
+            function editChargeInfo() { 
+
+  
+
+                /* Test with the charger and without  
+
+                charger by unpluging*/ 
+
+                var isBatteryCharging = (battery.charging ? "Yes" : "No") 
+
+                document.getElementById('is-battery-charging') 
+
+                    .innerText = isBatteryCharging 
+
+            } 
+
+  
+
+            battery.addEventListener('levelchange', function () { 
+
+                editLevelInfo(); 
+
+            }); 
+
+            function editLevelInfo() { 
+
+                /* Shows the battery level*/ 
+
+                var batteryLevel = battery.level * 100 
+
+                document.getElementById('battery-percentage') 
+
+                    .innerText = batteryLevel 
+
+            } 
+
+  
+
+            battery.addEventListener('chargingtimechange', function () { 
+
+                editChargingInfo(); 
+
+            }); 
+
+            function editChargingInfo() { 
+
+  
+
+                /* Test with the charger and without charger by unpluging*/ 
+
+                var charge = battery.chargingTime 
+
+                document.getElementById('chargingtime').innerText = charge 
+
+            } 
+
+  
+
+            battery.addEventListener('dischargingtimechange', function () { 
+
+                editDischargingInfo(); 
+
+            }); 
+
+            function editDischargingInfo() { 
+
+                var disCharge = battery.dischargingTime 
+
+                document.getElementById('dischargingtime') 
+
+                    .innerText = disCharge 
+
+} 
+   }); 
+
+    </script> 
+
+</body> 
+
+  
+
+</html> 
 
 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kolade Philip Ogunlana -- Profile 9jahotblog Storybooks CEO</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style> html, body, h1, h2, h3, h4, h5 {font-family: "Open Sans", sans-serif}
+</style>
+</head>
+<body class="w3-theme-l5">
 
 <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
         <img src="https://i.postimg.cc/905G2vZt/Philip-Smith.jpg" alt="Boss" class="w3-left w3-circle w3-margin-right" style="width:100px">
