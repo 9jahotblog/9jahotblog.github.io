@@ -120,14 +120,14 @@
 <body>
 
   <!-- Authentication Buttons -->
-  <button onclick="signInWithGoogle()">Sign in with Google</button>
+  <button onclick="jahotblog-login.firebaseapp.com()">Sign in with Google</button>
 
   <!-- Add more content as your project progresses -->
 
   <script>
     function signInWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
+      firebase.auth().jahotblog-login.firebaseapp.com(provider)
         .then((result) => {
           const user = result.user;
           console.log(user);
