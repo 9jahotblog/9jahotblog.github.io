@@ -117,6 +117,28 @@
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
 				</section>
+<body>
+
+  <!-- Authentication Buttons -->
+  <button onclick="signInWithGoogle()">Sign in with Google</button>
+
+  <!-- Add more content as your project progresses -->
+
+  <script>
+    function signInWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          const user = result.user;
+          console.log(user);
+          // Redirect or handle user login
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  </script>
+</body>
 
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
