@@ -118,16 +118,18 @@
 					<a href="#two" class="goto-next scrolly">Next</a>
 				</section>
 <body>
+  <h1>Welcome to Your Creative Writing Platform</h1>
 
   <!-- Authentication Buttons -->
-  <button onclick="jahotblog-login.firebaseapp.com()">Sign in with Google</button>
+  <button onclick="signInWithGoogle()">Sign in with Google</button>
+  <button onclick="signUpWithEmail()">Sign up with Email</button>
 
   <!-- Add more content as your project progresses -->
 
   <script>
     function signInWithGoogle() {
       const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().jahotblog-login.firebaseapp.com(provider)
+      firebase.auth().signInWithPopup(provider)
         .then((result) => {
           const user = result.user;
           console.log(user);
@@ -137,8 +139,25 @@
           console.error(error);
         });
     }
+
+    function signUpWithEmail() {
+      // Implement email/password sign-up
+      const email = prompt("Enter your email:");
+      const password = prompt("Enter your password:");
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+          // Redirect or handle user sign-up
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   </script>
 </body>
+
 
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
