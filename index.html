@@ -92,46 +92,6 @@
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
 				</section>
-<body>
-  <h1>Welcome to Your Creative Writing Platform</h1>
-
-  <!-- Authentication Buttons -->
-  <button onclick="signInWithGoogle()">Sign in with Google</button>
-  <button onclick="signUpWithEmail()">Sign up with Email</button>
-
-  <!-- Add more content as your project progresses -->
-
-  <script>
-    function signInWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-          const user = result.user;
-          console.log(user);
-          // Redirect or handle user login
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-
-    function signUpWithEmail() {
-      // Implement email/password sign-up
-      const email = prompt("Enter your email:");
-      const password = prompt("Enter your password:");
-
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          // Redirect or handle user sign-up
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  </script>
-</body>
 
 
 			<!-- Two -->
@@ -139,10 +99,10 @@
 					<span class="image fit main"><img src="https://i.postimg.cc/yNkz1NTg/IMG-20240106-112021-708.jpg" alt="" /></span>
 					<div class="content">
 						<header>
-							<h2> Create mind-blowing images for free! </h2>
+							<h2> Create mind-blowing movies/trailers from your books! </h2>
 							<p>Display your descriptive power!</p>
 						</header>
-						<p> Your stories deserve more than just words on a page. With 9jahotblog, you can bring your characters to life with stunning images, videos, and more. Our AI-powered tool lets you create vivid visual content that will captivate your readers and bring your stories to life. So go ahead, let your imagination run wild! With Writer's paradise, you can turn your words into worlds. It's time for your descriptive power to shine! </p>
+						<p> Your stories deserve more than just words on a page. With 9jahotblog, you can bring your characters to life with stunning images, videos, and more. Our AI-powered tool lets you create vivid visual content that will captivate your readers and bring your stories to life. So go ahead, let your imagination run wild! By simply turning your words into worlds. It really is time for your descriptive power to shine!  </p>
 						<ul class="actions">
 							<li><a href="#" class="button">Learn More</a></li>
 						</ul>
