@@ -77,7 +77,7 @@
 						</div>
 					</div>
 					<a href="#two" class="goto-next scrolly">Next</a>
-				</section>
+			</section>
 
 
 			<!-- Two -->
@@ -96,6 +96,28 @@
 					<a href="#three" class="goto-next scrolly">Next</a>
 				</section>
 
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '{1029241895238005}',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{api-}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+			
 			<!-- Three -->
 				<section id="three" class="spotlight style3 left">
 					<span class="image fit main bottom"><img src="https://i.postimg.cc/tC5kBNHy/IMG-20240106-112023-722.jpg" alt="image2" /></span>
