@@ -53,9 +53,6 @@
                                      </div>
                                        <a href="#one" class="goto-next scrolly">Next</a>
                                       </section>
-			<body>
-			<div id="fb-root"></div> <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v20.0&appId=1029241895238005" nonce="o3UqNdXz"></script>
-			</body>
 
 
 			<!-- One -->
@@ -82,7 +79,6 @@
 					<a href="#two" class="goto-next scrolly">Next</a>
 			</section>
 
-<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true"></div>
 
 			
 			<!-- Two -->
@@ -101,31 +97,60 @@
 					<a href="#three" class="goto-next scrolly">Next</a>
 				</section>
 
+
+```
 <body>
+  <script>https://connect.facebook.net/en_US/sdk.js
+    function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      if (response.status === 'connected') {
+        testAPI();
+      } else {
+        document.getElementById('status').innerHTML = 'Please log into this webpage.';
+      }
+    }
 
-	<!-- Facebook Login Button -->
-	<div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true" data-scope="public_profile,email"></div>
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
 
-	<!-- Facebook SDK Script -->
-	<script>
-		window.fbAsyncInit = function() {
-			FB.init({
-				appId      : '467949402517340', // Replace with your App ID
-				cookie     : true,
-				xfbml      : true,
-				version    : 'v13.0'
-			});
-			FB.AppEvents.logPageView();
-		};
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '467949402517340', // Replace with your App ID
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v13.0'
+      });
 
-		(function(d, s, id){
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement(s); (link unavailable) = id;
-			js.src = "(link unavailable)";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    };
+
+    function testAPI() {
+      console.log('Welcome! Fetching your information.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML = 'Thanks for logging in, ' + response.name + '!';
+      });
+    }
+  </script>
+
+  <!-- The JS SDK Login Button -->
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <div id="status">
+  </div>
+
+  <!-- Load the JS SDK asynchronously -->
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+</body>
+```
+
 
 	<!-- Handle Login/Logout -->
 	<script>
