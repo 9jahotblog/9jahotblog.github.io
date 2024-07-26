@@ -82,7 +82,8 @@
 					<a href="#two" class="goto-next scrolly">Next</a>
 			</section>
 
-<div class="fb-login-button" data-width="250" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true"></div>
+<div class="fb-login-button" data-width="" data-size="" data-button-type="" data-layout="" data-auto-logout-link="true" data-use-continue-as="true"></div>
+
 			
 			<!-- Two -->
 				<section id="two" class="spotlight style2 right">
@@ -100,27 +101,48 @@
 					<a href="#three" class="goto-next scrolly">Next</a>
 				</section>
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{1029241895238005}',
-      cookie     : true,
-      xfbml      : true,
-      version    : '{api-}'
-    });
-      
-    FB.AppEvents.logPageView();   
-      
-  };
+<body>
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
+	<!-- Facebook Login Button -->
+	<div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true" data-scope="public_profile,email"></div>
+
+	<!-- Facebook SDK Script -->
+	<script>
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '467949402517340', // Replace with your App ID
+				cookie     : true,
+				xfbml      : true,
+				version    : 'v13.0'
+			});
+			FB.AppEvents.logPageView();
+		};
+
+		(function(d, s, id){
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement(s); (link unavailable) = id;
+			js.src = "(link unavailable)";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+	<!-- Handle Login/Logout -->
+	<script>
+		FB.getLoginStatus(function(response) {
+			if (response.status === 'connected') {
+				// User is logged in, get their info
+				FB.api('/me', function(response) {
+					console.log('User info:', response);
+				});
+			} else {
+				// User is not logged in, show login button
+			}
+		});
+	</script>
+	
+			<div id="fb-root"></div> <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v20.0&appId=467949402517340" nonce="GcyPsVwp"></script>
+</body>
 			
 			<!-- Three -->
 				<section id="three" class="spotlight style3 left">
