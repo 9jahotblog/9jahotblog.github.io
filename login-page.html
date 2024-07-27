@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Authentication Page</title>
+  <title>9jahotblog Storybooks - Authentication</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -12,12 +12,21 @@
       align-items: center;
       height: 100vh;
       background-color: #f0f0f0;
+      margin: 0;
     }
     .auth-container {
       background: #fff;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    .auth-container img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
     }
     .auth-container form {
       display: flex;
@@ -37,41 +46,75 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-bottom: 10px;
     }
     .auth-container button:hover {
       background-color: #0277bd;
     }
-    .auth-container .social-login {
-      display: flex;
-      justify-content: space-between;
-    }
     .auth-container .social-login button {
       background-color: #db4437;
+    }
+    .auth-container .social-login button:hover {
+      background-color: #c23321;
+    }
+    .auth-container .password-container {
+      position: relative;
+    }
+    .auth-container .password-container input {
+      width: calc(100% - 40px);
+    }
+    .auth-container .password-container .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    #recaptcha-container {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <div class="auth-container">
+    <!-- Circular Photo Placeholder -->
+    <img src="#" alt="Profile Picture" />
+
     <!-- Sign-Up Form -->
     <form id="signup-form">
+      <input type="text" id="signup-username" placeholder="Username" required />
+      <input type="text" id="signup-fullname" placeholder="Full Name" required />
       <input type="email" id="signup-email" placeholder="Email" required />
-      <input type="password" id="signup-password" placeholder="Password" required />
+      <div class="password-container">
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
+      <input type="text" id="signup-country" placeholder="Country" required />
+      <input type="tel" id="signup-phone" placeholder="Phone Number" required />
+      <div id="recaptcha-container"></div>
+      <button id="verify-phone" type="button">Verify Phone Number</button>
+      <div id="phone-status"></div>
       <button type="submit">Sign Up</button>
     </form>
 
     <!-- Login Form -->
     <form id="login-form">
-      <input type="email" id="login-email" placeholder="Email" required />
-      <input type="password" id="login-password" placeholder="Password" required />
+      <input type="text" id="login-username" placeholder="Username" required />
+      <div class="password-container">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
       <button type="submit">Login</button>
     </form>
 
     <!-- Forgot Password -->
     <button id="forgot-password">Forgot Password</button>
 
-    <!-- Google Sign-In Button -->
+    <!-- Social Sign-In Buttons -->
     <div class="social-login">
       <button id="google-signin">Sign In with Google</button>
+      <button id="facebook-signin">Sign In with Facebook</button>
+      <button id="apple-signin">Sign In with Apple</button>
     </div>
 
     <div id="status"></div>
@@ -79,7 +122,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider, sendEmailVerification, sendPasswordResetEmail, updateProfile, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -92,21 +135,35 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    const googleProvider = new GoogleAuthProvider();
+    const facebookProvider = new FacebookAuthProvider();
+    const appleProvider = new OAuthProvider('apple.com');
 
-    // Redirect after successful login/signup
     function redirectToProfile() {
       window.location.href = 'profile.html';
     }
+
+    // Toggle Password Visibility
+    document.querySelectorAll('.toggle-password').forEach(item => {
+      item.addEventListener('click', function () {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+      });
+    });
 
     // Sign Up Form Submission
     document.getElementById('signup-form').addEventListener('submit', function (e) {
       e.preventDefault();
       const email = document.getElementById('signup-email').value;
       const password = document.getElementById('signup-password').value;
+      const username = document.getElementById('signup-username').value;
+      const fullname = document.getElementById('signup-fullname').value;
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           sendEmailVerification(userCredential.user);
+          updateProfile(userCredential.user, {
+            displayName: username
+          });
           document.getElementById('status').innerText = 'Sign-up successful! Verification email sent.';
           setTimeout(redirectToProfile, 2000);
         })
@@ -118,9 +175,9 @@
     // Login Form Submission
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      const email = document.getElementById('login-email').value;
+      const username = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
-      signInWithEmailAndPassword(auth, email, password)
+      signInWithEmailAndPassword(auth, username, password)
         .then((userCredential) => {
           if (userCredential.user.emailVerified) {
             document.getElementById('status').innerText = 'Login successful!';
@@ -136,7 +193,7 @@
 
     // Google Sign-In
     document.getElementById('google-signin').addEventListener('click', function () {
-      signInWithPopup(auth, provider)
+      signInWithPopup(auth, googleProvider)
         .then((result) => {
           document.getElementById('status').innerText = 'Google sign-in successful!';
           setTimeout(redirectToProfile, 2000);
@@ -146,9 +203,34 @@
         });
     });
 
+    // Facebook Sign-In
+    document.getElementById('facebook-signin').addEventListener('click', function () {
+      signInWithPopup(auth, facebookProvider)
+        .then((result) => {
+          document.getElementById('status').innerText = 'Facebook sign-in successful!';
+          setTimeout(redirectToProfile, 2000);
+        })
+        .catch((error) => {
+          document.getElementById('status').innerText = `Error: ${error.message}`;
+        });
+    });
+
+    // Apple Sign-In
+    document.getElementById('apple-signin').addEventListener('click', function () {
+      signInWithPopup(auth, appleProvider)
+        .then((result) => {
+          document.getElementById('status').innerText = 'Apple sign-in successful!';
+          setTimeout(redirectToProfile, 2000);
+        })
+        .catch((error) => {
+          document.getElementById('status').innerText = `Error: ${error.message}`;
+        });
+    });
+
     // Forgot Password
+    document.getElementById('forgot-password').addEventListener('click', function ()
     document.getElementById('forgot-password').addEventListener('click', function () {
-      const email = prompt('Please enter your email for password reset:');
+      const email = prompt('Please enter your email address:');
       if (email) {
         sendPasswordResetEmail(auth, email)
           .then(() => {
@@ -159,6 +241,29 @@
           });
       }
     });
+
+    // Phone Number Verification
+    const phoneInput = document.getElementById('signup-phone');
+    const verifyPhoneButton = document.getElementById('verify-phone');
+    const phoneStatus = document.getElementById('phone-status');
+
+    verifyPhoneButton.addEventListener('click', function () {
+      const phoneNumber = phoneInput.value;
+      const appVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+
+      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+        .then((confirmationResult) => {
+          const code = prompt('Enter the verification code you received via SMS');
+          confirmationResult.confirm(code).then((result) => {
+            phoneStatus.innerText = 'Phone number verified!';
+          }).catch((error) => {
+            phoneStatus.innerText = `Error: ${error.message}`;
+          });
+        }).catch((error) => {
+          phoneStatus.innerText = `Error: ${error.message}`;
+        });
+    });
+
   </script>
 </body>
 </html>
