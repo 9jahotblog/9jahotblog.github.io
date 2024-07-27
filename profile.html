@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+  .user-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #0288d1;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+  }
+</style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Profile</title>
@@ -35,7 +48,7 @@
     <p>Username: <span id="user-username"></span></p>
     <button id="logout">Logout</button>
   </div>
-
+<div class="user-info" id="user-info"></div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
