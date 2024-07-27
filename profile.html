@@ -59,14 +59,14 @@
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
       } else {
-        window.location.href = 'index.html';
+        window.location.href = 'login-page.html';
       }
     });
 
     // Logout function
     document.getElementById('logout').addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'login-page.html';
       });
     });
   </script>
