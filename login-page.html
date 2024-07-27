@@ -4,33 +4,83 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Authentication Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .auth-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-container input {
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .auth-container button {
+      padding: 10px;
+      background-color: #0288d1;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .auth-container button:hover {
+      background-color: #0277bd;
+    }
+    .auth-container .social-login {
+      display: flex;
+      justify-content: space-between;
+    }
+    .auth-container .social-login button {
+      background-color: #db4437;
+    }
+  </style>
 </head>
 <body>
-  <!-- Sign-Up Form -->
-  <form id="signup-form">
-    <input type="email" id="signup-email" placeholder="Email" required />
-    <input type="password" id="signup-password" placeholder="Password" required />
-    <button type="submit">Sign Up</button>
-  </form>
+  <div class="auth-container">
+    <!-- Sign-Up Form -->
+    <form id="signup-form">
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <input type="password" id="signup-password" placeholder="Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
 
-  <!-- Login Form -->
-  <form id="login-form">
-    <input type="email" id="login-email" placeholder="Email" required />
-    <input type="password" id="login-password" placeholder="Password" required />
-    <button type="submit">Login</button>
-  </form>
+    <!-- Login Form -->
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Email" required />
+      <input type="password" id="login-password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
 
-  <!-- Google Sign-In Button -->
-  <button id="google-signin">Sign In with Google</button>
+    <!-- Forgot Password -->
+    <button id="forgot-password">Forgot Password</button>
 
-  <div id="status"></div>
+    <!-- Google Sign-In Button -->
+    <div class="social-login">
+      <button id="google-signin">Sign In with Google</button>
+    </div>
+
+    <div id="status"></div>
+  </div>
 
   <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
       authDomain: "jahotblog-login.firebaseapp.com",
@@ -40,10 +90,14 @@
       appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
+
+    // Redirect after successful login/signup
+    function redirectToProfile() {
+      window.location.href = 'profile.html';
+    }
 
     // Sign Up Form Submission
     document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -54,6 +108,7 @@
         .then((userCredential) => {
           sendEmailVerification(userCredential.user);
           document.getElementById('status').innerText = 'Sign-up successful! Verification email sent.';
+          setTimeout(redirectToProfile, 2000);
         })
         .catch((error) => {
           document.getElementById('status').innerText = `Error: ${error.message}`;
@@ -69,6 +124,7 @@
         .then((userCredential) => {
           if (userCredential.user.emailVerified) {
             document.getElementById('status').innerText = 'Login successful!';
+            setTimeout(redirectToProfile, 2000);
           } else {
             document.getElementById('status').innerText = 'Please verify your email before logging in.';
           }
@@ -83,10 +139,25 @@
       signInWithPopup(auth, provider)
         .then((result) => {
           document.getElementById('status').innerText = 'Google sign-in successful!';
+          setTimeout(redirectToProfile, 2000);
         })
         .catch((error) => {
           document.getElementById('status').innerText = `Error: ${error.message}`;
         });
+    });
+
+    // Forgot Password
+    document.getElementById('forgot-password').addEventListener('click', function () {
+      const email = prompt('Please enter your email for password reset:');
+      if (email) {
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            document.getElementById('status').innerText = 'Password reset email sent!';
+          })
+          .catch((error) => {
+            document.getElementById('status').innerText = `Error: ${error.message}`;
+          });
+      }
     });
   </script>
 </body>
