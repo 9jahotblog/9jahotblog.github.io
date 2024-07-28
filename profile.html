@@ -97,17 +97,20 @@
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const userRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userRef);
-
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    document.getElementById('profile-name').innerText = userData.fullName || 'N/A';
-                    document.getElementById('profile-username').innerText = userData.username || 'N/A';
-                    document.getElementById('profile-email').innerText = user.email || 'N/A';
-                    document.getElementById('profile-dob').innerText = userData.dateOfBirth || 'N/A';
-                    document.getElementById('profile-country').innerText = userData.country || 'N/A';
-                } else {
-                    console.log('No such document!');
+                try {
+                    const userDoc = await getDoc(userRef);
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        document.getElementById('profile-name').innerText = userData.fullName || 'N/A';
+                        document.getElementById('profile-username').innerText = userData.username || 'N/A';
+                        document.getElementById('profile-email').innerText = user.email || 'N/A';
+                        document.getElementById('profile-dob').innerText = userData.dateOfBirth || 'N/A';
+                        document.getElementById('profile-country').innerText = userData.country || 'N/A';
+                    } else {
+                        console.error('No such document!');
+                    }
+                } catch (error) {
+                    console.error('Error getting document:', error);
                 }
             } else {
                 window.location.href = 'index.html';
@@ -123,4 +126,4 @@
         });
     </script>
 </body>
-</html>
+                    </html>
