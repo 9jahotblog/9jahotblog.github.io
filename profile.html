@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   <title>User Profile</title>
   <style>
     body {
@@ -64,8 +67,10 @@
       margin-top: 20px;
       margin-right: 10px;
     }
+    </head>
+	<body class="is-preload landing">
+		<div id="page-wrapper">
   </style>
-</head>
 <body>
   <ul class="menu-bar">
     <li><a href="index.html">Home</a></li>
@@ -73,6 +78,14 @@
     <li><a href="books.html">Books</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
+       <!-- Main -->
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+             <h1>Welcome Home!</h1>
+						</header>
+	<!-- Text -->
+							<section>
   <div class="profile-container">
     <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
@@ -81,6 +94,36 @@
     <button id="edit-profile">Edit Profile</button>
     <button id="logout"><a href="login-page.html">Logout</button></a>
   </div>
+    
+<hr />
+</section>
+
+<!-- Footer -->
+				<footer id="footer">
+					<ul class="icons">
+						<li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
