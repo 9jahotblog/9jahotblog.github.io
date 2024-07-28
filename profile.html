@@ -63,6 +63,7 @@
   <p>Email: <span id="user-email"></span></p>
   <p>Username: <span id="user-username"></span></p>
   <p>Birthday: <span id="birthday"></span></p>
+  <p>Full name: <span id="user-name"></span></p>
   <button id="edit-profile">Edit Profile</button>
   <a href="login-page.html"><button id="logout">Logout</button></a>
 </div>
@@ -119,8 +120,8 @@
     // Check if user is signed in and display their info
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById('birthday').textContent = user.displayName || 'birthday';
-	document.getElementById('user-name').textContent = user.displayName || 'User';
+        document.getElementById('birthday').textContent = user.displaybirthday || 'birthday';
+	document.getElementById('user-name').textContent = user.displayFullName || 'User';
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
         if (user.photoURL) {
