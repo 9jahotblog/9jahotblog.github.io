@@ -1,0 +1,56 @@
+<div class="profile-dropdown" id="profile-dropdown">
+    <p id="dropdown-profile-name"></p>
+    <p id="dropdown-profile-username"></p>
+    <button id="dropdown-logout-button">Logout</button>
+</div>
+
+<style>
+    .profile-dropdown {
+        display: none;
+        position: fixed;
+        right: 20px;
+        top: 60px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .profile-dropdown.visible {
+        display: block;
+    }
+</style>
+
+<script type="module">
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    
+    const auth = getAuth();
+    const db = getFirestore();
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userRef = doc(db, "users", user.uid);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+                const userData = userDoc.data();
+                document.getElementById('dropdown-profile-name').innerText = `Name: ${userData.fullName || 'N/A'}`;
+                document.getElementById('dropdown-profile-username').innerText = `Username: ${userData.username || 'N/A'}`;
+                document.getElementById('profile-dropdown').classList.add('visible');
+            } else {
+                console.log('No such document!');
+            }
+        } else {
+            document.getElementById('profile-dropdown').classList.remove('visible');
+        }
+    });
+
+    document.getElementById('dropdown-logout-button').addEventListener('click', () => {
+        signOut(auth).then(() => {
+            window.location.href = 'index.html';
+        }).catch((error) => {
+            console.error('Error signing out:', error);
+        });
+    });
+</script>
