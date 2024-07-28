@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   <title>User Profile</title>
   <style>
     body {
@@ -67,63 +64,25 @@
       margin-top: 20px;
       margin-right: 10px;
     }
-    </head>
-	<body class="is-preload landing">
-		<div id="page-wrapper">
   </style>
+</head>
 <body>
   <ul class="menu-bar">
     <li><a href="index.html">Home</a></li>
     <li><a href="news.html">News</a></li>
     <li><a href="books.html">Books</a></li>
     <li><a href="contact.html">Contact</a></li>
+    <li><a href="login-page.html" id="logout">Logout</a></li>
   </ul>
-       <!-- Main -->
-				<div id="main" class="wrapper style1">
-					<div class="container">
-						<header class="major">
-             <h1>Welcome Home!</h1>
-						</header>
-	<!-- Text -->
-							<section>
   <div class="profile-container">
     <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
+    <p>Full Name: <span id="user-fullname"></span></p>
     <p>Email: <span id="user-email"></span></p>
     <p>Username: <span id="user-username"></span></p>
     <button id="edit-profile">Edit Profile</button>
-    <button id="logout"><a href="login-page.html">Logout</button></a>
+    <button id="logout">Logout</button>
   </div>
-    
-<hr />
-</section>
-
-<!-- Footer -->
-				<footer id="footer">
-					<ul class="icons">
-						<li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-						<li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-						<li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-						<li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-						<li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-					</ul>
-					<ul class="copyright">
-						<li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-					</ul>
-				</footer>
-
-		</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
@@ -144,23 +103,32 @@
     const db = getFirestore(app);
 
     // Check if user is signed in and display their info
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        document.getElementById('user-name').textContent = user.displayName || 'User';
-        document.getElementById('user-email').textContent = user.email;
-        document.getElementById('user-username').textContent = user.displayName || 'Username';
-        if (user.photoURL) {
-          document.getElementById('profile-photo').src = user.photoURL;
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          document.getElementById('user-name').textContent = userData.username || 'User';
+          document.getElementById('user-fullname').textContent = userData.fullname || 'Full Name';
+          document.getElementById('user-email').textContent = user.email;
+          document.getElementById('user-username').textContent = userData.username || 'Username';
+          if (user.photoURL) {
+            document.getElementById('profile-photo').src = user.photoURL;
+          }
         }
       } else {
-        window.location.href = 'login-page.html.html';
+        window.location.href = 'index.html';
       }
     });
 
     // Logout function
     document.getElementById('logout').addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = 'login-page.html';
+        window.location.href = 'index.html';
+      }).catch((error) => {
+        alert("Failed to log out: " + error.message);
       });
     });
 
@@ -169,31 +137,31 @@
       const newFullname = prompt("Enter new full name:");
       const newUsername = prompt("Enter new username:");
       const newPhotoURL = prompt("Enter new profile photo URL:");
-      
+
       if (auth.currentUser) {
-        if (newFullname) {
-          await updateProfile(auth.currentUser, { displayName: newFullname });
-        }
-        if (newUsername) {
-          await updateProfile(auth.currentUser, { displayName: newUsername });
-        }
-        if (newPhotoURL) {
-          await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
-          document.getElementById('profile-photo').src = newPhotoURL;
-        }
-
         const userRef = doc(db, "users", auth.currentUser.uid);
-        await updateDoc(userRef, {
-          fullname: newFullname || auth.currentUser.displayName,
-          username: newUsername || auth.currentUser.displayName,
-          photoURL: newPhotoURL || auth.currentUser.photoURL
-        });
 
-        alert("Profile updated successfully!");
-        location.reload();
+        try {
+          if (newFullname) {
+            await updateDoc(userRef, { fullname: newFullname });
+          }
+          if (newUsername) {
+            await updateDoc(userRef, { username: newUsername });
+            await updateProfile(auth.currentUser, { displayName: newUsername });
+          }
+          if (newPhotoURL) {
+            await updateDoc(userRef, { photoURL: newPhotoURL });
+            await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
+            document.getElementById('profile-photo').src = newPhotoURL;
+          }
+
+          alert("Profile updated successfully!");
+          location.reload();
+        } catch (error) {
+          alert("Failed to update profile: " + error.message);
+        }
       }
     });
   </script>
 </body>
 </html>
- 
