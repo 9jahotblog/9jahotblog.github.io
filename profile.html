@@ -49,6 +49,7 @@
                     <p>Email: <span id="profile-email"></span></p>
                     <p>Date of Birth: <span id="profile-dob"></span></p>
                     <p>Country: <span id="profile-country"></span></p>
+                    <button id="logout-button" class="button primary">Logout</button>
                 </header>
 
                 <!-- Text -->
@@ -73,7 +74,6 @@
                 <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
             </ul>
         </footer>
-
     </div>
 
     <!-- Scripts -->
@@ -88,7 +88,7 @@
 
     <!-- Firebase Integration -->
     <script type="module">
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
         
         const auth = getAuth();
@@ -113,6 +113,14 @@
                 window.location.href = 'index.html';
             }
         });
+
+        document.getElementById('logout-button').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Error signing out:', error);
+            });
+        });
     </script>
 </body>
-        </html>
+</html>
