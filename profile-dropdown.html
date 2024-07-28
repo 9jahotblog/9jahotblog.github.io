@@ -48,7 +48,7 @@
 
     document.getElementById('dropdown-logout-button').addEventListener('click', () => {
         signOut(auth).then(() => {
-            window.location.href = 'index.html';
+            window.location.href = 'login-page.html';
         }).catch((error) => {
             console.error('Error signing out:', error);
         });
