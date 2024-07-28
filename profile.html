@@ -120,7 +120,7 @@
     // Check if user is signed in and display their info
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById('signup-fullname').textContent = user.displayName || 'User';
+        document.getElementById('signup-fullname').textContent = user.displayName || 'signup-fullname';
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
         if (user.photoURL) {
