@@ -84,31 +84,6 @@
         window.location.href = 'login-page.html';
       });
     });
-    <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-    authDomain: "jahotblog-login.firebaseapp.com",
-    projectId: "jahotblog-login",
-    storageBucket: "jahotblog-login.appspot.com",
-    messagingSenderId: "661526730601",
-    appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // Check if user is signed in and display their name
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      document.getElementById('user-info').textContent = `Welcome, ${user.displayName || 'User'}!`;
-    } else {
-      document.getElementById('user-info').textContent = 'You are not logged in.';
-    }
-  });
-</script> 
   </script>
 </body>
 </html>
