@@ -29,7 +29,7 @@
       margin-bottom: 20px;
     }
     .auth-container form {
-      display: flex;
+      display: none; /* Hide forms initially */
       flex-direction: column;
     }
     .auth-container input {
@@ -175,9 +175,9 @@
     // Login Form Submission
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      const username = document.getElementById('login-username').value;
+      const email = document.getElementById('login-username').value;
       const password = document.getElementById('login-password').value;
-      signInWithEmailAndPassword(auth, username, password)
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           if (userCredential.user.emailVerified) {
             document.getElementById('status').innerText = 'Login successful!';
@@ -224,11 +224,12 @@
         })
         .catch((error) => {
           document.getElementById('status').innerText = `Error: ${error.message}`;
+          .catch((error) => {
+          document.getElementById('status').innerText = `Error: ${error.message}`;
         });
     });
 
     // Forgot Password
-    document.getElementById('forgot-password').addEventListener('click', function ()
     document.getElementById('forgot-password').addEventListener('click', function () {
       const email = prompt('Please enter your email address:');
       if (email) {
@@ -264,6 +265,15 @@
         });
     });
 
+    // Show the appropriate form based on user selection
+    function showForm(formId) {
+      document.getElementById('signup-form').style.display = 'none';
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById(formId).style.display = 'flex';
+    }
+
+    // Initialize to show login form by default
+    showForm('login-form');
   </script>
 </body>
 </html>
