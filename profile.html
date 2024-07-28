@@ -58,7 +58,7 @@
 
   <div class="profile-container">
   <div style="text-align: center;">
-    <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="border-radius: 80%; width: 100px; height: 100px;" />
+    <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="border-radius: 100%; width: 100px; height: 100px;" />
   </div>
   <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
   <p>Email: <span id="user-email"></span></p>
@@ -134,7 +134,7 @@
     // Logout function
     document.getElementById('logout').addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'login-page.html';
       });
     });
 
