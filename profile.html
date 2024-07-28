@@ -6,6 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
@@ -43,11 +52,12 @@
         <div id="main" class="wrapper style1">
             <div class="container">
                 <header class="major">
+                    <img src="https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg" alt="Profile Photo" class="profile-photo" />
                     <h1>Welcome to your profile</h1>
-                    <p>Name: <span id="profile-name"></span></p>
+                    <p>Name: <span id="profile-fullName"></span></p>
                     <p>Username: <span id="profile-username"></span></p>
                     <p>Email: <span id="profile-email"></span></p>
-                    <p>Date of Birth: <span id="profile-dob"></span></p>
+                    <p>Date of Birth: <span id="profile-dateOfBirth"></span></p>
                     <p>Country: <span id="profile-country"></span></p>
                     <button id="logout-button" class="button primary">Logout</button>
                 </header>
@@ -101,10 +111,10 @@
                     const userDoc = await getDoc(userRef);
                     if (userDoc.exists()) {
                         const userData = userDoc.data();
-                        document.getElementById('profile-name').innerText = userData.fullName || 'N/A';
+                        document.getElementById('profile-fullName').innerText = userData.fullName || 'N/A';
                         document.getElementById('profile-username').innerText = userData.username || 'N/A';
                         document.getElementById('profile-email').innerText = user.email || 'N/A';
-                        document.getElementById('profile-dob').innerText = userData.dateOfBirth || 'N/A';
+                        document.getElementById('profile-dateOfBirth').innerText = userData.dateOfBirth || 'N/A';
                         document.getElementById('profile-country').innerText = userData.country || 'N/A';
                     } else {
                         console.error('No such document!');
@@ -126,4 +136,4 @@
         });
     </script>
 </body>
-                    </html>
+</html>
