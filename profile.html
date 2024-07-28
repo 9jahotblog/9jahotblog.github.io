@@ -163,24 +163,25 @@
       const newCountry = prompt("Enter new country:");
 
       if (auth.currentUser) {
+        const userRef = doc(db, "users", auth.currentUser.uid);
+
         if (newFullname) {
-          await updateProfile(auth.currentUser, { displayName: newUsername });
-          await updateDoc(doc(db, "users", auth.currentUser.uid), { fullname: newFullname });
+          await updateDoc(userRef, { fullname: newFullname });
         }
         if (newUsername) {
+          await updateDoc(userRef, { username: newUsername });
           await updateProfile(auth.currentUser, { displayName: newUsername });
-          await updateDoc(doc(db, "users", auth.currentUser.uid), { username: newUsername });
         }
         if (newPhotoURL) {
+          await updateDoc(userRef, { photoURL: newPhotoURL });
           await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
           document.getElementById('profile-photo').src = newPhotoURL;
-          await updateDoc(doc(db, "users", auth.currentUser.uid), { photoURL: newPhotoURL });
         }
         if (newBirthday) {
-          await updateDoc(doc(db, "users", auth.currentUser.uid), { birthday: newBirthday });
+          await updateDoc(userRef, { birthday: newBirthday });
         }
         if (newCountry) {
-          await updateDoc(doc(db, "users", auth.currentUser.uid), { country: newCountry });
+          await updateDoc(userRef, { country: newCountry });
         }
 
         alert("Profile updated successfully!");
