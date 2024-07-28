@@ -6,131 +6,224 @@
     <title>My 9jahotblog Storybooks Profile</title>
     <link rel="stylesheet" href="assets/css/main.css" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
         .profile-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
             background: #fff;
-            border-radius: 8px;
+            border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         .profile-header {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
         }
         .profile-header img {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
         }
         .profile-header h1 {
+            margin: 10px 0;
             font-size: 24px;
             color: #333;
         }
         .profile-info {
+            text-align: left;
             margin-top: 20px;
         }
         .profile-info p {
-            font-size: 16px;
+            font-size: 18px;
             color: #555;
         }
         .profile-menu {
             margin-top: 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
         }
         .profile-menu a {
             text-decoration: none;
             color: #0288d1;
-            font-size: 14px;
+            font-size: 16px;
         }
         .logout-button {
             display: block;
             margin: 20px 0;
-            padding: 12px;
+            padding: 10px;
             background-color: #d32f2f;
             color: #fff;
-            text-align: center;
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
         }
         .logout-button:hover {
             background-color: #c62828;
         }
+        .edit-button {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #0288d1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .edit-button:hover {
+            background-color: #0277bd;
+        }
     </style>
 </head>
-<body>
-    <div class="profile-container">
-        <div class="profile-header">
-            <img id="profile-pic" src="https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg" alt="Profile Picture">
-            <h1>Welcome, <span id="profile-name">User</span>!</h1>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Entertainment</a>
+                        <ul>
+                            <li><a href="#">Articles</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Discussions</a></li>
+                            <li>
+                                <a href="#">Novels</a>
+                                <ul>
+                                    <li><a href="#">Fiction</a></li>
+                                    <li><a href="#">Non-fiction</a></li>
+                                    <li><a href="#">Allegory</a></li>
+                                    <li><a href="#">Romance</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Books</a></li>
+                    <li><a href="#" class="button primary">Sign up</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <img id="profile-pic" src="https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg" alt="Profile Picture">
+                        <h1>Welcome, <span id="profile-name">User</span>!</h1>
+                        <button class="edit-button" id="edit-profile-button">Edit Profile</button>
+                    </div>
+                    <div class="profile-info">
+                        <p><strong>Full Name:</strong> <span id="profile-fullname">Full Name</span></p>
+                        <p><strong>Username:</strong> <span id="profile-username">Username</span></p>
+                        <p><strong>Email:</strong> <span id="profile-email">Email</span></p>
+                        <p><strong>Birthday:</strong> <span id="profile-birthday">Birthday</span></p>
+                        <p><strong>Country:</strong> <span id="profile-country">Country</span></p>
+                    </div>
+                    <div class="profile-menu">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                        <a href="#">Link 4</a>
+                    </div>
+                    <button class="logout-button" id="logout-button">Logout</button>
+                </div>
+            </div>
         </div>
-        <div class="profile-info">
-            <p><strong>Full Name:</strong> <span id="profile-fullname">Full Name</span></p>
-            <p><strong>Username:</strong> <span id="profile-username">Username</span></p>
-            <p><strong>Email:</strong> <span id="profile-email">Email</span></p>
-            <p><strong>Birthday:</strong> <span id="profile-birthday">Birthday</span></p>
-            <p><strong>Country:</strong> <span id="profile-country">Country</span></p>
-        </div>
-        <div class="profile-menu">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-            <a href="#">Link 4</a>
-        </div>
-        <button class="logout-button" id="logout-button">Logout</button>
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
+        </footer>
     </div>
-
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
+    apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+    authDomain: "jahotblog-login.firebaseapp.com",
+    projectId: "jahotblog-login",
+    storageBucket: "jahotblog-login.appspot.com",
+    messagingSenderId: "661526730601",
+    appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+};
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const userRef = doc(db, "users", user.uid);
-                getDoc(userRef).then((doc) => {
-                    if (doc.exists()) {
-                        const userData = doc.data();
-                        document.getElementById("profile-name").innerText = userData.username || user.displayName;
-                        document.getElementById("profile-fullname").innerText = userData.fullname;
-                        document.getElementById("profile-username").innerText = userData.username;
-                        document.getElementById("profile-email").innerText = user.email;
-                        document.getElementById("profile-birthday").innerText = userData.birthday;
-                        document.getElementById("profile-country").innerText = userData.country;
-                    }
-                });
-            } else {
-                window.location.href = "index.html";
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userRef = doc(db, "users", user.uid);
+        getDoc(userRef).then((doc) => {
+            if (doc.exists()) {
+                const userData = doc.data();
+                document.getElementById("profile-name").innerText = userData.username || user.displayName;
+                document.getElementById("profile-fullname").innerText = userData.fullname;
+                document.getElementById("profile-username").innerText = userData.username;
+                document.getElementById("profile-email").innerText = user.email;
+                document.getElementById("profile-birthday").innerText = userData.birthday;
+                document.getElementById("profile-country").innerText = userData.country;
             }
         });
+    } else {
+        window.location.href = "index.html";
+    }
+});
 
-        document.getElementById("logout-button").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            });
+document.getElementById("logout-button").addEventListener("click", () => {
+    signOut(auth).then(() => {
+        window.location.href = "index.html";
+    }).catch((error) => {
+        console.error("Error signing out: ", error);
+    });
+});
+
+// Edit Profile
+document.getElementById("edit-profile-button").addEventListener("click", () => {
+    const newFullname = prompt("Enter new full name:");
+    const newUsername = prompt("Enter new username:");
+    const newBirthday = prompt("Enter new birthday (YYYY-MM-DD):");
+    const newCountry = prompt("Enter new country:");
+    
+    if (auth.currentUser) {
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        updateDoc(userRef, {
+            fullname: newFullname,
+            username: newUsername,
+            birthday: newBirthday,
+            country: newCountry
+        }).then(() => {
+            alert("Profile updated successfully!");
+            location.reload();
+        }).catch((error) => {
+            console.error("Error updating profile: ", error);
         });
-    </script>
+    }
+});
+</script>
 </body>
 </html>
