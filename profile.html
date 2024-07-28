@@ -120,6 +120,7 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         document.getElementById('Full Name').textContent = user.displayName || 'Full Name';
+	document.getElementById('user-name').textContent = user.displayName || 'User';
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
         if (user.photoURL) {
