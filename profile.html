@@ -1,188 +1,74 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>My 9jahotblog Storybooks Profile</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        .profile-photo {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        #logout-button {
-            display: block;
-            margin: 20px 0;
-            padding: 10px;
-            background: #ff6347;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #edit-profile-button {
-            display: block;
-            margin: 10px 0;
-            padding: 10px;
-            background: #0288d1;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      padding: 20px;
+    }
+    .profile-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-container h1 {
+      margin-top: 0;
+    }
+    .profile-container img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
+<body>
+  <div class="profile-container">
+    <img src="#" alt="Profile Picture" />
+    <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
+    <p>Email: <span id="user-email"></span></p>
+    <p>Username: <span id="user-username"></span></p>
+    <button id="logout">Logout</button>
+  </div>
 
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#" class="button primary">Sign up</a></li>
-                </ul>
-            </nav>
-        </header>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-        <!-- Main -->
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <header class="major">
-                    <h1>Welcome to your profile</h1>
-                    <div>
-                        <img id="profile-photo" class="profile-photo" src="https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg" alt="Profile Photo" />
-                    </div>
-                    <p>Name: <span id="profile-fullname"></span></p>
-                    <p>Username: <span id="profile-username"></span></p>
-                    <p>Email: <span id="profile-email"></span></p>
-                    <p>Birthday: <span id="profile-birthday"></span></p>
-                    <p>Country: <span id="profile-country"></span></p>
-                    <button id="edit-profile-button">Edit Profile</button>
-                    <button id="logout-button">Logout</button>
-                </header>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+      authDomain: "jahotblog-login.firebaseapp.com",
+      projectId: "jahotblog-login",
+      storageBucket: "jahotblog-login.appspot.com",
+      messagingSenderId: "661526730601",
+      appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+    };
 
-                <!-- Text -->
-                <section>
-                    <div class="col-12"><span class="image fit"><img src="https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg" alt="image1" /></span></div>
-                    <h1>How to use 9jahotblog...</h1>
-                    <hr />
-                </section>
-            </div>
-        </div>
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li>
-                <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
-    </div>
+    // Check if user is signed in and display their info
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('user-name').textContent = user.displayName || 'User';
+        document.getElementById('user-email').textContent = user.email;
+        document.getElementById('user-username').textContent = user.displayName || 'Username';
+      } else {
+        window.location.href = 'index.html';
+      }
+    });
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const userRef = doc(db, "users", user.uid);
-                getDoc(userRef).then((doc) => {
-                    if (doc.exists()) {
-                        const userData = doc.data();
-                        document.getElementById("profile-fullname").innerText = userData.fullname || "";
-                        document.getElementById("profile-username").innerText = userData.username || user.displayName;
-                        document.getElementById("profile-email").innerText = user.email || "";
-                        document.getElementById("profile-birthday").innerText = userData.birthday || "";
-                        document.getElementById("profile-country").innerText = userData.country || "";
-                    }
-                });
-            } else {
-                window.location.href = login-page.html";
-            }
-        });
-
-        document.getElementById("logout-button").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
-        });
-
-        document.getElementById("edit-profile-button").addEventListener("click", () => {
-            const newFullname = prompt("Enter new full name:");
-            const newUsername = prompt("Enter new username:");
-            const newBirthday = prompt("Enter new birthday (YYYY-MM-DD):");
-            const newCountry = prompt("Enter new country:");
-
-            if (auth.currentUser) {
-                const userRef = doc(db, "users", auth.currentUser.uid);
-                updateDoc(userRef, {
-                    fullname: newFullname,
-                    username: newUsername,
-                    birthday: newBirthday,
-                    country: newCountry
-                }).then(() => {
-                    alert("Profile updated successfully!");
-                    location.reload();
-                }).catch((error) => {
-                    console.error("Error updating profile: ", error);
-                });
-            }
-        });
-    </script>
+    // Logout function
+    document.getElementById('logout').addEventListener('click', () => {
+      signOut(auth).then(() => {
+        window.location.href = 'index.html';
+      });
+    });
+  </script>
 </body>
 </html>
