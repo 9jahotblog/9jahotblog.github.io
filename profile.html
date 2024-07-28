@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +17,7 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       max-width: 600px;
       margin: auto;
+      position: relative;
     }
     .profile-container h1 {
       margin-top: 0;
@@ -33,18 +33,28 @@
       list-style-type: none;
       padding: 0;
       margin: 0;
-      display: flex;
-      justify-content: space-between;
+      display: none;
+      position: absolute;
+      top: 20px;
+      right: 20px;
       background-color: #333;
-      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
     .menu-bar li {
-      display: inline;
       padding: 10px;
     }
     .menu-bar a {
       color: white;
       text-decoration: none;
+    }
+    .menu-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #333;
     }
     #logout {
       background-color: #ff6347;
@@ -65,29 +75,53 @@
       margin-top: 20px;
       margin-right: 10px;
     }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <ul class="menu-bar">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="news.html">News</a></li>
-    <li><a href="books.html">Books</a></li>
-    <li><a href="contact.html">Contact</a></li>
-    <li><a href="#" id="logout">Logout</a></li>
-  </ul>
   <div class="profile-container">
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <ul class="menu-bar" id="menu-bar">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="news.html">News</a></li>
+      <li><a href="books.html">Books</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="#" id="logout">Logout</a></li>
+    </ul>
     <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
     <p>Email: <span id="user-email"></span></p>
     <p>Username: <span id="user-username"></span></p>
+    <p>Full Name: <span id="user-fullname"></span></p>
+    <p>Birthday: <span id="user-birthday"></span></p>
+    <p>Country: <span id="user-country"></span></p>
     <button id="edit-profile">Edit Profile</button>
     <button id="logout">Logout</button>
+  </div>
+
+  <div id="edit-profile-modal" class="hidden">
+    <div class="profile-container">
+      <h2>Edit Profile</h2>
+      <label for="edit-fullname">Full Name:</label>
+      <input type="text" id="edit-fullname" />
+      <label for="edit-username">Username:</label>
+      <input type="text" id="edit-username" />
+      <label for="edit-photo-url">Profile Photo URL:</label>
+      <input type="text" id="edit-photo-url" />
+      <label for="edit-photo-file">Or Upload Photo:</label>
+      <input type="file" id="edit-photo-file" />
+      <button id="save-profile">Save</button>
+      <button id="cancel-edit">Cancel</button>
+    </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
     import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -101,13 +135,26 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuBar = document.getElementById('menu-bar');
+    menuToggle.addEventListener('click', () => {
+      menuBar.classList.toggle('hidden');
+    });
 
     // Check if user is signed in and display their info
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userData = userDoc.data();
+
         document.getElementById('user-name').textContent = user.displayName || 'User';
         document.getElementById('user-email').textContent = user.email;
-        document.getElementById('user-username').textContent = user.displayName || 'Username';
+        document.getElementById('user-username').textContent = userData.username || 'Username';
+        document.getElementById('user-fullname').textContent = userData.fullname || 'Full Name';
+        document.getElementById('user-birthday').textContent = userData.birthday || 'Birthday';
+        document.getElementById('user-country').textContent = userData.country || 'Country';
         if (user.photoURL) {
           document.getElementById('profile-photo').src = user.photoURL;
         }
@@ -124,11 +171,28 @@
     });
 
     // Edit profile function
-    document.getElementById('edit-profile').addEventListener('click', async () => {
-      const newFullname = prompt("Enter new full name:");
-      const newUsername = prompt("Enter new username:");
-      const newPhotoURL = prompt("Enter new profile photo URL:");
+    document.getElementById('edit-profile').addEventListener('click', () => {
+      document.getElementById('edit-profile-modal').classList.remove('hidden');
+    });
+
+    document.getElementById('cancel-edit').addEventListener('click', () => {
+      document.getElementById('edit-profile-modal').classList.add('hidden');
+    });
+
+    document.getElementById('save-profile').addEventListener('click', async () => {
+      const newFullname = document.getElementById('edit-fullname').value;
+      const newUsername = document.getElementById('edit-username').value;
+      const newPhotoURL = document.getElementById('edit-photo-url').value;
+      const newPhotoFile = document.getElementById('edit-photo-file').files[0];
       
+      let photoURL = newPhotoURL;
+
+      if (newPhotoFile) {
+        const storageRef = ref(storage, `profile_photos/${auth.currentUser.uid}`);
+        await uploadBytes(storageRef, newPhotoFile);
+        photoURL = await getDownloadURL(storageRef);
+      }
+
       if (auth.currentUser) {
         if (newFullname) {
           await updateProfile(auth.currentUser, { displayName: newFullname });
@@ -136,20 +200,22 @@
         if (newUsername) {
           await updateProfile(auth.currentUser, { displayName: newUsername });
         }
-        if (newPhotoURL) {
-          await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
-          document.getElementById('profile-photo').src = newPhotoURL;
+        if (photoURL) {
+          await updateProfile(auth.currentUser, { photoURL: photoURL });
+          document.getElementById('profile-photo').src = photoURL;
         }
 
         const userRef = doc(db, "users", auth.currentUser.uid);
         await updateDoc(userRef, {
           fullname: newFullname || auth.currentUser.displayName,
           username: newUsername || auth.currentUser.displayName,
-          photoURL: newPhotoURL || auth.currentUser.photoURL
+          photoURL: photoURL || auth.currentUser.photoURL,
         });
 
-        alert("Profile updated successfully!");
-        location.reload();
+        document.getElementById('user-fullname').textContent = newFullname || auth.currentUser.displayName;
+        document.getElementById('user-username').textContent = newUsername || auth.currentUser.displayName;
+
+        document.getElementById('edit-profile-modal').classList.add('hidden');
       }
     });
   </script>
