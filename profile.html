@@ -64,10 +64,30 @@
       margin-top: 20px;
       margin-right: 10px;
     }
+    #menu-toggle {
+      display: none;
+    }
+    .menu-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .menu-bar li {
+      display: none;
+    }
+    #menu-toggle:checked + .menu-bar li {
+      display: block;
+    }
+    .menu-bar li a {
+      padding: 10px 0;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
+  <input type="checkbox" id="menu-toggle">
   <ul class="menu-bar">
+    <label for="menu-toggle">☰ Menu</label>
     <li><a href="index.html">Home</a></li>
     <li><a href="news.html">News</a></li>
     <li><a href="books.html">Books</a></li>
@@ -79,6 +99,9 @@
     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
     <p>Email: <span id="user-email"></span></p>
     <p>Username: <span id="user-username"></span></p>
+    <p>Full Name: <span id="user-fullname"></span></p>
+    <p>Birthday: <span id="user-birthday"></span></p>
+    <p>Country: <span id="user-country"></span></p>
     <button id="edit-profile">Edit Profile</button>
     <button id="logout">Logout</button>
   </div>
@@ -102,13 +125,22 @@
     const db = getFirestore(app);
 
     // Check if user is signed in and display their info
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        document.getElementById('user-name').textContent = user.displayName || 'User';
-        document.getElementById('user-email').textContent = user.email;
-        document.getElementById('user-username').textContent = user.displayName || 'Username';
-        if (user.photoURL) {
-          document.getElementById('profile-photo').src = user.photoURL;
+        const userRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          document.getElementById('user-name').textContent = userData.username || 'User';
+          document.getElementById('user-email').textContent = user.email;
+          document.getElementById('user-username').textContent = userData.username || 'Username';
+          document.getElementById('user-fullname').textContent = userData.fullname || 'Full Name';
+          document.getElementById('user-birthday').textContent = userData.birthday || 'Birthday';
+          document.getElementById('user-country').textContent = userData.country || 'Country';
+          if (user.photoURL) {
+            document.getElementById('profile-photo').src = user.photoURL;
+          }
         }
       } else {
         window.location.href = 'index.html';
@@ -127,25 +159,29 @@
       const newFullname = prompt("Enter new full name:");
       const newUsername = prompt("Enter new username:");
       const newPhotoURL = prompt("Enter new profile photo URL:");
-      
+      const newBirthday = prompt("Enter new birthday:");
+      const newCountry = prompt("Enter new country:");
+
       if (auth.currentUser) {
         if (newFullname) {
-          await updateProfile(auth.currentUser, { displayName: newFullname });
+          await updateProfile(auth.currentUser, { displayName: newUsername });
+          await updateDoc(doc(db, "users", auth.currentUser.uid), { fullname: newFullname });
         }
         if (newUsername) {
           await updateProfile(auth.currentUser, { displayName: newUsername });
+          await updateDoc(doc(db, "users", auth.currentUser.uid), { username: newUsername });
         }
         if (newPhotoURL) {
           await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
           document.getElementById('profile-photo').src = newPhotoURL;
+          await updateDoc(doc(db, "users", auth.currentUser.uid), { photoURL: newPhotoURL });
         }
-
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        await updateDoc(userRef, {
-          fullname: newFullname || auth.currentUser.displayName,
-          username: newUsername || auth.currentUser.displayName,
-          photoURL: newPhotoURL || auth.currentUser.photoURL
-        });
+        if (newBirthday) {
+          await updateDoc(doc(db, "users", auth.currentUser.uid), { birthday: newBirthday });
+        }
+        if (newCountry) {
+          await updateDoc(doc(db, "users", auth.currentUser.uid), { country: newCountry });
+        }
 
         alert("Profile updated successfully!");
         location.reload();
