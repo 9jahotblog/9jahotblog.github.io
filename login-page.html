@@ -11,70 +11,78 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-color: #f0f0f0;
+      background-color: #f9f9f9;
       margin: 0;
     }
     .auth-container {
       background: #fff;
       padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 350px;
       text-align: center;
     }
     .auth-container img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       margin-bottom: 20px;
+    }
+    .auth-container h2 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      color: #333;
     }
     .auth-container form {
       display: flex;
       flex-direction: column;
     }
-    .auth-container input {
+    .auth-container input, .auth-container select {
       margin-bottom: 10px;
-      padding: 8px;
+      padding: 12px;
       font-size: 14px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 8px;
     }
     .auth-container button {
-      padding: 10px;
+      padding: 12px;
       background-color: #0288d1;
       color: #fff;
       border: none;
-      border-radius: 4px;
+      border-radius: 8px;
       cursor: pointer;
-      margin-bottom: 10px;
+      font-size: 16px;
     }
     .auth-container button:hover {
       background-color: #0277bd;
     }
+    .auth-container .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: calc(50% - 10px);
+      cursor: pointer;
+    }
     .auth-container .password-container {
       position: relative;
     }
-    .auth-container .password-container input {
-      width: calc(100% - 40px);
-    }
-    .auth-container .password-container .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
+    .auth-container .login-toggle {
       cursor: pointer;
+      color: #0288d1;
+      margin-top: 20px;
+      font-size: 14px;
     }
-    #recaptcha-container {
-      margin-bottom: 10px;
+    .auth-container .login-toggle:hover {
+      text-decoration: underline;
+    }
+    .auth-container .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="auth-container">
-    <!-- Circular Photo Placeholder -->
     <img src="https://i.postimg.cc/y8ndfNxb/IMG-20240720-172101-879.jpg" alt="logo" />
-
-    <!-- Sign-Up Form -->
+    <h2>Create an Account</h2>
     <form id="signup-form">
       <input type="text" id="signup-username" placeholder="Username" required />
       <input type="text" id="signup-fullname" placeholder="Full Name" required />
@@ -83,33 +91,40 @@
         <input type="password" id="signup-password" placeholder="Password" required />
         <span class="toggle-password">👁️</span>
       </div>
-      <input type="text" id="signup-country" placeholder="Country" required />
-      <input type="tel" id="signup-phone" placeholder="Phone Number" required />
-      <div id="recaptcha-container"></div>
-      <button id="verify-phone" type="button">Verify Phone Number</button>
-      <div id="phone-status"></div>
+      <div class="password-container">
+        <input type="password" id="signup-password-confirm" placeholder="Confirm Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
+      <input type="date" id="signup-birthday" placeholder="Birthday" required />
+      <select id="signup-country" required>
+        <option value="">Select Country</option>
+        <!-- Add options for countries here -->
+        <option value="Nigeria">Nigeria</option>
+        <option value="United States">United States</option>
+        <!-- Add other countries as needed -->
+      </select>
+      <label>
+        <input type="checkbox" id="two-step-verification" /> Enable Two-Step Verification
+      </label>
       <button type="submit">Sign Up</button>
     </form>
-
-    <!-- Login Form -->
-    <form id="login-form">
-      <input type="text" id="login-username" placeholder="Username" required />
+    <div class="login-toggle">Already have an account? Log in.</div>
+    <form id="login-form" class="hidden">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" required />
       <div class="password-container">
         <input type="password" id="login-password" placeholder="Password" required />
         <span class="toggle-password">👁️</span>
       </div>
       <button type="submit">Login</button>
+      <div id="forgot-password">Forgot Password?</div>
     </form>
-
-    <!-- Forgot Password -->
-    <button id="forgot-password">Forgot Password</button>
-
     <div id="status"></div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -131,9 +146,11 @@
       });
     });
 
-    function redirectToProfile() {
-      window.location.href = 'profile.html';
-    }
+    // Show Login Form
+    document.querySelector('.login-toggle').addEventListener('click', function () {
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('login-form').classList.remove('hidden');
+    });
 
     // Sign Up Form Submission
     document.getElementById('signup-form').addEventListener('submit', function (e) {
@@ -142,6 +159,7 @@
       const password = document.getElementById('signup-password').value;
       const username = document.getElementById('signup-username').value;
       const fullname = document.getElementById('signup-fullname').value;
+      const twoStepVerification = document.getElementById('two-step-verification').checked;
 
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -149,7 +167,10 @@
           updateProfile(userCredential.user, {
             displayName: username
           });
-          document.getElementById('status').innerText = 'Sign-up successful! Verification email sent.';
+          document.getElementById('status').innerText = 'Sign-up successful! Verification email sent. Please verify your email before logging in.';
+          if (twoStepVerification) {
+            // Add your two-step verification setup here
+          }
         })
         .catch((error) => {
           document.getElementById('status').innerText = `Error: ${error.message}`;
@@ -159,14 +180,14 @@
     // Login Form Submission
     document.getElementById('login-form').addEventListener('submit', function (e) {
       e.preventDefault();
-      const username = document.getElementById('login-username').value;
+      const email = document.getElementById('login-email').value;
       const password = document.getElementById('login-password').value;
-
-      signInWithEmailAndPassword(auth, username, password)
+      
+      signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           if (userCredential.user.emailVerified) {
             document.getElementById('status').innerText = 'Login successful!';
-            setTimeout(redirectToProfile, 2000);
+            setTimeout(() => window.location.href = 'profile.html', 2000);
           } else {
             document.getElementById('status').innerText = 'Please verify your email before logging in.';
           }
@@ -189,29 +210,6 @@
           });
       }
     });
-
-    // Phone Number Verification
-    const phoneInput = document.getElementById('signup-phone');
-    const verifyPhoneButton = document.getElementById('verify-phone');
-    const phoneStatus = document.getElementById('phone-status');
-
-    verifyPhoneButton.addEventListener('click', function () {
-      const phoneNumber = phoneInput.value;
-      const appVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
-
-      signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-          const code = prompt('Enter the verification code you received via SMS');
-          confirmationResult.confirm(code).then((result) => {
-            phoneStatus.innerText = 'Phone number verified!';
-          }).catch((error) => {
-            phoneStatus.innerText = `Error: ${error.message}`;
-          });
-        }).catch((error) => {
-          phoneStatus.innerText = `Error: ${error.message}`;
-        });
-    });
-
   </script>
 </body>
 </html>
