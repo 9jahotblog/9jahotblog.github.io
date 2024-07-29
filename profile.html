@@ -121,7 +121,6 @@
     // Check if user is signed in and display their info
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        document.getElementById('birthday').textContent = user.displaybirthday || 'birthday';
 	document.getElementById('user-name').textContent = user.displayFullName || 'User';
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
@@ -136,7 +135,7 @@
     // Logout function
     document.getElementById('logout').addEventListener('click', () => {
       signOut(auth).then(() => {
-        window.location.href = 'index.html';
+        window.location.href = 'login-page.html';
       });
     });
 
