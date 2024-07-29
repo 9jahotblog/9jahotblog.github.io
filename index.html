@@ -78,6 +78,21 @@
 </body>
 </html>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const nav = document.getElementById('nav');
+        const menuItems = nav.querySelectorAll('li');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const subMenu = item.querySelector('ul');
+                if (subMenu) {
+                    subMenu.classList.toggle('show');
+                }
+            });
+        });
+    });
+			  </script>
 	    
 			<!-- Banner -->
 	                   
