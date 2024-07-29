@@ -208,9 +208,17 @@
   });
 </script>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Submission</title>
+</head>
+<body>
 
 <!-- Modify this form HTML and place wherever you want your form -->
-<form id="form" action="https://formspree.io/f/myzgeagq" method="POST">
+<form id="form">
   <label>
     Name of user:
     <input type="text" name="name" required>
@@ -243,19 +251,19 @@
     btn.textContent = 'Sending...';
 
     const serviceID = 'default_service';
-    const templateID = 'template_kyb8t4j';  // Replace with your actual template ID
+    const templateID = 'template_kyb8t4j';  // Replace with your thank-you email template ID
 
-    emailjs.sendForm(serviceID, templateID, this)
+    // Prepare the parameters for the thank-you email
+    const params = {
+      to_name: this.name.value,
+      to_email: this.email.value,
+      user_message: this.message.value
+    };
+
+    emailjs.send(serviceID, templateID, params)
       .then(() => {
         btn.textContent = 'Send Email';
-        alert('Sent!');
-
-        // Optional: Send a thank-you email to the user
-        const userTemplateID = 'template_kyb8t4j';  // Replace with your thank-you email template ID
-        emailjs.send(serviceID, userTemplateID, {
-          to_name: document.querySelector('input[name="name"]').value,
-          to_email: document.querySelector('input[name="email"]').value
-        });
+        alert('Thank you! Your submission has been received.');
       }, (err) => {
         btn.textContent = 'Send Email';
         alert(JSON.stringify(err));
@@ -266,6 +274,8 @@
 </body>
 </html>
 
+
+						
           </div>
         </div>
 
