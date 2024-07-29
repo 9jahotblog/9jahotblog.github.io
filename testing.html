@@ -1,11 +1,24 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>My 9jahotblog Profile</title>
+    <title>My 9jahotblog</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            right: 10px;
+            top: 10px;
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+    </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
@@ -38,23 +51,6 @@
             </nav>
         </header>
 
-        <!-- Profile Section -->
-        <section>
-            <div class="profile-container" style="text-align: center; background-color: #111111; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: auto;">
-                <div style="text-align: center;">
-                    <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="border-radius: 50%; width: 80px; height: 80px;" />
-                </div>
-                <p>Email: <span id="user-email"></span></p>
-                <p>Username: <span id="user-username"></span></p>
-                <p>Earnings: ₦0.00</p>
-                <p>Short Stories/Articles: N/A</p>
-                <p>Books: N/A</p>
-                <button id="edit-profile">Edit Profile</button>
-                <a href="login-page.html"><button id="logout">Logout</button></a>
-            </div>
-            <hr />
-        </section>
-        
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
@@ -62,6 +58,11 @@
             </div>
         </div>
 
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+        
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
@@ -86,7 +87,31 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <script type="module" src="profile.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
-  
