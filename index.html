@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" />
     <style>
         /* Additional styling for profile in menu */
         #profile-section {
@@ -31,6 +31,33 @@
             border: none;
             padding: 5px 10px;
             cursor: pointer;
+        }
+        #nav ul {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        #nav ul li {
+            margin-bottom: 5px;
+        }
+        #menu-toggle {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            #menu-toggle {
+                display: block;
+                cursor: pointer;
+            }
+            #nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: #333;
+                width: 100%;
+            }
+            #nav ul.active {
+                display: flex;
+            }
         }
     </style>
 </head>
@@ -60,19 +87,74 @@
                         </ul>
                     </li>
                     <li><a href="#">Books</a></li>
+                    <li><a href="#" class="button primary">Sign up</a></li>
                     <li id="profile-section">
                         <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" />
                         <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
                         <button id="logout-sidebar">Logout</button>
-			<!-- Toggle Button -->
-                        <button id="menu-toggle">☰ Menu</button>
-
                     </li>
-                    <li><a href="#" class="button primary">Sign up</a></li>
                 </ul>
+                <!-- Toggle Button -->
+                <button id="menu-toggle">☰ Menu</button>
             </nav>
         </header>
+    </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
+
+    <!-- Firebase Initialization and Sidebar Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const nav = document.getElementById('nav');
+            const menuToggle = document.getElementById('menu-toggle');
+            const logoutButton = document.getElementById('logout-sidebar');
+            const profileSection = document.getElementById('profile-section');
+
+            // Toggle menu visibility
+            menuToggle.addEventListener('click', () => {
+                nav.querySelector('ul').classList.toggle('active');
+            });
+
+            // Check if user is signed in and display their info
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('user-name-sidebar').textContent = `You're logged in as ${user.displayName || 'User'}`;
+                    document.getElementById('user-username-sidebar').textContent = user.displayName || 'Username';
+                    if (user.photoURL) {
+                        document.getElementById('profile-photo-sidebar').src = user.photoURL;
+                    }
+                    profileSection.style.display = 'block';
+                } else {
+                    profileSection.style.display = 'none';
+                }
+            });
+
+            // Logout function
+            logoutButton.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'login-page.html';
+                });
+            });
+        });
+    </script>
+</body>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
