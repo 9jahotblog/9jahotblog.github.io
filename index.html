@@ -110,62 +110,6 @@
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const nav = document.getElementById('nav');
-            const menuToggle = document.getElementById('menu-toggle');
-            const logoutButton = document.getElementById('logout-sidebar');
-            const profileSection = document.getElementById('profile-section');
-
-            // Toggle menu visibility
-            menuToggle.addEventListener('click', () => {
-                nav.querySelector('ul').classList.toggle('active');
-            });
-
-            // Check if user is signed in and display their info
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    document.getElementById('user-name-sidebar').textContent = `You're logged in as ${user.displayName || 'User'}`;
-                    document.getElementById('user-username-sidebar').textContent = user.displayName || 'Username';
-                    if (user.photoURL) {
-                        document.getElementById('profile-photo-sidebar').src = user.photoURL;
-                    }
-                    profileSection.style.display = 'block';
-                } else {
-                    profileSection.style.display = 'none';
-                }
-            });
-
-            // Logout function
-            logoutButton.addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    window.location.href = 'login-page.html';
-                });
-            });
-        });
-    </script>
-</body>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
-
-    <!-- Firebase Initialization and Sidebar Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
             authDomain: "jahotblog-login.firebaseapp.com",
             projectId: "jahotblog-login",
