@@ -209,6 +209,62 @@
 </script>
 
 
+<!-- Modify this form HTML and place wherever you want your form -->
+<form id="form" action="https://formspree.io/f/myzgeagq" method="POST">
+  <label>
+    Name of user:
+    <input type="text" name="name" required>
+  </label>
+  <label>
+    Your email:
+    <input type="email" name="email" required>
+  </label>
+  <label>
+    Submission:
+    <textarea name="message" rows="10" required></textarea>
+  </label>
+  <button id="button" type="submit">Send</button>
+</form>
+
+<!-- Include EmailJS library -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("gh-NcjFG6tRf1cTA6");  // Replace with your actual public key
+  })();
+</script>
+
+<script>
+  const btn = document.getElementById('button');
+
+  document.getElementById('form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    btn.textContent = 'Sending...';
+
+    const serviceID = 'default_service';
+    const templateID = 'template_kyb8t4j';  // Replace with your actual template ID
+
+    emailjs.sendForm(serviceID, templateID, this)
+      .then(() => {
+        btn.textContent = 'Send Email';
+        alert('Sent!');
+
+        // Optional: Send a thank-you email to the user
+        const userTemplateID = 'template_kyb8t4j';  // Replace with your thank-you email template ID
+        emailjs.send(serviceID, userTemplateID, {
+          to_name: document.querySelector('input[name="name"]').value,
+          to_email: document.querySelector('input[name="email"]').value
+        });
+      }, (err) => {
+        btn.textContent = 'Send Email';
+        alert(JSON.stringify(err));
+      });
+  });
+</script>
+
+</body>
+</html>
 
           </div>
         </div>
