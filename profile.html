@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>User profile</title>
+		<title><span id="user-name"></span> profile</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -121,7 +121,7 @@
     // Check if user is signed in and display their info
     onAuthStateChanged(auth, (user) => {
       if (user) {
-	document.getElementById('user-name').textContent = user.displayFullName || 'User';
+	document.getElementById('user-name').textContent = user.displayName || 'User';
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-username').textContent = user.displayName || 'Username';
         if (user.photoURL) {
