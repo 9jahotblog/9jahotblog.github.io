@@ -159,9 +159,50 @@
   </label>
   <button type="submit">Publish Story</button>
 </form>
+		
+<script>
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Send form data to Formspree
+    fetch(this.action, {
+      method: this.method,
+      body: new FormData(this),
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        // Send a thank you email using EmailJS
+        emailjs.send("service_7ccf1fn", "template_wu3o4rc", {
+          user_name: this.querySelector('input[name="name"]').value,
+	  user_audience this.querySelector('input[name="audience"]').value,
+          user_email: this.querySelector('input[name="email"]').value
+        }).then(function(response) {
+          console.log('Thank you email sent!', response.status, response.text);
+        }, function(error) {
+          console.log('Failed to send thank you email.', error);
+        });
+
+        alert("Thank you for your submission!");
+        // Optionally, clear the form
+        this.reset();
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwnProperty.call(data, 'errors')) {
+            alert(data["errors"].map(error => error["message"]).join(", "));
+          } else {
+            alert("Oops! There was a problem submitting your form.");
+          }
+        });
+      }
+    }).catch(error => {
+      alert("Oops! There was a problem submitting your form.");
+    });
+  });
+</script>
 
 
-						
 
           </div>
         </div>
