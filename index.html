@@ -6,15 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<script>
-    async function loadProfileDropdown() {
-        const response = await fetch('profile-dropdown.html');
-        const profileHtml = await response.text();
-        document.body.insertAdjacentHTML('beforeend', profileHtml);
-    }
-
-    loadProfileDropdown();
-</script>
+		
 	        </head>
 	<body class="is-preload landing">
 		<div id="page-wrapper">
@@ -58,8 +50,44 @@
                                     </header>
                                      </div>
                                        <a href="#one" class="goto-next scrolly">Next</a>
-                                      </section>
+                                 </section>
 
+<!-- Sidebar -->
+<aside id="sidebar">
+    <div id="user-info">
+        <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" style="border-radius: 50%; width: 50px; height: 50px;" />
+        <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
+        <button id="logout-sidebar">Logout</button>
+    </div>
+</aside>
+
+<style>
+    #sidebar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100%;
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+        display: none; /* Initially hidden */
+    }
+    #sidebar img {
+        border-radius: 50%;
+    }
+    #sidebar p {
+        margin: 10px 0;
+    }
+    #sidebar button {
+        margin-top: 20px;
+    }
+</style>
+			
 			<!-- One -->
 				<section id="one" class="spotlight style1 bottom">
 					<span class="image fit main"><img src="https://i.postimg.cc/g2f5PvHz/IMG-20240720-172101-879.jpg" alt="9jahotblog logo" /></span>
