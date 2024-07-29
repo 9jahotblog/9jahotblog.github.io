@@ -138,9 +138,15 @@
                                                                <hr />
 									    </section>
 						
+	<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init("YOU");
+  })();
+</script>
 						
 <!-- Modify this form HTML and place wherever you want your form -->
-<form action="https://formspree.io/f/myzgeagq" method="POST">
+<form id="contact-form" action="https://formspree.io/f/myzgeagq" method="POST">
   <label>
     Your full name/penname:
     <input type="text" name="name" required>
@@ -161,7 +167,7 @@
 </form>
 		
 <script>
-  document.getElementById('https://formspree.io/f/myzgeagq').addEventListener('submit', function(event) {
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     // Send form data to Formspree
