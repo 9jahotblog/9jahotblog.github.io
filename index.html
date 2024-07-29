@@ -1,46 +1,74 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Welcome to 9jahotblog - Hottest blog Naija! Writing community - Fiction Universe</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-
-	        </head>
-
-
-	<body class="is-preload landing">
-		<div id="page-wrapper">
-
-			<!-- Header -->
-				<header id="header">
-					<h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-					<nav id="nav">
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li>
-								<a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-								<ul>
-									<li><a href="#">Articles</a></li>
-									<li><a href="#">News</a></li>
-									<li><a href="#">Discussions</a></li>
-									<li>
-										<a href="#">Novels</a>
-										<ul>
-											<li><a href="#">Fiction</a></li>
-											<li><a href="#">Non-fiction</a></li>
-											<li><a href="#">Allegory</a></li>
-											<li><a href="#">Romance</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><a href="#">Books</a></li>
-							<li><a href="#" class="button primary">Sign up</a></li>
-						</ul>
-					</nav>
-				</header>
+<head>
+    <title>Welcome to 9jahotblog - Hottest blog Naija! Writing community - Fiction Universe</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        /* Additional styling for profile in menu */
+        #profile-section {
+            display: none; /* Initially hidden */
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        #profile-section img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        #profile-section p {
+            margin: 5px 0;
+        }
+        #profile-section button {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
+                        <ul>
+                            <li><a href="#">Articles</a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Discussions</a></li>
+                            <li>
+                                <a href="#">Novels</a>
+                                <ul>
+                                    <li><a href="#">Fiction</a></li>
+                                    <li><a href="#">Non-fiction</a></li>
+                                    <li><a href="#">Allegory</a></li>
+                                    <li><a href="#">Romance</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Books</a></li>
+                    <li id="profile-section">
+                        <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" />
+                        <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
+                        <button id="logout-sidebar">Logout</button>
+                    </li>
+                    <li><a href="#" class="button primary">Sign up</a></li>
+                </ul>
+            </nav>
+        </header>
 
 
 			<!-- Banner -->
