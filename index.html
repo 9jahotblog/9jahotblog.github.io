@@ -1,159 +1,45 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <title>Welcome to 9jahotblog - Hottest blog Naija! Writing community - Fiction Universe</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        /* Additional styling for profile in menu */
-        #profile-section {
-            display: none; /* Initially hidden */
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-        }
-        #profile-section img {
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
-        }
-        #profile-section p {
-            margin: 5px 0;
-        }
-        #profile-section button {
-            margin-top: 10px;
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        #nav ul {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        #nav ul li {
-            margin-bottom: 5px;
-        }
-        #menu-toggle {
-            display: none;
-        }
-        @media (max-width: 768px) {
-            #menu-toggle {
-                display: block;
-                cursor: pointer;
-            }
-            #nav ul {
-                display: none;
-                flex-direction: column;
-                align-items: flex-start;
-                background-color: #333;
-                width: 100%;
-            }
-            #nav ul.active {
-                display: flex;
-            }
-        }
-    </style>
-</head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Books</a></li>
-                    <li id="profile-section">
-                        <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" />
-                        <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
-                        <button id="logout-sidebar">Logout</button>
-                    </li>
-                    <li><a href="#" class="button primary">Sign up</a></li>
-                </ul>
-                <!-- Toggle Button -->
-                <button id="menu-toggle">☰ Menu</button>
-            </nav>
-        </header>
-    </div>
+	<head>
+		<title>Welcome to 9jahotblog - Hottest blog Naija! Writing community - Fiction Universe</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		
 
-<!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
+	</head>
+	<body class="is-preload landing">
+		<div id="page-wrapper">
 
-    <!-- Firebase Initialization and Sidebar Script -->
-    <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        const auth = firebase.auth();
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const profileSection = document.getElementById('profile-section');
-            const menuToggle = document.getElementById('menu-toggle');
-            const navUl = document.querySelector('#nav ul');
-            const logoutButton = document.getElementById('logout-sidebar');
-
-            // Toggle menu visibility
-            menuToggle.addEventListener('click', () => {
-                navUl.classList.toggle('active');
-            });
-
-            // Check if user is signed in and display their info
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('user-name-sidebar').textContent = `You're logged in as ${user.displayName || 'User'}`;
-                    document.getElementById('user-username-sidebar').textContent = user.displayName || 'Username';
-                    if (user.photoURL) {
-                        document.getElementById('profile-photo-sidebar').src = user.photoURL;
-                    }
-                    profileSection.style.display = 'block';
-                } else {
-                    profileSection.style.display = 'none';
-                }
-            });
-
-            // Logout function
-            logoutButton.addEventListener('click', () => {
-                auth.signOut().then(() => {
-                    window.location.href = 'login-page.html';
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li>
+								<a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
+								<ul>
+									<li><a href="#">Articles</a></li>
+									<li><a href="#">News</a></li>
+									<li><a href="#">Discussions</a></li>
+									<li>
+										<a href="#">Novels</a>
+										<ul>
+											<li><a href="#">Fiction</a></li>
+											<li><a href="#">Non-fiction</a></li>
+											<li><a href="#">Allegory</a></li>
+											<li><a href="#">Romance</a></li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><a href="#">Books</a></li>
+							<li><a href="#" class="button primary">Sign up</a></li>
+						</ul>
+					</nav>
+				</header>
 
 
 	
