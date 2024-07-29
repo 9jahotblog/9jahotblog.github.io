@@ -138,12 +138,7 @@
                                                                <hr />
 									    </section>
 						
-	<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("gh-NcjFG6tRf1cTA6");
-  })();
-</script>
+	
 						
 <!-- Modify this form HTML and place wherever you want your form -->
 <form id="contact-form" action="https://formspree.io/f/myzgeagq" method="POST">
@@ -166,115 +161,6 @@
   <button type="submit">Publish Story</button>
 </form>
 		
-<script>
-  document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    // Send form data to Formspree
-    fetch(this.action, {
-      method: this.method,
-      body: new FormData(this),
-      headers: {
-        'Accept': 'application/json'
-      }
-    }).then(response => {
-      if (response.ok) {
-        // Send a thank you email using EmailJS
-        emailjs.send("service_7ccf1fn", "template_kyb8t4j", {
-          user_name: this.querySelector('input[name="name"]').value,
-	  user_audience this.querySelector('input[name="audience"]').value,
-          user_email: this.querySelector('input[name="email"]').value
-        }).then(function(response) {
-          console.log('Thank you email sent!', response.status, response.text);
-        }, function(error) {
-          console.log('Failed to send thank you email.', error);
-        });
-
-        alert("Thank you for your submission!");
-        // Optionally, clear the form
-        this.reset();
-      } else {
-        response.json().then(data => {
-          if (Object.hasOwnProperty.call(data, 'errors')) {
-            alert(data["errors"].map(error => error["message"]).join(", "));
-          } else {
-            alert("Oops! There was a problem submitting your form.");
-          }
-        });
-      }
-    }).catch(error => {
-      alert("Oops! There was a problem submitting your form.");
-    });
-  });
-</script>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form Submission</title>
-</head>
-<body>
-
-<!-- Modify this form HTML and place wherever you want your form -->
-<form id="form">
-  <label>
-    Name of user:
-    <input type="text" name="name" required>
-  </label>
-  <label>
-    Your email:
-    <input type="email" name="email" required>
-  </label>
-  <label>
-    Submission:
-    <textarea name="message" rows="10" required></textarea>
-  </label>
-  <button id="button" type="submit">Send</button>
-</form>
-
-<!-- Include EmailJS library -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("gh-NcjFG6tRf1cTA6");  // Replace with your actual public key
-  })();
-</script>
-
-<script>
-  const btn = document.getElementById('button');
-
-  document.getElementById('form').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    btn.textContent = 'Sending...';
-
-    const serviceID = 'default_service';
-    const templateID = 'template_kyb8t4j';  // Replace with your thank-you email template ID
-
-    // Prepare the parameters for the thank-you email
-    const params = {
-      to_name: this.name.value,
-      to_email: this.email.value,
-      user_message: this.message.value
-    };
-
-    emailjs.send(serviceID, templateID, params)
-      .then(() => {
-        btn.textContent = 'Send Email';
-        alert('Thank you! Your submission has been received.');
-      }, (err) => {
-        btn.textContent = 'Send Email';
-        alert(JSON.stringify(err));
-      });
-  });
-</script>
-
-</body>
-</html>
-
-
 						
           </div>
         </div>
