@@ -6,6 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        /* Additional styling for profile in menu */
+        .profile-container {
+            text-align: center;
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .profile-container img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        .profile-container button {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
@@ -16,23 +41,7 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="#">Entertainment</a></li>
                     <li><a href="#">Books</a></li>
                 </ul>
             </nav>
@@ -42,15 +51,14 @@
         <div id="main" class="wrapper style1">
             <div class="container">
                 <header class="major">
-                    <h1>You're logged in..</h1>
                     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
                 </header>
 
                 <!-- Profile Section -->
                 <section>
-                    <div class="profile-container" style="text-align: center; background-color: #111111; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); max-width: 600px; margin: auto;">
-                        <div style="text-align: center;">
-                            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="border-radius: 50%; width: 80px; height: 80px;" />
+                    <div class="profile-container">
+                        <div>
+                            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
                         </div>
                         <p>Email: <span id="user-email"></span></p>
                         <p>Username: <span id="user-username"></span></p>
@@ -125,36 +133,42 @@
             document.getElementById('logout').addEventListener('click', () => {
                 signOut(auth).then(() => {
                     window.location.href = 'login-page.html';
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
                 });
             });
 
             // Edit profile function
             document.getElementById('edit-profile').addEventListener('click', async () => {
-                const newFullname = prompt("Enter new full name:");
-                const newUsername = prompt("Enter new username:");
-                const newPhotoURL = prompt("Enter new profile photo URL:");
+                try {
+                    const newFullname = prompt("Enter new full name:");
+                    const newUsername = prompt("Enter new username:");
+                    const newPhotoURL = prompt("Enter new profile photo URL:");
 
-                if (auth.currentUser) {
-                    if (newFullname) {
-                        await updateProfile(auth.currentUser, { displayName: newFullname });
-                    }
-                    if (newUsername) {
-                        await updateProfile(auth.currentUser, { displayName: newUsername });
-                    }
-                    if (newPhotoURL) {
-                        await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
-                        document.getElementById('profile-photo').src = newPhotoURL;
-                    }
+                    if (auth.currentUser) {
+                        if (newFullname) {
+                            await updateProfile(auth.currentUser, { displayName: newFullname });
+                        }
+                        if (newUsername) {
+                            await updateProfile(auth.currentUser, { displayName: newUsername });
+                        }
+                        if (newPhotoURL) {
+                            await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
+                            document.getElementById('profile-photo').src = newPhotoURL;
+                        }
 
-                    const userRef = doc(db, "users", auth.currentUser.uid);
-                    await updateDoc(userRef, {
-                        fullname: newFullname || auth.currentUser.displayName,
-                        username: newUsername || auth.currentUser.displayName,
-                        photoURL: newPhotoURL || auth.currentUser.photoURL
-                    });
+                        const userRef = doc(db, "users", auth.currentUser.uid);
+                        await updateDoc(userRef, {
+                            fullname: newFullname || auth.currentUser.displayName,
+                            username: newUsername || auth.currentUser.displayName,
+                            photoURL: newPhotoURL || auth.currentUser.photoURL
+                        });
 
-                    alert("Profile updated successfully!");
-                    location.reload();
+                        alert("Profile updated successfully!");
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error updating profile:', error);
                 }
             });
         </script>
