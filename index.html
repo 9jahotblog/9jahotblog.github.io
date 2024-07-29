@@ -52,41 +52,8 @@
                                        <a href="#one" class="goto-next scrolly">Next</a>
                                  </section>
 
-<!-- Sidebar -->
-<aside id="sidebar">
-    <div id="user-info">
-        <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" style="border-radius: 50%; width: 50px; height: 50px;" />
-        <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
-        <button id="logout-sidebar">Logout</button>
-    </div>
-</aside>
+<div id="sidebar-placeholder"></div>
 
-<style>
-    #sidebar {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 250px;
-        height: 100%;
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-        display: none; /* Initially hidden */
-    }
-    #sidebar img {
-        border-radius: 50%;
-    }
-    #sidebar p {
-        margin: 10px 0;
-    }
-    #sidebar button {
-        margin-top: 20px;
-    }
-</style>
 			
 			<!-- One -->
 				<section id="one" class="spotlight style1 bottom">
@@ -239,6 +206,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+		        <script src="sidebar.js"></script>
 
 	</body>
 </html>
