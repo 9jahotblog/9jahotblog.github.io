@@ -1,4 +1,4 @@
-	<!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>Welcome to 9jahotblog - Hottest blog Naija! Writing community - Fiction Universe</title>
@@ -6,20 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        .notification {
-            position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
-        }
-    </style>
+    
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
@@ -52,6 +39,7 @@
             </nav>
 	</header>					
 
+	    
 			<!-- Banner -->
                             <section id="banner" style="background: url('https://i.postimg.cc/MGyZg7kB/IMG-20240106-111157-774.jpg') center/cover no-repeat; height: 100vh; display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
                              <div class="content">
@@ -194,10 +182,7 @@
 					</div>
 				</section>
 
-<!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-	</div>
+
 			
 			<!-- Footer -->
 				<footer id="footer">
@@ -226,31 +211,6 @@
 			<script src="assets/js/main.js"></script>
 		        <script src="sidebar.js"></script>
                         <script src="assets/js/main.js"></script>
-                        <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
-        });
-			</script>
+                        
 	</body>
 </html>
