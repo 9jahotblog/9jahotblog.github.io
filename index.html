@@ -5,12 +5,48 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    
+    <style>
+        /* Basic styles for menu */
+        #nav {
+            display: flex;
+            background-color: #333;
+        }
+        #nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        #nav ul li {
+            position: relative;
+        }
+        #nav a {
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            display: block;
+        }
+        #nav ul li:hover > ul {
+            display: block;
+        }
+        #nav ul ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            padding: 0;
+        }
+        #nav ul ul li {
+            float: none;
+        }
+        #nav ul ul a {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
-
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
@@ -18,7 +54,7 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
+                        <a href="#">Entertainment</a>
                         <ul>
                             <li><a href="#">Articles</a></li>
                             <li><a href="#">News</a></li>
@@ -37,8 +73,10 @@
                     <li><a href="#">Books</a></li>
                 </ul>
             </nav>
-	</header>
+        </header>
     </div>
+</body>
+</html>
 
 	    
 			<!-- Banner -->
