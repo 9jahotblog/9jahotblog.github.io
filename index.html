@@ -9,122 +9,6 @@
 
 	        </head>
 
-<style>
-        /* Sidebar Styles */
-        #sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 250px;
-            height: 100%;
-            background-color: #111111;
-            color: #fff;
-            padding: 20px;
-            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-        #sidebar.active {
-            transform: translateX(0);
-        }
-        #sidebar img {
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-        }
-        #sidebar p {
-            margin: 10px 0;
-        }
-        #sidebar button {
-            margin-top: 20px;
-        }
-        #menu-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #330000;
-            color: #330000;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        #page-content {
-            margin-right: 260px; /* Adjust based on sidebar width */
-            padding: 20px;
-        }
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <aside id="sidebar">
-        <div id="user-info">
-            <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" />
-            <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
-            <button id="logout-sidebar">Logout</button>
-	    <a href="profile.html">Visit Profile</a>
-        </div>
-    </aside>
-
-    <!-- Toggle Button -->
-    <button id="menu-toggle">☰ Menu</button>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
-
-    <!-- Firebase Initialization and Sidebar Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const sidebar = document.getElementById('sidebar');
-            const menuToggle = document.getElementById('menu-toggle');
-            const logoutButton = document.getElementById('logout-sidebar');
-
-            // Toggle sidebar visibility
-            menuToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('active');
-            });
-
-            // Check if user is signed in and display their info
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    document.getElementById('user-name-sidebar').textContent = `You're logged in as ${user.displayName || 'User'}`;
-                    document.getElementById('user-username-sidebar').textContent = user.displayName || 'Username';
-                    if (user.photoURL) {
-                        document.getElementById('profile-photo-sidebar').src = user.photoURL;
-                    }
-                    sidebar.style.display = 'block';
-                } else {
-                    sidebar.style.display = 'none';
-                }
-            });
-
-            // Logout function
-            logoutButton.addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    window.location.href = 'login-page.html';
-                });
-            });
-        });
-    </script>
-</body>
-
 
 	<body class="is-preload landing">
 		<div id="page-wrapper">
@@ -214,7 +98,124 @@
 					</div>
 					<a href="#three" class="goto-next scrolly">Next</a>
 				</section>
+<style>
+        /* Sidebar Styles */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #111111;
+            color: #fff;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        #sidebar.active {
+            transform: translateX(0);
+        }
+        #sidebar img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+        #sidebar p {
+            margin: 10px 0;
+        }
+        #sidebar button {
+            margin-top: 20px;
+        }
+        #menu-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #111111;
+            color: #111111;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        #page-content {
+            margin-right: 260px; /* Adjust based on sidebar width */
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <div id="user-info">
+            <img id="profile-photo-sidebar" src="https://via.placeholder.com/50" alt="Profile Picture" />
+            <p id="user-name-sidebar">You're logged in as <span id="user-username-sidebar"></span></p>
+            <button id="logout-sidebar">Logout</button>
+	    <a href="profile.html">Visit Profile</a>
+        </div>
+    </aside>
 
+    <!-- Toggle Button -->
+    <button id="menu-toggle">☰ Menu</button>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
+
+    <!-- Firebase Initialization and Sidebar Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const logoutButton = document.getElementById('logout-sidebar');
+
+            // Toggle sidebar visibility
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+
+            // Check if user is signed in and display their info
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('user-name-sidebar').textContent = `You're logged in as ${user.displayName || 'User'}`;
+                    document.getElementById('user-username-sidebar').textContent = user.displayName || 'Username';
+                    if (user.photoURL) {
+                        document.getElementById('profile-photo-sidebar').src = user.photoURL;
+                    }
+                    sidebar.style.display = 'block';
+                } else {
+                    sidebar.style.display = 'none';
+                }
+            });
+
+            // Logout function
+            logoutButton.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'login-page.html';
+                });
+            });
+        });
+    </script>
+</body>
+
+
+			
 			
 			<!-- Three -->
 				<section id="three" class="spotlight style3 left">
