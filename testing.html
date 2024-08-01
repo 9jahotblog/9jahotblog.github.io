@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9jahotblog Storybooks</title>
+</head>
+<body>
+    <h1>Upload Image and Get Gemini Response</h1>
+    <form id="uploadForm">
+        <input type="file" id="imageUpload" accept="image/*" required>
+        <input type="text" id="textPrompt" placeholder="Enter your prompt" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="gemini-response"></div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const file = document.getElementById('imageUpload').files[0];
+            const prompt = document.getElementById('textPrompt').value;
+            
+            if (!file || !prompt) {
+                alert('Please select an image and enter a prompt.');
+                return;
+            }
+            
+            // Upload the image to Cloud Storage
+            const storageRef = ref(storage, `images/${file.name}`);
+            await uploadBytes(storageRef, file);
+            
+            // Get the image URL
+            const imageUrl = await getDownloadURL(storageRef);
+            
+            // Create a new Firestore document with the image URL and prompt
+            await addDoc(collection(db, 'gallery'), {
+                image: imageUrl,
+                prompt: prompt,
+                createdAt: new Date()
+            });
+            
+            alert('Image uploaded and Firestore document created.');
+        });
+
+        // Listen for changes in the 'gallery' collection
+        const q = query(collection(db, 'gallery'), orderBy('createdAt', 'desc'));
+        onSnapshot(q, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === 'added') {
+                    const data = change.doc.data();
+                    const geminiResponse = data.response;
+                    if (geminiResponse) {
+                        displayGeminiResponse(geminiResponse);
+                    }
+                }
+            });
+        });
+
+        function displayGeminiResponse(response) {
+            const responseContainer = document.getElementById('gemini-response');
+            responseContainer.textContent = response;
+        }
+    </script>
+</body>
+</html>
