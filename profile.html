@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
         /* Additional styling for profile in menu */
         .profile-container {
@@ -57,30 +57,8 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-        .dark-theme {
-            background-color: #222;
-            color: #fff;
-        }
-        .dark-theme .profile-container {
-            background-color: #333;
-        }
-        .dark-theme button {
-            background-color: #666;
-        }
-        #theme-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .error-highlight {
-            text-decoration: underline;
-            text-decoration-color: red;
-            text-decoration-style: wavy;
+        .error {
+            color: red;
         }
     </style>
 </head>
@@ -93,8 +71,8 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#writing-prompt-section">Publish Story</a></li>
-                    <li><a href="#read-a-novel-section">Read a Novel</a></li>
+                    <li><a href="#">Publish Story</a></li>
+                    <li><a href="#writing-section">Writing Prompts</a></li>
                 </ul>
             </nav>
         </header>
@@ -114,25 +92,21 @@
                         </div>
                         <p>Email: <span id="user-email"></span></p>
                         <p>Username: <span id="user-username"></span></p>
-                        <p>Earnings: ₦0.00</p>
-                        <p>Short Stories/Articles: N/A</p>
-                        <p>Books: N/A</p>
                         <button id="edit-profile">Edit Profile</button>
-                        <a href="login-page.html"><button id="logout">Logout</button></a>
+                        <button id="logout">Logout</button>
                     </div>
                     <hr />
                 </section>
 
                 <!-- Writing Prompt and Textbox Section -->
-                <section id="writing-prompt-section">
+                <section id="writing-section">
                     <div class="writing-container">
                         <h2>Writing Prompt</h2>
                         <p id="writing-prompt">Click the button to get a new prompt!</p>
                         <button id="new-prompt-btn">New Prompt</button>
                         <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
                         <p id="word-count">Word count: 0</p>
-                        <p>Pen Name: <input type="text" id="pen-name" /></p>
-                        <p>Email: <input type="email" id="email" /></p>
+                        <div id="congratulatory-message"></div>
                         <button id="publish-story">Publish Story</button>
                     </div>
                 </section>
@@ -149,7 +123,6 @@
                     <ul class="copyright">
                         <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
                     </ul>
-                    <button id="theme-toggle">💡</button>
                 </footer>
             </div>
         </div>
@@ -212,132 +185,107 @@
                     const newPhotoURL = prompt("Enter new profile photo URL:");
 
                     if (auth.currentUser) {
-    if (newFullname) {
-        await updateProfile(auth.currentUser, { displayName: newFullname });
-    }
-    if (newUsername) {
-        await updateProfile(auth.currentUser, { displayName: newUsername });
-    }
-    if (newPhotoURL) {
-        await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
-        document.getElementById('profile-photo').src = newPhotoURL;
-    }
+                        if (newFullname) {
+                            await updateProfile(auth.currentUser, { displayName: newFullname });
+                        }
+                        if (newUsername) {
+                            await updateProfile(auth.currentUser, { displayName: newUsername });
+                        }
+                        if (newPhotoURL) {
+                            await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
+                            document.getElementById('profile-photo').src = newPhotoURL;
+                        }
 
-    const userRef = doc(db, "users", auth.currentUser.uid);
-    await updateDoc(userRef, {
-        fullname: newFullname || auth.currentUser.displayName,
-        username: newUsername || auth.currentUser.displayName,
-        photoURL: newPhotoURL || auth.currentUser.photoURL
-    });
+                        const userRef = doc(db, "users", auth.currentUser.uid);
+                        await updateDoc(userRef, {
+                            fullname: newFullname || auth.currentUser.displayName,
+                            username: newUsername || auth.currentUser.displayName,
+                            photoURL: newPhotoURL || auth.currentUser.photoURL
+                        });
 
-    alert("Profile updated successfully!");
-    location.reload();
-}
-} catch (error) {
-    console.error('Error updating profile:', error);
-}
-});
-
-// Writing prompt and word count functionality
-const prompts = [
-    "Write about a magical forest.",
-    "Describe your favorite memory.",
-    "Create a story about a lost treasure.",
-    "Imagine a world where everyone has superpowers.",
-    "Write a funny story about a day gone wrong.",
-    "Describe a young adult's first day at a new school.",
-    "Write a Christian fiction story about faith and miracles.",
-    "Describe an adventure in a mythical land."
-];
-
-const writingPromptElement = document.getElementById('writing-prompt');
-const writingTextbox = document.getElementById('writing-textbox');
-const wordCountElement = document.getElementById('word-count');
-const newPromptButton = document.getElementById('new-prompt-btn');
-
-function getRandomPrompt() {
-    const randomIndex = Math.floor(Math.random() * prompts.length);
-    return prompts[randomIndex];
-}
-
-function updateWordCount() {
-    const text = writingTextbox.value.trim();
-    const wordCount = text.split(/\s+/).filter(word => word).length;
-    wordCountElement.textContent = `Word count: ${wordCount}`;
-}
-
-newPromptButton.addEventListener('click', () => {
-    writingPromptElement.textContent = getRandomPrompt();
-});
-
-writingTextbox.addEventListener('input', updateWordCount);
-
-// Initialize the first prompt
-writingPromptElement.textContent = getRandomPrompt();
-
-// Publish story
-document.getElementById('publish-story').addEventListener('click', async () => {
-    const penName = document.getElementById('pen-name').value;
-    const email = document.getElementById('email').value;
-    const story = writingTextbox.value;
-
-    if (penName && email && story) {
-        try {
-            const response = await fetch('https://formspree.io/f/mldrbpwo', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    penName,
-                    email,
-                    story
-                })
+                        alert("Profile updated successfully!");
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error updating profile:', error);
+                }
             });
 
-            if (response.ok) {
-                alert('Story published successfully!');
-                writingTextbox.value = '';
-                updateWordCount();
-            } else {
-                alert('Failed to publish story. Please try again.');
+            // Writing prompt and word count functionality
+            const prompts = [
+                "Write about a magical forest.",
+                "Describe your favorite memory.",
+                "Create a story about a lost treasure.",
+                "Imagine a world where everyone has superpowers.",
+                "Write a funny story about a day gone wrong.",
+                "Describe a young adult's first day at a new school.",
+                "Write a Christian fiction story about faith and miracles.",
+                "Describe an adventure in a mythical land."
+            ];
+
+            const writingPromptElement = document.getElementById('writing-prompt');
+            const writingTextbox = document.getElementById('writing-textbox');
+            const wordCountElement = document.getElementById('word-count');
+            const newPromptButton = document.getElementById('new-prompt-btn');
+            const congratulatoryMessage = document.getElementById('congratulatory-message');
+
+            function getRandomPrompt() {
+                const randomIndex = Math.floor(Math.random() * prompts.length);
+                return prompts[randomIndex];
             }
-        } catch (error) {
-            console.error('Error publishing story:', error);
-            alert('An error occurred. Please try again.');
-        }
-    } else {
-        alert('Please fill out all fields before submitting.');
-    }
-});
 
-// Dark mode toggle
-const themeToggleButton = document.getElementById('theme-toggle');
-themeToggleButton.addEventListener('click', () => {
-    document.body.classList.toggle('dark-theme');
-});
+            function updateWordCount() {
+                const text = writingTextbox.value.trim();
+                const wordCount = text.split(/\s+/).filter(word => word).length;
+                wordCountElement.textContent = `Word count: ${wordCount}`;
+                if (wordCount >= 1000) {
+                    congratulatoryMessage.textContent = "Congratulations! You have reached 1000 words!";
+                } else {
+                    congratulatoryMessage.textContent = "";
+                }
+            }
 
-// Grammar checking functionality
-const grammarlyButton = document.createElement('button');
-grammarlyButton.textContent = 'Check Grammar';
-grammarlyButton.addEventListener('click', async () => {
-    const text = writingTextbox.value;
-    const response = await fetch('https://api.grammarly.com/v2/check', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer YOUR_GRAMMARLY_API_KEY`
-        },
-        body: JSON.stringify({ text })
-    });
-    const data = await response.json();
-    data.errors.forEach(error => {
-        const errorText = text.substring(error.offset, error.offset + error.length);
-        const regex = new RegExp(errorText, 'g');
-        writingTextbox.value = writingTextbox.value.replace(regex, `<span class="error-highlight">${errorText}</span>`);
-    });
-});
-document.querySelector('.writing-container').appendChild(grammarlyButton);
-</script>
+            newPromptButton.addEventListener('click', () => {
+                writingPromptElement.textContent = getRandomPrompt();
+            });
+
+            writingTextbox.addEventListener('input', updateWordCount);
+
+            // Initialize the first prompt
+            writingPromptElement.textContent = getRandomPrompt();
+
+            // Publish story function
+            document.getElementById('publish-story').addEventListener('click', async () => {
+                const penName = prompt("Enter your pen name:");
+                const storyContent = writingTextbox.value.trim();
+                if (!penName || !storyContent) {
+                    alert("Pen name and story content cannot be empty.");
+                    return;
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append('penName', penName);
+                    formData.append('storyContent', storyContent);
+
+                    const response = await fetch('https://formspree.io/f/mldrbpwo', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert("Story published successfully!");
+                        writingTextbox.value = "";
+                        updateWordCount();
+                    } else {
+                        alert("Failed to publish story. Please try again.");
+                    }
+                } catch (error) {
+                    console.error('Error publishing story:', error);
+                    alert("An error occurred while publishing your story. Please try again.");
+                }
+            });
+        </script>
+    </div>
 </body>
 </html>
