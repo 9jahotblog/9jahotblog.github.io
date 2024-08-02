@@ -68,8 +68,8 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#">Entertainment</a></li>
-                    <li><a href="#">Books</a></li>
+                    <li><a href="#profile-section">Profile</a></li>
+                    <li><a href="#writing-prompt-section">Writing Prompt</a></li>
                 </ul>
             </nav>
         </header>
@@ -82,7 +82,7 @@
                 </header>
 
                 <!-- Profile Section -->
-                <section>
+                <section id="profile-section">
                     <div class="profile-container">
                         <div>
                             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
@@ -99,7 +99,7 @@
                 </section>
 
                 <!-- Writing Prompt and Textbox Section -->
-                <section>
+                <section id="writing-prompt-section">
                     <div class="writing-container">
                         <h2>Writing Prompt</h2>
                         <p id="writing-prompt">Click the button to get a new prompt!</p>
@@ -195,57 +195,38 @@
                         }
 
                         const userRef = doc(db, "users", auth.currentUser.uid);
-                        await updateDoc(userRef, {
-                            fullname: newFullname || auth.currentUser.displayName,
-                            username: newUsername || auth.currentUser.displayName,
-                            photoURL: newPhotoURL || auth.currentUser.photoURL
-                        });
+await updateDoc(userRef, {
+    fullname: newFullname || auth.currentUser.displayName,
+    username: newUsername || auth.currentUser.displayName,
+    photoURL: newPhotoURL || auth.currentUser.photoURL
+});
 
-                        alert("Profile updated successfully!");
-                        location.reload();
-                    }
-                } catch (error) {
-                    console.error('Error updating profile:', error);
-                }
-            });
+alert("Profile updated successfully!");
+location.reload();
+}
+} catch (error) {
+    console.error("Error updating profile:", error);
+    alert("There was an error updating your profile. Please try again.");
+}
+});
 
-            // Writing prompt and word count functionality
-            const prompts = [
-                "Write about a magical forest.",
-                "Describe your favorite memory.",
-                "Create a story about a lost treasure.",
-                "Imagine a world where everyone has superpowers.",
-                "Write a funny story about a day gone wrong.",
-                "Describe a young adult's first day at a new school.",
-                "Write a Christian fiction story about faith and miracles.",
-                "Describe an adventure in a mythical land."
-            ];
+// Writing prompt section
+const prompts = [
+    "Write about a time you overcame a challenge.",
+    "Describe your perfect day.",
+    "What is your favorite memory from childhood?",
+    // Add more prompts as needed
+];
+document.getElementById('new-prompt-btn').addEventListener('click', () => {
+    const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+    document.getElementById('writing-prompt').textContent = randomPrompt;
+});
 
-            const writingPromptElement = document.getElementById('writing-prompt');
-            const writingTextbox = document.getElementById('writing-textbox');
-            const wordCountElement = document.getElementById('word-count');
-            const newPromptButton = document.getElementById('new-prompt-btn');
-
-            function getRandomPrompt() {
-                const randomIndex = Math.floor(Math.random() * prompts.length);
-                return prompts[randomIndex];
-            }
-
-            function updateWordCount() {
-                const text = writingTextbox.value.trim();
-                const wordCount = text.split(/\s+/).filter(word => word).length;
-                wordCountElement.textContent = `Word count: ${wordCount}`;
-            }
-
-            newPromptButton.addEventListener('click', () => {
-                writingPromptElement.textContent = getRandomPrompt();
-            });
-
-            writingTextbox.addEventListener('input', updateWordCount);
-
-            // Initialize the first prompt
-            writingPromptElement.textContent = getRandomPrompt();
-        </script>
-    </div>
+const textarea = document.getElementById('writing-textbox');
+textarea.addEventListener('input', () => {
+    const wordCount = textarea.value.split(/\s+/).filter(word => word.length > 0).length;
+    document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
+});
+</script>
 </body>
 </html>
