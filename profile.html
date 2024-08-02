@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        /* Additional styling for profile in menu */
         .profile-container {
             text-align: center;
             background-color: #111111;
@@ -30,12 +29,42 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-        .dark-theme {
-            background-color: #111;
-            color: #eee;
-        }
-        .dark-theme .profile-container {
+        .writing-section {
             background-color: #222;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .writing-section textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+        .writing-section button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .dark-theme {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -48,9 +77,9 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#read-novel">Read a Novel</a></li>
-                    <li><a href="#writing-prompts">Writing Prompts</a></li>
-                    <li><a href="#publish-story">Publish Story</a></li>
+                    <li><a href="#writing-prompt-section">Publish Story</a></li>
+                    <li><a href="#profile-section">Profile</a></li>
+                    <li><a href="login-page.html" id="logout">Logout</a></li>
                 </ul>
             </nav>
         </header>
@@ -63,7 +92,7 @@
                 </header>
 
                 <!-- Profile Section -->
-                <section>
+                <section id="profile-section">
                     <div class="profile-container">
                         <div>
                             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
@@ -74,38 +103,20 @@
                         <p>Short Stories/Articles: N/A</p>
                         <p>Books: N/A</p>
                         <button id="edit-profile">Edit Profile</button>
-                        <a href="login-page.html"><button id="logout">Logout</button></a>
                     </div>
                     <hr />
                 </section>
-
-                <!-- Writing Prompts Section -->
-                <section id="writing-prompts">
-                    <header>
-                        <h2>Writing Prompts</h2>
-                    </header>
-                    <p id="writing-prompt"></p>
-                    <textarea id="writing-textbox" rows="10" cols="50" placeholder="Start writing here..."></textarea>
-                    <p id="word-count">Word count: 0</p>
+                
+                <!-- Writing Prompt Section -->
+                <section id="writing-prompt-section" class="writing-section">
+                    <h2>Writing Prompts</h2>
+                    <div id="writing-prompt"></div>
+                    <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
+                    <div id="word-count">Word count: 0</div>
+                    <input type="text" id="pen-name" placeholder="Pen Name" />
+                    <input type="email" id="email" placeholder="Email" />
                     <button id="new-prompt-btn">New Prompt</button>
                     <button id="publish-story">Publish Story</button>
-                </section>
-
-                <!-- Read a Novel Section -->
-                <section id="read-novel">
-                    <header>
-                        <h2>Read a Novel</h2>
-                    </header>
-                    <div>
-                        <button id="prev-book">Previous Book</button>
-                        <button id="next-book">Next Book</button>
-                    </div>
-                    <div id="story" style="display:none;">
-                        <img id="book-cover" src="" alt="Book Cover" style="width:100px;">
-                        <p id="story-text"></p>
-                        <button id="prev-page">Previous Page</button>
-                        <button id="next-page">Next Page</button>
-                    </div>
                 </section>
                 
                 <!-- Footer -->
@@ -124,6 +135,8 @@
             </div>
         </div>
 
+        <button class="theme-toggle" id="theme-toggle">💡</button>
+
         <!-- Scripts -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>
@@ -137,21 +150,19 @@
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
             import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+            import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
                 authDomain: "jahotblog-login.firebaseapp.com",
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
-                messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+                messagingSenderId: "661526730601"
             };
 
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            // Check if user is signed in and display their info
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     document.getElementById('user-name').textContent = user.displayName || 'User';
@@ -165,16 +176,14 @@
                 }
             });
 
-            // Logout function
             document.getElementById('logout').addEventListener('click', () => {
                 signOut(auth).then(() => {
                     window.location.href = 'login-page.html';
                 }).catch((error) => {
-                    console.error('Error signing out: ', error);
+                    console.error('Error signing out:', error);
                 });
             });
 
-            // Edit profile function
             document.getElementById('edit-profile').addEventListener('click', async () => {
                 try {
                     const newFullname = prompt("Enter new full name:");
@@ -199,147 +208,89 @@
                             username: newUsername || auth.currentUser.displayName,
                             photoURL: newPhotoURL || auth.currentUser.photoURL
                         });
+
                         document.getElementById('user-name').textContent = newFullname || auth.currentUser.displayName;
                         document.getElementById('user-username').textContent = newUsername || auth.currentUser.displayName;
                     }
                 } catch (error) {
-                    console.error('Error updating profile: ', error);
+                    console.error('Error updating profile:', error);
                 }
             });
 
-            // Writing Prompts Section
-            const prompts = ["Write about a magical forest.", "Describe your favorite memory.", "Craft a tale of a young adventurer.", "Write a funny story about an unexpected event.", "Create a Christian fiction story based on a Bible verse."];
-            const writingPromptElement = document.getElementById('writing-prompt');
-            const writingTextbox = document.getElementById('writing-textbox');
-            const wordCountElement = document.getElementById('word-count');
-            const harmfulWords = ["pussy", "nigga", "fuck"];
+            // Word count functionality
+            const textarea = document.getElementById('writing-textbox');
+            const wordCountDisplay = document.getElementById('word-count');
+            textarea.addEventListener('input', () => {
+                const wordCount = textarea.value.trim().split(/\s+/).length;
+                wordCountDisplay.textContent = `Word count: ${wordCount}`;
 
-            function updateWritingPrompt() {
+                if (wordCount >= 10 && wordCount < 50) {
+                    alert("Great start! Keep going!");
+                } else if (wordCount >= 50 && wordCount < 200) {
+                    alert("Amazing! You're on fire!");
+                } else if (wordCount >= 200 && wordCount < 500) {
+                    alert("Fantastic! You're unstoppable!");
+                } else if (wordCount >= 500) {
+                    alert("Incredible! You're a writing machine!");
+                }
+            });
+
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-theme');
+                themeToggle.textContent = document.body.classList.contains('dark-theme') ? '🔆' : '💡';
+            });
+
+            // Writing prompt generation
+            const prompts = [
+                "Write about a dream you had recently.",
+                "Describe your favorite childhood memory.",
+                "Imagine you are a detective solving a mystery. What happens next?",
+                "Write a story set in a world where magic is real.",
+                "Describe a perfect day in your life."
+            ];
+
+            const writingPromptElement = document.getElementById('writing-prompt');
+            const newPromptBtn = document.getElementById('new-prompt-btn');
+            newPromptBtn.addEventListener('click', () => {
                 const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
                 writingPromptElement.textContent = randomPrompt;
-            }
-
-            function countWords(text) {
-                return text.trim().split(/\s+/).length;
-            }
-
-            writingTextbox.addEventListener('input', () => {
-                const text = writingTextbox.value;
-                const words = countWords(text);
-                wordCountElement.textContent = `Word count: ${words}`;
-
-                harmfulWords.forEach(word => {
-                    if (text.includes(word)) {
-                        alert("We don't allow such words. Please use appropriate language.");
-                    }
-                });
             });
 
-            document.getElementById('new-prompt-btn').addEventListener('click', updateWritingPrompt);
+            // Initial writing prompt
+            const initialPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+            writingPromptElement.textContent = initialPrompt;
 
-            document.getElementById('publish-story').addEventListener('click', () => {
-                const email = prompt("Enter your email:");
-                const penName = prompt("Enter your pen name:");
+            // Publish story functionality
+            document.getElementById('publish-story').addEventListener('click', async () => {
+                const penName = document.getElementById('pen-name').value;
+                const email = document.getElementById('email').value;
+                const story = textarea.value;
 
-                if (email && penName && writingTextbox.value.trim()) {
-                    const form = document.createElement('form');
-                    form.action = "https://formspree.io/f/mldrbpwo";
-                    form.method = "POST";
-
-                    const emailInput = document.createElement('input');
-                    emailInput.type = "hidden";
-                    emailInput.name = "email";
-                    emailInput.value = email;
-                    form.appendChild(emailInput);
-
-                    const penNameInput = document.createElement('input');
-                    penNameInput.type = "hidden";
-                    penNameInput.name = "penName";
-                    penNameInput.value = penName;
-                    form.appendChild(penNameInput);
-
-                    const storyInput = document.createElement('textarea');
-                    storyInput.name = "story";
-                    storyInput.value = writingTextbox.value;
-                    form.appendChild(storyInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                } else {
-                    alert("Please fill out all fields and write a story before submitting.");
+                if (!penName || !email || !story) {
+                    alert("Please fill out all fields before submitting.");
+                    return;
                 }
-            });
 
-            updateWritingPrompt();
-
-            // Read a Novel Section
-            const books = [
-                { title: "The Enchanted Forest", cover: "cover1.jpg", content: ["Page 1 of Enchanted Forest", "Page 2 of Enchanted Forest"] },
-                { title: "A Funny Thing Happened", cover: "cover2.jpg", content: ["Page 1 of Funny Thing", "Page 2 of Funny Thing"] }
-            ];
-            let currentBookIndex = 0;
-            let currentPageIndex = 0;
-
-            const bookCoverElement = document.getElementById('book-cover');
-            const storyTextElement = document.getElementById('story-text');
-            const storyElement = document.getElementById('story');
-
-            function updateBook() {
-                const book = books[currentBookIndex];
-                bookCoverElement.src = book.cover;
-                storyTextElement.textContent = book.content[currentPageIndex];
-                storyElement.style.display = "block";
-            }
-
-            document.getElementById('prev-book').addEventListener('click', () => {
-                if (currentBookIndex > 0) {
-                    currentBookIndex--;
-                    currentPageIndex = 0;
-                    updateBook();
+                try {
+                    await fetch('https://formspree.io/f/mldrbpwo', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ penName, email, story })
+                    });
+                    alert("Story submitted successfully!");
+                    textarea.value = '';
+                    wordCountDisplay.textContent = 'Word count: 0';
+                } catch (error) {
+                    console.error('Error submitting story:', error);
                 }
-            });
-
-            document.getElementById('next-book').addEventListener('click', () => {
-                if (currentBookIndex < books.length - 1) {
-                    currentBookIndex++;
-                    currentPageIndex = 0;
-                    updateBook();
-                }
-            });
-
-            document.getElementById('prev-page').addEventListener('click', () => {
-                if (currentPageIndex > 0) {
-                    currentPageIndex--;
-                    storyTextElement.textContent = books[currentBookIndex].content[currentPageIndex];
-                }
-            });
-
-            document.getElementById('next-page').addEventListener('click', () => {
-                if (currentPageIndex < books[currentBookIndex].content.length - 1) {
-                    currentPageIndex++;
-                    storyTextElement.textContent = books[currentBookIndex].content[currentPageIndex];
-                }
-            });
-
-            updateBook();
-
-            // Dark Theme Toggle
-            const darkThemeToggle = document.createElement('button');
-            darkThemeToggle.textContent = "🌙";
-            darkThemeToggle.style.position = "fixed";
-            darkThemeToggle.style.top = "10px";
-            darkThemeToggle.style.right = "10px";
-            darkThemeToggle.style.background = "none";
-            darkThemeToggle.style.border = "none";
-            darkThemeToggle.style.cursor = "pointer";
-            darkThemeToggle.style.fontSize = "24px";
-
-            document.body.appendChild(darkThemeToggle);
-
-            darkThemeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-theme');
             });
         </script>
     </div>
 </body>
 </html>
+        
+            };
