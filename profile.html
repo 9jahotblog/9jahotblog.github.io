@@ -55,6 +55,35 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        #dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .book-reader-container {
+            text-align: center;
+            background-color: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .book-reader-container button {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -96,6 +125,18 @@
                     <hr />
                 </section>
 
+                <!-- Book Reader Section -->
+                <section id="book-reader-section">
+                    <div class="book-reader-container">
+                        <h2>Book Reader</h2>
+                        <div id="book-content">
+                            <p id="book-page">Page content goes here...</p>
+                        </div>
+                        <button id="prev-page">Previous</button>
+                        <button id="next-page">Next</button>
+                    </div>
+                </section>
+
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
                     <div class="writing-container">
@@ -122,6 +163,7 @@
                         <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
                     </ul>
                 </footer>
+                <button id="dark-mode-toggle">🌙</button>
             </div>
         </div>
 
@@ -146,137 +188,102 @@
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
                 messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
             };
 
             const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+            const auth = getAuth();
             const db = getFirestore(app);
 
-            // Check if user is signed in and display their info
+            // Book page flip feature
+            let currentPage = 0;
+            const bookPages = [
+                "Page 1 content...",
+                "Page 2 content...",
+                "Page 3 content...",
+                "Page 4 content..."
+            ];
+
+            document.getElementById("next-page").addEventListener("click", () => {
+                if (currentPage < bookPages.length - 1) {
+                    currentPage++;
+                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                }
+            });
+
+            document.getElementById("prev-page").addEventListener("click", () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                }
+            });
+
+            // Writing goals and progress tracker
+            function updateProgress(userId, newProgress) {
+                const userRef = doc(db, "users", userId);
+                updateDoc(userRef, {
+                    progress: newProgress
+                }).then(() => {
+                    console.log("Progress updated successfully.");
+                }).catch((error) => {
+                    console.error("Error updating progress:", error);
+                });
+            }
+
+            // User level based on activity
+            function updateUserLevel(userId, numWriteups) {
+                let level = "New Writer";
+                if (numWriteups > 10) level = "Intermediary Writer";
+                if (numWriteups > 20) level = "Level 2";
+                if (numWriteups > 50) level = "Pro Writer";
+
+                const userRef = doc(db, "users", userId);
+                updateDoc(userRef, {
+                    level: level
+                }).then(() => {
+                    console.log("User level updated to:", level);
+                }).catch((error) => {
+                    console.error("Error updating user level:", error);
+                });
+            }
+
+            // Authentication state observer
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    document.getElementById('user-name').textContent = user.displayName || 'User';
-                    document.getElementById('user-email').textContent = user.email;
-                    document.getElementById('user-username').textContent = user.displayName || 'Username';
-                    if (user.photoURL) {
-                        document.getElementById('profile-photo').src = user.photoURL;
-                    }
-                } else {
-                    window.location.href = 'login-page.html';
-                }
-            });
+                    const userId = user.uid;
+                    document.getElementById("user-name").innerText = user.displayName;
+                    document.getElementById("user-email").innerText = user.email;
+                    document.getElementById("user-username").innerText = user.displayName;
+                    document.getElementById("profile-photo").src = user.photoURL;
 
-            // Logout function
-            document.getElementById('logout').addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    window.location.href = 'login-page.html';
-                }).catch((error) => {
-                    console.error('Error signing out:', error);
-                });
-            });
-
-            // Edit profile function
-            document.getElementById('edit-profile').addEventListener('click', async () => {
-                try {
-                    const newFullname = prompt("Enter new full name:");
-                    const newUsername = prompt("Enter new username:");
-                    const newPhotoURL = prompt("Enter new profile photo URL:");
-
-                    if (auth.currentUser) {
-                        if (newFullname || newUsername || newPhotoURL) {
-                            await updateProfile(auth.currentUser, {
-                                displayName: newFullname || auth.currentUser.displayName,
-                                photoURL: newPhotoURL || auth.currentUser.photoURL
-                            });
-
-                            const userRef = doc(db, "users", auth.currentUser.uid);
-                            await updateDoc(userRef, {
-                                fullname: newFullname || auth.currentUser.displayName,
-                                username: newUsername || auth.currentUser.displayName,
-                                photoURL: newPhotoURL || auth.currentUser.photoURL
-                            });
-
-                            alert("Profile updated successfully!");
-                            location.reload();
+                    // Fetch user data from Firestore
+                    const userRef = doc(db, "users", userId);
+                    getDoc(userRef).then((doc) => {
+                        if (doc.exists()) {
+                            const userData = doc.data();
+                            document.getElementById("user-username").innerText = userData.username;
+                            document.getElementById("user-email").innerText = userData.email;
+                            // Display user progress and level
+                            updateUserLevel(userId, userData.writeups || 0);
                         } else {
-                            alert("No changes were made.");
+                            console.log("No such document!");
                         }
-                    }
-                } catch (error) {
-                    console.error("Error updating profile:", error);
-                    alert("An error occurred while updating the profile.");
-            }
-        });
-
-        // Writing prompt and word count logic
-        const prompts = [
-            "Write about a time you overcame a challenge.",
-            "Describe your ideal vacation.",
-            "Write a story that starts with someone saying, 'I have a secret.'",
-            "Imagine you could travel anywhere in time. Where and when would you go?",
-            "Write about a memorable meal."
-        ];
-
-        const writingPrompt = document.getElementById('writing-prompt');
-        const newPromptBtn = document.getElementById('new-prompt-btn');
-        const writingTextbox = document.getElementById('writing-textbox');
-        const wordCount = document.getElementById('word-count');
-        const congratulatoryMessage = document.getElementById('congratulatory-message');
-
-        newPromptBtn.addEventListener('click', () => {
-            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-            writingPrompt.textContent = randomPrompt;
-        });
-
-        writingTextbox.addEventListener('input', () => {
-            const text = writingTextbox.value.trim();
-            const words = text.split(/\s+/).filter(word => word.length > 0);
-            const count = words.length;
-            wordCount.textContent = `Word count: ${count}`;
-
-            if (count >= 500) {
-                congratulatoryMessage.textContent = 'Congratulations! You have reached 500 words!';
-            } else {
-                congratulatoryMessage.textContent = '';
-            }
-        });
-
-        // Publish story function
-        document.getElementById('publish-story').addEventListener('click', async () => {
-            const storyContent = writingTextbox.value.trim();
-
-            if (storyContent.length === 0) {
-                alert('Please write something before publishing.');
-                return;
-            }
-
-            try {
-                const response = await fetch('https://formspree.io/f/mldrbpwo', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        content: storyContent,
-                        userEmail: auth.currentUser.email,
-                        userName: auth.currentUser.displayName
-                    })
-                });
-
-                if (response.ok) {
-                    alert('Story published successfully!');
-                    writingTextbox.value = '';
-                    wordCount.textContent = 'Word count: 0';
-                    congratulatoryMessage.textContent = '';
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
                 } else {
-                    throw new Error('Failed to publish story.');
+                    window.location.href = "login-page.html";
                 }
-            } catch (error) {
-                console.error('Error publishing story:', error);
-                alert('An error occurred while publishing the story.');
-            }
-        });
-    </script>
+            });
+
+            document.getElementById("logout").addEventListener("click", () => {
+                signOut(auth).then(() => {
+                    window.location.href = "login-page.html";
+                }).catch((error) => {
+                    console.error("Error signing out:", error);
+                });
+            });
+        </script>
+    </div>
 </body>
 </html>
