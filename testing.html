@@ -1,4 +1,200 @@
-const userRef = doc(db, "users", auth.currentUser.uid);
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>My 9jahotblog Profile</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        /* Additional styling for profile in menu */
+        .profile-container {
+            text-align: center;
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .profile-container img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        .profile-container button {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        /* Styling for writing prompt and textbox */
+        .writing-container {
+            text-align: center;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .writing-container textarea {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .writing-container button {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#profile-section">Profile</a></li>
+                    <li><a href="#writing-prompt-section">Writing Prompt</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
+                </header>
+
+                <!-- Profile Section -->
+                <section id="profile-section">
+                    <div class="profile-container">
+                        <div>
+                            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
+                        </div>
+                        <p>Email: <span id="user-email"></span></p>
+                        <p>Username: <span id="user-username"></span></p>
+                        <p>Earnings: ₦0.00</p>
+                        <p>Short Stories/Articles: N/A</p>
+                        <p>Books: N/A</p>
+                        <button id="edit-profile">Edit Profile</button>
+                        <a href="login-page.html"><button id="logout">Logout</button></a>
+                    </div>
+                    <hr />
+                </section>
+
+                <!-- Writing Prompt and Textbox Section -->
+                <section id="writing-prompt-section">
+                    <div class="writing-container">
+                        <h2>Writing Prompt</h2>
+                        <p id="writing-prompt">Click the button to get a new prompt!</p>
+                        <button id="new-prompt-btn">New Prompt</button>
+                        <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
+                        <p id="word-count">Word count: 0</p>
+                    </div>
+                </section>
+                
+                <!-- Footer -->
+                <footer id="footer">
+                    <ul class="icons">
+                        <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                        <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                        <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                        <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+                    </ul>
+                    <ul class="copyright">
+                        <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+                    </ul>
+                </footer>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+            import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+            const firebaseConfig = {
+                authDomain: "jahotblog-login.firebaseapp.com",
+                projectId: "jahotblog-login",
+                storageBucket: "jahotblog-login.appspot.com",
+                messagingSenderId: "661526730601",
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+
+            // Check if user is signed in and display their info
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    document.getElementById('user-name').textContent = user.displayName || 'User';
+                    document.getElementById('user-email').textContent = user.email;
+                    document.getElementById('user-username').textContent = user.displayName || 'Username';
+                    if (user.photoURL) {
+                        document.getElementById('profile-photo').src = user.photoURL;
+                    }
+                } else {
+                    window.location.href = 'login-page.html';
+                }
+            });
+
+            // Logout function
+            document.getElementById('logout').addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'login-page.html';
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
+                });
+            });
+
+            // Edit profile function
+            document.getElementById('edit-profile').addEventListener('click', async () => {
+                try {
+                    const newFullname = prompt("Enter new full name:");
+                    const newUsername = prompt("Enter new username:");
+                    const newPhotoURL = prompt("Enter new profile photo URL:");
+
+                    if (auth.currentUser) {
+                        if (newFullname) {
+                            await updateProfile(auth.currentUser, { displayName: newFullname });
+                        }
+                        if (newUsername) {
+                            await updateProfile(auth.currentUser, { displayName: newUsername });
+                        }
+                        if (newPhotoURL) {
+                            await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
+                            document.getElementById('profile-photo').src = newPhotoURL;
+                        }
+
+                        const userRef = doc(db, "users", auth.currentUser.uid);
 await updateDoc(userRef, {
     fullname: newFullname || auth.currentUser.displayName,
     username: newUsername || auth.currentUser.displayName,
