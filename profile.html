@@ -32,35 +32,37 @@
         }
 
         /* Styles for the writing prompt section */
-        .writing-prompt-section {
-            background-color: #F2C464; /* Light gold color */
-            padding: 20px;
-            margin-top: 30px;
+        .writing-container {
             text-align: center;
+            background-color: #333333; /* light black */
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
         }
-        .writing-prompt-section p {
+        .writing-container p {
             font-size: 1.2em;
             font-weight: bold;
         }
-        .writing-prompt-section textarea {
+        .writing-container textarea {
             width: 100%;
             height: 150px;
             padding: 10px;
             margin: 10px 0;
         }
-        .writing-prompt-section .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .writing-prompt-section button {
+        .writing-container button {
             background-color: #444;
             color: white;
             border: none;
             padding: 10px 20px;
             cursor: pointer;
+            margin-top: 10px;
+        }
+        .writing-container .publish-btn {
+            background-color: #007BFF; /* Blue color */
+            margin-top: 20px;
         }
 
         /* Styles for the book flip feature */
@@ -138,16 +140,16 @@
                 </section>
 
                 <!-- Writing Prompt Section -->
-                <section class="writing-prompt-section">
-                    <p id="writing-prompt"></p>
-                    <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
-                    <div class="buttons">
+                <section>
+                    <div class="writing-container">
+                        <p id="writing-prompt">Click the button to get a new prompt!</p>
+                        <textarea id="writing-textbox" name="story" placeholder="Start writing here..." required></textarea>
                         <button id="new-prompt-btn">New Prompt</button>
+                        <form action="https://formspree.io/f/mldrbpwo" method="POST">
+                            <button type="submit" class="publish-btn">Publish Story</button>
+                        </form>
+                        <p id="word-count">Word count: 0</p>
                     </div>
-                    <form action="https://formspree.io/f/mldrbpwo" method="POST">
-                        <button type="submit" id="publish-story-btn">Publish Story</button>
-                    </form>
-                    <p id="word-count">Word count: 0</p>
                 </section>
 
                 <!-- Book Flip Feature -->
@@ -195,7 +197,6 @@
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
                 authDomain: "jahotblog-login.firebaseapp.com",
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
@@ -216,95 +217,79 @@
                     if (user.photoURL) {
                         document.getElementById('profile-photo').src = user.photoURL;
                     }
-
-                    // Get user data from Firestore
-                    const userDoc = doc(db, 'users', user.uid);
-                    getDoc(userDoc).then((docSnap) => {
-                        if (docSnap.exists()) {
-                            const data = docSnap.data();
-                            document.getElementById('user-username').textContent = data.username || 'Username';
-                            document.getElementById('user-email').textContent = data.email || 'Email';
-                            // Populate other profile details as needed
-                        } else {
-                            console.log('No such document!');
-                        }
-                    }).catch((error) => {
-                        console.error('Error getting document:', error);
-                    });
-
-                    // Handle Logout
-                    document.getElementById('logout').addEventListener('click', () => {
-                        signOut(auth).then(() => {
-                            window.location.href = 'login-page.html'; // Redirect after logout
-                        }).catch((error) => {
-                            console.error('Logout Error:', error);
-                        });
-                    });
-
-                    // Handle Edit Profile
-                    document.getElementById('edit-profile').addEventListener('click', () => {
-                        // Redirect to profile edit page
-                        window.location.href = 'edit-profile.html';
-                    });
                 } else {
-                    // User is not signed in
-                    window.location.href = 'login-page.html'; // Redirect to login page
+                    window.location.href = 'login-page.html';
                 }
             });
 
-            // Handle New Prompt Button
-            document.getElementById('new-prompt-btn').addEventListener('click', () => {
-                // Fetch new writing prompt from your backend or API
-                fetch('/api/new-prompt')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('writing-prompt').textContent = data.prompt;
-                        document.getElementById('writing-textbox').value = '';
-                        document.getElementById('word-count').textContent = 'Word count: 0';
-                    });
+            // Logout function
+            document.getElementById('logout').addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'login-page.html';
+                }).catch((error) => {
+                    console.error('Logout Error:', error);
+                });
             });
 
-            // Handle word count in the textarea
-            document.getElementById('writing-textbox').addEventListener('input', (event) => {
-                const text = event.target.value;
-                const wordCount = text.trim().split(/\s+/).length;
+            // Edit profile button
+            document.getElementById('edit-profile').addEventListener('click', () => {
+                // Redirect to edit profile page or show profile edit form
+                window.location.href = 'edit-profile.html';
+            });
+
+            // Writing prompt and word count functionality
+            const prompts = [
+                "Write about a magical forest.",
+                "Describe your favorite memory.",
+                "Create a story about a lost treasure.",
+                "Imagine a world where everyone has superpowers.",
+                "Write a funny story about a day gone wrong.",
+                "Describe a young adult's first day at a new school.",
+                "Write a Christian fiction story about faith and miracles.",
+                "Describe an adventure in a mythical land."
+            ];
+
+            document.getElementById('new-prompt-btn').addEventListener('click', () => {
+                const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+                document.getElementById('writing-prompt').textContent = randomPrompt;
+                document.getElementById('writing-textbox').value = '';
+                document.getElementById('word-count').textContent = 'Word count: 0';
+            });
+
+            document.getElementById('writing-textbox').addEventListener('input', () => {
+                const text = document.getElementById('writing-textbox').value;
+                const wordCount = text.split(/\s+/).filter(Boolean).length;
                 document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
             });
 
-            // Handle Book Navigation
+            // Book flip feature
+            const books = [
+                { title: "Book 1", cover: "book1-cover.jpg", story: "Once upon a time..." },
+                { title: "Book 2", cover: "book2-cover.jpg", story: "In a galaxy far away..." }
+                // Add more books as needed
+            ];
+
             let currentBookIndex = 0;
-            const books = ['book1-cover.jpg', 'book2-cover.jpg', 'book3-cover.jpg']; // List of book cover images
-            const bookCover = document.getElementById('book-cover');
-            const story = document.getElementById('story');
-            const storyText = document.getElementById('story-text');
+
+            function updateBook() {
+                const book = books[currentBookIndex];
+                document.getElementById('book-cover').src = book.cover;
+                document.getElementById('story-text').textContent = book.story;
+                document.getElementById('story').style.display = 'block';
+            }
 
             document.getElementById('next-book').addEventListener('click', () => {
-                if (currentBookIndex < books.length - 1) {
-                    currentBookIndex++;
-                    bookCover.src = books[currentBookIndex];
-                    // Fetch new story for the selected book
-                    fetch(`/api/book/${currentBookIndex}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            storyText.textContent = data.story;
-                            story.style.display = 'block';
-                        });
-                }
+                currentBookIndex = (currentBookIndex + 1) % books.length;
+                updateBook();
             });
 
             document.getElementById('prev-book').addEventListener('click', () => {
-                if (currentBookIndex > 0) {
-                    currentBookIndex--;
-                    bookCover.src = books[currentBookIndex];
-                    // Fetch new story for the selected book
-                    fetch(`/api/book/${currentBookIndex}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            storyText.textContent = data.story;
-                            story.style.display = 'block';
-                        });
-                }
+                currentBookIndex = (currentBookIndex - 1 + books.length) % books.length;
+                updateBook();
             });
+
+            // Initial setup for the book flip feature
+            updateBook();
         </script>
     </div>
 </body>
