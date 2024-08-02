@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
     <style>
-        /* Additional styling for profile in menu */
         .profile-container {
             text-align: center;
             background-color: #111111;
@@ -30,12 +31,20 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        #flipbook {
+            width: 400px;
+            height: 300px;
+            margin: auto;
+        }
+        .reading-mode {
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
-
-        <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
             <nav id="nav">
@@ -47,14 +56,12 @@
             </nav>
         </header>
 
-        <!-- Main -->
         <div id="main" class="wrapper style1">
             <div class="container">
                 <header class="major">
                     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
                 </header>
 
-                <!-- Profile Section -->
                 <section>
                     <div class="profile-container">
                         <div>
@@ -71,6 +78,36 @@
                     <hr />
                 </section>
                 
+                <!-- Book Page Flip Section -->
+                <section>
+                    <div id="flipbook">
+                        <div class="page">Page 1 content</div>
+                        <div class="page">Page 2 content</div>
+                        <!-- Add more pages as needed -->
+                    </div>
+                </section>
+                <hr />
+                
+                <!-- Reading Mode -->
+                <section>
+                    <button id="reading-mode-btn">Toggle Reading Mode</button>
+                </section>
+                <hr />
+
+                <!-- Writing Prompts -->
+                <section>
+                    <div id="writing-prompt">Click the button for a new prompt!</div>
+                    <button id="new-prompt-btn">New Prompt</button>
+                </section>
+                <hr />
+
+                <!-- Writing Textbox with Grammar Check -->
+                <section>
+                    <textarea id="writing-textbox" placeholder="Start writing..."></textarea>
+                    <div id="word-count">Word count: 0</div>
+                </section>
+                <hr />
+
                 <!-- Footer -->
                 <footer id="footer">
                     <ul class="icons">
@@ -103,7 +140,6 @@
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
                 authDomain: "jahotblog-login.firebaseapp.com",
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
@@ -115,7 +151,6 @@
             const auth = getAuth(app);
             const db = getFirestore(app);
 
-            // Check if user is signed in and display their info
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     document.getElementById('user-name').textContent = user.displayName || 'User';
@@ -129,7 +164,6 @@
                 }
             });
 
-            // Logout function
             document.getElementById('logout').addEventListener('click', () => {
                 signOut(auth).then(() => {
                     window.location.href = 'login-page.html';
@@ -138,7 +172,6 @@
                 });
             });
 
-            // Edit profile function
             document.getElementById('edit-profile').addEventListener('click', async () => {
                 try {
                     const newFullname = prompt("Enter new full name:");
@@ -171,6 +204,50 @@
                     console.error('Error updating profile:', error);
                 }
             });
+
+            $(document).ready(function() {
+                $("#flipbook").turn({
+                    width: 400,
+                    height: 300,
+                    autoCenter: true
+                });
+            });
+
+            document.getElementById('reading-mode-btn').addEventListener('click', function() {
+                document.body.classList.toggle('reading-mode');
+            });
+
+            const prompts = [
+            "Write about a magical forest.",
+            "Describe your favorite memory.",
+            "Imagine you find a secret door in your house. Where does it lead?",
+            "Write a story set in a futuristic city.",
+            "Describe a day in the life of a superhero.",
+            "Write a humorous story about a clumsy wizard.",
+            "Imagine you are a detective solving a mystery in a small town.",
+            "Write about a character who discovers they have magical powers.",
+            "Describe a family road trip that goes hilariously wrong.",
+            "Write a Christian fiction story about faith overcoming adversity.",
+            "Imagine you are a young adult navigating high school drama with a twist.",
+            "Write a story about a group of friends on a summer adventure.",
+            "Describe a fantastical creature and its habitat.",
+            "Write a heartwarming story about a family reunion.",
+            "Imagine you are an explorer discovering an ancient civilization.",
+            "Write about a character's journey of self-discovery and faith.",
+            "Describe a funny encounter with an alien.",
+            "Write a story about a hidden talent being revealed."
+        ];
+
+        document.getElementById('new-prompt-btn').addEventListener('click', function() {
+            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+            document.getElementById('writing-prompt').textContent = randomPrompt;
+        });
+
+        document.getElementById('writing-textbox').addEventListener('input', function() {
+            const text = this.value;
+            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+            document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
+        });
         </script>
     </div>
 </body>
