@@ -33,10 +33,10 @@
 
         /* Styles for the writing prompt section */
         .writing-prompt-section {
+            background-color: #f8e1b4; /* Light gold color */
+            padding: 20px;
             margin-top: 30px;
             text-align: center;
-            background-color: #; /* Light gold color */
-            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -56,7 +56,7 @@
             gap: 10px;
         }
         .writing-prompt-section button {
-            background-color: #f5f5dc;
+            background-color: #444;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -139,12 +139,14 @@
 
                 <!-- Writing Prompt Section -->
                 <section class="writing-prompt-section">
-                    <p id="writing-prompt">Click the button to get a new prompt!</p>
+                    <p id="writing-prompt"></p>
                     <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
                     <div class="buttons">
                         <button id="new-prompt-btn">New Prompt</button>
-                        <button id="publish-story-btn">Publish Story</button>
                     </div>
+                    <form action="https://formspree.io/f/mldrbpwo" method="POST">
+                        <button type="submit" id="publish-story-btn">Publish Story</button>
+                    </form>
                     <p id="word-count">Word count: 0</p>
                 </section>
 
@@ -193,6 +195,7 @@
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
+                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
                 authDomain: "jahotblog-login.firebaseapp.com",
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
@@ -213,80 +216,95 @@
                     if (user.photoURL) {
                         document.getElementById('profile-photo').src = user.photoURL;
                     }
+
+                    // Get user data from Firestore
+                    const userDoc = doc(db, 'users', user.uid);
+                    getDoc(userDoc).then((docSnap) => {
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+                            document.getElementById('user-username').textContent = data.username || 'Username';
+                            document.getElementById('user-email').textContent = data.email || 'Email';
+                            // Populate other profile details as needed
+                        } else {
+                            console.log('No such document!');
+                        }
+                    }).catch((error) => {
+                        console.error('Error getting document:', error);
+                    });
+
+                    // Handle Logout
+                    document.getElementById('logout').addEventListener('click', () => {
+                        signOut(auth).then(() => {
+                            window.location.href = 'login-page.html'; // Redirect after logout
+                        }).catch((error) => {
+                            console.error('Logout Error:', error);
+                        });
+                    });
+
+                    // Handle Edit Profile
+                    document.getElementById('edit-profile').addEventListener('click', () => {
+                        // Redirect to profile edit page
+                        window.location.href = 'edit-profile.html';
+                    });
                 } else {
-                    window.location.href = 'login-page.html';
+                    // User is not signed in
+                    window.location.href = 'login-page.html'; // Redirect to login page
                 }
             });
 
-            // Logout function
-            document.getElementById('logout').addEventListener('click', () => {
-                signOut(auth).then(() => {
-                    window.location.href = 'login-page.html';
-                }).catch((error) => {
-                    console.error('Sign out error:', error);
-                });
+            // Handle New Prompt Button
+            document.getElementById('new-prompt-btn').addEventListener('click', () => {
+                // Fetch new writing prompt from your backend or API
+                fetch('/api/new-prompt')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('writing-prompt').textContent = data.prompt;
+                        document.getElementById('writing-textbox').value = '';
+                        document.getElementById('word-count').textContent = 'Word count: 0';
+                    });
             });
 
-            // Handling book selection and page flipping
-            const books = [
-                { cover: 'book1-cover.jpg', story: 'Once upon a time in a land far, far away...' },
-                { cover: 'book2-cover.jpg', story: 'In a small village nestled in the hills...' }
-                // Add more book objects here
-            ];
+            // Handle word count in the textarea
+            document.getElementById('writing-textbox').addEventListener('input', (event) => {
+                const text = event.target.value;
+                const wordCount = text.trim().split(/\s+/).length;
+                document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
+            });
 
+            // Handle Book Navigation
             let currentBookIndex = 0;
+            const books = ['book1-cover.jpg', 'book2-cover.jpg', 'book3-cover.jpg']; // List of book cover images
+            const bookCover = document.getElementById('book-cover');
+            const story = document.getElementById('story');
+            const storyText = document.getElementById('story-text');
 
-            function updateBookDisplay(index) {
-                const bookCover = document.getElementById('book-cover');
-                const storyText = document.getElementById('story-text');
-                bookCover.src = books[index].cover;
-                storyText.textContent = books[index].story;
-                document.getElementById('book-container').style.display = 'flex';
-            }
-
-            document.getElementById('read-novel-link').addEventListener('click', (e) => {
-                e.preventDefault();
-                const bookContainer = document.getElementById('book-container');
-                if (bookContainer.style.display === 'none') {
-                    updateBookDisplay(currentBookIndex);
-                } else {
-                    bookContainer.style.display = 'none';
+            document.getElementById('next-book').addEventListener('click', () => {
+                if (currentBookIndex < books.length - 1) {
+                    currentBookIndex++;
+                    bookCover.src = books[currentBookIndex];
+                    // Fetch new story for the selected book
+                    fetch(`/api/book/${currentBookIndex}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            storyText.textContent = data.story;
+                            story.style.display = 'block';
+                        });
                 }
             });
 
             document.getElementById('prev-book').addEventListener('click', () => {
-                currentBookIndex = (currentBookIndex > 0) ? currentBookIndex - 1 : books.length - 1;
-                updateBookDisplay(currentBookIndex);
-            });
-
-            document.getElementById('next-book').addEventListener('click', () => {
-                currentBookIndex = (currentBookIndex < books.length - 1) ? currentBookIndex + 1 : 0;
-                updateBookDisplay(currentBookIndex);
-            });
-
-            // Handling writing prompt and word count
-            document.getElementById('writing-textbox').addEventListener('input', () => {
-                const wordCount = document.getElementById('writing-textbox').value.split(/\s+/).filter(Boolean).length;
-                document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
-            });
-
-            document.getElementById('publish-story-btn').addEventListener('click', () => {
-                const storyText = document.getElementById('writing-textbox').value;
-                if (storyText.trim() === '') {
-                    alert('Please write something before publishing.');
-                } else {
-                    // Here you can handle the form submission to Formspree or any other service
-                    console.log('Publishing story:', storyText);
+                if (currentBookIndex > 0) {
+                    currentBookIndex--;
+                    bookCover.src = books[currentBookIndex];
+                    // Fetch new story for the selected book
+                    fetch(`/api/book/${currentBookIndex}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            storyText.textContent = data.story;
+                            story.style.display = 'block';
+                        });
                 }
             });
-
-            document.getElementById('new-prompt-btn').addEventListener('click', () => {
-                // Logic to get a new writing prompt
-                document.getElementById('writing-prompt').textContent = 'New prompt: Write about your favorite memory!';
-                document.getElementById('writing-textbox').value = '';
-                document.getElementById('word-count').textContent = 'Word count: 0';
-            });
-
         </script>
     </div>
 </body>
