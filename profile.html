@@ -31,66 +31,24 @@
             cursor: pointer;
         }
 
-        /* Styles for the writing prompt section */
-        .writing-prompt-section {
-            margin-top: 30px;
-            text-align: center;
+        /* Dark theme styling */
+        .dark-theme {
+            background-color: #1e1e1e;
+            color: #ffffff;
         }
-        .writing-prompt-section p {
-            font-size: 1.2em;
-            font-weight: bold;
+        .dark-theme .profile-container {
+            background-color: #2e2e2e;
         }
-        .writing-prompt-section textarea {
-            width: 100%;
-            height: 150px;
-            padding: 10px;
-            margin: 10px 0;
+        .dark-theme button {
+            background-color: #555;
         }
-        .writing-prompt-section .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        .writing-prompt-section button {
-            background-color: #444;
-            color: white;
+        .theme-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: none;
             border: none;
-            padding: 10px 20px;
             cursor: pointer;
-        }
-
-        /* Styles for the book flip feature */
-        .book-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 30px;
-        }
-        .book-container h2 {
-            font-size: 1.5em;
-        }
-        .book-container .book-cover {
-            width: 200px;
-            height: 300px;
-            margin: 10px;
-        }
-        .book-container .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 600px;
-        }
-        .book-container .nav-buttons button {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-        .book-container .story {
-            display: none;
-            text-align: left;
-            margin-top: 20px;
         }
     </style>
 </head>
@@ -134,26 +92,30 @@
                 </section>
 
                 <!-- Writing Prompt Section -->
-                <section class="writing-prompt-section">
-                    <p id="writing-prompt"></p>
-                    <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
-                    <div class="buttons">
-                        <button id="new-prompt-btn">New Prompt</button>
-                        <button id="publish-story-btn">Publish Story</button>
-                    </div>
-                    <p id="word-count">Word count: 0</p>
+                <section>
+                    <h2>Writing Prompt</h2>
+                    <div id="writing-prompt"></div>
+                    <button id="new-prompt-btn">New Prompt</button>
+                    <textarea id="writing-textbox" rows="10" cols="50" placeholder="Start writing here..."></textarea>
+                    <div id="word-count">Word count: 0</div>
+                    <form action="#" method="POST" id="publish-form">
+                        <input type="text" id="pen-name" name="pen-name" placeholder="Pen Name" required>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                        <button type="submit" id="publish-story-btn">Publish Story</button>
+                    </form>
                 </section>
 
-                <!-- Book Flip Feature -->
-                <section class="book-container" id="book-container">
-                    <h2>Choose a book:</h2>
-                    <div class="nav-buttons">
-                        <button id="prev-book">Previous</button>
-                        <img id="book-cover" class="book-cover" src="book1-cover.jpg" alt="Book Cover">
-                        <button id="next-book">Next</button>
+                <!-- Book Flip Section -->
+                <section id="book-container" style="display:none;">
+                    <h2>Choose a Novel</h2>
+                    <div>
+                        <button id="prev-book">Previous Book</button>
+                        <img id="book-cover" src="" alt="Book Cover" style="cursor:pointer;">
+                        <button id="next-book">Next Book</button>
                     </div>
-                    <div class="story" id="story">
-                        <p id="story-text"></p>
+                    <div id="story" style="display:none;">
+                        <h2>Reading Mode</h2>
+                        <div id="story-text"></div>
                     </div>
                 </section>
 
@@ -173,6 +135,11 @@
             </div>
         </div>
 
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="theme-toggle">
+            <img src="assets/images/bulb-icon.png" alt="Toggle Theme">
+        </button>
+
         <!-- Scripts -->
         <script src="assets/js/jquery.min.js"></script>
         <script src="assets/js/jquery.scrolly.min.js"></script>
@@ -189,7 +156,6 @@
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
                 authDomain: "jahotblog-login.firebaseapp.com",
                 projectId: "jahotblog-login",
                 storageBucket: "jahotblog-login.appspot.com",
@@ -216,23 +182,23 @@
             });
 
             // Logout function
-        document.getElementById('logout').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                window.location.href = 'login-page.html';
-            }).catch((error) => {
-                console.error('Error signing out:', error);
+            document.getElementById('logout').addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = 'login-page.html';
+                }).catch((error) => {
+                    console.error('Error signing out:', error);
+                });
             });
-        });
 
-        // Edit profile function
-        document.getElementById('edit-profile').addEventListener('click', async () => {
-            try {
-                const newFullname = prompt("Enter new full name:");
-                const newUsername = prompt("Enter new username:");
-                const newPhotoURL = prompt("Enter new profile photo URL:");
+            // Edit profile function
+            document.getElementById('edit-profile').addEventListener('click', async () => {
+                try {
+                    const newFullname = prompt("Enter new full name:");
+                    const newUsername = prompt("Enter new username:");
+                    const newPhotoURL = prompt("Enter new profile photo URL:");
 
-                if (auth.currentUser) {
-                    if (newFullname) {
+                    if (auth.currentUser) {
+                        if (newFullname) {
                         await updateProfile(auth.currentUser, { displayName: newFullname });
                     }
                     if (newUsername) {
@@ -258,106 +224,106 @@
             }
         });
 
-        // Writing prompts and publish story button
-        const prompts = [
-            "Write about a magical forest.",
-            "Describe your favorite memory.",
-            "Create a fantasy world with unique creatures.",
-            "Write a humorous short story about an awkward family gathering.",
-            "Describe a young adult adventure in a mysterious city.",
-            "Write a Christian fiction story about finding faith in adversity."
-        ];
+        // Writing Prompts
+        const prompts = ["Write about a magical forest.", "Describe your favorite memory.", "Imagine you're a detective solving a mystery.", "Write a humorous story about a talking animal.", "Describe a day in the life of a superhero.", "Write about a young adult's first day at a new school.", "Describe a futuristic world where humans live on another planet.", "Write a Christian fiction story about faith and miracles."];
 
         const promptElement = document.getElementById('writing-prompt');
-        const writingTextbox = document.getElementById('writing-textbox');
-        const wordCountElement = document.getElementById('word-count');
+        const textbox = document.getElementById('writing-textbox');
+        const wordCount = document.getElementById('word-count');
+        const publishForm = document.getElementById('publish-form');
 
-        const setNewPrompt = () => {
-            const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-            promptElement.textContent = randomPrompt;
-        };
+        function newPrompt() {
+            const randomIndex = Math.floor(Math.random() * prompts.length);
+            promptElement.textContent = prompts[randomIndex];
+        }
 
-        document.getElementById('new-prompt-btn').addEventListener('click', setNewPrompt);
-
-        writingTextbox.addEventListener('input', () => {
-            const wordCount = writingTextbox.value.split(/\s+/).filter(word => word.length > 0).length;
-            wordCountElement.textContent = `Word count: ${wordCount}`;
+        document.getElementById('new-prompt-btn').addEventListener('click', newPrompt);
+        textbox.addEventListener('input', () => {
+            const text = textbox.value;
+            const count = text.split(/\s+/).filter(word => word.length > 0).length;
+            wordCount.textContent = `Word count: ${count}`;
         });
 
-        setNewPrompt(); // Set initial prompt
+        // Initial prompt
+        newPrompt();
 
-        document.getElementById('publish-story-btn').addEventListener('click', () => {
-            // Your Formspree link will go here
-            const formspreeUrl = "https://formspree.io/f/mldrbpwo";
-            const storyContent = writingTextbox.value;
-
-            if (storyContent.trim().length === 0) {
-                alert("Please write something before submitting.");
-                return;
-            }
-
-            const form = document.createElement('form');
-            form.action = formspreeUrl;
-            form.method = 'POST';
-
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'story';
-            input.value = storyContent;
-
-            form.appendChild(input);
-            document.body.appendChild(form);
-            form.submit();
+        // Theme toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
         });
 
-        // Book flip feature
+        // Read a Novel functionality
+        const readNovelLink = document.getElementById('read-novel-link');
+        const bookContainer = document.getElementById('book-container');
+        const storyElement = document.getElementById('story');
+        const storyTextElement = document.getElementById('story-text');
+
         const books = [
-            { cover: "book1-cover.jpg", content: ["Page 1 of Book 1", "Page 2 of Book 1", "Page 3 of Book 1"] },
-            { cover: "book2-cover.jpg", content: ["Page 1 of Book 2", "Page 2 of Book 2", "Page 3 of Book 2"] },
-            { cover: "book3-cover.jpg", content: ["Page 1 of Book 3", "Page 2 of Book 3", "Page 3 of Book 3"] }
+            {
+                cover: 'assets/images/book1-cover.jpg',
+                title: 'The Enchanted Forest',
+                content: [
+                    "Once upon a time, in a magical forest...",
+                    "The trees were alive with whispers...",
+                    "A young adventurer named Lily discovered..."
+                ]
+            },
+            {
+                cover: 'assets/images/book2-cover.jpg',
+                title: 'The Time Traveler',
+                content: [
+                    "In the year 3021, time travel was a reality...",
+                    "Dr. Emmett Brown, a renowned scientist...",
+                    "A daring mission to save the future began..."
+                ]
+            }
         ];
 
         let currentBookIndex = 0;
         let currentPageIndex = 0;
 
-        const bookContainer = document.getElementById('book-container');
-        const bookCover = document.getElementById('book-cover');
-        const storyElement = document.getElementById('story');
-        const storyTextElement = document.getElementById('story-text');
+        function updateBook() {
+            document.getElementById('book-cover').src = books[currentBookIndex].cover;
+        }
 
-        const updateBookView = () => {
-            bookCover.src = books[currentBookIndex].cover;
+        function updateStory() {
             storyTextElement.textContent = books[currentBookIndex].content[currentPageIndex];
-        };
+        }
+
+        readNovelLink.addEventListener('click', () => {
+            bookContainer.style.display = 'block';
+            updateBook();
+        });
 
         document.getElementById('prev-book').addEventListener('click', () => {
             currentBookIndex = (currentBookIndex - 1 + books.length) % books.length;
-            currentPageIndex = 0;
-            updateBookView();
+            updateBook();
         });
 
         document.getElementById('next-book').addEventListener('click', () => {
             currentBookIndex = (currentBookIndex + 1) % books.length;
-            currentPageIndex = 0;
-            updateBookView();
+            updateBook();
         });
 
-        bookCover.addEventListener('click', () => {
+        document.getElementById('book-cover').addEventListener('click', () => {
             storyElement.style.display = 'block';
-            storyTextElement.textContent = books[currentBookIndex].content[currentPageIndex];
+            updateStory();
         });
 
-        document.getElementById('read-novel-link').addEventListener('click', () => {
-            bookContainer.style.display = 'flex';
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPageIndex > 0) {
+                currentPageIndex--;
+                updateStory();
+            }
         });
 
-        bookContainer.addEventListener('click', () => {
-            currentPageIndex = (currentPageIndex + 1) % books[currentBookIndex].content.length;
-            updateBookView();
+        document.getElementById('next-page').addEventListener('click', () => {
+            if (currentPageIndex < books[currentBookIndex].content.length - 1) {
+                currentPageIndex++;
+                updateStory();
+            }
         });
-
-        updateBookView(); // Initial book view setup
-        </script>
-    </div>
+    </script>
 </body>
 </html>
