@@ -84,6 +84,22 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        .library-container {
+            text-align: center;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        .library-container img {
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -97,6 +113,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#writing-section">Publish Story</a></li>
                     <li><a href="#profile-section">Profile</a></li>
+                    <li><a href="#library-section">Read Free Novels/Books</a></li>
                 </ul>
             </nav>
         </header>
@@ -116,6 +133,7 @@
                         </div>
                         <p>Email: <span id="user-email"></span></p>
                         <p>Username: <span id="user-username"></span></p>
+                        <p>Level: <span id="user-level"></span></p>
                         <p>Earnings: ₦0.00</p>
                         <p>Short Stories/Articles: N/A</p>
                         <p>Books: N/A</p>
@@ -125,8 +143,22 @@
                     <hr />
                 </section>
 
+                <!-- Library Section -->
+                <section id="library-section">
+                    <div class="library-container">
+                        <h2>Library</h2>
+                        <div id="book-covers">
+                            <!-- Add book cover images with data-book-id attribute -->
+                            <img src="book1.jpg" data-book-id="1" alt="Book 1" />
+                            <img src="book2.jpg" data-book-id="2" alt="Book 2" />
+                            <img src="book3.jpg" data-book-id="3" alt="Book 3" />
+                            <!-- Add more book covers as needed -->
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Book Reader Section -->
-                <section id="book-reader-section">
+                <section id="book-reader-section" style="display: none;">
                     <div class="book-reader-container">
                         <h2>Book Reader</h2>
                         <div id="book-content">
@@ -159,131 +191,177 @@
                         <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
                         <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
                     </ul>
-                    <ul class="copyright">
-                        <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-                    </ul>
                 </footer>
-                <button id="dark-mode-toggle">🌙</button>
             </div>
         </div>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/jquery.scrollex.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
+        <!-- Dark Mode Toggle -->
+        <button id="dark-mode-toggle">Dark Mode</button>
 
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-            import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-            const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-                authDomain: "jahotblog-login.firebaseapp.com",
-                projectId: "jahotblog-login",
-                storageBucket: "jahotblog-login.appspot.com",
-                messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-            };
-
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth();
-            const db = getFirestore(app);
-
-            // Book page flip feature
-            let currentPage = 0;
-            const bookPages = [
-                "Page 1 content...",
-                "Page 2 content...",
-                "Page 3 content...",
-                "Page 4 content..."
-            ];
-
-            document.getElementById("next-page").addEventListener("click", () => {
-                if (currentPage < bookPages.length - 1) {
-                    currentPage++;
-                    document.getElementById("book-page").innerText = bookPages[currentPage];
-                }
-            });
-
-            document.getElementById("prev-page").addEventListener("click", () => {
-                if (currentPage > 0) {
-                    currentPage--;
-                    document.getElementById("book-page").innerText = bookPages[currentPage];
-                }
-            });
-
-            // Writing goals and progress tracker
-            function updateProgress(userId, newProgress) {
-                const userRef = doc(db, "users", userId);
-                updateDoc(userRef, {
-                    progress: newProgress
-                }).then(() => {
-                    console.log("Progress updated successfully.");
-                }).catch((error) => {
-                    console.error("Error updating progress:", error);
-                });
-            }
-
-            // User level based on activity
-            function updateUserLevel(userId, numWriteups) {
-                let level = "New Writer";
-                if (numWriteups > 10) level = "Intermediary Writer";
-                if (numWriteups > 20) level = "Level 2";
-                if (numWriteups > 50) level = "Pro Writer";
-
-                const userRef = doc(db, "users", userId);
-                updateDoc(userRef, {
-                    level: level
-                }).then(() => {
-                    console.log("User level updated to:", level);
-                }).catch((error) => {
-                    console.error("Error updating user level:", error);
-                });
-            }
-
-            // Authentication state observer
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    const userId = user.uid;
-                    document.getElementById("user-name").innerText = user.displayName;
-                    document.getElementById("user-email").innerText = user.email;
-                    document.getElementById("user-username").innerText = user.displayName;
-                    document.getElementById("profile-photo").src = user.photoURL;
-
-                    // Fetch user data from Firestore
-                    const userRef = doc(db, "users", userId);
-                    getDoc(userRef).then((doc) => {
-                        if (doc.exists()) {
-                            const userData = doc.data();
-                            document.getElementById("user-username").innerText = userData.username;
-                            document.getElementById("user-email").innerText = userData.email;
-                            // Display user progress and level
-                            updateUserLevel(userId, userData.writeups || 0);
-                        } else {
-                            console.log("No such document!");
-                        }
-                    }).catch((error) => {
-                        console.log("Error getting document:", error);
-                    });
-                } else {
-                    window.location.href = "login-page.html";
-                }
-            });
-
-            document.getElementById("logout").addEventListener("click", () => {
-                signOut(auth).then(() => {
-                    window.location.href = "login-page.html";
-                }).catch((error) => {
-                    console.error("Error signing out:", error);
-                });
-            });
-        </script>
     </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+    authDomain: "jahotblog-login.firebaseapp.com",
+    projectId: "jahotblog-login",
+    storageBucket: "jahotblog-login.appspot.com",
+    messagingSenderId: "661526730601",
+    appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        // User is signed in, show user info
+        document.getElementById("user-email").textContent = user.email;
+        document.getElementById("user-username").textContent = user.displayName;
+
+        // Fetch additional user data from Firestore
+        const userRef = doc(db, "users", user.uid);
+        getDoc(userRef).then((doc) => {
+            if (doc.exists()) {
+                const userData = doc.data();
+                document.getElementById("profile-photo").src = userData.photoURL || "https://via.placeholder.com/100";
+                document.getElementById("user-level").textContent = userData.level || "Beginner Writer";
+            }
+        });
+
+        document.getElementById("edit-profile").addEventListener("click", () => {
+            const newUsername = prompt("Enter new username:");
+            if (newUsername) {
+                updateProfile(user, {
+                    displayName: newUsername
+                }).then(() => {
+                    document.getElementById("user-username").textContent = newUsername;
+                });
+
+                updateDoc(userRef, {
+                    displayName: newUsername
+                });
+            }
+        });
+
+        document.getElementById("logout").addEventListener("click", () => {
+            signOut(auth).then(() => {
+                window.location.href = "login-page.html";
+            });
+        });
+    } else {
+        // User is signed out, redirect to login page
+        window.location.href = "login-page.html";
+    }
+});
+
+document.getElementById("new-prompt-btn").addEventListener("click", () => {
+    // Fetch a new writing prompt from the database (simulated here)
+    const prompts = [
+        "Write about a time when you overcame a great challenge.",
+        "Describe a world where technology no longer exists.",
+        "Write a story about a character who discovers a hidden talent."
+    ];
+    const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+    document.getElementById("writing-prompt").textContent = randomPrompt;
+});
+
+document.getElementById("publish-story").addEventListener("click", () => {
+    const storyContent = document.getElementById("writing-textbox").value;
+    if (storyContent.trim() !== "") {
+        fetch("https://formspree.io/f/mldrbpwo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                story: storyContent
+            })
+        }).then((response) => {
+            if (response.ok) {
+                alert("Story published successfully!");
+            } else {
+                alert("Failed to publish story.");
+            }
+        });
+    } else {
+        alert("Please write something before publishing.");
+    }
+});
+
+document.getElementById("writing-textbox").addEventListener("input", () => {
+    const text = document.getElementById("writing-textbox").value;
+    const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+    document.getElementById("word-count").textContent = `Word count: ${wordCount}`;
+
+    let message = "";
+    if (wordCount >= 10) {
+        message = "Great start!";
+    }
+    if (wordCount >= 50) {
+        message = "Keep going, you're doing well!";
+    }
+    if (wordCount >= 100) {
+        message = "Fantastic! You've reached 100 words!";
+    }
+    if (wordCount >= 200) {
+        message = "Amazing! 200 words and counting!";
+    }
+    if (wordCount >= 500) {
+        message = "Incredible! 500 words! You're a star!";
+    }
+    document.getElementById("congratulatory-message").textContent = message;
+});
+
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    const colors = ["#444", "#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#BD10E0"];
+    const currentColor = document.body.style.backgroundColor;
+    const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
+    document.body.style.backgroundColor = nextColor;
+});
+
+document.querySelectorAll("#book-covers img").forEach((img) => {
+    img.addEventListener("click", (event) => {
+        const bookId = event.target.getAttribute("data-book-id");
+        // Fetch the book content from the database (simulated here)
+        const books = {
+            "1": ["Page 1 content of book 1", "Page 2 content of book 1"],
+            "2": ["Page 1 content of book 2", "Page 2 content of book 2"],
+            "3": ["Page 1 content of book 3", "Page 2 content of book 3"]
+        };
+        const bookContent = books[bookId];
+        let currentPage = 0;
+        document.getElementById("book-page").textContent = bookContent[currentPage];
+        document.getElementById("book-reader-section").style.display = "block";
+        document.getElementById("library-section").style.display = "none";
+
+        document.getElementById("next-page").addEventListener("click", () => {
+            if (currentPage < bookContent.length - 1) {
+                currentPage++;
+                document.getElementById("book-page").textContent = bookContent[currentPage];
+            }
+        });
+
+        document.getElementById("prev-page").addEventListener("click", () => {
+            if (currentPage > 0) {
+                currentPage--;
+                document.getElementById("book-page").textContent = bookContent[currentPage];
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
