@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
+        /* Additional styling for profile in menu */
         .profile-container {
             text-align: center;
             background-color: #111111;
@@ -29,6 +30,7 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+        /* Styling for writing prompt and textbox */
         .writing-container {
             text-align: center;
             background-color: #222;
@@ -55,17 +57,6 @@
             padding: 5px 10px;
             cursor: pointer;
         }
-        #dark-mode-toggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -77,8 +68,8 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="#writing-section">Publish Story</a></li>
-                    <li><a href="#profile-section">Profile</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">Books</a></li>
                 </ul>
             </nav>
         </header>
@@ -91,7 +82,7 @@
                 </header>
 
                 <!-- Profile Section -->
-                <section id="profile-section">
+                <section>
                     <div class="profile-container">
                         <div>
                             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
@@ -108,15 +99,13 @@
                 </section>
 
                 <!-- Writing Prompt and Textbox Section -->
-                <section id="writing-section">
+                <section>
                     <div class="writing-container">
                         <h2>Writing Prompt</h2>
                         <p id="writing-prompt">Click the button to get a new prompt!</p>
                         <button id="new-prompt-btn">New Prompt</button>
                         <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
                         <p id="word-count">Word count: 0</p>
-                        <p id="congratulatory-message"></p>
-                        <button id="publish-story">Publish Story</button>
                     </div>
                 </section>
                 
@@ -133,7 +122,6 @@
                         <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
                     </ul>
                 </footer>
-                <button id="dark-mode-toggle">🌙</button>
             </div>
         </div>
 
@@ -195,88 +183,68 @@
                     const newPhotoURL = prompt("Enter new profile photo URL:");
 
                     if (auth.currentUser) {
-                        if (newFullname || newUsername || newPhotoURL) {
-                            await updateProfile(auth.currentUser, {
-                                displayName: newFullname || auth.currentUser.displayName,
-                                photoURL: newPhotoURL || auth.currentUser.photoURL
-                            });
-                            alert("Profile updated successfully!");
-                            location.reload();
-                        } else {
-                            alert("No changes were made.");
+                        if (newFullname) {
+                            await updateProfile(auth.currentUser, { displayName: newFullname });
                         }
+                        if (newUsername) {
+                            await updateProfile(auth.currentUser, { displayName: newUsername });
+                        }
+                        if (newPhotoURL) {
+                            await updateProfile(auth.currentUser, { photoURL: newPhotoURL });
+                            document.getElementById('profile-photo').src = newPhotoURL;
+                        }
+
+                        const userRef = doc(db, "users", auth.currentUser.uid);
+                        await updateDoc(userRef, {
+                            fullname: newFullname || auth.currentUser.displayName,
+                            username: newUsername || auth.currentUser.displayName,
+                            photoURL: newPhotoURL || auth.currentUser.photoURL
+                        });
+
+                        alert("Profile updated successfully!");
+                        location.reload();
                     }
                 } catch (error) {
-                    console.error("Error updating profile:", error);
-                    alert("An error occurred while updating the profile.");
+                    console.error('Error updating profile:', error);
                 }
             });
 
-            // Writing Prompt and Word Count
+            // Writing prompt and word count functionality
             const prompts = [
-                "Describe a time when you felt truly content.",
-                "Write about a character who discovers a hidden talent.",
-                "Imagine a world where animals rule. What happens?",
-                "What would you do if you found a secret door in your house?"
+                "Write about a magical forest.",
+                "Describe your favorite memory.",
+                "Create a story about a lost treasure.",
+                "Imagine a world where everyone has superpowers.",
+                "Write a funny story about a day gone wrong.",
+                "Describe a young adult's first day at a new school.",
+                "Write a Christian fiction story about faith and miracles.",
+                "Describe an adventure in a mythical land."
             ];
 
-            document.getElementById('new-prompt-btn').addEventListener('click', () => {
-                const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-                document.getElementById('writing-prompt').textContent = randomPrompt;
+            const writingPromptElement = document.getElementById('writing-prompt');
+            const writingTextbox = document.getElementById('writing-textbox');
+            const wordCountElement = document.getElementById('word-count');
+            const newPromptButton = document.getElementById('new-prompt-btn');
+
+            function getRandomPrompt() {
+                const randomIndex = Math.floor(Math.random() * prompts.length);
+                return prompts[randomIndex];
+            }
+
+            function updateWordCount() {
+                const text = writingTextbox.value.trim();
+                const wordCount = text.split(/\s+/).filter(word => word).length;
+                wordCountElement.textContent = `Word count: ${wordCount}`;
+            }
+
+            newPromptButton.addEventListener('click', () => {
+                writingPromptElement.textContent = getRandomPrompt();
             });
 
-            const textarea = document.getElementById('writing-textbox');
-            const wordCountDisplay = document.getElementById('word-count');
-            const congratsMessage = document.getElementById('congratulatory-message');
-            
-            textarea.addEventListener('input', () => {
-                const text = textarea.value;
-                const wordCount = text.trim().split(/\s+/).length;
-                wordCountDisplay.textContent = `Word count: ${wordCount}`;
-                if (wordCount >= 250) {
-                    congratsMessage.textContent = "Congratulations! You've reached 250 words!";
-                } else {
-                    congratsMessage.textContent = "";
-                }
-            });
+            writingTextbox.addEventListener('input', updateWordCount);
 
-            // Publish Story
-            document.getElementById('publish-story').addEventListener('click', async () => {
-                const storyText = textarea.value;
-                const penName = prompt("Enter your pen name:");
-                const userEmail = auth.currentUser ? auth.currentUser.email : '';
-
-                if (storyText && penName) {
-                    try {
-                        await fetch("https://formspree.io/f/mldrbpwo", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            body: JSON.stringify({
-                                penName,
-                                email: userEmail,
-                                story: storyText
-                            })
-                        });
-                        alert("Story published successfully!");
-                        textarea.value = "";
-                        wordCountDisplay.textContent = "Word count: 0";
-                        congratsMessage.textContent = "";
-                    } catch (error) {
-                        console.error("Error publishing story:", error);
-                        alert("An error occurred while publishing the story.");
-                    }
-                } else {
-                    alert("Please fill in all fields before publishing.");
-                }
-            });
-
-            // Dark Mode Toggle
-            const darkModeToggle = document.getElementById('dark-mode-toggle');
-            darkModeToggle.addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-            });
+            // Initialize the first prompt
+            writingPromptElement.textContent = getRandomPrompt();
         </script>
     </div>
 </body>
