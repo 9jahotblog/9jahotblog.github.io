@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
     if (!prompt || !model) {
       return res.status(400).json({ error: 'Missing prompt or model' });
     }
-    
+
     try {
       let response;
       switch (model) {
