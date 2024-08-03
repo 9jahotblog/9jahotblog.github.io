@@ -31,8 +31,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        .profile-container img,
-        .library-container img {
+        .profile-container img {
             border-radius: 50%;
             width: 80px;
             height: 80px;
@@ -157,29 +156,7 @@
                         <button class="theme-toggle">🌙</button>
                         <h2>Book Reader</h2>
                         <div id="book-content">
-                            <p id="book-page">
-                                <p><strong>LONE RANGER</strong></p>
-                                <p><i>I shivered as the cool wind blew dust into my eyes. I'd come for a long run before dawn by the beach, but now, I was winded.</i></p>
-                                <p>My life was a suffocating mess and I needed the breathing space, so I took a much needed sabbatical from my job.</p>
-                                <p>I was a pro-life and pro-God activist, making me automatically the target of every anti-Christ organisation. It was a good thing I was a lone ranger, with no family since my parents disowned me years ago because of my faith. The way the world had gone haywire, turning normalcy upside down, I just wished the return of the Lord was closer.</p>
-                                <p>All sorts of debauchery had been legalised all on the claim of human liberty. But when it came to mentions of truth, one was tagged a fanatic and was blatantly persecuted. As I was. I had received lots of threats. The most recent one that forced me to take this retreat was the lawsuit I was faced with a particular celebrity.</p>
-                                <p>A popular popstar had sued me for allegedly defaming her. Her lyrics were clearly satanic and I'd only expressed my displeasure at how young people were being indoctrinated by her songs.</p>
-                                <p><i>I lay exhausted on the wet sand, spread eagle as I watch the sky light up with colours of the rising sun—pinks and oranges against a background of pale blue spotted with white fluffy clouds.</i></p>
-                                <p>'Lord, I'm tired and exhausted. I don't think I can go on on this path. Everyone hates me. Can't you just come and take me home? Like right now.'</p>
-                                <p>The voice of the Lord came softly on the wind.</p>
-                                <p>'Those who wait upon me will renew their strengths. They will mount up with wings as eagles, they will run and not be weary, they will walk and not faint.'</p>
-                                <p>I soaked in the word. I needed the reminder.</p>
-                                <p>A particular quote I'd read somewhere rang in my heart as I watched the crashing waves: <blockquote>'If you want to go fast go alone, but if you want to go far, go with others.'</blockquote></p>
-                                <p>'Sam, there are many who haven't caved in to the system of this world. You need to find them and walk with them. Your lone ranger creed won't work anymore, son.'</p>
-                                <p>As He spoke those words, I noticed a young brunette walking into the shallow waters with her surf board. She didn't seem to notice me and I was impressed that she wore a very modest swim suit as opposed to the bikini that was common place. I noticed the glint of the silver cross pendant she wore. I had a witness in my spirit that she was also a strong believer.</p>
-                                <p>She slid into the water and went under for such a long time that I panicked and considered diving in to rescue her from drowning.</p>
-                                <p>Just as I was about to rise to her rescue, she came out sleek and wet, her face brimming with such joy and peace. I saw her clasp her hands in prayer and her lips moving. I watched her for a long time. She must have sensed my eyes because the moment she was done, she opened her eyes and looked straight at me with a beautiful smile.</p>
-                                <p>'Go, speak to her,' the Lord's voice said.</p>
-                                <p>'Lord? I'm ranting to you about my predicament. Asking you for a solution. Not this. I don't need a distraction right now.'</p>
-                                <p>'She's the solution I'm providing you.'</p>
-                                <p>I looked at the waves again as this nameless lady began to ride the next wave. I smiled, not minding one bit that God's choice for me was a gorgeous lady who was obviously crazily in love with Him and not ashamed to show it.</p>
-                                <p><strong>AUTHOR: Praise Abraham</strong></p>
-                            </p>
+                            <p id="book-page"></p>
                         </div>
                         <button id="prev-page">Previous</button>
                         <button id="next-page">Next</button>
@@ -201,12 +178,28 @@
                         </form>
                     </div>
                 </section>
-                
+
                 <!-- Profile Benefits Section -->
                 <section id="benefits-section">
                     <div class="profile-container">
+                        <button class="theme-toggle">🌙</button>
                         <h2>Profile Benefits</h2>
-                        <p>As a 9jahotblogger, you get access to exclusive writing prompts, personalized feedback on your stories, and the chance to be featured as our Writer of the Month!</p>
+                        <p>As a 9jahotblogger, you enjoy numerous benefits, including:</p>
+                        <ul>
+                            <li>Prioritized ranking in search results, both on 9jahotblog and Google.</li>
+                            <li>Opportunities to adapt your book into a movie.</li>
+                            <li>Participation in exclusive contests.</li>
+                            <li>Earn money from posting short stories and getting engagements on your posts.</li>
+                            <li>Track analytics of your posts by checking the post link page.</li>
+                            <li>Getting a verified badge after amassing massive engagements on posts.</li>
+                        </ul>
+                        <p><strong>Introducing the 9jahotblog Verified Badge:</strong></p>
+                        <p>The 9jahotblog verified badge appears next to a person's username, indicating their profile is authentic and notable. Users with a verified badge have access to additional features, such as:</p>
+                        <ul>
+                            <li>An AI assistant to evaluate writing and check grammar and spelling.</li>
+                            <li>Earning for posting alone and higher earnings for massive engagements on posts.</li>
+                        </ul>
+                        <p>For custom verified badges, contact <a href="https://wa.me/+2349160331432">9jahotblog support</a> to join the waitlist. This service allows you to get a custom badge without the rigorous steps of obtaining it naturally and is endorsed by 9jahotblog.</p>
                     </div>
                 </section>
 
@@ -348,7 +341,38 @@
                 if (words.length >= 100) message = "Amazing! You're a true writer.";
                 if (words.length >= 200) message = "Outstanding! Keep up the excellent work.";
                 if (words.length >= 500) message = "Congratulations! You've written a masterpiece.";
-                document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+                document.getElementById("congratulatory-message").innerText = message;
+            });
+
+            document.getElementById("publish-story").addEventListener("click", (event) => {
+                event.preventDefault();
+                const text = document.getElementById("writing-textbox").value;
+                const words = text.trim().split(/\s+/);
+                const wordCount = words.length;
+
+                // Submit the form
+                event.target.closest("form").submit();
+
+                // Update progress in Firestore
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        updateProgress(user.uid, wordCount);
+                    }
+                });
+            });
+
+            // Dark mode toggle with multiple colors
+            let themeIndex = 0;
+            const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
+            function applyTheme(themeIndex) {
+                document.body.style.backgroundColor = themes[themeIndex];
+                document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
+                document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
+                    element.style.backgroundColor = themes[themeIndex];
+                });
+            }
+
+            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
                 themeIndex = (themeIndex + 1) % themes.length;
                 applyTheme(themeIndex);
             });
