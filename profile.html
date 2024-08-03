@@ -114,7 +114,7 @@
                         <p>Earnings: ₦0.00</p>
                         <p>Short Stories/Articles: N/A</p>
                         <p>Books: N/A</p>
-                        <p>Level: <span id="user-level"></span></p>
+                        <p>Level: <span id="user-level">no stories/no level</span></p>
                         <button id="edit-profile">Edit Profile</button>
                         <button id="logout">Logout</button>
                     </div>
@@ -186,7 +186,6 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
-
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
             import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
@@ -253,10 +252,8 @@
             }
 
             function updateUserLevel(userId, numWriteups) {
-                let level = "New Writer";
-                if (numWriteups > 10) level = "Intermediary Writer";
-                if (numWriteups > 20) level = "Level 2";
-                if (numWriteups > 50) level = "Pro Writer";
+                let level = "no stories/no level";
+                if (numWriteups > 0) level = "9jahotblogger";
 
                 const userRef = doc(db, "users", userId);
                 updateDoc(userRef, {
@@ -310,10 +307,7 @@
                 const lastWord = words[words.length - 1];
                 const suggestion = suggestions[lastWord];
                 if (suggestion) {
-                    const suggestionBox = document.createElement("span");
-                    suggestionBox.style.color = "gray";
-                    suggestionBox.innerText = ` ${suggestion}`;
-                    document.getElementById("writing-textbox").value += suggestionBox.innerText;
+                    event.target.value = text.slice(0, text.lastIndexOf(' ') + 1) + suggestion;
                 }
                 document.getElementById("word-count").innerText = `Word count: ${words.length}`;
             });
@@ -362,9 +356,9 @@
             });
 
             document.querySelectorAll('.theme-toggle').forEach((button) => {
-                button.addEventListener("click", () => {
+                button.addEventListener("click", (event) => {
                     themeIndex = (themeIndex + 1) % themes.length;
-                    applyTheme(themeIndex);
+                    event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container').style.backgroundColor = themes[themeIndex];
                 });
             });
 
@@ -384,7 +378,7 @@
                             const userData = doc.data();
                             document.getElementById("user-username").innerText = userData.username;
                             document.getElementById("user-email").innerText = userData.email;
-                            document.getElementById("user-level").innerText = userData.level || "New Writer";
+                            document.getElementById("user-level").innerText = userData.level || "no stories/no level";
                         } else {
                             console.log("No such document!");
                         }
