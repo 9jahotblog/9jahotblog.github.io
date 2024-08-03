@@ -19,6 +19,7 @@
             max-width: 600px;
             margin: auto;
             margin-top: 20px;
+            position: relative;
         }
         .profile-container img, .library-container img {
             border-radius: 50%;
@@ -60,6 +61,17 @@
             border-radius: 50%;
             cursor: pointer;
         }
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
         footer {
             margin-top: 40px;
         }
@@ -76,7 +88,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="#writing-section">Publish Story</a></li>
                     <li><a href="#profile-section">Profile</a></li>
-                    <li><a href="#library-section">Read Free Novels/Books</a></li>
+                    <li><a href="#library-section">Featured Story of the Month</a></li>
                 </ul>
             </nav>
         </header>
@@ -90,6 +102,7 @@
 
                 <!-- Profile Section -->
                 <section id="profile-section">
+                    <button class="theme-toggle">🌙</button>
                     <div class="profile-container">
                         <div>
                             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
@@ -108,18 +121,18 @@
 
                 <!-- Library Section -->
                 <section id="library-section">
+                    <button class="theme-toggle">🌙</button>
                     <div class="library-container">
-                        <h2>Select a Book to Read</h2>
-                        <div class="book-gallery">
-                            <img src="book-cover-1.jpg" alt="Book 1" onclick="openBook(1)" />
-                            <img src="book-cover-2.jpg" alt="Book 2" onclick="openBook(2)" />
-                            <img src="book-cover-3.jpg" alt="Book 3" onclick="openBook(3)" />
-                        </div>
+                        <h2>Featured Story of the Month</h2>
+                        <img src="https://i.postimg.cc/VvSVHH3N/1722646756851.jpg" alt="Lone Ranger" onclick="openBook(1)" />
+                        <h3>Lone Ranger</h3>
+                        <p>by Praise Abraham</p>
                     </div>
                 </section>
 
                 <!-- Book Reader Section -->
                 <section id="book-reader-section">
+                    <button class="theme-toggle">🌙</button>
                     <div class="book-reader-container">
                         <h2>Book Reader</h2>
                         <div id="book-content">
@@ -132,6 +145,7 @@
 
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
+                    <button class="theme-toggle">🌙</button>
                     <div class="writing-container">
                         <form action="https://formspree.io/f/mldrbpwo" method="POST">
                             <h2>Writing Prompt</h2>
@@ -176,221 +190,241 @@
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
             import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-                authDomain: "jahotblog-login.firebaseapp.com",
-                projectId: "jahotblog-login",
-                storageBucket: "jahotblog-login.appspot.com",
-                messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-            };
+const firebaseConfig = {
+    apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+    authDomain: "jahotblog-login.firebaseapp.com",
+    projectId: "jahotblog-login",
+    storageBucket: "jahotblog-login.appspot.com",
+    messagingSenderId: "661526730601",
+    appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+};
 
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth();
-            const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore(app);
 
-            let currentPage = 0;
-            const booksContent = {
-                1: ["Book 1 - Page 1 content...", "Book 1 - Page 2 content...", "Book 1 - Page 3 content...", "Book 1 - Page 4 content..."],
-                2: ["Book 2 - Page 1 content...", "Book 2 - Page 2 content...", "Book 2 - Page 3 content...", "Book 2 - Page 4 content..."],
-                3: ["Book 3 - Page 1 content...", "Book 3 - Page 2 content...", "Book 3 - Page 3 content...", "Book 3 - Page 4 content..."]
-            };
-            let currentBook = [];
+let currentPage = 0;
+const booksContent = {
+    1: [
+        "<p><strong>LONE RANGER</strong></p><p><i>I shivered as the cool wind blew dust into my eyes. I'd come for a long run before dawn by the beach, but now, I was winded.</i></p><p>My life was a suffocating mess and I needed the breathing space, so I took a much needed sabbatical from my job.</p><p>I was a pro-life and pro-God activist, making me automatically the target of every anti-Christ organisation. It was a good thing I was a lone ranger, with no family since my parents disowned me years ago because of my faith. The way the world had gone haywire, turning normalcy upside down, I just wished the return of the Lord was closer.</p>",
+        "<p>All sorts of debauchery had been legalised all on the claim of human liberty. But when it came to mentions of truth, one was tagged a fanatic and was blatantly persecuted. As I was. I had received lots of threats. The most recent one that forced me to take this retreat was the lawsuit I was faced with a particular celebrity.</p><p>A popular popstar had sued me for allegedly defaming her. Her lyrics were clearly satanic and I'd only expressed my displeasure at how young people were being indoctrinated by her songs.</p>",
+        "<p><i>I lay exhausted on the wet sand, spread eagle as I watch the sky light up with colours of the rising sun—pinks and oranges against a background of pale blue spotted with white fluffy clouds.</i></p><p>'Lord, I'm tired and exhausted. I don't think I can go on on this path. Everyone hates me. Can't you just come and take me home? Like right now.'</p><p>The voice of the Lord came softly on the wind.</p><p>'Those who wait upon me will renew their strengths. They will mount up with wings as eagles, they will run and not be weary, they will walk and not faint.'</p><p>I soaked in the word. I needed the reminder.</p>",
+        "<p>A particular quote I'd read somewhere rang in my heart as I watched the crashing waves: <blockquote>'If you want to go fast go alone, but if you want to go far, go with others.'</blockquote></p><p>'Sam, there are many who haven't caved in to the system of this world. You need to find them and walk with them. Your lone ranger creed won't work anymore, son.'</p><p>As He spoke those words, I noticed a young brunette walking into the shallow waters with her surf board. She didn't seem to notice me and I was impressed that she wore a very modest swim suit as opposed to the bikini that was common place. I noticed the glint of the silver cross pendant she wore. I had a witness in my spirit that she was also a strong believer.</p>",
+        "<p>She slid into the water and went under for such a long time that I panicked and considered diving in to rescue her from drowning.</p><p>Just as I was about to rise to her rescue, she came out sleek and wet, her face brimming with such joy and peace. I saw her clasp her hands in prayer and her lips moving. I watched her for a long time. She must have sensed my eyes because the moment she was done, she opened her eyes and looked straight at me with a beautiful smile.</p><p>'Go, speak to her,' the Lord's voice said.</p><p>'Lord? I'm ranting to you about my predicament. Asking you for a solution. Not this. I don't need a distraction right now.'</p><p>'She's the solution I'm providing you.'</p><p>I looked at the waves again as this nameless lady began to ride the next wave. I smiled, not minding one bit that God's choice for me was a gorgeous lady who was obviously crazily in love with Him and not ashamed to show it.</p><p><strong>AUTHOR: Praise Abraham</strong></p>"
+    ]
+};
+let currentBook = [];
 
-            function updatePageContent() {
-                document.getElementById("book-page").innerText = currentBook[currentPage];
+function updatePageContent() {
+    document.getElementById("book-page").innerHTML = currentBook[currentPage];
+}
+
+document.getElementById("next-page").addEventListener("click", () => {
+    if (currentPage < currentBook.length - 1) {
+        currentPage++;
+        updatePageContent();
+    }
+});
+
+document.getElementById("prev-page").addEventListener("click", () => {
+    if (currentPage > 0) {
+        currentPage--;
+        updatePageContent();
+    }
+});
+
+function openBook(bookId) {
+    currentPage = 0; // Reset to the first page
+    currentBook = booksContent[bookId] || [];
+    updatePageContent();
+}
+
+function updateProgress(userId, newProgress) {
+    const userRef = doc(db, "users", userId);
+    updateDoc(userRef, {
+        progress: newProgress
+    }).then(() => {
+        console.log("Progress updated successfully.");
+    }).catch((error) => {
+        console.error("Error updating progress:", error);
+    });
+}
+
+function updateUserLevel(userId, numWriteups) {
+    let level = "New Writer";
+    if (numWriteups > 10) level = "Intermediary Writer";
+    if (numWriteups > 20) level = "Level 2";
+    if (numWriteups > 50) level = "Pro Writer";
+
+    const userRef = doc(db, "users", userId);
+    updateDoc(userRef, {
+        level: level
+    }).then(() => {
+        console.log("User level updated to:", level);
+    }).catch((error) => {
+        console.error("Error updating user level:", error);
+    });
+}
+
+function fetchNewPrompt() {
+    const prompts = {
+        "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
+        "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
+        "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."]
+    };
+    const genres = Object.keys(prompts);
+    const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+    const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
+    return randomPrompt;
+}
+
+const suggestions = {
+    "Once": "Once upon a time",
+    "In": "In a land far away",
+    "The": "The hero embarked on a journey",
+    "I don't": "I don't know",
+    "He is": "He is a brave warrior",
+    "She was": "She was a kind soul",
+    "They went": "They went on an adventure",
+    "It was": "It was a dark and stormy night",
+    "There is": "There is a secret door",
+    "We can": "We can make it through"
+};
+
+document.getElementById("new-prompt-btn").addEventListener("click", () => {
+    const newPrompt = fetchNewPrompt();
+    document.getElementById("writing-prompt").innerText = newPrompt;
+});
+
+document.getElementById("writing-textbox").addEventListener("input", (event) => {
+    const text = event.target.value;
+    const words = text.split(" ");
+    const lastWord = words[words.length - 1];
+    const suggestion = suggestions[lastWord];
+    if (suggestion) {
+        event.target.value = text + " " + suggestion;
+    }
+    document.getElementById("word-count").innerText = `Word count: ${words.length}`;
+});
+
+document.getElementById("publish-story").addEventListener("click", () => {
+    const text = document.getElementById("writing-textbox").value;
+    const wordCount = text.split(" ").length;
+    let message = "";
+
+    if (wordCount >= 10) message = "Great start! Keep going.";
+    if (wordCount >= 50) message = "Impressive! You're on fire.";
+    if (wordCount >= 100) message = "Amazing! You're a true writer.";
+    if (wordCount >= 200) message = "Outstanding! Keep up the excellent work.";
+    if (wordCount >= 500) message = "Congratulations! You've written a masterpiece.";
+
+    document.getElementById("congratulatory-message").innerText = message;
+
+    // Update progress in Firestore
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            updateProgress(user.uid, wordCount);
+            updateUserLevel(user.uid, Math.floor(wordCount / 100)); // Assuming 100 words per write-up
+        }
+    });
+});
+
+// Dark mode toggle with multiple colors
+let themeIndex = 0;
+const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
+function applyTheme(themeIndex) {
+    document.body.style.backgroundColor = themes[themeIndex];
+    document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
+    document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
+        element.style.backgroundColor = themes[themeIndex];
+    });
+}
+
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    themeIndex = (themeIndex + 1) % themes.length;
+    applyTheme(themeIndex);
+});
+
+document.querySelectorAll('.theme-toggle').forEach((button) => {
+    button.addEventListener("click", () => {
+        themeIndex = (themeIndex + 1) % themes.length;
+        applyTheme(themeIndex);
+    });
+});
+
+// Authentication state observer
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userId = user.uid;
+        document.getElementById("user-name").innerText = user.displayName;
+        document.getElementById("user-email").innerText = user.email;
+        document.getElementById("user-username").innerText = user.displayName;
+        document.getElementById("profile-photo").src = user.photoURL;
+
+        // Fetch user data from Firestore
+        const userRef = doc(db, "users", userId);
+        getDoc(userRef).then((doc) => {
+            if (doc.exists()) {
+                const userData = doc.data();
+                document.getElementById("user-username").innerText = userData.username;
+                document.getElementById("user-email").innerText = userData.email;
+                document.getElementById("user-level").innerText = userData.level || "New Writer";
+            } else {
+                console.log("No such document!");
             }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    } else {
+        window.location.href = "login-page.html";
+    }
+});
 
-            document.getElementById("next-page").addEventListener("click", () => {
-                if (currentPage < currentBook.length - 1) {
-                    currentPage++;
-                    updatePageContent();
-                }
-            });
+document.getElementById("logout").addEventListener("click", () => {
+    signOut(auth).then(() => {
+        window.location.href = "login-page.html";
+    }).catch((error) => {
+        console.error("Error signing out:", error);
+    });
+});
 
-            document.getElementById("prev-page").addEventListener("click", () => {
-                if (currentPage > 0) {
-                    currentPage--;
-                    updatePageContent();
-                }
-            });
+// Handle edit profile
+document.getElementById("edit-profile").addEventListener("click", () => {
+    const newUsername = prompt("Enter new username:");
+    const newEmail = prompt("Enter new email:");
+    const newPhotoURL = prompt("Enter new photo URL:");
 
-            function openBook(bookId) {
-                currentPage = 0; // Reset to the first page
-                currentBook = booksContent[bookId] || [];
-                updatePageContent();
-            }
-
-            function updateProgress(userId, newProgress) {
-                const userRef = doc(db, "users", userId);
-                updateDoc(userRef, {
-                    progress: newProgress
+    if (newUsername && newEmail && newPhotoURL) {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                updateProfile(user, {
+                    displayName: newUsername,
+                    email: newEmail,
+                    photoURL: newPhotoURL
                 }).then(() => {
-                    console.log("Progress updated successfully.");
-                }).catch((error) => {
-                    console.error("Error updating progress:", error);
-                });
-            }
-
-            function updateUserLevel(userId, numWriteups) {
-                let level = "New Writer";
-                if (numWriteups > 10) level = "Intermediary Writer";
-                if (numWriteups > 20) level = "Level 2";
-                if (numWriteups > 50) level = "Pro Writer";
-
-                const userRef = doc(db, "users", userId);
-                updateDoc(userRef, {
-                    level: level
-                }).then(() => {
-                    console.log("User level updated to:", level);
-                }).catch((error) => {
-                    console.error("Error updating user level:", error);
-                });
-            }
-
-            function fetchNewPrompt() {
-                const prompts = {
-                    "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
-                    "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
-                    "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."]
-                };
-                const genres = Object.keys(prompts);
-                const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-                const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
-                return randomPrompt;
-            }
-
-            function suggestNextLine(word) {
-                const suggestions = {
-                    "Once": "Once upon a time",
-                    "In": "In a land far away",
-                    "The": "The hero embarked on a journey"
-                };
-                return suggestions[word] || "";
-            }
-
-            document.getElementById("new-prompt-btn").addEventListener("click", () => {
-                const newPrompt = fetchNewPrompt();
-                document.getElementById("writing-prompt").innerText = newPrompt;
-            });
-
-            document.getElementById("writing-textbox").addEventListener("input", (event) => {
-                const text = event.target.value;
-                const words = text.split(" ");
-                const lastWord = words[words.length - 1];
-                const suggestion = suggestNextLine(lastWord);
-                if (suggestion) {
-                    const span = document.createElement("span");
-                    span.style.color = "gray";
-                    span.innerText = ` (${suggestion})`;
-                    document.getElementById("writing-prompt").appendChild(span);
-                }
-                document.getElementById("word-count").innerText = `Word count: ${words.length}`;
-            });
-
-            document.getElementById("publish-story").addEventListener("click", () => {
-                const text = document.getElementById("writing-textbox").value;
-                const wordCount = text.split(" ").length;
-                let message = "";
-
-                if (wordCount >= 10) message = "Great start! Keep going.";
-                if (wordCount >= 50) message = "Impressive! You're on fire.";
-                if (wordCount >= 100) message = "Amazing! You're a true writer.";
-                if (wordCount >= 200) message = "Outstanding! Keep up the excellent work.";
-                if (wordCount >= 500) message = "Congratulations! You've written a masterpiece.";
-
-                document.getElementById("congratulatory-message").innerText = message;
-
-                // Update progress in Firestore
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        updateProgress(user.uid, wordCount);
-                        updateUserLevel(user.uid, Math.floor(wordCount / 100)); // Assuming 100 words per write-up
-                    }
-                });
-            });
-
-            // Dark mode toggle with multiple colors
-            let themeIndex = 0;
-            const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
-            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
-                themeIndex = (themeIndex + 1) % themes.length;
-                document.body.style.backgroundColor = themes[themeIndex];
-                document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
-            });
-
-            // Authentication state observer
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    const userId = user.uid;
-                    document.getElementById("user-name").innerText = user.displayName;
-                    document.getElementById("user-email").innerText = user.email;
-                    document.getElementById("user-username").innerText = user.displayName;
-                    document.getElementById("profile-photo").src = user.photoURL;
-
-                    // Fetch user data from Firestore
-                    const userRef = doc(db, "users", userId);
-                    getDoc(userRef).then((doc) => {
-                        if (doc.exists()) {
-                            const userData = doc.data();
-                            document.getElementById("user-username").innerText = userData.username;
-                            document.getElementById("user-email").innerText = userData.email;
-                            document.getElementById("user-level").innerText = userData.level || "New Writer";
-                        } else {
-                            console.log("No such document!");
-                        }
+                    const userRef = doc(db, "users", user.uid);
+                    updateDoc(userRef, {
+                        username: newUsername,
+                        email: newEmail,
+                        photoURL: newPhotoURL
+                    }).then(() => {
+                        alert("Profile updated successfully!");
+                        document.getElementById("user-name").innerText = newUsername;
+                        document.getElementById("user-email").innerText = newEmail;
+                        document.getElementById("profile-photo").src = newPhotoURL;
                     }).catch((error) => {
-                        console.log("Error getting document:", error);
+                        console.error("Error updating Firestore:", error);
                     });
-                } else {
-                    window.location.href = "login-page.html";
-                }
-            });
-
-            document.getElementById("logout").addEventListener("click", () => {
-                signOut(auth).then(() => {
-                    window.location.href = "login-page.html";
                 }).catch((error) => {
-                    console.error("Error signing out:", error);
+                    console.error("Error updating profile:", error);
                 });
-            });
-
-            // Handle edit profile
-            document.getElementById("edit-profile").addEventListener("click", () => {
-                const newUsername = prompt("Enter new username:");
-                const newEmail = prompt("Enter new email:");
-                const newPhotoURL = prompt("Enter new photo URL:");
-
-                if (newUsername && newEmail && newPhotoURL) {
-                    onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            updateProfile(user, {
-                                displayName: newUsername,
-                                email: newEmail,
-                                photoURL: newPhotoURL
-                            }).then(() => {
-                                const userRef = doc(db, "users", user.uid);
-                                updateDoc(userRef, {
-                                    username: newUsername,
-                                    email: newEmail,
-                                    photoURL: newPhotoURL
-                                }).then(() => {
-                                    alert("Profile updated successfully!");
-                                    document.getElementById("user-name").innerText = newUsername;
-                                    document.getElementById("user-email").innerText = newEmail;
-                                    document.getElementById("profile-photo").src = newPhotoURL;
-                                }).catch((error) => {
-                                    console.error("Error updating Firestore:", error);
-                                });
-                            }).catch((error) => {
-                                console.error("Error updating profile:", error);
-                            });
-                        }
-                    });
-                }
-            });
-        </script>
-    </div>
+            }
+        });
+    }
+});
+</script>
+</div>
 </body>
 </html>
