@@ -20,6 +20,8 @@
             margin: auto;
             margin-top: 20px;
             position: relative;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
         }
         .profile-container img, .library-container img {
             border-radius: 50%;
@@ -102,8 +104,8 @@
 
                 <!-- Profile Section -->
                 <section id="profile-section">
-                    <button class="theme-toggle">🌙</button>
                     <div class="profile-container">
+                        <button class="theme-toggle">🌙</button>
                         <div>
                             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
                         </div>
@@ -121,7 +123,6 @@
 
                 <!-- Library Section -->
                 <section id="library-section">
-                    <button class="theme-toggle">🌙</button>
                     <div class="library-container">
                         <h2>Featured Story of the Month</h2>
                         <img src="https://i.postimg.cc/VvSVHH3N/1722646756851.jpg" alt="Lone Ranger" onclick="openBook(1)" />
@@ -132,8 +133,8 @@
 
                 <!-- Book Reader Section -->
                 <section id="book-reader-section">
-                    <button class="theme-toggle">🌙</button>
                     <div class="book-reader-container">
+                        <button class="theme-toggle">🌙</button>
                         <h2>Book Reader</h2>
                         <div id="book-content">
                             <p id="book-page">Page content goes here...</p>
@@ -145,8 +146,8 @@
 
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
-                    <button class="theme-toggle">🌙</button>
                     <div class="writing-container">
+                        <button class="theme-toggle">🌙</button>
                         <form action="https://formspree.io/f/mldrbpwo" method="POST">
                             <h2>Writing Prompt</h2>
                             <p id="writing-prompt">Click the button to get a new prompt!</p>
@@ -198,7 +199,7 @@
                 storageBucket: "jahotblog-login.appspot.com",
                 messagingSenderId: "661526730601",
                 appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-                };
+            };
 
             const app = initializeApp(firebaseConfig);
             const auth = getAuth();
@@ -305,11 +306,14 @@
 
             document.getElementById("writing-textbox").addEventListener("input", (event) => {
                 const text = event.target.value;
-                const words = text.split(" ");
+                const words = text.trim().split(/\s+/);
                 const lastWord = words[words.length - 1];
                 const suggestion = suggestions[lastWord];
                 if (suggestion) {
-                    event.target.value = text + " " + suggestion;
+                    const suggestionBox = document.createElement("span");
+                    suggestionBox.style.color = "gray";
+                    suggestionBox.innerText = ` ${suggestion}`;
+                    document.getElementById("writing-textbox").value += suggestionBox.innerText;
                 }
                 document.getElementById("word-count").innerText = `Word count: ${words.length}`;
             });
@@ -317,7 +321,8 @@
             document.getElementById("publish-story").addEventListener("click", (event) => {
                 event.preventDefault();
                 const text = document.getElementById("writing-textbox").value;
-                const wordCount = text.split(" ").length;
+                const words = text.trim().split(/\s+/);
+                const wordCount = words.length;
                 let message = "";
 
                 if (wordCount >= 10) message = "Great start! Keep going.";
@@ -336,8 +341,6 @@
                     if (user) {
                         updateProgress(user.uid, wordCount);
                         updateUserLevel(user.uid, Math.floor(wordCount / 100)); // Assuming 100 words per write-up
-                        
-                    });
                     }
                 });
             });
