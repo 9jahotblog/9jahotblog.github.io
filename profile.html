@@ -179,6 +179,21 @@
                     </div>
                 </section>
 
+                <!-- Chat and Image Generation Section -->
+        <section id="ai-section">
+            <div class="ai-container">
+                <h2>AI Chat and Image Generation</h2>
+                <textarea id="ai-prompt" placeholder="Enter your prompt"></textarea>
+                <select id="ai-model">
+                    <option value="gpt">GPT</option>
+                    <option value="gpt4">GPT-4</option>
+                    <option value="gemini">Gemini</option>
+                </select>
+                <button id="ai-submit">Submit</button>
+                <div id="ai-response"></div>
+            </div>
+        </section>
+
                 <!-- Profile Benefits Section -->
 <section id="benefits-section">
     <div class="profile-container">
@@ -479,6 +494,23 @@
                         }
                     });
                 }
+            });
+        </script>
+        <script>
+            document.getElementById('ai-submit').addEventListener('click', async () => {
+                const prompt = document.getElementById('ai-prompt').value;
+                const model = document.getElementById('ai-model').value;
+
+                const response = await fetch('https://your-vercel-deployment-url.vercel.app/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ prompt, model })
+                });
+
+                const data = await response.json();
+                document.getElementById('ai-response').innerText = data.response;
             });
         </script>
     </div>
