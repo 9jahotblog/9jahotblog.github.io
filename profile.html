@@ -336,6 +336,8 @@
                     if (user) {
                         updateProgress(user.uid, wordCount);
                         updateUserLevel(user.uid, Math.floor(wordCount / 100)); // Assuming 100 words per write-up
+                        
+                    });
                     }
                 });
             });
@@ -343,10 +345,24 @@
             // Dark mode toggle with multiple colors
             let themeIndex = 0;
             const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
-            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
-                themeIndex = (themeIndex + 1) % themes.length;
+            function applyTheme(themeIndex) {
                 document.body.style.backgroundColor = themes[themeIndex];
                 document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
+                document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
+                    element.style.backgroundColor = themes[themeIndex];
+                });
+            }
+
+            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+                themeIndex = (themeIndex + 1) % themes.length;
+                applyTheme(themeIndex);
+            });
+
+            document.querySelectorAll('.theme-toggle').forEach((button) => {
+                button.addEventListener("click", () => {
+                    themeIndex = (themeIndex + 1) % themes.length;
+                    applyTheme(themeIndex);
+                });
             });
 
             // Authentication state observer
