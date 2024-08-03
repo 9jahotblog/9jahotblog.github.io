@@ -1,0 +1,7 @@
+{
+  "name": "9jahotblog.github.io",
+  "version": "1.0.0",
+  "dependencies": {
+    "rsnchat": "^1.0.0"
+  }
+}
