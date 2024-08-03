@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>AI Chat and Image Generation</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Welcome to AI Chat and Image Generation</h1>
+  </header>
+
+  <!-- AI Chat and Image Generation Section -->
+  <section id="ai-section" class="container">
+    <h2>Interact with AI</h2>
+    <textarea id="ai-prompt" placeholder="Enter your prompt"></textarea>
+    <select id="ai-model">
+      <option value="gpt">GPT</option>
+      <option value="gpt4">GPT-4</option>
+      <option value="gemini">Gemini</option>
+    </select>
+    <button id="ai-submit">Submit</button>
+    <div id="ai-response"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 AI Chat and Image Generation. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    document.getElementById('ai-submit').addEventListener('click', async () => {
+      const prompt = document.getElementById('ai-prompt').value;
+      const model = document.getElementById('ai-model').value;
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ prompt, model })
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        document.getElementById('ai-response').innerText = data.response;
+      } catch (error) {
+        document.getElementById('ai-response').innerText = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>
