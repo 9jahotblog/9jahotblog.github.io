@@ -497,22 +497,30 @@
             });
         </script>
         <script>
-            document.getElementById('ai-submit').addEventListener('click', async () => {
-                const prompt = document.getElementById('ai-prompt').value;
-                const model = document.getElementById('ai-model').value;
+    document.getElementById('ai-submit').addEventListener('click', async () => {
+      const prompt = document.getElementById('ai-prompt').value;
+      const model = document.getElementById('ai-model').value;
 
-                const response = await fetch('https://your-vercel-deployment-url.vercel.app/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ prompt, model })
-                });
+      try {
+        const response = await fetch('https://your-vercel-deployment-url.vercel.app/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ prompt, model })
+        });
 
-                const data = await response.json();
-                document.getElementById('ai-response').innerText = data.response;
-            });
-        </script>
-    </div>
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        document.getElementById('ai-response').innerText = data.response;
+      } catch (error) {
+        document.getElementById('ai-response').innerText = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</div>
 </body>
 </html>
