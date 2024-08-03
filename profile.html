@@ -1,4 +1,4 @@
- <!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
     <title>My 9jahotblog Profile</title>
@@ -8,7 +8,7 @@
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
         body {
-            transition: background-color 0.5s;
+            transition: background-color 0.5s, color 0.5s;
         }
         .profile-container, .writing-container, .book-reader-container, .library-container {
             text-align: center;
@@ -30,8 +30,10 @@
             background-color: #444;
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 10px 20px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
         .writing-container textarea {
             width: 100%;
@@ -57,6 +59,9 @@
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
+        }
+        footer {
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -128,13 +133,15 @@
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
                     <div class="writing-container">
-                        <h2>Writing Prompt</h2>
-                        <p id="writing-prompt">Click the button to get a new prompt!</p>
-                        <button id="new-prompt-btn">New Prompt</button>
-                        <textarea id="writing-textbox" placeholder="Start writing here..."></textarea>
-                        <p id="word-count">Word count: 0</p>
-                        <p id="congratulatory-message"></p>
-                        <button id="publish-story">Publish Story</button>
+                        <form action="https://formspree.io/f/mldrbpwo" method="POST">
+                            <h2>Writing Prompt</h2>
+                            <p id="writing-prompt">Click the button to get a new prompt!</p>
+                            <button type="button" id="new-prompt-btn">New Prompt</button>
+                            <textarea id="writing-textbox" name="content" placeholder="Start writing here..."></textarea>
+                            <p id="word-count">Word count: 0</p>
+                            <p id="congratulatory-message"></p>
+                            <button type="submit" id="publish-story">Publish Story</button>
+                        </form>
                     </div>
                 </section>
                 
@@ -171,42 +178,53 @@
             import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
             const firebaseConfig = {
-    apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-    authDomain: "jahotblog-login.firebaseapp.com",
-    projectId: "jahotblog-login",
-    storageBucket: "jahotblog-login.appspot.com",
-    messagingSenderId: "661526730601",
-    appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-};
+                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+                authDomain: "jahotblog-login.firebaseapp.com",
+                projectId: "jahotblog-login",
+                storageBucket: "jahotblog-login.appspot.com",
+                messagingSenderId: "661526730601",
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+            };
 
             const app = initializeApp(firebaseConfig);
             const auth = getAuth();
             const db = getFirestore(app);
 
             let currentPage = 0;
-            const bookPages = [
-                "Page 1 content...",
-                "Page 2 content...",
-                "Page 3 content...",
-                "Page 4 content..."
-            ];
+            const booksContent = {
+                1: ["Book 1 - Page 1 content...", "Book 1 - Page 2 content...", "Book 1 - Page 3 content...", "Book 1 - Page 4 content..."],
+                2: ["Book 2 - Page 1 content...", "Book 2 - Page 2 content...", "Book 2 - Page 3 content...", "Book 2 - Page 4 content..."],
+                3: ["Book 3 - Page 1 content...", "Book 3 - Page 2 content...", "Book 3 - Page 3 content...", "Book 3 - Page 4 content..."]
+            };
+            let currentBook = [];
+
+            function updatePageContent() {
+                document.getElementById("book-page").innerText = currentBook[currentPage];
+            }
 
             document.getElementById("next-page").addEventListener("click", () => {
-                if (currentPage < bookPages.length - 1) {
+                if (currentPage < currentBook.length - 1) {
                     currentPage++;
-                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                    updatePageContent();
                 }
             });
 
             document.getElementById("prev-page").addEventListener("click", () => {
                 if (currentPage > 0) {
                     currentPage--;
-                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                    updatePageContent();
                 }
             });
 
+            function openBook(bookId) {
+                currentPage = 0; // Reset to the first page
+                currentBook = booksContent[bookId] || [];
+                updatePageContent();
+            }
+
             function updateProgress(userId, newProgress) {
-                const userRef = doc(db, "users", userId);   updateDoc(userRef, {
+                const userRef = doc(db, "users", userId);
+                updateDoc(userRef, {
                     progress: newProgress
                 }).then(() => {
                     console.log("Progress updated successfully.");
@@ -268,6 +286,7 @@
                     span.innerText = ` (${suggestion})`;
                     document.getElementById("writing-prompt").appendChild(span);
                 }
+                document.getElementById("word-count").innerText = `Word count: ${words.length}`;
             });
 
             document.getElementById("publish-story").addEventListener("click", () => {
@@ -287,22 +306,18 @@
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         updateProgress(user.uid, wordCount);
-                        updateUserLevel(user.uid, wordCount / 100); // Assuming 100 words per write-up
+                        updateUserLevel(user.uid, Math.floor(wordCount / 100)); // Assuming 100 words per write-up
                     }
                 });
             });
 
-            // Dark mode toggle
-            let darkMode = false;
+            // Dark mode toggle with multiple colors
+            let themeIndex = 0;
+            const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
             document.getElementById("dark-mode-toggle").addEventListener("click", () => {
-                darkMode = !darkMode;
-                if (darkMode) {
-                    document.body.style.backgroundColor = "#333";
-                    document.body.style.color = "#fff";
-                } else {
-                    document.body.style.backgroundColor = "#fff";
-                    document.body.style.color = "#000";
-                }
+                themeIndex = (themeIndex + 1) % themes.length;
+                document.body.style.backgroundColor = themes[themeIndex];
+                document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
             });
 
             // Authentication state observer
@@ -341,22 +356,6 @@
                 });
             });
 
-            function openBook(bookId) {
-                // Load book content based on bookId
-                currentPage = 0; // Reset to the first page
-                // Example content for different books
-                const books = {
-                    1: ["Book 1 - Page 1", "Book 1 - Page 2", "Book 1 - Page 3"],
-                    2: ["Book 2 - Page 1", "Book 2 - Page 2", "Book 2 - Page 3"],
-                    3: ["Book 3 - Page 1", "Book 3 - Page 2", "Book 3 - Page 3"]
-                };
-                if (books[bookId]) {
-                    bookPages.length = 0;
-                    bookPages.push(...books[bookId]);
-                    document.getElementById("book-page").innerText = bookPages[currentPage];
-                }
-            }
-
             // Handle edit profile
             document.getElementById("edit-profile").addEventListener("click", () => {
                 const newUsername = prompt("Enter new username:");
@@ -394,6 +393,4 @@
         </script>
     </div>
 </body>
-</html>                    
-     
-       
+</html>
