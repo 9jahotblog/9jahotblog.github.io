@@ -2,6 +2,10 @@ const { RsnChat } = require('rsnchat');
 
 const ai = new RsnChat('rsnai_EEboyMMYPoxnPFpIRpEjsmaZ');
 
+rsnchat.gpt4("Hello, what is your name?").then((response) => {
+  console.log(response.message);
+});
+
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
