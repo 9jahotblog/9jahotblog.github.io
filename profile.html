@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html>
 <head>
     <title>My 9jahotblog Profile</title>
@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        .profile-container {
+        body {
+            transition: background-color 0.5s;
+        }
+        .profile-container, .writing-container, .book-reader-container, .library-container {
             text-align: center;
             background-color: #111111;
             padding: 20px;
@@ -15,29 +18,20 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             margin: auto;
+            margin-top: 20px;
         }
-        .profile-container img {
+        .profile-container img, .library-container img {
             border-radius: 50%;
             width: 80px;
             height: 80px;
         }
-        .profile-container button {
+        .profile-container button, .writing-container button, .book-reader-container button, #dark-mode-toggle {
             margin-top: 10px;
             background-color: #444;
             color: white;
             border: none;
             padding: 5px 10px;
             cursor: pointer;
-        }
-        .writing-container {
-            text-align: center;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-            margin-top: 20px;
         }
         .writing-container textarea {
             width: 100%;
@@ -47,12 +41,10 @@
             border-radius: 4px;
             border: 1px solid #ccc;
         }
-        .writing-container button {
-            margin-top: 10px;
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
+        .library-container img {
+            width: 100px;
+            height: 150px;
+            margin: 10px;
             cursor: pointer;
         }
         #dark-mode-toggle {
@@ -64,40 +56,6 @@
             border: none;
             padding: 10px;
             border-radius: 50%;
-            cursor: pointer;
-        }
-        .book-reader-container {
-            text-align: center;
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-            margin-top: 20px;
-        }
-        .book-reader-container button {
-            margin-top: 10px;
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .library-container {
-            text-align: center;
-            background-color: #222;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            margin: auto;
-            margin-top: 20px;
-        }
-        .library-container img {
-            width: 100px;
-            height: 150px;
-            margin: 10px;
             cursor: pointer;
         }
     </style>
@@ -133,12 +91,12 @@
                         </div>
                         <p>Email: <span id="user-email"></span></p>
                         <p>Username: <span id="user-username"></span></p>
-                        <p>Level: <span id="user-level"></span></p>
                         <p>Earnings: ₦0.00</p>
                         <p>Short Stories/Articles: N/A</p>
                         <p>Books: N/A</p>
+                        <p>Level: <span id="user-level"></span></p>
                         <button id="edit-profile">Edit Profile</button>
-                        <a href="login-page.html"><button id="logout">Logout</button></a>
+                        <button id="logout">Logout</button>
                     </div>
                     <hr />
                 </section>
@@ -146,19 +104,17 @@
                 <!-- Library Section -->
                 <section id="library-section">
                     <div class="library-container">
-                        <h2>Library</h2>
-                        <div id="book-covers">
-                            <!-- Add book cover images with data-book-id attribute -->
-                            <img src="book1.jpg" data-book-id="1" alt="Book 1" />
-                            <img src="book2.jpg" data-book-id="2" alt="Book 2" />
-                            <img src="book3.jpg" data-book-id="3" alt="Book 3" />
-                            <!-- Add more book covers as needed -->
+                        <h2>Select a Book to Read</h2>
+                        <div class="book-gallery">
+                            <img src="book-cover-1.jpg" alt="Book 1" onclick="openBook(1)" />
+                            <img src="book-cover-2.jpg" alt="Book 2" onclick="openBook(2)" />
+                            <img src="book-cover-3.jpg" alt="Book 3" onclick="openBook(3)" />
                         </div>
                     </div>
                 </section>
 
                 <!-- Book Reader Section -->
-                <section id="book-reader-section" style="display: none;">
+                <section id="book-reader-section">
                     <div class="book-reader-container">
                         <h2>Book Reader</h2>
                         <div id="book-content">
@@ -191,27 +147,30 @@
                         <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
                         <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
                     </ul>
+                    <ul class="copyright">
+                        <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+                    </ul>
                 </footer>
+                <button id="dark-mode-toggle">🌙</button>
             </div>
         </div>
 
-        <!-- Dark Mode Toggle -->
-        <button id="dark-mode-toggle">Dark Mode</button>
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
 
-    </div>
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+            import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-const firebaseConfig = {
+            const firebaseConfig = {
     apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
     authDomain: "jahotblog-login.firebaseapp.com",
     projectId: "jahotblog-login",
@@ -220,148 +179,221 @@ const firebaseConfig = {
     appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth();
+            const db = getFirestore(app);
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in, show user info
-        document.getElementById("user-email").textContent = user.email;
-        document.getElementById("user-username").textContent = user.displayName;
+            let currentPage = 0;
+            const bookPages = [
+                "Page 1 content...",
+                "Page 2 content...",
+                "Page 3 content...",
+                "Page 4 content..."
+            ];
 
-        // Fetch additional user data from Firestore
-        const userRef = doc(db, "users", user.uid);
-        getDoc(userRef).then((doc) => {
-            if (doc.exists()) {
-                const userData = doc.data();
-                document.getElementById("profile-photo").src = userData.photoURL || "https://via.placeholder.com/100";
-                document.getElementById("user-level").textContent = userData.level || "Beginner Writer";
-            }
-        });
-
-        document.getElementById("edit-profile").addEventListener("click", () => {
-            const newUsername = prompt("Enter new username:");
-            if (newUsername) {
-                updateProfile(user, {
-                    displayName: newUsername
-                }).then(() => {
-                    document.getElementById("user-username").textContent = newUsername;
-                });
-
-                updateDoc(userRef, {
-                    displayName: newUsername
-                });
-            }
-        });
-
-        document.getElementById("logout").addEventListener("click", () => {
-            signOut(auth).then(() => {
-                window.location.href = "login-page.html";
+            document.getElementById("next-page").addEventListener("click", () => {
+                if (currentPage < bookPages.length - 1) {
+                    currentPage++;
+                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                }
             });
-        });
-    } else {
-        // User is signed out, redirect to login page
-        window.location.href = "login-page.html";
-    }
-});
 
-document.getElementById("new-prompt-btn").addEventListener("click", () => {
-    // Fetch a new writing prompt from the database (simulated here)
-    const prompts = [
-        "Write about a time when you overcame a great challenge.",
-        "Describe a world where technology no longer exists.",
-        "Write a story about a character who discovers a hidden talent."
-    ];
-    const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-    document.getElementById("writing-prompt").textContent = randomPrompt;
-});
+            document.getElementById("prev-page").addEventListener("click", () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                }
+            });
 
-document.getElementById("publish-story").addEventListener("click", () => {
-    const storyContent = document.getElementById("writing-textbox").value;
-    if (storyContent.trim() !== "") {
-        fetch("https://formspree.io/f/mldrbpwo", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                story: storyContent
-            })
-        }).then((response) => {
-            if (response.ok) {
-                alert("Story published successfully!");
-            } else {
-                alert("Failed to publish story.");
+            function updateProgress(userId, newProgress) {
+                const userRef = doc(db, "users", userId);   updateDoc(userRef, {
+                    progress: newProgress
+                }).then(() => {
+                    console.log("Progress updated successfully.");
+                }).catch((error) => {
+                    console.error("Error updating progress:", error);
+                });
             }
-        });
-    } else {
-        alert("Please write something before publishing.");
-    }
-});
 
-document.getElementById("writing-textbox").addEventListener("input", () => {
-    const text = document.getElementById("writing-textbox").value;
-    const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
-    document.getElementById("word-count").textContent = `Word count: ${wordCount}`;
+            function updateUserLevel(userId, numWriteups) {
+                let level = "New Writer";
+                if (numWriteups > 10) level = "Intermediary Writer";
+                if (numWriteups > 20) level = "Level 2";
+                if (numWriteups > 50) level = "Pro Writer";
 
-    let message = "";
-    if (wordCount >= 10) {
-        message = "Great start!";
-    }
-    if (wordCount >= 50) {
-        message = "Keep going, you're doing well!";
-    }
-    if (wordCount >= 100) {
-        message = "Fantastic! You've reached 100 words!";
-    }
-    if (wordCount >= 200) {
-        message = "Amazing! 200 words and counting!";
-    }
-    if (wordCount >= 500) {
-        message = "Incredible! 500 words! You're a star!";
-    }
-    document.getElementById("congratulatory-message").textContent = message;
-});
-
-document.getElementById("dark-mode-toggle").addEventListener("click", () => {
-    const colors = ["#444", "#4A90E2", "#50E3C2", "#F5A623", "#D0021B", "#BD10E0"];
-    const currentColor = document.body.style.backgroundColor;
-    const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
-    document.body.style.backgroundColor = nextColor;
-});
-
-document.querySelectorAll("#book-covers img").forEach((img) => {
-    img.addEventListener("click", (event) => {
-        const bookId = event.target.getAttribute("data-book-id");
-        // Fetch the book content from the database (simulated here)
-        const books = {
-            "1": ["Page 1 content of book 1", "Page 2 content of book 1"],
-            "2": ["Page 1 content of book 2", "Page 2 content of book 2"],
-            "3": ["Page 1 content of book 3", "Page 2 content of book 3"]
-        };
-        const bookContent = books[bookId];
-        let currentPage = 0;
-        document.getElementById("book-page").textContent = bookContent[currentPage];
-        document.getElementById("book-reader-section").style.display = "block";
-        document.getElementById("library-section").style.display = "none";
-
-        document.getElementById("next-page").addEventListener("click", () => {
-            if (currentPage < bookContent.length - 1) {
-                currentPage++;
-                document.getElementById("book-page").textContent = bookContent[currentPage];
+                const userRef = doc(db, "users", userId);
+                updateDoc(userRef, {
+                    level: level
+                }).then(() => {
+                    console.log("User level updated to:", level);
+                }).catch((error) => {
+                    console.error("Error updating user level:", error);
+                });
             }
-        });
 
-        document.getElementById("prev-page").addEventListener("click", () => {
-            if (currentPage > 0) {
-                currentPage--;
-                document.getElementById("book-page").textContent = bookContent[currentPage];
+            function fetchNewPrompt() {
+                const prompts = {
+                    "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
+                    "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
+                    "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."]
+                };
+                const genres = Object.keys(prompts);
+                const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+                const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
+                return randomPrompt;
             }
-        });
-    });
-});
-</script>
+
+            function suggestNextLine(word) {
+                const suggestions = {
+                    "Once": "Once upon a time",
+                    "In": "In a land far away",
+                    "The": "The hero embarked on a journey"
+                };
+                return suggestions[word] || "";
+            }
+
+            document.getElementById("new-prompt-btn").addEventListener("click", () => {
+                const newPrompt = fetchNewPrompt();
+                document.getElementById("writing-prompt").innerText = newPrompt;
+            });
+
+            document.getElementById("writing-textbox").addEventListener("input", (event) => {
+                const text = event.target.value;
+                const words = text.split(" ");
+                const lastWord = words[words.length - 1];
+                const suggestion = suggestNextLine(lastWord);
+                if (suggestion) {
+                    const span = document.createElement("span");
+                    span.style.color = "gray";
+                    span.innerText = ` (${suggestion})`;
+                    document.getElementById("writing-prompt").appendChild(span);
+                }
+            });
+
+            document.getElementById("publish-story").addEventListener("click", () => {
+                const text = document.getElementById("writing-textbox").value;
+                const wordCount = text.split(" ").length;
+                let message = "";
+
+                if (wordCount >= 10) message = "Great start! Keep going.";
+                if (wordCount >= 50) message = "Impressive! You're on fire.";
+                if (wordCount >= 100) message = "Amazing! You're a true writer.";
+                if (wordCount >= 200) message = "Outstanding! Keep up the excellent work.";
+                if (wordCount >= 500) message = "Congratulations! You've written a masterpiece.";
+
+                document.getElementById("congratulatory-message").innerText = message;
+
+                // Update progress in Firestore
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        updateProgress(user.uid, wordCount);
+                        updateUserLevel(user.uid, wordCount / 100); // Assuming 100 words per write-up
+                    }
+                });
+            });
+
+            // Dark mode toggle
+            let darkMode = false;
+            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+                darkMode = !darkMode;
+                if (darkMode) {
+                    document.body.style.backgroundColor = "#333";
+                    document.body.style.color = "#fff";
+                } else {
+                    document.body.style.backgroundColor = "#fff";
+                    document.body.style.color = "#000";
+                }
+            });
+
+            // Authentication state observer
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    const userId = user.uid;
+                    document.getElementById("user-name").innerText = user.displayName;
+                    document.getElementById("user-email").innerText = user.email;
+                    document.getElementById("user-username").innerText = user.displayName;
+                    document.getElementById("profile-photo").src = user.photoURL;
+
+                    // Fetch user data from Firestore
+                    const userRef = doc(db, "users", userId);
+                    getDoc(userRef).then((doc) => {
+                        if (doc.exists()) {
+                            const userData = doc.data();
+                            document.getElementById("user-username").innerText = userData.username;
+                            document.getElementById("user-email").innerText = userData.email;
+                            document.getElementById("user-level").innerText = userData.level || "New Writer";
+                        } else {
+                            console.log("No such document!");
+                        }
+                    }).catch((error) => {
+                        console.log("Error getting document:", error);
+                    });
+                } else {
+                    window.location.href = "login-page.html";
+                }
+            });
+
+            document.getElementById("logout").addEventListener("click", () => {
+                signOut(auth).then(() => {
+                    window.location.href = "login-page.html";
+                }).catch((error) => {
+                    console.error("Error signing out:", error);
+                });
+            });
+
+            function openBook(bookId) {
+                // Load book content based on bookId
+                currentPage = 0; // Reset to the first page
+                // Example content for different books
+                const books = {
+                    1: ["Book 1 - Page 1", "Book 1 - Page 2", "Book 1 - Page 3"],
+                    2: ["Book 2 - Page 1", "Book 2 - Page 2", "Book 2 - Page 3"],
+                    3: ["Book 3 - Page 1", "Book 3 - Page 2", "Book 3 - Page 3"]
+                };
+                if (books[bookId]) {
+                    bookPages.length = 0;
+                    bookPages.push(...books[bookId]);
+                    document.getElementById("book-page").innerText = bookPages[currentPage];
+                }
+            }
+
+            // Handle edit profile
+            document.getElementById("edit-profile").addEventListener("click", () => {
+                const newUsername = prompt("Enter new username:");
+                const newEmail = prompt("Enter new email:");
+                const newPhotoURL = prompt("Enter new photo URL:");
+
+                if (newUsername && newEmail && newPhotoURL) {
+                    onAuthStateChanged(auth, (user) => {
+                        if (user) {
+                            updateProfile(user, {
+                                displayName: newUsername,
+                                email: newEmail,
+                                photoURL: newPhotoURL
+                            }).then(() => {
+                                const userRef = doc(db, "users", user.uid);
+                                updateDoc(userRef, {
+                                    username: newUsername,
+                                    email: newEmail,
+                                    photoURL: newPhotoURL
+                                }).then(() => {
+                                    alert("Profile updated successfully!");
+                                    document.getElementById("user-name").innerText = newUsername;
+                                    document.getElementById("user-email").innerText = newEmail;
+                                    document.getElementById("profile-photo").src = newPhotoURL;
+                                }).catch((error) => {
+                                    console.error("Error updating Firestore:", error);
+                                });
+                            }).catch((error) => {
+                                console.error("Error updating profile:", error);
+                            });
+                        }
+                    });
+                }
+            });
+        </script>
+    </div>
 </body>
-</html>
+</html>                    
+     
+       
