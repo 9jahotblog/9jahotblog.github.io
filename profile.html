@@ -189,6 +189,7 @@
             <button id="pause-speech">Pause</button>
             <button id="continue-speech">Continue</button>
             <button id="stop-speech">Stop</button>
+            <button id="download-speech">Download</button>
         </div>
     </div>
 </section>
@@ -205,7 +206,8 @@
         utterance.onboundary = function(event) {
             if (event.name === 'word') {
                 const span = document.createElement('span');
-                span.style.backgroundColor = 'yellow';
+                span.style.backgroundColor = 'black'; // Darker background
+                span.style.color = 'white'; // White text
                 span.textContent = words[currentIndex] + ' ';
                 words[currentIndex] = span.outerHTML;
                 document.getElementById('tts-input').innerHTML = words.join(' ');
@@ -213,7 +215,7 @@
 
                 // Scroll to the highlighted word
                 const ttsInput = document.getElementById('tts-input');
-                const highlightedWord = ttsInput.querySelector('span[style="background-color: yellow;"]');
+                const highlightedWord = ttsInput.querySelector('span[style*="background-color: black;"]');
                 if (highlightedWord) {
                     ttsInput.scrollTop = highlightedWord.offsetTop - ttsInput.offsetTop;
                 }
@@ -241,7 +243,7 @@
         });
     }
 
-    // Function to speak text with emotions
+    // Function to speak text with emotions and enhanced voice
     function speakText() {
         const text = document.getElementById('tts-input').innerText;
 
@@ -250,8 +252,12 @@
             utterances = parts.map(part => {
                 const msg = new SpeechSynthesisUtterance(part.text);
                 msg.rate = part.rate;
-                msg.pitch = part.pitch;
+                msg.pitch = part.pitch + 0.3; // More mature voice
                 msg.volume = part.volume;
+                
+                // Set different voices and effects
+                const voices = window.speechSynthesis.getVoices();
+                msg.voice = voices.find(voice => voice.name.includes('WaveNet')) || voices[0]; // Example using WaveNet
                 return msg;
             });
 
@@ -273,6 +279,17 @@
         }
     }
 
+    // Function to download spoken text
+    function downloadText(text) {
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'spoken_text.txt';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
     // Event listeners for TTS buttons
     document.getElementById('convert-speech').addEventListener('click', () => {
         window.speechSynthesis.cancel();
@@ -290,8 +307,19 @@
     document.getElementById('stop-speech').addEventListener('click', () => {
         window.speechSynthesis.cancel();
     });
+
+    document.getElementById('download-speech').addEventListener('click', () => {
+        const text = document.getElementById('tts-input').innerText;
+        if (text.trim() !== "") {
+            downloadText(text);
+        } else {
+            alert("Please enter some text to download.");
+        }
+    });
 </script>
 
+        
+    
                 <!-- Chat Section -->
                 <section id="chat-section">
                     <div class="profile-container">
