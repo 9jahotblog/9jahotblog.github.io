@@ -185,7 +185,11 @@
         <h2>9jahotblog Audiobook Ai</h2>
         <div id="tts-input" contenteditable="true" style="width: 100%; height: 200px; border: 1px solid #ccc; margin-bottom: 10px; overflow-y: scroll;"></div>
         <div>
-            <button id="convert-speech">Convert to Speech</button>
+            <button id="convert-speech-wavenet">Convert to Speech (WaveNet)</button>
+            <button id="convert-speech-polyglot">Convert to Speech (Polyglot)</button>
+            <button id="convert-speech-neural2">Convert to Speech (Neural2)</button>
+            <button id="convert-speech-smartphone">Convert to Speech (Smartphone)</button>
+            <button id="convert-speech-speaker">Convert to Speech (Speaker)</button>
             <button id="pause-speech">Pause</button>
             <button id="continue-speech">Continue</button>
             <button id="stop-speech">Stop</button>
@@ -244,23 +248,25 @@
         });
     }
 
-    // Function to speak text with emotions and enhanced voice
-    function speakText() {
+    // Function to create and configure a SpeechSynthesisUtterance
+    function createUtterance(text, voiceConfig) {
+        const parts = parseEmotions(text);
+        return parts.map(part => {
+            const msg = new SpeechSynthesisUtterance(part.text);
+            msg.rate = part.rate;
+            msg.pitch = part.pitch + voiceConfig.pitchAdjust; // Voice pitch adjustment
+            msg.volume = part.volume;
+            msg.voice = voiceConfig.voice; // Voice configuration
+            return msg;
+        });
+    }
+
+    // Function to speak text with selected voice
+    function speakText(voiceConfig) {
         const text = document.getElementById('tts-input').innerText;
 
         if (text.trim() !== "") {
-            const parts = parseEmotions(text);
-            utterances = parts.map(part => {
-                const msg = new SpeechSynthesisUtterance(part.text);
-                msg.rate = part.rate;
-                msg.pitch = part.pitch + 0.3; // More mature voice
-                msg.volume = part.volume;
-                
-                // Set different voices and effects
-                const voices = window.speechSynthesis.getVoices();
-                msg.voice = voices.find(voice => voice.name.includes('WaveNet')) || voices[0]; // Example using WaveNet
-                return msg;
-            });
+            utterances = createUtterance(text, voiceConfig);
 
             currentIndex = 0;
             utterances.forEach((utterance, index) => {
@@ -294,10 +300,57 @@
         }
     }
 
+    // Load voices and configure voice options
+    function loadVoices() {
+        const voices = window.speechSynthesis.getVoices();
+        return {
+            wavenet: {
+                voice: voices.find(voice => voice.name.includes('WaveNet')) || voices[0],
+                pitchAdjust: 0.3
+            },
+            polyglot: {
+                voice: voices.find(voice => voice.name.includes('Polyglot')) || voices[1],
+                pitchAdjust: 0.2
+            },
+            neural2: {
+                voice: voices.find(voice => voice.name.includes('Neural2')) || voices[2],
+                pitchAdjust: 0.4
+            },
+            smartphone: {
+                voice: voices.find(voice => voice.name.includes('Smartphone')) || voices[3],
+                pitchAdjust: 0.1
+            },
+            speaker: {
+                voice: voices.find(voice => voice.name.includes('Speaker')) || voices[4],
+                pitchAdjust: 0.5
+            }
+        };
+    }
+
     // Event listeners for TTS buttons
-    document.getElementById('convert-speech').addEventListener('click', () => {
+    document.getElementById('convert-speech-wavenet').addEventListener('click', () => {
         window.speechSynthesis.cancel();
-        speakText();
+        speakText(loadVoices().wavenet);
+    });
+
+    document.getElementById('convert-speech-polyglot').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        speakText(loadVoices().polyglot);
+    });
+
+    document.getElementById('convert-speech-neural2').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        speakText(loadVoices().neural2);
+    });
+
+    document.getElementById('convert-speech-smartphone').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        speakText(loadVoices().smartphone);
+    });
+
+    document.getElementById('convert-speech-speaker').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        speakText(loadVoices().speaker);
     });
 
     document.getElementById('pause-speech').addEventListener('click', () => {
@@ -315,6 +368,11 @@
     document.getElementById('download-speech').addEventListener('click', () => {
         downloadAudio();
     });
+
+    // Ensure voices are loaded before the buttons are used
+    window.speechSynthesis.onvoiceschanged = () => {
+        loadVoices();
+    };
 </script>
     
                 <!-- Chat Section -->
