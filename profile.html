@@ -161,6 +161,39 @@
                         <button id="prev-page">Previous</button>
                         <button id="next-page">Next</button>
                     </div>
+                       <div style="margin-bottom: 10px;">
+            <button id="audio-mode">Listen to Audio</button>
+        </div>
+        <div>
+            <button id="voice1">Listen to Story (Voice 1)</button>
+            <button id="voice2">Listen to Story (Voice 2)</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Function to read the current page content
+    function speakText(voiceName) {
+        const msg = new SpeechSynthesisUtterance();
+        const bookPage = document.getElementById('book-page').innerText;
+        msg.text = bookPage;
+
+        if (voiceName) {
+            const voices = window.speechSynthesis.getVoices();
+            msg.voice = voices.find(voice => voice.name === voiceName);
+        }
+
+        window.speechSynthesis.speak(msg);
+    }
+
+    // Event listeners for TTS buttons
+    document.getElementById('audio-mode').addEventListener('click', () => speakText());
+    document.getElementById('voice1').addEventListener('click', () => speakText('Google UK English Male'));
+    document.getElementById('voice2').addEventListener('click', () => speakText('Google UK English Female'));
+
+    // Load voices asynchronously
+    window.speechSynthesis.onvoiceschanged = () => {};
+</script>
                 </section>
 
                 <!-- Writing Prompt and Textbox Section -->
