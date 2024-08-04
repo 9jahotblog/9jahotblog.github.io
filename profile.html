@@ -179,6 +179,20 @@
                     </div>
                 </section>
 
+                <!-- Chat Section -->
+<section id="chat-section">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <h2>Chat with AI</h2>
+        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <div id="chat-messages"></div>
+        </div>
+        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
+        <button id="send-message">Send</button>
+    </div>
+</section>
+
+
                 <!-- Profile Benefits Section -->
 <section id="benefits-section">
     <div class="profile-container">
@@ -256,6 +270,38 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
+        <script>
+document.getElementById("send-message").addEventListener("click", async () => {
+    const userMessage = document.getElementById("chat-input").value;
+    if (userMessage) {
+        // Display user message
+        document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+        document.getElementById("chat-input").value = '';
+
+        // Call Google Gemini API (example URL and API key)
+        try {
+            const response = await fetch('https://api.google-gemini.com/v1/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            const data = await response.json();
+            const aiMessage = data.reply;  // Adjust based on API response structure
+
+            // Display AI message
+            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> Sorry, something went wrong.</p>`;
+        }
+    }
+});
+</script>
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
             import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
