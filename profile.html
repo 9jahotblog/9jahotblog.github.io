@@ -151,22 +151,17 @@
                 </section>
 
                 <!-- Book Reader Section -->
-                <section id="book-reader-section">
-                    <div class="book-reader-container">
-                        <button class="theme-toggle">🌙</button>
-                        <h2>Book Reader</h2>
-                        <div id="book-content">
-                            <p id="book-page"></p>
-                        </div>
-                        <button id="prev-page">Previous</button>
-                        <button id="next-page">Next</button>
-                    </div>
-                       <div style="margin-bottom: 10px;">
-            <button id="audio-mode">Listen to Audio</button>
+<section id="book-reader-section">
+    <div class="book-reader-container">
+        <button class="theme-toggle">🌙</button>
+        <h2>Book Reader</h2>
+        <div id="book-content">
+            <p id="book-page"></p>
         </div>
-        <div>
-            <button id="voice1">Listen to Story (Voice 1)</button>
-            <button id="voice2">Listen to Story (Voice 2)</button>
+        <button id="prev-page">Previous</button>
+        <button id="next-page">Next</button>
+        <div style="margin-top: 10px;">
+            <button id="audio-mode">Listen to Audio</button>
         </div>
     </div>
 </section>
@@ -178,23 +173,20 @@
         const bookPage = document.getElementById('book-page').innerText;
         msg.text = bookPage;
 
+        const voices = window.speechSynthesis.getVoices();
         if (voiceName) {
-            const voices = window.speechSynthesis.getVoices();
             msg.voice = voices.find(voice => voice.name === voiceName);
         }
 
         window.speechSynthesis.speak(msg);
     }
 
-    // Event listeners for TTS buttons
+    // Event listener for TTS button
     document.getElementById('audio-mode').addEventListener('click', () => speakText());
-    document.getElementById('voice1').addEventListener('click', () => speakText('Google UK English Male'));
-    document.getElementById('voice2').addEventListener('click', () => speakText('Google UK English Female'));
 
     // Load voices asynchronously
     window.speechSynthesis.onvoiceschanged = () => {};
 </script>
-                </section>
 
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
