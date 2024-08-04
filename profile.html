@@ -305,6 +305,121 @@
                         <button id="send-message">Send</button>
                     </div>
                 </section>
+
+                <!-- Text-to-Speech Section with Third-Party TTS Integration -->
+<section id="tts-section">
+    <div class="profile-container">
+        <h2>Text-to-Speech</h2>
+        <div id="tts-input" contenteditable="true" style="width: 100%; height: 200px; border: 1px solid #ccc; margin-bottom: 10px; overflow-y: scroll;"></div>
+        <div>
+            <button id="convert-speech">Convert to Speech</button>
+            <button id="pause-speech">Pause</button>
+            <button id="continue-speech">Continue</button>
+            <button id="stop-speech">Stop</button>
+        </div>
+    </div>
+</section>
+
+<script>
+    let audioContext;
+    let source;
+    let isPaused = false;
+    let audioBuffer;
+
+    // Function to highlight spoken text
+    function highlightSpokenText(text) {
+        const words = text.split(' ');
+        let currentIndex = 0;
+
+        const interval = setInterval(() => {
+            if (currentIndex < words.length) {
+                const span = document.createElement('span');
+                span.style.backgroundColor = 'yellow';
+                span.textContent = words[currentIndex] + ' ';
+                words[currentIndex] = span.outerHTML;
+                document.getElementById('tts-input').innerHTML = words.join(' ');
+
+                const ttsInput = document.getElementById('tts-input');
+                const highlightedWord = ttsInput.querySelector('span[style="background-color: yellow;"]');
+                if (highlightedWord) {
+                    ttsInput.scrollTop = highlightedWord.offsetTop - ttsInput.offsetTop;
+                }
+
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 200); // Adjust the interval as needed
+    }
+
+    // Function to fetch and play TTS audio
+    async function fetchAndPlayTTS(text) {
+        const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
+        const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                input: { text: text },
+                voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+                audioConfig: { audioEncoding: 'MP3' }
+            })
+        });
+
+        const data = await response.json();
+        const audioContent = data.audioContent;
+        const audioString = `data:audio/mp3;base64,${audioContent}`;
+
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const responseAudio = await fetch(audioString);
+        const arrayBuffer = await responseAudio.arrayBuffer();
+        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        playAudio();
+        highlightSpokenText(text);
+    }
+
+    // Function to play audio
+    function playAudio() {
+        source = audioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(audioContext.destination);
+        source.start(0);
+    }
+
+    // Event listeners for TTS buttons
+    document.getElementById('convert-speech').addEventListener('click', () => {
+        const text = document.getElementById('tts-input').innerText;
+        if (text.trim() !== "") {
+            fetchAndPlayTTS(text);
+        } else {
+            alert("Please enter some text to convert to speech.");
+        }
+    });
+
+    document.getElementById('pause-speech').addEventListener('click', () => {
+        if (audioContext && audioContext.state === 'running') {
+            audioContext.suspend();
+            isPaused = true;
+        }
+    });
+
+    document.getElementById('continue-speech').addEventListener('click', () => {
+        if (audioContext && isPaused) {
+            audioContext.resume();
+            isPaused = false;
+        }
+    });
+
+    document.getElementById('stop-speech').addEventListener('click', () => {
+        if (source) {
+            source.stop();
+        }
+    });
+</script>
             
 
                 <!-- Profile Benefits Section -->
