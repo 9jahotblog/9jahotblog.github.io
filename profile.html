@@ -354,7 +354,7 @@
     // Function to fetch and play TTS audio
     async function fetchAndPlayTTS(text) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
-        const url = `https://texttospeech.googleapis.com=${apiKey}`;
+        const url = `https://texttospeech.googleapis.com/v1beta1/text:synthesize=${apiKey}`;
         
         const response = await fetch(url, {
             method: 'POST',
