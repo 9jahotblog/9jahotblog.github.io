@@ -193,6 +193,34 @@
 </section>
 
 <script>
+async function callGoogleGeminiAI(userMessage) {
+    const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
+    const endpoint = 'https://esm.run/@google/generative-ai'; // Hypothetical endpoint
+
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                message: userMessage
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data.reply;  // Adjust based on API response structure
+    } catch (error) {
+        console.error("Error communicating with AI:", error);
+        return "Sorry, something went wrong.";
+    }
+}
+
 document.getElementById("send-message").addEventListener("click", async () => {
     const userMessage = document.getElementById("chat-input").value;
     if (userMessage) {
@@ -200,34 +228,11 @@ document.getElementById("send-message").addEventListener("click", async () => {
         document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
         document.getElementById("chat-input").value = '';
 
-        try {
-            // Example URL and API key, replace with your actual URL and API key
-            const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent';
-            const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
+        const aiMessage = await callGoogleGeminiAI(userMessage);
 
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({ message: userMessage })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            const aiMessage = data.reply;  // Adjust based on API response structure
-
-            // Display AI message
-            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
-            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-        } catch (error) {
-            console.error("Error communicating with AI:", error);
-            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> Sorry, something went wrong.</p>`;
-        }
+        // Display AI message
+        document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
+        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
     }
 });
 </script>
