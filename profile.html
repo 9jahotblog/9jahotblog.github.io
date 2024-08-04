@@ -489,7 +489,7 @@
 
     async function callGoogleGeminiAI(userMessage) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
-        const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro-001:generateContent?key=$API_KEY'; // Hypothetical endpoint
+        const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro-002:generateContent?key=$API_KEY'; // Hypothetical endpoint
 
         try {
             const response = await fetch(endpoint, {
@@ -507,8 +507,13 @@
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            return data.reply;  // Adjust based on API response structure
+            // To generate text output, call generateContent with the text input
+  const result = await model.generateContent(prompt);
+
+  const response = result.response;
+  const text = response.text();
+  console.log(text);
+}
         } catch (error) {
             console.error("Error communicating with AI:", error);
             return "Sorry, something went wrong.";
