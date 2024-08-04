@@ -507,12 +507,10 @@
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            // To generate text output, call generateContent with the text input
-  const result = await model.generateContent(prompt);
-
-  const response = result.response;
+            const response = result.response;
   const text = response.text();
-  console.log(text);
+  console.log(text); // na here kola
+       
 
         } catch (error) {
             console.error("Error communicating with AI:", error);
