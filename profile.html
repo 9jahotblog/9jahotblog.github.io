@@ -192,6 +192,46 @@
     </div>
 </section>
 
+<script>
+document.getElementById("send-message").addEventListener("click", async () => {
+    const userMessage = document.getElementById("chat-input").value;
+    if (userMessage) {
+        // Display user message
+        document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+        document.getElementById("chat-input").value = '';
+
+        try {
+            // Example URL and API key, replace with your actual URL and API key
+            const apiUrl = 'https://api.example-ai.com/v1/chat';
+            const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
+
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({ message: userMessage })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const aiMessage = data.reply;  // Adjust based on API response structure
+
+            // Display AI message
+            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> Sorry, something went wrong.</p>`;
+        }
+    }
+});
+</script>
+
 
                 <!-- Profile Benefits Section -->
 <section id="benefits-section">
@@ -270,38 +310,6 @@
         <script src="assets/js/breakpoints.min.js"></script>
         <script src="assets/js/util.js"></script>
         <script src="assets/js/main.js"></script>
-        <script>
-document.getElementById("send-message").addEventListener("click", async () => {
-    const userMessage = document.getElementById("chat-input").value;
-    if (userMessage) {
-        // Display user message
-        document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
-        document.getElementById("chat-input").value = '';
-
-        // Call Google Gemini API (example URL and API key)
-        try {
-            const response = await fetch('https://api.google-gemini.com/v1/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'
-                },
-                body: JSON.stringify({ message: userMessage })
-            });
-
-            const data = await response.json();
-            const aiMessage = data.reply;  // Adjust based on API response structure
-
-            // Display AI message
-            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
-            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-        } catch (error) {
-            console.error("Error communicating with AI:", error);
-            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> Sorry, something went wrong.</p>`;
-        }
-    }
-});
-</script>
         <script type="module">
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
             import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
