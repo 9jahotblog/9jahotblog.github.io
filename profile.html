@@ -203,8 +203,6 @@
         <textarea id="tts-input" placeholder="Enter text here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
         <div>
             <button id="voice-default">Default Voice</button>
-            <button id="voice-kasali">Kasali Voice</button>
-            <button id="voice-yusuf">Brother Yusuf Voice</button>
             <button id="voice-uk-male">UK Male Voice</button>
             <button id="voice-uk-female">UK Female Voice</button>
             <button id="voice-us-male">US Male Voice</button>
@@ -213,12 +211,13 @@
     </div>
 </section>
 
+
 <script>
     // Function to highlight spoken text
     function highlightSpokenText(text, utterance) {
         let currentIndex = 0;
         const words = text.split(' ');
-        
+
         utterance.onboundary = function(event) {
             if (event.name === 'word') {
                 const span = document.createElement('span');
@@ -236,11 +235,14 @@
         const msg = new SpeechSynthesisUtterance();
         const text = document.getElementById('tts-input').value;
         const voices = window.speechSynthesis.getVoices();
-        
+
         if (text.trim() !== "") {
             msg.text = text;
             if (voiceName) {
-                msg.voice = voices.find(voice => voice.name === voiceName);
+                const selectedVoice = voices.find(voice => voice.name.includes(voiceName));
+                if (selectedVoice) {
+                    msg.voice = selectedVoice;
+                }
             }
             highlightSpokenText(text, msg);
             window.speechSynthesis.speak(msg);
@@ -251,17 +253,14 @@
 
     // Event listeners for TTS buttons
     document.getElementById('voice-default').addEventListener('click', () => speakText());
-    document.getElementById('voice-kasali').addEventListener('click', () => speakText('Kasali Voice'));
-    document.getElementById('voice-yusuf').addEventListener('click', () => speakText('Brother Yusuf Voice'));
-    document.getElementById('voice-uk-male').addEventListener('click', () => speakText('Google UK English Male'));
-    document.getElementById('voice-uk-female').addEventListener('click', () => speakText('Google UK English Female'));
-    document.getElementById('voice-us-male').addEventListener('click', () => speakText('Google US English Male'));
-    document.getElementById('voice-us-female').addEventListener('click', () => speakText('Google US English Female'));
+    document.getElementById('voice-uk-male').addEventListener('click', () => speakText('UK English Male'));
+    document.getElementById('voice-uk-female').addEventListener('click', () => speakText('UK English Female'));
+    document.getElementById('voice-us-male').addEventListener('click', () => speakText('US English Male'));
+    document.getElementById('voice-us-female').addEventListener('click', () => speakText('US English Female'));
 
     // Load voices asynchronously
     window.speechSynthesis.onvoiceschanged = () => {};
 </script>
-
                 <!-- Profile Benefits Section -->
                 <section id="benefits-section">
                     <div class="profile-container">
