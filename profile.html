@@ -230,30 +230,66 @@
     <div class="profile-container">
         <h2>Text-to-Speech</h2>
         <textarea id="tts-input" placeholder="Enter text here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
-        <button id="convert-to-speech">Convert to Speech</button>
+        <div>
+            <button id="voice-default">Default Voice</button>
+            <button id="voice-kasali">Kasali Voice</button>
+            <button id="voice-yusuf">Brother Yusuf Voice</button>
+            <button id="voice-uk-male">UK Male Voice</button>
+            <button id="voice-uk-female">UK Female Voice</button>
+            <button id="voice-us-male">US Male Voice</button>
+            <button id="voice-us-female">US Female Voice</button>
+        </div>
     </div>
 </section>
 
 <script>
-    // Chat functionality (assuming existing script is here)
-    
-    // Text-to-Speech functionality
-    function speakText() {
-        var msg = new SpeechSynthesisUtterance();
-        var text = document.getElementById("tts-input").value;
+    // Function to highlight spoken text
+    function highlightSpokenText(text, utterance) {
+        let currentIndex = 0;
+        const words = text.split(' ');
+        
+        utterance.onboundary = function(event) {
+            if (event.name === 'word') {
+                const span = document.createElement('span');
+                span.style.backgroundColor = 'yellow';
+                span.textContent = words[currentIndex] + ' ';
+                words[currentIndex] = span.outerHTML;
+                document.getElementById('tts-input').innerHTML = words.join(' ');
+                currentIndex++;
+            }
+        };
+    }
 
+    // Function to speak text with selected voice
+    function speakText(voiceName) {
+        const msg = new SpeechSynthesisUtterance();
+        const text = document.getElementById('tts-input').value;
+        const voices = window.speechSynthesis.getVoices();
+        
         if (text.trim() !== "") {
             msg.text = text;
+            if (voiceName) {
+                msg.voice = voices.find(voice => voice.name === voiceName);
+            }
+            highlightSpokenText(text, msg);
             window.speechSynthesis.speak(msg);
         } else {
             alert("Please enter some text to convert to speech.");
         }
     }
 
-    // Event listener for TTS button
-    document.getElementById('convert-to-speech').addEventListener('click', speakText);
-</script>
+    // Event listeners for TTS buttons
+    document.getElementById('voice-default').addEventListener('click', () => speakText());
+    document.getElementById('voice-kasali').addEventListener('click', () => speakText('Kasali Voice'));
+    document.getElementById('voice-yusuf').addEventListener('click', () => speakText('Brother Yusuf Voice'));
+    document.getElementById('voice-uk-male').addEventListener('click', () => speakText('Google UK English Male'));
+    document.getElementById('voice-uk-female').addEventListener('click', () => speakText('Google UK English Female'));
+    document.getElementById('voice-us-male').addEventListener('click', () => speakText('Google US English Male'));
+    document.getElementById('voice-us-female').addEventListener('click', () => speakText('Google US English Female'));
 
+    // Load voices asynchronously
+    window.speechSynthesis.onvoiceschanged = () => {};
+</script>
 
                 <!-- Profile Benefits Section -->
                 <section id="benefits-section">
