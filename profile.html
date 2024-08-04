@@ -197,6 +197,7 @@
 <script>
     let utterances = [];
     let currentIndex = 0;
+    let audioBlob = null;
 
     // Function to highlight spoken text
     function highlightSpokenText(text, utterance) {
@@ -279,15 +280,18 @@
         }
     }
 
-    // Function to download spoken text
-    function downloadText(text) {
-        const blob = new Blob([text], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'spoken_text.txt';
-        a.click();
-        URL.revokeObjectURL(url);
+    // Function to download audio
+    function downloadAudio() {
+        if (audioBlob) {
+            const url = URL.createObjectURL(audioBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'spoken_audio.wav';
+            a.click();
+            URL.revokeObjectURL(url);
+        } else {
+            alert("No audio to download. Please convert text to speech first.");
+        }
     }
 
     // Event listeners for TTS buttons
@@ -309,16 +313,9 @@
     });
 
     document.getElementById('download-speech').addEventListener('click', () => {
-        const text = document.getElementById('tts-input').innerText;
-        if (text.trim() !== "") {
-            downloadText(text);
-        } else {
-            alert("Please enter some text to download.");
-        }
+        downloadAudio();
     });
 </script>
-
-        
     
                 <!-- Chat Section -->
                 <section id="chat-section">
