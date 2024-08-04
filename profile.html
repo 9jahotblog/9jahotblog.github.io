@@ -180,35 +180,24 @@
                     </div>
                 </section>
 
-                <!-- Chat Section -->
-                <section id="chat-section">
-                    <div class="profile-container">
-                        <button class="theme-toggle">🌙</button>
-                        <h2>Chat with AI</h2>
-                        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-                            <div id="chat-messages"></div>
-                        </div>
-                        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
-                        <button id="send-message">Send</button>
-                    </div>
-                </section>
-                
-                <!-- Text-to-Speech Section with Highlighted Text -->
+                <!-- Text-to-Speech Section-->
 <section id="tts-section">
     <div class="profile-container">
-        <h2>Text-to-Speech</h2>
-        <div id="tts-input" contenteditable="true" style="width: 100%; height: 100px; border: 1px solid #ccc; margin-bottom: 10px;"></div>
+        <h2>9jahotblog Audiobook Ai</h2>
+        <div id="tts-input" contenteditable="true" style="width: 100%; height: 200px; border: 1px solid #ccc; margin-bottom: 10px; overflow-y: scroll;"></div>
         <div>
-            <button id="voice-default">Default Voice</button>
-            <button id="voice-uk-male">UK Male Voice</button>
-            <button id="voice-uk-female">UK Female Voice</button>
-            <button id="voice-us-male">US Male Voice</button>
-            <button id="voice-us-female">US Female Voice</button>
+            <button id="convert-speech">Convert to Speech</button>
+            <button id="pause-speech">Pause</button>
+            <button id="continue-speech">Continue</button>
+            <button id="stop-speech">Stop</button>
         </div>
     </div>
 </section>
 
 <script>
+    let utterances = [];
+    let currentIndex = 0;
+
     // Function to highlight spoken text
     function highlightSpokenText(text, utterance) {
         let currentIndex = 0;
@@ -222,42 +211,101 @@
                 words[currentIndex] = span.outerHTML;
                 document.getElementById('tts-input').innerHTML = words.join(' ');
                 currentIndex++;
+
+                // Scroll to the highlighted word
+                const ttsInput = document.getElementById('tts-input');
+                const highlightedWord = ttsInput.querySelector('span[style="background-color: yellow;"]');
+                if (highlightedWord) {
+                    ttsInput.scrollTop = highlightedWord.offsetTop - ttsInput.offsetTop;
+                }
             }
         };
     }
 
-    // Function to speak text with selected voice
-    function speakText(voiceName) {
-        const msg = new SpeechSynthesisUtterance();
+    // Function to parse and apply emotions to the text
+    function parseEmotions(text) {
+        const emotionMap = {
+            "angry": { rate: 1, pitch: 1, volume: 1 },
+            "sad": { rate: 0.8, pitch: 0.6, volume: 0.8 },
+            "happy": { rate: 1.2, pitch: 1.5, volume: 1 },
+            "quiet": { rate: 1, pitch: 1, volume: 0.5 },
+            "slow": { rate: 0.7, pitch: 1, volume: 1 },
+            "fast": { rate: 1.5, pitch: 1, volume: 1 },
+            "sobs": { rate: 0.8, pitch: 0.7, volume: 0.8 }
+        };
+
+        return text.split(/\[(.*?)\]/).map((part, index) => {
+            if (index % 2 === 1 && emotionMap[part.toLowerCase()]) {
+                return { text: "", ...emotionMap[part.toLowerCase()] };
+            }
+            return { text: part, rate: 1, pitch: 1, volume: 1 };
+        });
+    }
+
+    // Function to speak text with emotions
+    function speakText() {
         const text = document.getElementById('tts-input').innerText;
-        const voices = window.speechSynthesis.getVoices();
 
         if (text.trim() !== "") {
-            msg.text = text;
-            if (voiceName) {
-                const selectedVoice = voices.find(voice => voice.name.includes(voiceName));
-                if (selectedVoice) {
-                    msg.voice = selectedVoice;
-                }
-            }
-            highlightSpokenText(text, msg);
-            window.speechSynthesis.speak(msg);
+            const parts = parseEmotions(text);
+            utterances = parts.map(part => {
+                const msg = new SpeechSynthesisUtterance(part.text);
+                msg.rate = part.rate;
+                msg.pitch = part.pitch;
+                msg.volume = part.volume;
+                return msg;
+            });
+
+            currentIndex = 0;
+            utterances.forEach((utterance, index) => {
+                utterance.onend = () => {
+                    if (index === currentIndex && currentIndex < utterances.length - 1) {
+                        currentIndex++;
+                        highlightSpokenText(parts[currentIndex].text, utterances[currentIndex]);
+                        window.speechSynthesis.speak(utterances[currentIndex]);
+                    }
+                };
+            });
+
+            highlightSpokenText(parts[currentIndex].text, utterances[currentIndex]);
+            window.speechSynthesis.speak(utterances[currentIndex]);
         } else {
             alert("Please enter some text to convert to speech.");
         }
     }
 
     // Event listeners for TTS buttons
-    document.getElementById('voice-default').addEventListener('click', () => speakText());
-    document.getElementById('voice-uk-male').addEventListener('click', () => speakText('UK English Male'));
-    document.getElementById('voice-uk-female').addEventListener('click', () => speakText('UK English Female'));
-    document.getElementById('voice-us-male').addEventListener('click', () => speakText('US English Male'));
-    document.getElementById('voice-us-female').addEventListener('click', () => speakText('US English Female'));
+    document.getElementById('convert-speech').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+        speakText();
+    });
 
-    // Load voices asynchronously
-    window.speechSynthesis.onvoiceschanged = () => {};
+    document.getElementById('pause-speech').addEventListener('click', () => {
+        window.speechSynthesis.pause();
+    });
+
+    document.getElementById('continue-speech').addEventListener('click', () => {
+        window.speechSynthesis.resume();
+    });
+
+    document.getElementById('stop-speech').addEventListener('click', () => {
+        window.speechSynthesis.cancel();
+    });
 </script>
 
+                <!-- Chat Section -->
+                <section id="chat-section">
+                    <div class="profile-container">
+                        <button class="theme-toggle">🌙</button>
+                        <h2>Chat with 9jahotblog AI</h2>
+                        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                            <div id="chat-messages"></div>
+                        </div>
+                        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
+                        <button id="send-message">Send</button>
+                    </div>
+                </section>
+            
 
                 <!-- Profile Benefits Section -->
                 <section id="benefits-section">
