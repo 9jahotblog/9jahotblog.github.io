@@ -507,9 +507,9 @@
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
-            return data.reply;  // Adjust based on API response structure
-    }
+            const response = result.response;
+  const text = response.text();
+  console.log(text); // na here kola
 
         } catch (error) {
             console.error("Error communicating with AI:", error);
