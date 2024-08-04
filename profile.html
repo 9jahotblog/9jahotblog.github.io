@@ -180,366 +180,356 @@
                 </section>
 
                 <!-- Chat Section -->
-<section id="chat-section">
-    <div class="profile-container">
-        <button class="theme-toggle">🌙</button>
-        <h2>Chat with AI</h2>
-        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-            <div id="chat-messages"></div>
-        </div>
-        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
-        <button id="send-message">Send</button>
-    </div>
-</section>
-
-<script>
-async function callGoogleGeminiAI(userMessage) {
-    const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
-    const endpoint = 'https://esm.run/@google/generative-ai'; // Hypothetical endpoint
-
-    try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-                message: userMessage
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data.reply;  // Adjust based on API response structure
-    } catch (error) {
-        console.error("Error communicating with AI:", error);
-        return "Sorry, something went wrong.";
-    }
-}
-
-document.getElementById("send-message").addEventListener("click", async () => {
-    const userMessage = document.getElementById("chat-input").value;
-    if (userMessage) {
-        // Display user message
-        document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
-        document.getElementById("chat-input").value = '';
-
-        const aiMessage = await callGoogleGeminiAI(userMessage);
-
-        // Display AI message
-        document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
-        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-    }
-});
-</script>
-
+                <section id="chat-section">
+                    <div class="profile-container">
+                        <button class="theme-toggle">🌙</button>
+                        <h2>Chat with AI</h2>
+                        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                            <div id="chat-messages"></div>
+                        </div>
+                        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
+                        <button id="send-message">Send</button>
+                    </div>
+                </section>
 
                 <!-- Profile Benefits Section -->
-<section id="benefits-section">
-    <div class="profile-container">
-        <button class="theme-toggle">🌙</button>
-        <h2>Profile Benefits</h2>
-        
-        <p>As a 9jahotblogger, you enjoy numerous benefits that elevate your writing experience and expand your reach. A detailed look at some of the incredible advantages you gain:</p>
-        
-        <h3>Search Result Priority.</h3>
-        <p>Enjoy prioritized ranking in search results on both 9jahotblog, Google, and more.. Ensuring your content reaches a wider audience.</p>
-        
-        <h3>Adaptations.</h3>
-        <p>Get free credits to adapt your book into a movie, create a marketing video, or movie trailer for your stories. Offering a significant boost to your creative career. For more information, <a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Click here</a></p>
-        
-        <h3>Exclusive Contests..</h3>
-        <p>Participate in exclusive contests that provide unique opportunities to showcase your talent and win exciting prizes.</p>
-        
-        <h3>Monetization..</h3>
-        <p>Earn money from posting short stories and engaging your audience. Increased engagements lead to earnings.</p>
-        
-        <h3>Analytics Tracking..</h3>
-        <p>Track the analytics of your posts by checking the post link page, allowing you to monitor and optimize your content's performance. There, you can see how your post is doing, feedbacks, earnings and more.. Can't wait to find out? Post today and share the links to geg started!</p>
-        
-        <h3>Verified Badge..</h3>
-        <p>Gain a verified badge after amassing significant engagements on your posts, enhancing your credibility and visibility, not only on 9jahotblog.</p>
-        
-        <h3>Introducing the 9jahotblog Verified Badge
-     
-            <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
-          <p>The 9jahotblog verified badge appears next to a person's username, indicating their profile is authentic and notable. They've posted multiple times and they've gained massive engagements and exposure.
-        </p>
-        <p>Users with a verified badge have access to additional features, such as:</p>
-        
-        <h3>AI Writing Assistant
-        
-            <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
-            <p>An AI assistant integrated here to evaluate writing, check grammar and spelling, ensuring your posts are polished and professional. Basically for rating, spelling check, image generation and more.. Users can also choose social media channel they want the bot to be. (Telegram&here Default)
-        </p>
-        
-        <h3>Enhanced Earnings
-        
-            <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
-            <p>Earn for posting alone and receive higher earnings for massive engagements on your posts, making your writing efforts more rewarding.
-        </p>
-        
-        <p>For custom verified badges, contact <a href="https://wa.me/+2349160331432">9jahotblog tech support</a> to join the waitlist. This service allows you to get a custom badge without the rigorous steps of obtaining it naturally and is endorsed by 9jahotblog. (You may have to sign up for this.)</p>
-    </div>
-</section>
-                
+                <section id="benefits-section">
+                    <div class="profile-container">
+                        <button class="theme-toggle">🌙</button>
+                        <h2>Profile Benefits</h2>
 
-                <!-- Footer -->
-                <footer id="footer">
-                    <ul class="icons">
-                        <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                        <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                        <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                        <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                        <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-                    </ul>
-                    <ul class="copyright">
-                        <li>&copy; 9jahotblog. All rights reserved.</li>
-                        <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-                    </ul>
-                </footer>
-                <button id="dark-mode-toggle">🌙</button>
-            </div>
+                        <p>As a 9jahotblogger, you enjoy numerous benefits that elevate your writing experience and expand your reach. A detailed look at some of the incredible advantages you gain:</p>
+
+                        <h3>Search Result Priority.</h3>
+                        <p>Enjoy prioritized ranking in search results on both 9jahotblog, Google, and more.. Ensuring your content reaches a wider audience.</p>
+
+                        <h3>Adaptations.</h3>
+                        <p>Get free credits to adapt your book into a movie, create a marketing video, or movie trailer for your stories. Offering a significant boost to your creative career. For more information, <a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Click here</a></p>
+
+                        <h3>Exclusive Contests..</h3>
+                        <p>Participate in exclusive contests that provide unique opportunities to showcase your talent and win exciting prizes.</p>
+
+                        <h3>Monetization..</h3>
+                        <p>Earn money from posting short stories and engaging your audience. Increased engagements lead to earnings.</p>
+
+                        <h3>Analytics Tracking..</h3>
+                        <p>Track the analytics of your posts by checking the post link page, allowing you to monitor and optimize your content's performance. There, you can see how your post is doing, feedbacks, earnings and more.. Can't wait to find out? Post today and share the links to get started!</p>
+
+            <h3>Verified Badge..</h3>
+            <p>Gain a verified badge after amassing significant engagements on your posts, enhancing your credibility and visibility, not only on 9jahotblog.</p>
+
+            <h3>Introducing the 9jahotblog Verified Badge
+                <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
+            <p>The 9jahotblog verified badge appears next to a person's username, indicating their profile is authentic and notable. They've posted multiple times and they've gained massive engagements and exposure.</p>
+            <p>Users with a verified badge have access to additional features, such as:</p>
+
+            <h3>AI Writing Assistant
+                <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
+            <p>An AI assistant integrated here to evaluate writing, check grammar and spelling, ensuring your posts are polished and professional. Basically for rating, spelling check, image generation and more.. Users can also choose social media channel they want the bot to be. (Telegram&here Default)</p>
+
+            <h3>Enhanced Earnings
+                <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:25px;height:25px;vertical-align:middle;margin-right:5px;"></h3>
+            <p>Earn for posting alone and receive higher earnings for massive engagements on your posts, making your writing efforts more rewarding.</p>
+
+            <p>For custom verified badges, contact <a href="https://wa.me/+2349160331432">9jahotblog tech support</a> to join the waitlist. This service allows you to get a custom badge without the rigorous steps of obtaining it naturally and is endorsed by 9jahotblog. (You may have to sign up for this.)</p>
         </div>
+    </section>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/jquery.scrollex.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-        <script type="module">
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-            import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-            import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+    <!-- Footer -->
+    <footer id="footer">
+        <ul class="icons">
+            <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+            <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; 9jahotblog. All rights reserved.</li>
+            <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+        </ul>
+    </footer>
+    <button id="dark-mode-toggle">🌙</button>
+</div>
+</div>
 
-            const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-                authDomain: "jahotblog-login.firebaseapp.com",
-                projectId: "jahotblog-login",
-                storageBucket: "jahotblog-login.appspot.com",
-                messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-            };
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth();
-            const db = getFirestore(app);
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+    };
 
-            let currentPage = 0;
-            const bookContent = [
-                "<p><strong>LONE RANGER</strong></p><p><i>I shivered as the cool wind blew dust into my eyes. I'd come for a long run before dawn by the beach, but now, I was winded.</i></p><p>My life was a suffocating mess and I needed the breathing space, so I took a much needed sabbatical from my job.</p><p>I was a pro-life and pro-God activist, making me automatically the target of every anti-Christ organisation. It was a good thing I was a lone ranger, with no family since my parents disowned me years ago because of my faith. The way the world had gone haywire, turning normalcy upside down, I just wished the return of the Lord was closer.</p>",
-                "<p>All sorts of debauchery had been legalised all on the claim of human liberty. But when it came to mentions of truth, one was tagged a fanatic and was blatantly persecuted. As I was. I had received lots of threats. The most recent one that forced me to take this retreat was the lawsuit I was faced with a particular celebrity.</p><p>A popular popstar had sued me for allegedly defaming her. Her lyrics were clearly satanic and I'd only expressed my displeasure at how young people were being indoctrinated by her songs.</p>",
-                "<p><i>I lay exhausted on the wet sand, spread eagle as I watch the sky light up with colours of the rising sun—pinks and oranges against a background of pale blue spotted with white fluffy clouds.</i></p><p>'Lord, I'm tired and exhausted. I don't think I can go on on this path. Everyone hates me. Can't you just come and take me home? Like right now.'</p><p>The voice of the Lord came softly on the wind.</p><p>'Those who wait upon me will renew their strengths. They will mount up with wings as eagles, they will run and not be weary, they will walk and not faint.'</p><p>I soaked in the word. I needed the reminder.</p>",
-                "<p>A particular quote I'd read somewhere rang in my heart as I watched the crashing waves: <blockquote>'If you want to go fast go alone, but if you want to go far, go with others.'</blockquote></p><p>'Sam, there are many who haven't caved in to the system of this world. You need to find them and walk with them. Your lone ranger creed won't work anymore, son.'</p><p>As He spoke those words, I noticed a young brunette walking into the shallow waters with her surf board. She didn't seem to notice me and I was impressed that she wore a very modest swim suit as opposed to the bikini that was common place. I noticed the glint of the silver cross pendant she wore. I had a witness in my spirit that she was also a strong believer.</p>",
-                "<p>She slid into the water and went under for such a long time that I panicked and considered diving in to rescue her from drowning.</p><p>Just as I was about to rise to her rescue, she came out sleek and wet, her face brimming with such joy and peace. I saw her clasp her hands in prayer and her lips moving. I watched her for a long time. She must have sensed my eyes because the moment she was done, she opened her eyes and looked straight at me with a beautiful smile.</p><p>'Go, speak to her,' the Lord's voice said.</p><p>'Lord? I'm ranting to you about my predicament. Asking you for a solution. Not this. I don't need a distraction right now.'</p><p>'She's the solution I'm providing you.'</p><p>I looked at the waves again as this nameless lady began to ride the next wave. I smiled, not minding one bit that God's choice for me was a gorgeous lady who was obviously crazily in love with Him and not ashamed to show it.</p><p><strong>AUTHOR: Praise Abraham</strong></p>"
-            ];
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app);
 
-            function updatePageContent() {
-                document.getElementById("book-page").innerHTML = bookContent[currentPage];
+    let currentPage = 0;
+    const bookContent = [
+        "<p><strong>LONE RANGER</strong></p><p><i>I shivered as the cool wind blew dust into my eyes. I'd come for a long run before dawn by the beach, but now, I was winded.</i></p><p>My life was a suffocating mess and I needed the breathing space, so I took a much needed sabbatical from my job.</p><p>I was a pro-life and pro-God activist, making me automatically the target of every anti-Christ organisation. It was a good thing I was a lone ranger, with no family since my parents disowned me years ago because of my faith. The way the world had gone haywire, turning normalcy upside down, I just wished the return of the Lord was closer.</p>",
+        "<p>All sorts of debauchery had been legalised all on the claim of human liberty. But when it came to mentions of truth, one was tagged a fanatic and was blatantly persecuted. As I was. I had received lots of threats. The most recent one that forced me to take this retreat was the lawsuit I was faced with a particular celebrity.</p><p>A popular popstar had sued me for allegedly defaming her. Her lyrics were clearly satanic and I'd only expressed my displeasure at how young people were being indoctrinated by her songs.</p>",
+        "<p><i>I lay exhausted on the wet sand, spread eagle as I watch the sky light up with colours of the rising sun—pinks and oranges against a background of pale blue spotted with white fluffy clouds.</i></p><p>'Lord, I'm tired and exhausted. I don't think I can go on on this path. Everyone hates me. Can't you just come and take me home? Like right now.'</p><p>The voice of the Lord came softly on the wind.</p><p>'Those who wait upon me will renew their strengths. They will mount up with wings as eagles, they will run and not be weary, they will walk and not faint.'</p><p>I soaked in the word. I needed the reminder.</p>",
+        "<p>A particular quote I'd read somewhere rang in my heart as I watched the crashing waves: <blockquote>'If you want to go fast go alone, but if you want to go far, go with others.'</blockquote></p><p>'Sam, there are many who haven't caved in to the system of this world. You need to find them and walk with them. Your lone ranger creed won't work anymore, son.'</p><p>As He spoke those words, I noticed a young brunette walking into the shallow waters with her surf board. She didn't seem to notice me and I was impressed that she wore a very modest swim suit as opposed to the bikini that was common place. I noticed the glint of the silver cross pendant she wore. I had a witness in my spirit that she was also a strong believer.</p>",
+        "<p>She slid into the water and went under for such a long time that I panicked and considered diving in to rescue her from drowning.</p><p>Just as I was about to rise to her rescue, she came out sleek and wet, her face brimming with such joy and peace. I saw her clasp her hands in prayer and her lips moving. I watched her for a long time. She must have sensed my eyes because the moment she was done, she opened her eyes and looked straight at me with a beautiful smile.</p><p>'Go, speak to her,' the Lord's voice said.</p><p>'Lord? I'm ranting to you about my predicament. Asking you for a solution. Not this. I don't need a distraction right now.'</p><p>'She's the solution I'm providing you.'</p><p>I looked at the waves again as this nameless lady began to ride the next wave. I smiled, not minding one bit that God's choice for me was a gorgeous lady who was obviously crazily in love with Him and not ashamed to show it.</p><p><strong>AUTHOR: Praise Abraham</strong></p>"
+    ];
+
+    function updatePageContent() {
+        document.getElementById("book-page").innerHTML = bookContent[currentPage];
+    }
+
+    document.getElementById("next-page").addEventListener("click", () => {
+        if (currentPage < bookContent.length - 1) {
+            currentPage++;
+            updatePageContent();
+        }
+    });
+
+    document.getElementById("prev-page").addEventListener("click", () => {
+        if (currentPage > 0) {
+            currentPage--;
+            updatePageContent();
+        }
+    });
+
+    updatePageContent(); // Initialize with the first page content
+
+    function updateProgress(userId, newProgress) {
+        const userRef = doc(db, "users", userId);
+        updateDoc(userRef, {
+            progress: newProgress
+        }).then(() => {
+            console.log("Progress updated successfully.");
+        }).catch((error) => {
+            console.error("Error updating progress:", error);
+        });
+    }
+
+    function fetchNewPrompt() {
+        const prompts = {
+            "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
+            "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
+            "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."],
+            "Science Fiction": ["Imagine a future where humans live on Mars.", "Write about a robot that gains consciousness."],
+            "Mystery": ["Describe a detective solving a crime.", "Write about a person who finds a hidden treasure map."]
+        };
+        const genres = Object.keys(prompts);
+        const randomGenre = genres[Math.floor(Math.random() * genres.length)];
+        const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
+        return randomPrompt;
+    }
+
+    const suggestions = {
+        "Once": "Once upon a time",
+        "In": "In a land far away",
+        "The": "The hero embarked on a journey",
+        "I don't": "I don't know",
+        "He is": "He is a brave warrior",
+        "She was": "She was a kind soul",
+        "They went": "They went on an adventure",
+        "It was": "It was a dark and stormy night",
+        "There is": "There is a secret door",
+        "We can": "We can make it through",
+        "A long": "A long time ago",
+        "Far away": "Far away in a distant land",
+        "In the": "In the beginning",
+        "I am": "I am ready for the challenge"
+    };
+
+    document.getElementById("new-prompt-btn").addEventListener("click", () => {
+        const newPrompt = fetchNewPrompt();
+        document.getElementById("writing-prompt").innerText = newPrompt;
+    });
+
+    document.getElementById("writing-textbox").addEventListener("input", (event) => {
+        const text = event.target.value;
+        const words = text.trim().split(/\s+/);
+        const lastWord = words[words.length - 1];
+        const suggestion = suggestions[lastWord];
+        if (suggestion) {
+            event.target.value = text.slice(0, text.lastIndexOf(' ') + 1) + suggestion;
+        }
+        document.getElementById("word-count").innerText = `Word count: ${words.length}`;
+
+        // Display congratulatory message based on word count
+        let message = "";
+        if (words.length >= 10) message = "Great start! Keep going.";
+        if (words.length >= 50) message = "Impressive! You're on fire.";
+        if (words.length >= 100) message = "Amazing! You're a true writer.";
+        if (words.length >= 200) message = "Outstanding! Keep up the excellent work.";
+        if (words.length >= 500) message = "Congratulations! You've written a masterpiece.";
+        document.getElementById("congratulatory-message").innerText = message;
+    });
+
+    document.getElementById("publish-story").addEventListener("click", (event) => {
+        event.preventDefault();
+        const text = document.getElementById("writing-textbox").value;
+        const words = text.trim().split(/\s+/);
+        const wordCount = words.length;
+
+        // Submit the form
+        event.target.closest("form").submit();
+
+        // Update progress in Firestore
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                updateProgress(user.uid, wordCount);
             }
+        });
+    });
 
-            document.getElementById("next-page").addEventListener("click", () => {
-                if (currentPage < bookContent.length - 1) {
-                    currentPage++;
-                    updatePageContent();
+    // Dark mode toggle with multiple colors
+    let themeIndex = 0;
+    const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
+    function applyTheme(themeIndex) {
+        document.body.style.backgroundColor = themes[themeIndex];
+        document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
+        document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
+            element.style.backgroundColor = themes[themeIndex];
+        });
+    }
+
+    document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+        themeIndex = (themeIndex + 1) % themes.length;
+        applyTheme(themeIndex);
+    });
+
+    document.querySelectorAll('.theme-toggle').forEach((button) => {
+        button.addEventListener("click", (event) => {
+            themeIndex = (themeIndex + 1) % themes.length;
+            event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container').style.backgroundColor = themes[themeIndex];
+        });
+    });
+
+    // Authentication state observer
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userId = user.uid;
+            document.getElementById("user-name").innerText = user.displayName;
+            document.getElementById("user-email").innerText = user.email;
+            document.getElementById("user-username").innerText = user.displayName;
+            document.getElementById("profile-photo").src = user.photoURL;
+
+            // Fetch user data from Firestore
+            const userRef = doc(db, "users", userId);
+            getDoc(userRef).then((doc) => {
+                if (doc.exists()) {
+                    const userData = doc.data();
+                    document.getElementById("user-username").innerText = userData.username;
+                    document.getElementById("user-email").innerText = userData.email;
+                    document.getElementById("user-level").innerText = "9jahotblogger";
+                } else {
+                    console.log("No such document!");
                 }
+            }).catch((error) => {
+                console.log("Error getting document:", error);
             });
+        } else {
+            window.location.href = "login-page.html";
+        }
+    });
 
-            document.getElementById("prev-page").addEventListener("click", () => {
-                if (currentPage > 0) {
-                    currentPage--;
-                    updatePageContent();
-                }
-            });
+    document.getElementById("logout").addEventListener("click", () => {
+        signOut(auth).then(() => {
+            window.location.href = "login-page.html";
+        }).catch((error) => {
+            console.error("Error signing out:", error);
+        });
+    });
 
-            updatePageContent(); // Initialize with the first page content
+    // Handle edit profile
+    document.getElementById("edit-profile").addEventListener("click", () => {
+        const newUsername = prompt("Enter new username:");
+        const newEmail = prompt("Enter new email:");
+        const newPhotoURL = prompt("Enter new photo URL:");
 
-            function updateProgress(userId, newProgress) {
-                const userRef = doc(db, "users", userId);
-                updateDoc(userRef, {
-                    progress: newProgress
-                }).then(() => {
-                    console.log("Progress updated successfully.");
-                }).catch((error) => {
-                    console.error("Error updating progress:", error);
-                });
-            }
-
-            function fetchNewPrompt() {
-                const prompts = {
-                    "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
-                    "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
-                    "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."],
-                    "Science Fiction": ["Imagine a future where humans live on Mars.", "Write about a robot that gains consciousness."],
-                    "Mystery": ["Describe a detective solving a crime.", "Write about a person who finds a hidden treasure map."]
-                };
-                const genres = Object.keys(prompts);
-                const randomGenre = genres[Math.floor(Math.random() * genres.length)];
-                const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
-                return randomPrompt;
-            }
-
-            const suggestions = {
-                "Once": "Once upon a time",
-                "In": "In a land far away",
-                "The": "The hero embarked on a journey",
-                "I don't": "I don't know",
-                "He is": "He is a brave warrior",
-                "She was": "She was a kind soul",
-                "They went": "They went on an adventure",
-                "It was": "It was a dark and stormy night",
-                "There is": "There is a secret door",
-                "We can": "We can make it through",
-                "A long": "A long time ago",
-                "Far away": "Far away in a distant land",
-                "In the": "In the beginning",
-                "I am": "I am ready for the challenge"
-            };
-
-            document.getElementById("new-prompt-btn").addEventListener("click", () => {
-                const newPrompt = fetchNewPrompt();
-                document.getElementById("writing-prompt").innerText = newPrompt;
-            });
-
-            document.getElementById("writing-textbox").addEventListener("input", (event) => {
-                const text = event.target.value;
-                const words = text.trim().split(/\s+/);
-                const lastWord = words[words.length - 1];
-                const suggestion = suggestions[lastWord];
-                if (suggestion) {
-                    event.target.value = text.slice(0, text.lastIndexOf(' ') + 1) + suggestion;
-                }
-                document.getElementById("word-count").innerText = `Word count: ${words.length}`;
-
-                // Display congratulatory message based on word count
-                let message = "";
-                if (words.length >= 10) message = "Great start! Keep going.";
-                if (words.length >= 50) message = "Impressive! You're on fire.";
-                if (words.length >= 100) message = "Amazing! You're a true writer.";
-                if (words.length >= 200) message = "Outstanding! Keep up the excellent work.";
-                if (words.length >= 500) message = "Congratulations! You've written a masterpiece.";
-                document.getElementById("congratulatory-message").innerText = message;
-            });
-
-            document.getElementById("publish-story").addEventListener("click", (event) => {
-                event.preventDefault();
-                const text = document.getElementById("writing-textbox").value;
-                const words = text.trim().split(/\s+/);
-                const wordCount = words.length;
-
-                // Submit the form
-                event.target.closest("form").submit();
-
-                // Update progress in Firestore
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        updateProgress(user.uid, wordCount);
-                    }
-                });
-            });
-
-            // Dark mode toggle with multiple colors
-            let themeIndex = 0;
-            const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
-            function applyTheme(themeIndex) {
-                document.body.style.backgroundColor = themes[themeIndex];
-                document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
-                document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
-                    element.style.backgroundColor = themes[themeIndex];
-                });
-            }
-
-            document.getElementById("dark-mode-toggle").addEventListener("click", () => {
-                themeIndex = (themeIndex + 1) % themes.length;
-                applyTheme(themeIndex);
-            });
-
-            document.querySelectorAll('.theme-toggle').forEach((button) => {
-                button.addEventListener("click", (event) => {
-                    themeIndex = (themeIndex + 1) % themes.length;
-                    event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container').style.backgroundColor = themes[themeIndex];
-                });
-            });
-
-            // Authentication state observer
+        if (newUsername && newEmail && newPhotoURL) {
             onAuthStateChanged(auth, (user) => {
                 if (user) {
-                    const userId = user.uid;
-                    document.getElementById("user-name").innerText = user.displayName;
-                    document.getElementById("user-email").innerText = user.email;
-                    document.getElementById("user-username").innerText = user.displayName;
-                    document.getElementById("profile-photo").src = user.photoURL;
-
-                    // Fetch user data from Firestore
-                    const userRef = doc(db, "users", userId);
-                    getDoc(userRef).then((doc) => {
-                        if (doc.exists()) {
-                            const userData = doc.data();
-                            document.getElementById("user-username").innerText = userData.username;
-                            document.getElementById("user-email").innerText = userData.email;
-                            document.getElementById("user-level").innerText = "9jahotblogger";
-                        } else {
-                            console.log("No such document!");
-                        }
+                    updateProfile(user, {
+                        displayName: newUsername,
+                        email: newEmail,
+                        photoURL: newPhotoURL
+                    }).then(() => {
+                        const userRef = doc(db, "users", user.uid);
+                        updateDoc(userRef, {
+                            username: newUsername,
+                            email: newEmail,
+                            photoURL: newPhotoURL
+                        }).then(() => {
+                            alert("Profile updated successfully!");
+                            document.getElementById("user-name").innerText = newUsername;
+                            document.getElementById("user-email").innerText = newEmail;
+                            document.getElementById("profile-photo").src = newPhotoURL;
+                        }).catch((error) => {
+                            console.error("Error updating Firestore:", error);
+                        });
                     }).catch((error) => {
-                        console.log("Error getting document:", error);
-                    });
-                } else {
-                    window.location.href = "login-page.html";
-                }
-            });
-
-            document.getElementById("logout").addEventListener("click", () => {
-                signOut(auth).then(() => {
-                    window.location.href = "login-page.html";
-                }).catch((error) => {
-                    console.error("Error signing out:", error);
-                });
-            });
-
-            // Handle edit profile
-            document.getElementById("edit-profile").addEventListener("click", () => {
-                const newUsername = prompt("Enter new username:");
-                const newEmail = prompt("Enter new email:");
-                const newPhotoURL = prompt("Enter new photo URL:");
-
-                if (newUsername && newEmail && newPhotoURL) {
-                    onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            updateProfile(user, {
-                                displayName: newUsername,
-                                email: newEmail,
-                                photoURL: newPhotoURL
-                            }).then(() => {
-                                const userRef = doc(db, "users", user.uid);
-                                updateDoc(userRef, {
-                                    username: newUsername,
-                                    email: newEmail,
-                                    photoURL: newPhotoURL
-                                }).then(() => {
-                                    alert("Profile updated successfully!");
-                                    document.getElementById("user-name").innerText = newUsername;
-                                    document.getElementById("user-email").innerText = newEmail;
-                                    document.getElementById("profile-photo").src = newPhotoURL;
-                                }).catch((error) => {
-                                    console.error("Error updating Firestore:", error);
-                                });
-                            }).catch((error) => {
-                                console.error("Error updating profile:", error);
-                            });
-                        }
+                        console.error("Error updating profile:", error);
                     });
                 }
             });
-        </script>
-     </div>
-   </body>
+        }
+    });
+
+    async function callGoogleGeminiAI(userMessage) {
+        const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
+        const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=$API_KEY'; // Hypothetical endpoint
+
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    message: userMessage
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.reply;  // Adjust based on API response structure
+        } catch (error) {
+            console.error("Error communicating with AI:", error);
+            return "Sorry, something went wrong.";
+        }
+    }
+
+    document.getElementById("send-message").addEventListener("click", async () => {
+        const userMessage = document.getElementById("chat-input").value;
+        if (userMessage) {
+            // Display user message
+            document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+            document.getElementById("chat-input").value = '';
+
+            const aiMessage = await callGoogleGeminiAI(userMessage);
+
+            // Display AI message
+            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+        }
+    });
+</script>
+</div>
+</body>
 </html>
