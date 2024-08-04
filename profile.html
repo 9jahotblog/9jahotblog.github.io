@@ -192,52 +192,34 @@
                     </div>
                 </section>
                 
-    <head>
-    <style>
-        #tts-section {
-            margin: 20px 0;
-        }
-
-        #tts-input {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
-<body>
-    <div id="tts-section">
+                <!-- Text-to-Speech Section -->
+<section id="tts-section">
+    <div class="profile-container">
         <h2>Text-to-Speech</h2>
-        <textarea id="tts-input" placeholder="Enter text here..."></textarea>
-        <button onclick="speakText()">Convert to Speech</button>
+        <textarea id="tts-input" placeholder="Enter text here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+        <button id="convert-to-speech">Convert to Speech</button>
     </div>
+</section>
 
-    <script>
-        function speakText() {
-            var msg = new SpeechSynthesisUtterance();
-            var text = document.getElementById("tts-input").value;
+<script>
+    // Chat functionality (assuming existing script is here)
+    
+    // Text-to-Speech functionality
+    function speakText() {
+        var msg = new SpeechSynthesisUtterance();
+        var text = document.getElementById("tts-input").value;
 
-            if (text.trim() !== "") {
-                msg.text = text;
-                window.speechSynthesis.speak(msg);
-            } else {
-                alert("Please enter some text to convert to speech.");
-            }
+        if (text.trim() !== "") {
+            msg.text = text;
+            window.speechSynthesis.speak(msg);
+        } else {
+            alert("Please enter some text to convert to speech.");
         }
-    </script>
-</body>
+    }
+
+    // Event listener for TTS button
+    document.getElementById('convert-to-speech').addEventListener('click', speakText);
+</script>
 
 
                 <!-- Profile Benefits Section -->
