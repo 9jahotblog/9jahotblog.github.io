@@ -202,7 +202,7 @@ document.getElementById("send-message").addEventListener("click", async () => {
 
         try {
             // Example URL and API key, replace with your actual URL and API key
-            const apiUrl = 'https://generativelanguage.googleapis.com';
+            const apiUrl = 'https://generativelanguage.googleapis.com/v1beta/{model=models/*}:generateContent';
             const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
 
             const response = await fetch(apiUrl, {
