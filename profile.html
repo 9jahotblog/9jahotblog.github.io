@@ -488,47 +488,50 @@
     });
 
     async function callGoogleGeminiAI(userMessage) {
-        const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
-        const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro-002:generateContent?key=$API_KEY'; // Hypothetical endpoint
+    const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
+    const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent?key=AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA;
 
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    message: userMessage
-                })
-            });
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                prompt: {
+                    text: userMessage
+                }
+            })
+        });
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            return data.reply;  // Adjust based on API response structure
-        } catch (error) {
-            console.error("Error communicating with AI:", error);
-            return "Sorry, something went wrong.";
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const data = await response.json();
+        return data.generations[0].text;  // Adjust based on API response structure
+    } catch (error) {
+        console.error("Error communicating with AI:", error);
+        return "Sorry, something went wrong.";
     }
+}
 
-    document.getElementById("send-message").addEventListener("click", async () => {
-        const userMessage = document.getElementById("chat-input").value;
-        if (userMessage) {
-            // Display user message
-            document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
-            document.getElementById("chat-input").value = '';
+document.getElementById("send-message").addEventListener("click", async () => {
+    const userMessage = document.getElementById("chat-input").value;
+    if (userMessage) {
+        // Display user message
+        document.getElementById("chat-messages").innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+        document.getElementById("chat-input").value = '';
 
-            const aiMessage = await callGoogleGeminiAI(userMessage);
+        const aiMessage = await callGoogleGeminiAI(userMessage);
 
-            // Display AI message
-            document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
-            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-        }
-    });
+        // Display AI message
+        document.getElementById("chat-messages").innerHTML += `<p><strong>AI:</strong> ${aiMessage}</p>`;
+        document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
+    }
+});
+
 </script>
 </div>
 </body>
