@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
     <title>My 9jahotblog Profile</title>
     <meta charset="utf-8" />
@@ -355,7 +354,7 @@
     // Function to fetch and play TTS audio
     async function fetchAndPlayTTS(text) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
-        const url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`;
+        const url = `https://texttospeech.googleapis.com=${apiKey}`;
         
         const response = await fetch(url, {
             method: 'POST',
