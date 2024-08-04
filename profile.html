@@ -191,6 +191,54 @@
                         <button id="send-message">Send</button>
                     </div>
                 </section>
+                
+    <head>
+    <style>
+        #tts-section {
+            margin: 20px 0;
+        }
+
+        #tts-input {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="tts-section">
+        <h2>Text-to-Speech</h2>
+        <textarea id="tts-input" placeholder="Enter text here..."></textarea>
+        <button onclick="speakText()">Convert to Speech</button>
+    </div>
+
+    <script>
+        function speakText() {
+            var msg = new SpeechSynthesisUtterance();
+            var text = document.getElementById("tts-input").value;
+
+            if (text.trim() !== "") {
+                msg.text = text;
+                window.speechSynthesis.speak(msg);
+            } else {
+                alert("Please enter some text to convert to speech.");
+            }
+        }
+    </script>
+</body>
+
 
                 <!-- Profile Benefits Section -->
                 <section id="benefits-section">
