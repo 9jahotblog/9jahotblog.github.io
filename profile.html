@@ -161,32 +161,11 @@
         <button id="prev-page">Previous</button>
         <button id="next-page">Next</button>
         <div style="margin-top: 10px;">
-            <button id="audio-mode">Listen to Audio</button>
+            <button id="tts-section">Listen to Audio</button>
         </div>
     </div>
 </section>
 
-<script>
-    // Function to read the current page content
-    function speakText(voiceName) {
-        const msg = new SpeechSynthesisUtterance();
-        const bookPage = document.getElementById('book-page').innerText;
-        msg.text = bookPage;
-
-        const voices = window.speechSynthesis.getVoices();
-        if (voiceName) {
-            msg.voice = voices.find(voice => voice.name === voiceName);
-        }
-
-        window.speechSynthesis.speak(msg);
-    }
-
-    // Event listener for TTS button
-    document.getElementById('audio-mode').addEventListener('click', () => speakText());
-
-    // Load voices asynchronously
-    window.speechSynthesis.onvoiceschanged = () => {};
-</script>
 
                 <!-- Writing Prompt and Textbox Section -->
                 <section id="writing-section">
