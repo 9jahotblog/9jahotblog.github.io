@@ -201,7 +201,8 @@
 <script>
     let utterances = [];
     let currentIndex = 0;
-    let audioBlob = null;
+    let mediaRecorder;
+    let audioChunks = [];
 
     // Function to highlight spoken text
     function highlightSpokenText(text, utterance) {
@@ -273,31 +274,47 @@
                 utterance.onend = () => {
                     if (index === currentIndex && currentIndex < utterances.length - 1) {
                         currentIndex++;
-                        highlightSpokenText(parts[currentIndex].text, utterances[currentIndex]);
+                        highlightSpokenText(utterances[currentIndex].text, utterances[currentIndex]);
                         window.speechSynthesis.speak(utterances[currentIndex]);
                     }
                 };
             });
 
-            highlightSpokenText(parts[currentIndex].text, utterances[currentIndex]);
+            highlightSpokenText(utterances[currentIndex].text, utterances[currentIndex]);
             window.speechSynthesis.speak(utterances[currentIndex]);
+
+            // Start recording audio
+            if (mediaRecorder && mediaRecorder.state === 'inactive') {
+                mediaRecorder.start();
+            }
         } else {
             alert("Please enter some text to convert to speech.");
         }
     }
 
-    // Function to download audio
-    function downloadAudio() {
-        if (audioBlob) {
-            const url = URL.createObjectURL(audioBlob);
+    // Function to handle audio recording
+    function startRecording() {
+        audioChunks = [];
+        const stream = new MediaStream();
+        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+
+        mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+                audioChunks.push(event.data);
+            }
+        };
+
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const audioUrl = URL.createObjectURL(audioBlob);
             const a = document.createElement('a');
-            a.href = url;
-            a.download = 'spoken_audio.wav';
+            a.style.display = 'none';
+            a.href = audioUrl;
+            a.download = 'spoken_audio.webm';
+            document.body.appendChild(a);
             a.click();
-            URL.revokeObjectURL(url);
-        } else {
-            alert("No audio to download. Please convert text to speech first.");
-        }
+            URL.revokeObjectURL(audioUrl);
+        };
     }
 
     // Load voices and configure voice options
@@ -305,23 +322,23 @@
         const voices = window.speechSynthesis.getVoices();
         return {
             wavenet: {
-                voice: voices.find(voice => voice.name.includes('WaveNet')) || voices[0],
+                voice: voices.find(voice => voice.lang === 'en-US' && voice.name.includes('WaveNet')) || voices[0],
                 pitchAdjust: 0.3
             },
             polyglot: {
-                voice: voices.find(voice => voice.name.includes('Polyglot')) || voices[1],
+                voice: voices.find(voice => voice.lang === 'en-GB' && voice.name.includes('Polyglot')) || voices[1],
                 pitchAdjust: 0.2
             },
             neural2: {
-                voice: voices.find(voice => voice.name.includes('Neural2')) || voices[2],
+                voice: voices.find(voice => voice.lang === 'en-AU' && voice.name.includes('Neural2')) || voices[2],
                 pitchAdjust: 0.4
             },
             smartphone: {
-                voice: voices.find(voice => voice.name.includes('Smartphone')) || voices[3],
+                voice: voices.find(voice => voice.lang === 'en-IE' && voice.name.includes('Smartphone')) || voices[3],
                 pitchAdjust: 0.1
             },
             speaker: {
-                voice: voices.find(voice => voice.name.includes('Speaker')) || voices[4],
+                voice: voices.find(voice => voice.lang === 'en-ZA' && voice.name.includes('Speaker')) || voices[4],
                 pitchAdjust: 0.5
             }
         };
@@ -330,50 +347,73 @@
     // Event listeners for TTS buttons
     document.getElementById('convert-speech-wavenet').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        startRecording();
         speakText(loadVoices().wavenet);
     });
 
     document.getElementById('convert-speech-polyglot').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        startRecording();
         speakText(loadVoices().polyglot);
     });
 
     document.getElementById('convert-speech-neural2').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        startRecording();
         speakText(loadVoices().neural2);
     });
 
     document.getElementById('convert-speech-smartphone').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        startRecording();
         speakText(loadVoices().smartphone);
     });
 
     document.getElementById('convert-speech-speaker').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        startRecording();
         speakText(loadVoices().speaker);
     });
 
     document.getElementById('pause-speech').addEventListener('click', () => {
         window.speechSynthesis.pause();
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            mediaRecorder.pause();
+        }
     });
 
     document.getElementById('continue-speech').addEventListener('click', () => {
         window.speechSynthesis.resume();
+        if (mediaRecorder && mediaRecorder.state === 'paused') {
+            mediaRecorder.resume();
+        }
     });
 
     document.getElementById('stop-speech').addEventListener('click', () => {
         window.speechSynthesis.cancel();
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+        }
     });
 
     document.getElementById('download-speech').addEventListener('click', () => {
-        downloadAudio();
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+            mediaRecorder.stop();
+        } else {
+            alert("No audio to download. Please convert text to speech first.");
+        }
     });
 
-    // Ensure voices are loaded before the buttons are used
-    window.speechSynthesis.onvoiceschanged = () => {
-        loadVoices();
-    };
+    // Load voices when the voices are loaded
+window.speechSynthesis.onvoiceschanged = loadVoices;
+
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+});
 </script>
+            
     
                 <!-- Chat Section -->
                 <section id="chat-section">
