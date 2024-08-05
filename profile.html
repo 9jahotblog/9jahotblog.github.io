@@ -363,7 +363,85 @@
         }
     });
 </script>
-    
+
+            <!--Mystery writer section-->
+               <section id="mystery-writer">
+    <div class="game-container">
+        <h2>Mystery Writer Challenge</h2>
+        <div id="challenge-display" style="margin-top: 10px; border: 1px solid #ccc; padding: 10px;"></div>
+        <textarea id="user-input" style="width: 100%; height: 100px; margin-top: 10px;"></textarea>
+        <button id="submit-challenge">Submit</button>
+        <div id="feedback" style="margin-top: 10px;"></div>
+    </div>
+</section>
+
+<script>
+    const challenges = [
+        {
+            prompt: "Describe the mysterious figure you saw in the alley.",
+            clue: "The figure dropped a clue. It was a key.",
+            success: "You keenly observe and notice the key has a unique insignia.",
+            failure: "You missed the clue. The figure vanished into the darkness."
+        },
+        {
+            prompt: "Write about how you used the key to unlock a secret door.",
+            clue: "Behind the door, you found a hidden map.",
+            success: "The key fits perfectly. You unveil a hidden map.",
+            failure: "The key didn't fit. You need to find another way."
+        },
+        {
+            prompt: "Explain what the map led to and your adventure to find it.",
+            clue: "The map led to a treasure chest buried under an old oak tree.",
+            success: "Following the map, you discover a chest under the oak tree.",
+            failure: "The map was misleading. You find yourself lost in the woods."
+        }
+    ];
+
+    let currentChallenge = 0;
+
+    function displayChallenge() {
+        const challengeDisplay = document.getElementById('challenge-display');
+        challengeDisplay.innerText = challenges[currentChallenge].prompt;
+    }
+
+    document.getElementById('submit-challenge').addEventListener('click', () => {
+        const userInput = document.getElementById('user-input').value;
+        const feedback = document.getElementById('feedback');
+
+        if (userInput.trim() !== '') {
+            const success = Math.random() > 0.5;  // Randomly determine success or failure
+            const response = success ? challenges[currentChallenge].success : challenges[currentChallenge].failure;
+            feedback.innerText = response;
+
+            if (success) {
+                db.collection("mysteryWriter").add({
+                    challenge: challenges[currentChallenge].prompt,
+                    response: userInput,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    currentChallenge++;
+                    if (currentChallenge < challenges.length) {
+                        displayChallenge();
+                    } else {
+                        alert('Congratulations! You have solved the mystery.');
+                        document.getElementById('challenge-display').innerText = 'You have completed the Mystery Writer Challenge!';
+                        document.getElementById('user-input').style.display = 'none';
+                        document.getElementById('submit-challenge').style.display = 'none';
+                    }
+                }).catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+            }
+        } else {
+            feedback.innerText = 'Please write something before submitting.';
+        }
+    });
+
+    displayChallenge();
+</script>
+
+
+                
                 <!-- Chat Section -->
                 <section id="chat-section">
                     <div class="profile-container">
