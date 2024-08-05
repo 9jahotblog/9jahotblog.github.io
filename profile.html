@@ -364,7 +364,7 @@
     });
 </script>
 
-         
+        
     <style>
         body.dark-theme {
             background-color: #121212;
@@ -456,122 +456,126 @@
             "sci-fi-adventure": [
                 { prompt: "Level 1: Your spaceship encounters a mysterious signal. What do you do?", successKeywords: ['investigate', 'analyze', 'examine', 'inspect', 'explore', 'decode'], failureMessage: "You ignore the signal and miss an opportunity.", successMessage: "You investigate the signal and discover a new planet! 🌍" },
                 { prompt: "Level 2: An alien ship approaches. What's your next move?", successKeywords: ['communicate', 'contact', 'approach', 'greet', 'hail', 'signal'], failureMessage: "The alien ship attacks.", successMessage: "You successfully communicate and establish friendly contact! 👽" },
-                { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! },
-                { prompt: "Level 4: You discover an ancient alien artifact. What do you do?", successKeywords: ['examine', 'study', 'analyze', 'research', 'inspect', 'explore'], failureMessage: "You mishandle the artifact and it disintegrates.", successMessage: "You carefully examine the artifact and unlock its secrets! 🛸" },
-        { prompt: "Level 5: An unknown force pulls your ship towards a black hole. How do you respond?", successKeywords: ['escape', 'evade', 'avoid', 'navigate', 'steer', 'maneuver'], failureMessage: "You get too close and the ship is destroyed.", successMessage: "You successfully navigate away from the black hole! 🌌" },
-        { prompt: "Level 6: A distress signal is received from a nearby planet. What's your plan?", successKeywords: ['rescue', 'help', 'aid', 'assist', 'save', 'respond'], failureMessage: "You ignore the signal and miss an important opportunity.", successMessage: "You respond to the distress signal and save the inhabitants! 🚀" }
-    ],
-    "haunted-house": [
-        { prompt: "Level 1: You enter a haunted house and hear a strange noise. What do you do?", successKeywords: ['investigate', 'explore', 'check', 'inspect', 'look', 'search'], failureMessage: "You ignore the noise and miss a clue.", successMessage: "You investigate the noise and find a hidden room! 👻" },
-        { prompt: "Level 2: A ghostly figure appears in front of you. How do you react?", successKeywords: ['confront', 'talk', 'communicate', 'speak', 'address', 'ask'], failureMessage: "You run away and miss a chance to learn more.", successMessage: "You communicate with the ghost and learn its story! 👻" },
-        { prompt: "Level 3: The lights go out suddenly. What's your move?", successKeywords: ['light', 'flashlight', 'candle', 'lamp', 'torch', 'illuminate'], failureMessage: "You stumble in the dark and get hurt.", successMessage: "You use a flashlight and find your way safely! 🕯️" },
-        { prompt: "Level 4: You find an old diary with cryptic entries. What do you do?", successKeywords: ['read', 'decode', 'translate', 'interpret', 'understand', 'solve'], failureMessage: "You ignore the diary and miss valuable information.", successMessage: "You decode the diary and uncover crucial clues! 📖" },
-        { prompt: "Level 5: A mysterious fog fills the room. What's your plan?", successKeywords: ['ventilate', 'escape', 'fan', 'clear', 'breathe', 'disperse'], failureMessage: "You stay in the fog and get disoriented.", successMessage: "You clear the fog and see your path ahead! 🌫️" },
-        { prompt: "Level 6: The final spirit asks you to solve its last mystery. How do you proceed?", successKeywords: ['solve', 'answer', 'resolve', 'figure', 'uncover', 'decipher'], failureMessage: "You fail to solve the mystery and the spirit remains restless.", successMessage: "You solve the mystery and the spirit finds peace! 🕊️" }
-    ],
-    "time-travel": [
-        { prompt: "Level 1: You discover a time machine. What do you do?", successKeywords: ['use', 'enter', 'operate', 'activate', 'start', 'travel'], failureMessage: "You ignore the machine and miss an adventure.", successMessage: "You use the time machine and travel to the past! ⏳" },
-        { prompt: "Level 2: You arrive in a different era. How do you adapt?", successKeywords: ['adapt', 'blend', 'fit', 'adjust', 'acclimate', 'integrate'], failureMessage: "You stand out and cause suspicion.", successMessage: "You successfully blend in with the locals! 🕰️" },
-        { prompt: "Level 3: A historical figure asks for your help. What's your response?", successKeywords: ['help', 'aid', 'assist', 'support', 'cooperate', 'collaborate'], failureMessage: "You refuse and miss an important connection.", successMessage: "You help the figure and change the course of history! 🤝" },
-        { prompt: "Level 4: You need to find a way back to your time. What's your plan?", successKeywords: ['return', 'find', 'way', 'back', 'home', 'present'], failureMessage: "You get stuck in the past.", successMessage: "You find a way back to your time successfully! 🚀" },
-        { prompt: "Level 5: A time paradox is created. How do you resolve it?", successKeywords: ['resolve', 'fix', 'repair', 'correct', 'restore', 'adjust'], failureMessage: "The paradox worsens.", successMessage: "You resolve the paradox and restore the timeline! 🌀" },
-        { prompt: "Level 6: You encounter another time traveler with a different agenda. What do you do?", successKeywords: ['confront', 'negotiate', 'ally', 'compete', 'challenge', 'defeat'], failureMessage: "The other traveler disrupts the timeline.", successMessage: "You outsmart the other traveler and protect the timeline! 🔄" }
-    ]
-};
+                { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! 🛠️" },
+                { prompt: "Level 4: You encounter an unknown space anomaly. What's your plan?", successKeywords: ['analyze', 'study', 'research', 'examine', 'investigate', 'observe'], failureMessage: "The anomaly damages your ship.", successMessage: "You analyze the anomaly and navigate safely! 🌌" },
+                { prompt: "Level 5: You need to make a crucial decision to save your crew. What do you do?", successKeywords: ['decide', 'choose', 'plan', 'execute', 'act', 'lead'], failureMessage: "Your decision leads to a crisis.", successMessage: "Your decision saves the crew and the mission continues! 👩‍🚀👨‍🚀" },
+                { prompt: "Level 6: You discover a habitable planet. How do you proceed?", successKeywords: ['explore', 'land', 'survey', 'investigate', 'settle', 'colonize'], failureMessage: "Your landing attempt fails.", successMessage: "You successfully land and begin exploring the new planet! 🌍🚀" },
+                { prompt: "Level 7: You find alien technology on the planet. What's your next step?", successKeywords: ['study', 'analyze', 'reverse-engineer', 'examine', 'utilize', 'exploit'], failureMessage: "The technology backfires.", successMessage: "You harness the alien technology and make groundbreaking discoveries! 🛸✨" }
+            ],
+            "haunted-house": [
+                { prompt: "Level 1: You enter an old, abandoned house at midnight. You hear strange noises. What's your first move? 🏚️👻", successKeywords: ['explore', 'investigate', 'search', 'look', 'observe', 'inspect'], failureMessage: "You run away scared and miss crucial clues.", successMessage: "You bravely explore and find an old diary! 📖" },
+                { prompt: "Level 2: The diary hints at a hidden room. How do you find it? 📓🕵️‍♂️", successKeywords: ['search', 'explore', 'investigate', 'look', 'inspect', 'examine'], failureMessage: "You fail to find the hidden room.", successMessage: "You discover the hidden room behind a bookcase! 📚" },
+                { prompt: "Level 3: You hear footsteps behind you. How do you handle it? 👣😨", successKeywords: ['turn', 'look', 'confront', 'investigate', 'face', 'check'], failureMessage: "You freeze in fear and miss important details.", successMessage: "You turn around and see a friendly ghost guiding you! 👻😊" },
+                { prompt: "Level 4: You find a locked chest. What do you do? 🗝️🔒", successKeywords: ['open', 'unlock', 'break', 'investigate', 'search', 'find'], failureMessage: "You give up on the chest.", successMessage: "You open the chest and find ancient relics! 🏺" },
+                { prompt: "Level 5: The ghost reveals a secret passage. Do you enter? 👻🚪", successKeywords: ['enter', 'explore', 'go', 'proceed', 'venture', 'investigate'], failureMessage: "You hesitate and miss the opportunity.", successMessage: "You enter and find a hidden underground chamber! 🕳️" },
+                { prompt: "Level 6: The chamber has strange symbols. How do you decipher them? 🔮📜", successKeywords: ['decipher', 'interpret', 'translate', 'study', 'analyze', 'examine'], failureMessage: "You fail to understand the symbols.", successMessage: "You decipher the symbols and reveal a hidden treasure! 💎" },
+                { prompt: "Level 7: The treasure is cursed! How do you lift the curse? 😱🧿", successKeywords: ['break', 'lift', 'dispel', 'remove', 'cleanse', 'destroy'], failureMessage: "You trigger the curse and face dire consequences.", successMessage: "You lift the curse and claim the treasure safely! 🏆" }
+            ],
+            "time-travel": [
+                { prompt: "Level 1: You discover a time machine. What year do you travel to first? 🕰️🚀", successKeywords: ['future', 'past', 'ancient', 'medieval', 'modern', 'prehistoric'], failureMessage: "You hesitate and the machine shuts down.", successMessage: "You set the time machine and travel to an exciting era! 🌐" },
+                { prompt: "Level 2: You meet a famous historical figure. How do you introduce yourself? 🧑‍🎤🏛️", successKeywords: ['introduce', 'greet', 'meet', 'present', 'approach', 'engage'], failureMessage: "You fail to make a good impression.", successMessage: "You introduce yourself and gain valuable insights! 🧠" },
+                { prompt: "Level 3: A crucial event is about to occur. Do you intervene? 🌪️⏳", successKeywords: ['intervene', 'help', 'assist', 'stop', 'prevent', 'act'], failureMessage: "You miss the opportunity to make a difference.", successMessage: "You intervene and change the course of history! 📜" },
+                { prompt: "Level 4: Your time machine malfunctions. How do you fix it? 🛠️🕰️", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the time machine and resume your journey! 🔧" },
+                { prompt: "Level 5: You encounter a paradox. How do you resolve it? 🔄🌀", successKeywords: ['resolve', 'fix', 'solve', 'unravel', 'untangle', 'understand'], failureMessage: "The paradox causes a time loop.", successMessage: "You resolve the paradox and restore the timeline! 🕰️✨" },
+                { prompt: "Level 6: You find yourself in a futuristic city. What's your first move? 🌃🚀", successKeywords: ['explore', 'investigate', 'look', 'observe', 'inspect', 'search'], failureMessage: "You get lost in the city.", successMessage: "You explore the city and uncover advanced technology! 🏙️" },
+                { prompt: "Level 7: You must return to your own time. How do you ensure a safe trip back? 🏠🕰️", successKeywords: ['return', 'travel', 'go', 'navigate', 'operate', 'use'], failureMessage: "You get stranded in another time.", successMessage: "You successfully navigate back to your own time and complete your adventure! 🎉" }
+            ]
+        };
 
-            document.querySelectorAll('.topic-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const topic = button.getAttribute('data-topic');
-            startGame(topic);
+        document.querySelectorAll('.topic-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const topic = button.getAttribute('data-topic');
+                startGame(topic);
+            });
         });
-    });
 
-    document.querySelector('.theme-toggle').addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-    });
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+        });
 
-    let currentLevel = 0;
-    let currentTopic = '';
-    let storyLog = '';
+        let currentLevel = 0;
+        let currentTopic = '';
+        let storyLog = '';
 
-    function startGame(topic) {
-        currentTopic = topic;
-        currentLevel = 0;
-        storyLog = '';
-        document.getElementById('topic-selection').style.display = 'none';
-        document.getElementById('mystery-writer').style.display = 'block';
-        showPrompt();
-    }
-
-    function showPrompt() {
-        const level = levels[currentTopic][currentLevel];
-        const gameDisplay = document.getElementById('game-display');
-        gameDisplay.innerHTML = `<p>${level.prompt}</p>`;
-    }
-
-    document.getElementById('submit-challenge').addEventListener('click', () => {
-        const userInput = document.getElementById('user-input').value.toLowerCase();
-        const level = levels[currentTopic][currentLevel];
-        const success = level.successKeywords.some(keyword => userInput.includes(keyword));
-
-        const gameDisplay = document.getElementById('game-display');
-        const feedback = document.getElementById('feedback');
-
-        if (success) {
-            storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
-            gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
-            feedback.textContent = 'Success! 🎉 Excellent descriptive power. Good job analysing the situation.👏👏🫡;
-            document.getElementById('next-level').style.display = 'block';
-        } else {
-            gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
-            feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, dont give up my friend! ✍️💪🏾😊';
-        }
-    });
-
-    document.getElementById('next-level').addEventListener('click', () => {
-        currentLevel++;
-        document.getElementById('user-input').value = '';
-        document.getElementById('next-level').style.display = 'none';
-
-        if (currentLevel < levels[currentTopic].length) {
+        function startGame(topic) {
+            currentTopic = topic;
+            currentLevel = 0;
+            storyLog = '';
+            document.getElementById('topic-selection').style.display = 'none';
+            document.getElementById('mystery-writer').style.display = 'block';
             showPrompt();
-        } else {
-            endGame();
         }
-    });
 
-    function endGame() {
-        document.getElementById('final-message').style.display = 'block';
-        document.getElementById('game-display').innerHTML += '<p>Well done! You completed all levels! 🏆</p>';
-    }
+        function showPrompt() {
+            const level = levels[currentTopic][currentLevel];
+            const gameDisplay = document.getElementById('game-display');
+            gameDisplay.innerHTML = `<p>${level.prompt}</p>`;
+        }
 
-    document.getElementById('continue-game').addEventListener('click', () => {
-        document.getElementById('final-message').style.display = 'none';
-        document.getElementById('next-section').style.display = 'block';
-    });
+        document.getElementById('submit-challenge').addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value.toLowerCase();
+            const level = levels[currentTopic][currentLevel];
+            const success = level.successKeywords.some(keyword => userInput.includes(keyword));
 
-    document.getElementById('stop-game').addEventListener('click', () => {
-        document.getElementById('end-game').style.display = 'block';
-    });
+            const gameDisplay = document.getElementById('game-display');
+            const feedback = document.getElementById('feedback');
 
-    document.getElementById('download-txt').addEventListener('click', () => {
-        downloadResponses('txt');
-    });
+            if (success) {
+                storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
+                gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
+                feedback.textContent = 'Success! 🎉 Excellent descriptive power. Good job analysing the situation.👏👏🫡';
+                document.getElementById('next-level').style.display = 'block';
+            } else {
+                gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
+                feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, dont give up my friend! ✍️💪🏾😊';
+            }
+        });
 
-    document.getElementById('download-word').addEventListener('click', () => {
-        downloadResponses('word');
-    });
+        document.getElementById('next-level').addEventListener('click', () => {
+            currentLevel++;
+            document.getElementById('user-input').value = '';
+            document.getElementById('next-level').style.display = 'none';
 
-    function downloadResponses(format) {
-        const element = document.createElement('a');
-        const file = new Blob([storyLog], { type: 'text/plain' });
-        element.href = URL.createObjectURL(file);
-        element.download = `story.${format}`;
-        document.body.appendChild(element);
-        element.click();
-    }
-</script>
-                    
+            if (currentLevel < levels[currentTopic].length) {
+                showPrompt();
+            } else {
+                endGame();
+            }
+        });
+
+        function endGame() {
+            document.getElementById('final-message').style.display = 'block';
+            document.getElementById('game-display').innerHTML += '<p>Well done! You completed all levels! 🏆</p>';
+        }
+
+        document.getElementById('continue-game').addEventListener('click', () => {
+            document.getElementById('final-message').style.display = 'none';
+            document.getElementById('next-section').style.display = 'block';
+        });
+
+        document.getElementById('stop-game').addEventListener('click', () => {
+            document.getElementById('end-game').style.display = 'block';
+        });
+
+        document.getElementById('download-txt').addEventListener('click', () => {
+            downloadResponses('txt');
+        });
+
+        document.getElementById('download-word').addEventListener('click', () => {
+            downloadResponses('word');
+        });
+
+        function downloadResponses(format) {
+            const element = document.createElement('a');
+            const file = new Blob([storyLog], { type: 'text/plain' });
+            element.href = URL.createObjectURL(file);
+            element.download = `story.${format}`;
+            document.body.appendChild(element);
+            element.click();
+        }
+    </script>
+</body>
+
 
               <!-- Character Creation Section -->
 <section id="character-creation" style="display: block;">
