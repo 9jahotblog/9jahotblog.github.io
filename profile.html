@@ -431,7 +431,7 @@
         </div>
     </section>
 
-    <!-- Chat Section -->
+    <!-- Mysterious Section -->
     <section id="chat-section" style="display: none;">
         <div class="profile-container">
             <button class="theme-toggle">🌙</button>
@@ -445,65 +445,80 @@
     </section>
 
     <script>
-        const stories = {
-            'ancient-mystery': [
-                { prompt: "Level 1: You find an ancient scroll with cryptic writing. Describe your first steps in deciphering it.", successKeywords: ['analyze', 'study', 'examine'], failureMessage: "You fail to understand the symbols. The mystery deepens.", successMessage: "You carefully analyze the symbols and uncover a hidden message.", clue: "The scroll hints at a secret meeting place." },
-                { prompt: "Level 2: The scroll's message leads you to an abandoned castle. What do you find there?", successKeywords: ['hidden chamber', 'map', 'secret room'], failureMessage: "The castle is empty. You need to look elsewhere.", successMessage: "You discover a hidden chamber with a map.", clue: "The map points to a forest nearby." },
-                // Add more levels here...
-            ],
-            'modern-detective': [
-                { prompt: "Level 1: A famous painting has been stolen from a museum. How do you begin your investigation?", successKeywords: ['frame', 'clue', 'investigate'], failureMessage: "You can't find any leads at the museum.", successMessage: "You find a clue hidden in the frame.", clue: "The thief left a partial fingerprint." },
-                { prompt: "Level 2: The fingerprint leads you to a suspect's house. What do you do?", successKeywords: ['search', 'stash', 'investigate'], failureMessage: "The house is empty and looks abandoned.", successMessage: "You find a stash of stolen goods.", clue: "There are tickets to a foreign country." },
-                // Add more levels here...
-            ],
-            'sci-fi-adventure': [
-                { prompt: "Level 1: You've landed on a mysterious alien planet. What's your first move?", successKeywords: ['communicate', 'analyze', 'understand'], failureMessage: "You are unable to understand the alien language.", successMessage: "You establish communication with friendly aliens.", clue: "The aliens use a universal translator." },
-                { prompt: "Level 2: The aliens lead you to an ancient artifact. What do you do?", successKeywords: ['unlock', 'analyze', 'study'], failureMessage: "The artifact remains a mystery.", successMessage: "You unlock the secrets of the artifact.", clue: "The artifact has strange symbols similar to those in your spaceship's database." },
-                // Add more levels here...
-            ],
-            'haunted-house': [
-                { prompt: "Level 1: You enter a haunted house rumored to be cursed. Describe your first investigation.", successKeywords: ['explore', 'search', 'investigate'], failureMessage: "You can't find any evidence of paranormal activity.", successMessage: "You find a hidden diary detailing a tragic past.", clue: "The diary mentions a secret room in the attic." },
-                { prompt: "Level 2: The diary's clues lead you to the attic. What do you find there?", successKeywords: ['search', 'hidden room', 'investigate'], failureMessage: "The attic is empty. You need to search more carefully.", successMessage: "You discover a hidden room with old photographs.", clue: "The photographs show a hidden passage in the basement." },
-                // Add more levels here...
-            ],
-            'time-travel': [
-                { prompt: "Level 1: You find a time machine. Describe your first journey through time.", successKeywords: ['explore', 'travel', 'investigate'], failureMessage: "You end up in a time period you didn't expect.", successMessage: "You successfully travel to ancient Rome.", clue: "The machine has coordinates for another significant event in history." },
-                { prompt: "Level 2: You arrive in ancient Rome. What do you do first?", successKeywords: ['explore', 'investigate', 'interact'], failureMessage: "You get lost in the bustling city.", successMessage: "You meet a local historian who helps you.", clue: "The historian tells you about a hidden library." },
-                // Add more levels here...
-            ]
-        };
-
-        let currentLevel = 0;
-        let selectedTopic = '';
-        let currentLevels = [];
-        let username = 'User';  // Default username, replace with dynamic username if available
-
-        document.querySelectorAll('.topic-button').forEach(button => {
-            button.addEventListener('click', () => {
-                selectedTopic = button.getAttribute('data-topic');
-                currentLevels = stories[selectedTopic];
-                document.getElementById('topic-selection').style.display = 'none';
-                document.getElementById('mystery-writer').style.display = 'block';
-                displayLevel();
-            });
-        });
-
-        function displayLevel() {
-            const gameDisplay = document.getElementById('game-display');
-            gameDisplay.innerHTML = `<strong>${currentLevels[currentLevel].prompt}</strong>`;
+const stories = {
+    'ancient-mystery': [
+        { 
+            prompt: "Level 1: You find an ancient scroll with cryptic writing. Describe your first steps in deciphering it.", 
+            successKeywords: ['analyze', 'study', 'examine'], 
+            failureMessage: "You fail to understand the symbols. The mystery deepens.", 
+            successMessage: "You carefully analyze the symbols and uncover a hidden message. The scroll hints at a secret meeting place.",
+        },
+        { 
+            prompt: "Level 2: The scroll's message leads you to an abandoned castle. What do you find there?", 
+            successKeywords: ['hidden chamber', 'map', 'secret room'], 
+            failureMessage: "The castle is empty. You need to look elsewhere.", 
+            successMessage: "You discover a hidden chamber with a map. The map points to a forest nearby.",
+        },
+        { 
+            prompt: "Level 3: In the forest, you find a hidden temple. Describe your exploration.", 
+            successKeywords: ['explore', 'search', 'investigate', 'artifacts'], 
+            failureMessage: "The temple is dark and you can't find anything useful.", 
+            successMessage: "You find ancient artifacts and a hidden passage. The passage leads deeper into the temple.",
+        },
+        { 
+            prompt: "Level 4: The hidden passage leads to a room with ancient writings on the wall. What do you do?", 
+            successKeywords: ['decipher', 'translate', 'interpret', 'study'], 
+            failureMessage: "You can't make sense of the writings.", 
+            successMessage: "You decipher the writings, revealing a prophecy about a hidden treasure.",
+        },
+        { 
+            prompt: "Level 5: The prophecy leads you to a hidden treasure. Describe your final steps to uncover it.", 
+            successKeywords: ['uncover', 'dig', 'retrieve', 'discover'], 
+            failureMessage: "You can't find the treasure.", 
+            successMessage: "You uncover the hidden treasure, completing the ancient mystery! 🎉 Congratulations! You win 100MB data!",
         }
+    ],
+    // Add more stories similarly...
+};
 
-        function isSuccessful(response, keywords) {
-    // Check if response is long enough and contains necessary keywords
+let currentLevel = 0;
+let selectedTopic = '';
+let currentLevels = [];
+let username = 'User';  // Default username, replace with dynamic username if available
+
+document.querySelectorAll('.topic-button').forEach(button => {
+    button.addEventListener('click', () => {
+        selectedTopic = button.getAttribute('data-topic');
+        currentLevels = stories[selectedTopic];
+        document.getElementById('topic-selection').style.display = 'none';
+        document.getElementById('mystery-writer').style.display = 'block';
+        displayLevel();
+    });
+});
+
+function displayLevel() {
+    const gameDisplay = document.getElementById('game-display');
+    gameDisplay.innerHTML = `<strong>${currentLevels[currentLevel].prompt}</strong>`;
+}
+
+function isSuccessful(response, keywords) {
     if (response.split(' ').length < 10) {
-        return false;  // Response is too short
+        return false;
     }
     for (let keyword of keywords) {
         if (response.includes(keyword)) {
-            return true;  // Contains at least one keyword
+            return true;
         }
     }
-    return false;  // Does not contain any keywords
+    return false;
+}
+
+function displayAnalyzing() {
+    const feedback = document.getElementById('feedback');
+    feedback.innerHTML = '<p>Analyzing...</p>';
+    setTimeout(() => {
+        feedback.innerHTML = '';
+    }, 2000);
 }
 
 document.getElementById('submit-challenge').addEventListener('click', () => {
@@ -511,22 +526,26 @@ document.getElementById('submit-challenge').addEventListener('click', () => {
     const feedback = document.getElementById('feedback');
     const success = isSuccessful(userInput, currentLevels[currentLevel].successKeywords);
 
-    if (userInput.trim() !== '') {
-        const response = success ? currentLevels[currentLevel].successMessage : currentLevels[currentLevel].failureMessage;
-        feedback.innerHTML = `<p>${response}</p>`;
-        feedback.innerHTML += `<p>AI Comment: ${success ? "Great job analyzing the situation! ✅️👌👍🤗🫡👏 You'll be a nice ghostwriter." : "Don't give up, keep trying! You need to be more descriptive and specific."}</p>`;
-        
-        if (success) {
-            currentLevel++;
-            document.getElementById('submit-challenge').style.display = 'none';
-            document.getElementById('next-level').style.display = 'inline';
-            if (currentLevel === currentLevels.length) {
-                document.getElementById('final-message').style.display = 'block';
+    displayAnalyzing();
+
+    setTimeout(() => {
+        if (userInput.trim() !== '') {
+            const response = success ? currentLevels[currentLevel].successMessage : currentLevels[currentLevel].failureMessage;
+            feedback.innerHTML = `<p>${response}</p>`;
+            feedback.innerHTML += `<p>AI Comment: ${success ? "Great job analyzing the situation! 🎉👏 Keep it up!" : "Nope, that's not it. You need to be more descriptive and specific."}</p>`;
+            
+            if (success) {
+                currentLevel++;
+                document.getElementById('submit-challenge').style.display = 'none';
+                document.getElementById('next-level').style.display = 'inline';
+                if (currentLevel === currentLevels.length) {
+                    document.getElementById('final-message').style.display = 'block';
+                }
             }
+        } else {
+            feedback.innerText = 'Please write something before submitting.';
         }
-    } else {
-        feedback.innerText = 'Please write something before submitting.';
-    }
+    }, 2000);
 });
 
 document.getElementById('next-level').addEventListener('click', () => {
@@ -566,10 +585,7 @@ document.querySelectorAll('.theme-toggle').forEach(button => {
         document.body.classList.toggle('dark-theme');
     });
 });
-    </script>
-</body>
-</html>
-            
+</script>
 
                 
                 <!-- Chat Section -->
