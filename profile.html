@@ -365,7 +365,32 @@
 </script>
 
             
-    
+    <style>
+        body.dark-theme {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .dark-theme .profile-container {
+            background-color: #1e1e1e;
+            border-color: #333;
+        }
+        .dark-theme #game-display,
+        .dark-theme #chat-box {
+            background-color: #2e2e2e;
+            border-color: #444;
+        }
+        .dark-theme input,
+        .dark-theme textarea {
+            background-color: #3e3e3e;
+            color: #fff;
+            border-color: #555;
+        }
+        .dark-theme button {
+            background-color: #444;
+            color: #fff;
+            border-color: #555;
+        }
+    </style>
     <!-- Mystery Writer Challenge Section -->
     <section id="mystery-writer" style="display: none;">
         <div class="profile-container">
@@ -444,7 +469,7 @@
         let currentLevel = 0;
         let selectedTopic = '';
         let currentLevels = [];
-        let username = 'User';  // Default username, replace with dynamic username if available
+        let username = 'user-username';  // Default username, replace with dynamic username if available
 
         document.querySelectorAll('.topic-button').forEach(button => {
             button.addEventListener('click', () => {
