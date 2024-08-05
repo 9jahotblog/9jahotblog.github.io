@@ -600,6 +600,53 @@ document.querySelectorAll('.theme-toggle').forEach(button => {
                         <button id="send-message">Send</button>
                     </div>
                 </section>
+    
+                  <script> 
+                   document.getElementById('send-message').addEventListener('click', () => {
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const userMessage = chatInput.value.trim();
+
+    if (userMessage === '') {
+        return;
+    }
+
+    // Add user message to chat
+    const userMessageElement = document.createElement('div');
+    userMessageElement.textContent = `You: ${userMessage}`;
+    chatMessages.appendChild(userMessageElement);
+
+    // Clear input
+    chatInput.value = '';
+
+    // Simulate AI response (Replace this part with actual AI response logic if available)
+    setTimeout(() => {
+        const aiResponse = `AI: I'm here to assist you, ${userMessage}`;
+        const aiMessageElement = document.createElement('div');
+        aiMessageElement.textContent = aiResponse;
+        chatMessages.appendChild(aiMessageElement);
+
+        // Scroll to the bottom of the chat box
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }, 1000);
+});
+
+// Theme toggle functionality
+document.querySelectorAll('.theme-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+    });
+});
+
+// Optional: Handle Enter key press to send message
+document.getElementById('chat-input').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        document.getElementById('send-message').click();
+    }
+});
+                  </script>
+
+        
 
                 <!-- Text-to-Speech Section with Third-Party TTS Integration -->
 <section id="tts-section">
