@@ -364,44 +364,52 @@
     });
 </script>
 
-            <!--Mystery writer section-->
-               <section id="mystery-writer">
-    <div class="game-container">
+            
+            <!-- Mystery Writer Challenge Section -->
+<section id="mystery-writer">
+    <div class="profile-container">
         <h2>Mystery Writer Challenge</h2>
-        <div id="challenge-display" style="margin-top: 10px; border: 1px solid #ccc; padding: 10px;"></div>
-        <textarea id="user-input" style="width: 100%; height: 100px; margin-top: 10px;"></textarea>
-        <button id="submit-challenge">Submit</button>
+        <p id="intro">Hello, welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries, based on top-notch movies like "Legend of the Seeker" or "Merlin".</p>
+        <div id="game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+        <textarea id="user-input" placeholder="Type your response here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+        <div>
+            <button id="submit-challenge">Submit</button>
+            <button id="next-level" style="display: none;">Next Level</button>
+        </div>
         <div id="feedback" style="margin-top: 10px;"></div>
+        <div id="final-message" style="display: none;">
+            <p>Congratulations, you've completed today's level of the challenge! Would you like to continue or move to the next section game?</p>
+            <button id="continue-game">Continue</button>
+            <button id="next-section">Next Section</button>
+        </div>
+        <div id="end-game" style="display: none;">
+            <p>You just won 200MB worth of data! You're a writing machine! Click <a href="https://wa.me/+2349160331432">here</a> to claim your prize.</p>
+        </div>
     </div>
 </section>
 
 <script>
-    const challenges = [
+    const levels = [
         {
-            prompt: "Describe the mysterious figure you saw in the alley.",
-            clue: "The figure dropped a clue. It was a key.",
-            success: "You keenly observe and notice the key has a unique insignia.",
-            failure: "You missed the clue. The figure vanished into the darkness."
+            prompt: "Level 1: You find an ancient scroll with cryptic writing. Describe your first steps in deciphering it.",
+            success: "You carefully analyze the symbols and uncover a hidden message.",
+            failure: "You fail to understand the symbols. The mystery deepens.",
+            clue: "The scroll hints at a secret meeting place."
         },
         {
-            prompt: "Write about how you used the key to unlock a secret door.",
-            clue: "Behind the door, you found a hidden map.",
-            success: "The key fits perfectly. You unveil a hidden map.",
-            failure: "The key didn't fit. You need to find another way."
+            prompt: "Level 2: The scroll's message leads you to an abandoned castle. What do you find there?",
+            success: "You discover a hidden chamber with a map.",
+            failure: "The castle is empty. You need to look elsewhere.",
+            clue: "The map points to a forest nearby."
         },
-        {
-            prompt: "Explain what the map led to and your adventure to find it.",
-            clue: "The map led to a treasure chest buried under an old oak tree.",
-            success: "Following the map, you discover a chest under the oak tree.",
-            failure: "The map was misleading. You find yourself lost in the woods."
-        }
+        // Add more levels here...
     ];
 
-    let currentChallenge = 0;
+    let currentLevel = 0;
 
-    function displayChallenge() {
-        const challengeDisplay = document.getElementById('challenge-display');
-        challengeDisplay.innerText = challenges[currentChallenge].prompt;
+    function displayLevel() {
+        const gameDisplay = document.getElementById('game-display');
+        gameDisplay.innerHTML = `<strong>${levels[currentLevel].prompt}</strong>`;
     }
 
     document.getElementById('submit-challenge').addEventListener('click', () => {
@@ -410,36 +418,50 @@
 
         if (userInput.trim() !== '') {
             const success = Math.random() > 0.5;  // Randomly determine success or failure
-            const response = success ? challenges[currentChallenge].success : challenges[currentChallenge].failure;
-            feedback.innerText = response;
-
+            const response = success ? levels[currentLevel].success : levels[currentLevel].failure;
+            feedback.innerHTML = `<p>${response}</p>`;
             if (success) {
-                db.collection("mysteryWriter").add({
-                    challenge: challenges[currentChallenge].prompt,
-                    response: userInput,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                }).then(() => {
-                    currentChallenge++;
-                    if (currentChallenge < challenges.length) {
-                        displayChallenge();
-                    } else {
-                        alert('Congratulations! You have solved the mystery.');
-                        document.getElementById('challenge-display').innerText = 'You have completed the Mystery Writer Challenge!';
-                        document.getElementById('user-input').style.display = 'none';
-                        document.getElementById('submit-challenge').style.display = 'none';
-                    }
-                }).catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
+                currentLevel++;
+                document.getElementById('submit-challenge').style.display = 'none';
+                document.getElementById('next-level').style.display = 'inline';
+                if (currentLevel === levels.length) {
+                    document.getElementById('final-message').style.display = 'block';
+                }
             }
         } else {
             feedback.innerText = 'Please write something before submitting.';
         }
     });
 
-    displayChallenge();
-</script>
+    document.getElementById('next-level').addEventListener('click', () => {
+        if (currentLevel < levels.length) {
+            displayLevel();
+            document.getElementById('feedback').innerHTML = '';
+            document.getElementById('user-input').value = '';
+            document.getElementById('submit-challenge').style.display = 'inline';
+            document.getElementById('next-level').style.display = 'none';
+        } else {
+            document.getElementById('end-game').style.display = 'block';
+        }
+    });
 
+    document.getElementById('continue-game').addEventListener('click', () => {
+        displayLevel();
+        document.getElementById('final-message').style.display = 'none';
+        document.getElementById('feedback').innerHTML = '';
+        document.getElementById('user-input').value = '';
+        document.getElementById('submit-challenge').style.display = 'inline';
+        document.getElementById('next-level').style.display = 'none';
+    });
+
+    document.getElementById('next-section').addEventListener('click', () => {
+        alert('Moving to the next section...');
+        // Add logic to navigate to the next section of games
+    });
+
+    displayLevel();
+</script>
+            
 
                 
                 <!-- Chat Section -->
