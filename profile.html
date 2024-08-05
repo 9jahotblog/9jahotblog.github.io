@@ -675,9 +675,8 @@
                 <!-- X and O Game Section -->
 <section id="tic-tac-toe">
     <div class="profile-container">
-        <button class="theme-toggle">🌙</button>
         <h2>X and O Game (Tic-Tac-Toe)</h2>
-        <p>Welcome to the classic Tic-Tac-Toe game. Play against the AI and see if you can win!</p>
+        <p>Welcome to the classic Tic-Tac-Toe game. Play against the 9jahotblog AI and see if you can win!</p>
         
         <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px;">
             <!-- Game cells will be inserted here -->
@@ -722,19 +721,32 @@
         const cell = event.target;
         const index = cell.dataset.index;
         
-        if (!board[index]) {
-            board[index] = currentPlayer;
-            cell.innerText = currentPlayer;
-            if (checkWin(currentPlayer)) {
-                gameStatus.innerText = `Player ${currentPlayer} wins!`;
-                gameBoard.removeEventListener('click', handleCellClick);
-            } else if (board.every(cell => cell)) {
-                gameStatus.innerText = 'It\'s a tie!';
-            } else {
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                gameStatus.innerText = `Player ${currentPlayer}'s turn`;
+        if (!board[index] && currentPlayer === 'X') {
+            makeMove(index, 'X');
+            if (!checkWin('X') && !board.every(cell => cell)) {
+                setTimeout(makeAiMove, 500);
             }
         }
+    }
+    
+    function makeMove(index, player) {
+        board[index] = player;
+        gameBoard.children[index].innerText = player;
+        if (checkWin(player)) {
+            gameStatus.innerText = `Player ${player} wins!`;
+            gameBoard.removeEventListener('click', handleCellClick);
+        } else if (board.every(cell => cell)) {
+            gameStatus.innerText = 'It\'s a tie!';
+        } else {
+            currentPlayer = player === 'X' ? 'O' : 'X';
+            gameStatus.innerText = `Player ${currentPlayer}'s turn`;
+        }
+    }
+    
+    function makeAiMove() {
+        const emptyIndices = board.map((val, idx) => val === null ? idx : null).filter(val => val !== null);
+        const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+        makeMove(randomIndex, 'O');
     }
     
     function checkWin(player) {
