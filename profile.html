@@ -601,78 +601,76 @@
     }
     </script>
 </body>
-            
 
-              <!-- Character Creation Section -->
-<section id="character-creation" style="display: block;">
+                
+<!-- Plot Generator Game Section -->
+<section id="plot-generator">
     <div class="profile-container">
-        <button class="theme-toggle">🌙</button>
-        <h2>Character Creation Challenge</h2>
-        <p id="char-intro">Welcome to the Character Creation Game! 🎨✨ Your mission is to create a character with unique traits and skills by making critical decisions through various levels. Ready to start?</p>
-        
-        <div id="char-game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
-        <textarea id="char-user-input" placeholder="Type your choice here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+        <h2>Plot Generator Game</h2>
+        <p>Welcome to the Plot Generator! Select your preferred genre and themes, and generate a unique story plot.</p>
         
         <div>
-            <button id="char-submit-choice">Submit Choice</button>
-            <button id="char-next-level" style="display: none;">Next Level</button>
+            <label for="genre">Select Genre:</label>
+            <select id="genre">
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Horror">Horror</option>
+            </select>
         </div>
         
-        <div id="char-feedback" style="margin-top: 10px;"></div>
-        <div id="char-summary" style="display: none;">
-            <p>Congratulations! 🎉 You've completed the Character Creation Challenge. Review your character's profile below:</p>
-            <div id="char-profile"></div>
-            <button id="download-char-profile">Download Character Profile</button>
+        <div>
+            <label for="theme">Select Theme:</label>
+            <select id="theme">
+                <option value="Adventure">Adventure</option>
+                <option value="Time Travel">Time Travel</option>
+                <option value="Forbidden Love">Forbidden Love</option>
+                <option value="Haunted House">Haunted House</option>
+                <option value="Heist">Heist</option>
+            </select>
         </div>
         
+        <button id="generate-plot">Generate Plot</button>
+        
+        <div id="plot-display" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; height: 150px; overflow-y: scroll;">
+            <strong>Your Generated Plot:</strong>
+            <p id="plot-content"></p>
+        </div>
     </div>
 </section>
 
 <script>
-    // Character Creation Data
-    const characterLevels = [
-        { prompt: "Level 1: Choose your character’s background. Will they be a Noble, Merchant, or Adventurer?", successKeywords: ['noble', 'merchant', 'adventurer'], failureMessage: "You didn't make a choice, and your character's background remains unclear.", successMessage: "You have chosen a background for your character!" },
-        { prompt: "Level 2: Pick a special skill for your character. Will they be skilled in Magic, Combat, or Diplomacy?", successKeywords: ['magic', 'combat', 'diplomacy'], failureMessage: "You failed to choose a skill, and your character lacks focus.", successMessage: "Your character now has a special skill!" },
-        { prompt: "Level 3: Choose a defining trait. Will your character be Brave, Wise, or Cunning?", successKeywords: ['brave', 'wise', 'cunning'], failureMessage: "You missed selecting a defining trait, leaving your character's personality vague.", successMessage: "You've defined a key trait of your character!" },
-        { prompt: "Level 4: Decide on an important goal for your character. Will they seek Wealth, Knowledge, or Power?", successKeywords: ['wealth', 'knowledge', 'power'], failureMessage: "You didn't set a goal, and your character lacks direction.", successMessage: "Your character now has a clear goal!" },
-        { prompt: "Level 5: Finalize your character’s name and appearance. What will your character be called and look like?", successKeywords: ['name', 'description'], failureMessage: "You didn't provide a name or description, leaving your character incomplete.", successMessage: "You've given your character a name and appearance!" }
+    const characters = [
+        "a brave knight", "a clever scientist", "a witty detective", "a young couple", "an ancient wizard"
     ];
-
-    let currentLevel = 0;
     
-    function displayLevel(levelIndex) {
-        const level = characterLevels[levelIndex];
-        document.getElementById('char-game-display').innerHTML = `<p>${level.prompt}</p>`;
-        document.getElementById('char-submit-choice').style.display = 'block';
-        document.getElementById('char-next-level').style.display = 'none';
-    }
-
-    document.getElementById('char-submit-choice').addEventListener('click', function() {
-        const userInput = document.getElementById('char-user-input').value.toLowerCase();
-        const level = characterLevels[currentLevel];
-        if (level.successKeywords.includes(userInput)) {
-            document.getElementById('char-feedback').innerHTML = `<p>Success! ${level.successMessage}</p>`;
-            currentLevel++;
-            if (currentLevel < characterLevels.length) {
-                document.getElementById('char-next-level').style.display = 'block';
-            } else {
-                document.getElementById('char-summary').style.display = 'block';
-                document.getElementById('char-feedback').innerHTML = `<p>You've completed all levels! ${level.successMessage}</p>`;
-                // Logic to show character profile
-                document.getElementById('char-profile').innerHTML = "Your character profile details...";
-                document.getElementById('download-char-profile').style.display = 'block';
-            }
-        } else {
-            document.getElementById('char-feedback').innerHTML = `<p>Failure. ${level.failureMessage}</p>`;
-        }
+    const settings = [
+        "in a distant kingdom", "on a futuristic space station", "in a small, eerie town", "on a tropical island", "in a haunted mansion"
+    ];
+    
+    const conflicts = [
+        "must stop a powerful enemy", "discovers a hidden truth", "uncovers a deep conspiracy", "faces an unexpected betrayal", "finds a mysterious artifact"
+    ];
+    
+    const resolutions = [
+        "and saves the day", "but loses something precious", "and finds a new beginning", "but faces a tragic end", "and learns a valuable lesson"
+    ];
+    
+    document.getElementById('generate-plot').addEventListener('click', () => {
+        const genre = document.getElementById('genre').value;
+        const theme = document.getElementById('theme').value;
+        
+        const randomCharacter = characters[Math.floor(Math.random() * characters.length)];
+        const randomSetting = settings[Math.floor(Math.random() * settings.length)];
+        const randomConflict = conflicts[Math.floor(Math.random() * conflicts.length)];
+        const randomResolution = resolutions[Math.floor(Math.random() * resolutions.length)];
+        
+        const plot = `${randomCharacter} ${randomSetting} ${randomConflict} ${randomResolution}.`;
+        document.getElementById('plot-content').innerText = `Genre: ${genre}\nTheme: ${theme}\nPlot: ${plot}`;
     });
-
-    document.getElementById('char-next-level').addEventListener('click', function() {
-        displayLevel(currentLevel);
-    });
-
-    displayLevel(currentLevel);
 </script>
+                
     
                 <!-- Chat Section -->
                 <section id="chat-section">
