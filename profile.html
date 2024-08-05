@@ -454,14 +454,33 @@
                 { prompt: "Level 6: It's time to apprehend the suspect. How do you proceed?", successKeywords: ['arrest', 'confront', 'capture', 'detain', 'apprehend', 'seize'], failureMessage: "The suspect escapes.", successMessage: "You successfully apprehend the suspect! 🚓" }
             ],
             "sci-fi-adventure": [
-                { prompt: "Level 1: Your spaceship encounters a mysterious signal. What do you do?", successKeywords: ['investigate', 'analyze', 'examine', 'inspect', 'explore', 'decode'], failureMessage: "You ignore the signal and miss an opportunity.", successMessage: "You investigate the signal and discover a new planet! 🌍" },
-                { prompt: "Level 2: An alien ship approaches. What's your next move?", successKeywords: ['communicate', 'contact', 'approach', 'greet', 'hail', 'signal'], failureMessage: "The alien ship attacks.", successMessage: "You successfully communicate and establish friendly contact! 👽" },
-                { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! 🛠️" },
-                { prompt: "Level 4: You encounter an unknown space anomaly. What's your plan?", successKeywords: ['analyze', 'study', 'research', 'examine', 'investigate', 'observe'], failureMessage: "The anomaly damages your ship.", successMessage: "You analyze the anomaly and navigate safely! 🌌" },
-                { prompt: "Level 5: You need to make a crucial decision to save your crew. What do you do?", successKeywords: ['decide', 'choose', 'plan', 'execute', 'act', 'lead'], failureMessage: "Your decision leads to a crisis.", successMessage: "Your decision saves the crew and the mission continues! 👩‍🚀👨‍🚀" },
-                { prompt: "Level 6: You discover a habitable planet. How do you proceed?", successKeywords: ['explore', 'land', 'survey', 'investigate', 'settle', 'colonize'], failureMessage: "Your landing attempt fails.", successMessage: "You successfully land and begin exploring the new planet! 🌍🚀" }
-            ]
-        };
+            { prompt: "Level 1: Your spaceship encounters a mysterious signal. What do you do?", successKeywords: ['investigate', 'analyze', 'examine', 'inspect', 'explore', 'decode'], failureMessage: "You ignore the signal and miss an opportunity.", successMessage: "You investigate the signal and discover a new planet! 🌍" },
+            { prompt: "Level 2: An alien ship approaches. What's your next move?", successKeywords: ['communicate', 'contact', 'approach', 'greet', 'hail', 'signal'], failureMessage: "The alien ship attacks.", successMessage: "You successfully communicate and establish friendly contact! 👽" },
+            { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! 🛠️" },
+            { prompt: "Level 4: You encounter an unknown space anomaly. What's your plan?", successKeywords: ['analyze', 'study', 'research', 'examine', 'investigate', 'observe'], failureMessage: "The anomaly damages your ship.", successMessage: "You analyze the anomaly and navigate safely! 🌌" },
+            { prompt: "Level 5: You need to make a crucial decision to save your crew. What do you do?", successKeywords: ['decide', 'choose', 'plan', 'execute', 'act', 'lead'], failureMessage: "Your decision leads to a crisis.", successMessage: "Your decision saves the crew and the mission continues! 👩‍🚀👨‍🚀" },
+            { prompt: "Level 6: You discover a habitable planet. How do you proceed?", successKeywords: ['explore', 'land', 'survey', 'investigate', 'settle', 'colonize'], failureMessage: "Your landing attempt fails.", successMessage: "You successfully land and begin exploring the new planet! 🌍🚀" },
+            { prompt: "Level 7: You find alien technology on the planet. What's your next step?", successKeywords: ['study', 'analyze', 'reverse-engineer', 'examine', 'utilize', 'exploit'], failureMessage: "The technology backfires.", successMessage: "You harness the alien technology and make groundbreaking discoveries! 🛸✨" }
+        ],
+        "haunted-house": [
+            { prompt: "Level 1: You enter an old, abandoned house at midnight. You hear strange noises. What's your first move? 🏚️👻", successKeywords: ['explore', 'investigate', 'search', 'look', 'observe', 'inspect'], failureMessage: "You run away scared and miss crucial clues.", successMessage: "You bravely explore and find an old diary! 📖" },
+            { prompt: "Level 2: The diary hints at a hidden room. How do you find it? 📓🕵️‍♂️", successKeywords: ['search', 'explore', 'investigate', 'look', 'inspect', 'examine'], failureMessage: "You fail to find the hidden room.", successMessage: "You discover the hidden room behind a bookcase! 📚" },
+            { prompt: "Level 3: You hear footsteps behind you. How do you handle it? 👣😨", successKeywords: ['turn', 'look', 'confront', 'investigate', 'face', 'check'], failureMessage: "You freeze in fear and miss important details.", successMessage: "You turn around and see a friendly ghost guiding you! 👻😊" },
+            { prompt: "Level 4: You find a locked chest. What do you do? 🗝️🔒", successKeywords: ['open', 'unlock', 'break', 'investigate', 'search', 'find'], failureMessage: "You give up on the chest.", successMessage: "You open the chest and find ancient relics! 🏺" },
+            { prompt: "Level 5: The ghost reveals a secret passage. Do you enter? 👻🚪", successKeywords: ['enter', 'explore', 'go', 'proceed', 'venture', 'investigate'], failureMessage: "You hesitate and miss the opportunity.", successMessage: "You enter and find a hidden underground chamber! 🕳️" },
+            { prompt: "Level 6: The chamber has strange symbols. How do you decipher them? 🔮📜", successKeywords: ['decipher', 'interpret', 'translate', 'study', 'analyze', 'examine'], failureMessage: "You fail to understand the symbols.", successMessage: "You decipher the symbols and reveal a hidden treasure! 💎" },
+            { prompt: "Level 7: The treasure is cursed! How do you lift the curse? 😱🧿", successKeywords: ['break', 'lift', 'dispel', 'remove', 'cleanse', 'destroy'], failureMessage: "You trigger the curse and face dire consequences.", successMessage: "You lift the curse and claim the treasure safely! 🏆" }
+        ],
+        "time-travel": [
+            { prompt: "Level 1: You discover a time machine. What year do you travel to first? 🕰️🚀", successKeywords: ['future', 'past', 'ancient', 'medieval', 'modern', 'prehistoric'], failureMessage: "You hesitate and the machine shuts down.", successMessage: "You set the time machine and travel to an exciting era! 🌐" },
+            { prompt: "Level 2: You meet a famous historical figure. How do you introduce yourself? 🧑‍🎤🏛️", successKeywords: ['introduce', 'greet', 'meet', 'present', 'approach', 'engage'], failureMessage: "You fail to make a good impression.", successMessage: "You introduce yourself and gain valuable insights! 🧠" },
+            { prompt: "Level 3: A crucial event is about to occur. Do you intervene? 🌪️⏳", successKeywords: ['intervene', 'help', 'assist', 'stop', 'prevent', 'act'], failureMessage: "You miss the opportunity to make a difference.", successMessage: "You intervene and change the course of history! 📜" },
+            { prompt: "Level 4: Your time machine malfunctions. How do you fix it? 🛠️🕰️", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the time machine and resume your journey! 🔧" },
+            { prompt: "Level 5: You encounter a paradox. How do you resolve it? 🔄🌀", successKeywords: ['resolve', 'fix', 'solve', 'unravel', 'untangle', 'understand'], failureMessage: "The paradox causes a time loop.", successMessage: "You resolve the paradox and restore the timeline! 🕰️✨" },
+            { prompt: "Level 6: You find yourself in a futuristic city. What's your first move? 🌃🚀", successKeywords: ['explore', 'investigate', 'look', 'observe', 'inspect', 'search'], failureMessage: "You get lost in the city.", successMessage: "You explore the city and uncover advanced technology! 🏙️" },
+            { prompt: "Level 7: You must return to your own time. How do you ensure a safe trip back? 🏠🕰️", successKeywords: ['return', 'travel', 'go', 'navigate', 'operate', 'use'], failureMessage: "You get stranded in another time.", successMessage: "You successfully navigate back to your own time and complete your adventure! 🎉" }
+        ]
+    };
 
         document.querySelectorAll('.topic-button').forEach(button => {
             button.addEventListener('click', () => {
@@ -504,11 +523,11 @@
             if (success) {
                 storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
                 gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
-                feedback.textContent = 'Success! 🎉';
+                feedback.textContent = 'Success! 🎉 Excellent descriptive power. Good job analysing the situation.👏👏🫡;
                 document.getElementById('next-level').style.display = 'block';
             } else {
                 gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
-                feedback.textContent = 'Try again! ❌';
+                feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, don't give up my friend! ✍️💪🏾😊';
             }
         });
 
