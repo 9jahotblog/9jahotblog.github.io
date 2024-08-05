@@ -365,11 +365,21 @@
 </script>
 
             
-            <!-- Mystery Writer Challenge Section -->
-<section id="mystery-writer">
+            <!-- Topic Selection Section -->
+<section id="topic-selection">
+    <div class="profile-container">
+        <h2>Select a Topic</h2>
+        <button class="topic-button" data-topic="ancient-mystery">Ancient Mystery</button>
+        <button class="topic-button" data-topic="modern-detective">Modern Detective</button>
+        <button class="topic-button" data-topic="sci-fi-adventure">Sci-Fi Adventure</button>
+    </div>
+</section>
+
+<!-- Mystery Writer Challenge Section -->
+<section id="mystery-writer" style="display: none;">
     <div class="profile-container">
         <h2>Mystery Writer Challenge</h2>
-        <p id="intro">Hello, welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries, based on top-notch movies like "Legend of the Seeker" or "Merlin".</p>
+        <p id="intro">Hello, welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries.</p>
         <div id="game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
         <textarea id="user-input" placeholder="Type your response here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
         <div>
@@ -388,28 +398,55 @@
     </div>
 </section>
 
+<!-- Chat Section -->
+<section id="chat-section" style="display: none;">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <h2>9jahotblog Chat AI</h2>
+        <div id="chat-box" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <div id="chat-messages"></div>
+        </div>
+        <input type="text" id="chat-input" placeholder="Type your message here..." style="width: 80%;">
+        <button id="send-message">Send</button>
+    </div>
+</section>
+
 <script>
-    const levels = [
-        {
-            prompt: "Level 1: You find an ancient scroll with cryptic writing. Describe your first steps in deciphering it.",
-            success: "You carefully analyze the symbols and uncover a hidden message.",
-            failure: "You fail to understand the symbols. The mystery deepens.",
-            clue: "The scroll hints at a secret meeting place."
-        },
-        {
-            prompt: "Level 2: The scroll's message leads you to an abandoned castle. What do you find there?",
-            success: "You discover a hidden chamber with a map.",
-            failure: "The castle is empty. You need to look elsewhere.",
-            clue: "The map points to a forest nearby."
-        },
-        // Add more levels here...
-    ];
+    const topics = {
+        'ancient-mystery': [
+            { prompt: "Level 1: You find an ancient scroll with cryptic writing. Describe your first steps in deciphering it.", success: "You carefully analyze the symbols and uncover a hidden message.", failure: "You fail to understand the symbols. The mystery deepens.", clue: "The scroll hints at a secret meeting place." },
+            { prompt: "Level 2: The scroll's message leads you to an abandoned castle. What do you find there?", success: "You discover a hidden chamber with a map.", failure: "The castle is empty. You need to look elsewhere.", clue: "The map points to a forest nearby." },
+            // Add more levels here...
+        ],
+        'modern-detective': [
+            { prompt: "Level 1: A famous painting has been stolen from a museum. How do you begin your investigation?", success: "You find a clue hidden in the frame.", failure: "You can't find any leads at the museum.", clue: "The thief left a partial fingerprint." },
+            { prompt: "Level 2: The fingerprint leads you to a suspect's house. What do you do?", success: "You find a stash of stolen goods.", failure: "The house is empty and looks abandoned.", clue: "There are tickets to a foreign country." },
+            // Add more levels here...
+        ],
+        'sci-fi-adventure': [
+            { prompt: "Level 1: You've landed on a mysterious alien planet. What's your first move?", success: "You establish communication with friendly aliens.", failure: "You are unable to understand the alien language.", clue: "The aliens use a universal translator." },
+            { prompt: "Level 2: The aliens lead you to an ancient artifact. What do you do?", success: "You unlock the secrets of the artifact.", failure: "The artifact remains a mystery.", clue: "The artifact has strange symbols similar to those in your spaceship's database." },
+            // Add more levels here...
+        ]
+    };
 
     let currentLevel = 0;
+    let selectedTopic = '';
+    let currentLevels = [];
+
+    document.querySelectorAll('.topic-button').forEach(button => {
+        button.addEventListener('click', () => {
+            selectedTopic = button.getAttribute('data-topic');
+            currentLevels = topics[selectedTopic];
+            document.getElementById('topic-selection').style.display = 'none';
+            document.getElementById('mystery-writer').style.display = 'block';
+            displayLevel();
+        });
+    });
 
     function displayLevel() {
         const gameDisplay = document.getElementById('game-display');
-        gameDisplay.innerHTML = `<strong>${levels[currentLevel].prompt}</strong>`;
+        gameDisplay.innerHTML = `<strong>${currentLevels[currentLevel].prompt}</strong>`;
     }
 
     document.getElementById('submit-challenge').addEventListener('click', () => {
@@ -418,13 +455,15 @@
 
         if (userInput.trim() !== '') {
             const success = Math.random() > 0.5;  // Randomly determine success or failure
-            const response = success ? levels[currentLevel].success : levels[currentLevel].failure;
+            const response = success ? currentLevels[currentLevel].success : currentLevels[currentLevel].failure;
             feedback.innerHTML = `<p>${response}</p>`;
+            // Add comments from the AI
+            feedback.innerHTML += `<p>AI Comment: ${success ? "Great job analyzing the situation!" : "Don't give up, keep trying!"}</p>`;
             if (success) {
                 currentLevel++;
                 document.getElementById('submit-challenge').style.display = 'none';
                 document.getElementById('next-level').style.display = 'inline';
-                if (currentLevel === levels.length) {
+                if (currentLevel === currentLevels.length) {
                     document.getElementById('final-message').style.display = 'block';
                 }
             }
@@ -434,7 +473,7 @@
     });
 
     document.getElementById('next-level').addEventListener('click', () => {
-        if (currentLevel < levels.length) {
+        if (currentLevel < currentLevels.length) {
             displayLevel();
             document.getElementById('feedback').innerHTML = '';
             document.getElementById('user-input').value = '';
@@ -446,6 +485,7 @@
     });
 
     document.getElementById('continue-game').addEventListener('click', () => {
+        currentLevel = 0;
         displayLevel();
         document.getElementById('final-message').style.display = 'none';
         document.getElementById('feedback').innerHTML = '';
@@ -455,12 +495,52 @@
     });
 
     document.getElementById('next-section').addEventListener('click', () => {
-        alert('Moving to the next section...');
-        // Add logic to navigate to the next section of games
+        document.getElementById('mystery-writer').style.display = 'none';
+        document.getElementById('chat-section').style.display = 'block';
     });
 
-    displayLevel();
+    document.getElementById('send-message').addEventListener('click', () => {
+        const chatInput = document.getElementById('chat-input').value;
+        if (chatInput.trim() !== '') {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML += `<p><strong>You:</strong> ${chatInput}</p>`;
+            chatMessages.innerHTML += `<p><strong>AI:</strong> I'm here to help with any questions you have about the game or anything else!</p>`;
+            document.getElementById('chat-input').value = '';
+            document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+        }
+    });
+
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    });
 </script>
+
+<style>
+    body.dark-theme {
+        background-color: #121212;
+        color: #ffffff;
+    }
+    .dark-theme .profile-container {
+        background-color: #1e1e1e;
+        border-color: #333;
+    }
+    .dark-theme #game-display,
+    .dark-theme #chat-box {
+        background-color: #2e2e2e;
+        border-color: #444;
+    }
+    .dark-theme input,
+    .dark-theme textarea {
+        background-color: #3e3e3e;
+        color: #fff;
+        border-color: #555;
+    }
+    .dark-theme button {
+        background-color: #444;
+        color: #fff;
+        border-color: #555;
+    }
+</style>
             
 
                 
