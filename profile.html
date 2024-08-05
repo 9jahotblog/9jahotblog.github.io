@@ -400,6 +400,7 @@
     <section id="topic-selection">
         <div class="profile-container">
             <h2>Select a Mysterious Story</h2>
+            <strong>Why?: Solve an investigation or uncover something and win data and amazing prizes! 😁🌟</strong>
             <button class="topic-button" data-topic="ancient-mystery">Ancient Mystery</button>
             <button class="topic-button" data-topic="modern-detective">Modern Detective</button>
             <button class="topic-button" data-topic="sci-fi-adventure">Sci-Fi Adventure</button>
@@ -412,7 +413,6 @@
         <div class="profile-container">
             <button class="theme-toggle">🌙</button>
             <h2>Mysterious Game!</h2>
-            <strong>Title: Solve an investigation or uncover something and win data and amazing prizes! 🌟</strong>
             <p id="intro">Hello, <span id="user-username"></span>! Welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries.</p>
             <div id="game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
             <textarea id="user-input" placeholder="Type your response here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
@@ -527,7 +527,7 @@
                 document.getElementById('next-level').style.display = 'block';
             } else {
                 gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
-                feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, don't give up my friend! ✍️💪🏾😊';
+                feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, dont give up my friend! ✍️💪🏾😊';
             }
         });
 
