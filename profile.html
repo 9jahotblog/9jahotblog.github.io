@@ -364,53 +364,55 @@
     });
 </script>
 
-            
-    
+
     <style>
         body.dark-theme {
             background-color: #121212;
             color: #ffffff;
         }
+
         .dark-theme .profile-container {
             background-color: #1e1e1e;
             border-color: #333;
         }
+
         .dark-theme #game-display,
         .dark-theme #chat-box {
             background-color: #2e2e2e;
             border-color: #444;
         }
+
         .dark-theme input,
         .dark-theme textarea {
             background-color: #3e3e3e;
             color: #fff;
             border-color: #555;
         }
+
         .dark-theme button {
             background-color: #444;
             color: #fff;
             border-color: #555;
         }
     </style>
-                
-    <!-- Menu Section -->
-    <section id="menu" style="display: block;">
-        <h1>Welcome to 9jahotblog Storybooks</h1>
-        <p>Select a mysterious story:</p>
-        <strong>Title: Solve an investigation, uncover secrets, and win data and amazing prizes!</strong>
-        <p>As you advance, genres and stories change weekly or daily.</p>
-        <button class="story-choice" data-story="1">The Haunted Manor</button>
-        <button class="story-choice" data-story="2">The Secret Laboratory</button>
-        <button class="story-choice" data-story="3">The Missing Artifact</button>
-        <button class="story-choice" data-story="4">The Cursed Treasure</button>
-        <button class="story-choice" data-story="5">The Hidden Gallery</button>
+</head>
+<body>
+    <section id="topic-selection">
+        <div class="profile-container">
+            <h2>Select a Mysterious Story</h2>
+            <button class="topic-button" data-topic="ancient-mystery">Ancient Mystery</button>
+            <button class="topic-button" data-topic="modern-detective">Modern Detective</button>
+            <button class="topic-button" data-topic="sci-fi-adventure">Sci-Fi Adventure</button>
+            <button class="topic-button" data-topic="haunted-house">Haunted House</button>
+            <button class="topic-button" data-topic="time-travel">Time Travel</button>
+        </div>
     </section>
 
-    <!-- Mystery Writer Challenge Section -->
     <section id="mystery-writer" style="display: none;">
         <div class="profile-container">
             <button class="theme-toggle">🌙</button>
             <h2>Mysterious Game!</h2>
+            <strong>Title: Solve an investigation or uncover something and win data and amazing prizes! 🌟</strong>
             <p id="intro">Hello, <span id="user-username"></span>! Welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries.</p>
             <div id="game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
             <textarea id="user-input" placeholder="Type your response here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
@@ -420,199 +422,141 @@
             </div>
             <div id="feedback" style="margin-top: 10px;"></div>
             <div id="final-message" style="display: none;">
-                <p>Congratulations, you've completed this level of the challenge! Would you like to continue or stop and win 20MB data?</p>
+                <p>Congratulations, you've completed this level of the challenge! Would you like to continue or stop and win 20MB data? 📱🎉</p>
                 <button id="continue-game">Continue</button>
                 <button id="stop-game">Stop and Win 20MB Data</button>
                 <button id="next-section">Next Section</button>
             </div>
             <div id="end-game" style="display: none;">
-                <p>You just won 200MB worth of data! You're a writing machine! Click <a href="https://wa.me/+2349160331432" target="_blank">here</a> to claim your prize. Remember to screenshot this page and send it to support for verification.</p>
-            </div>
-            <div id="user-responses-container" style="margin-top: 20px;">
-                <h3>Your Story Progress:</h3>
-                <div id="user-responses"></div>
-            </div>
-            <div id="download-link" style="margin-top: 10px;">
-                <button id="download-txt">Download Story TXT</button>
-                <button id="download-word">Download Story Word</button>
-                <button id="download-pdf">Download Story PDF</button>
-                <button id="download-all">Download All Responses</button>
+                <p>You just won 200MB worth of data! You're a writing machine! Click <a href="https://wa.me/+2349160331432">here</a> to claim your prize. 🏆📲</p>
+                <button id="download-txt">Download Story (TXT)</button>
+                <button id="download-word">Download Story (Word)</button>
             </div>
         </div>
     </section>
 
     <script>
-        // Story Data
-        const stories = {
-            1: [
-                { prompt: "Level 1: You find yourself standing before a haunted manor. The air is thick with mystery. What do you do first?", successKeywords: ['enter', 'explore', 'investigate'], failureMessage: "You hesitate at the door and miss your chance.", successMessage: "You bravely enter the manor and begin your investigation. 🕵️‍♂️🏚️" },
-                { prompt: "Level 2: Inside, you hear eerie sounds coming from the basement. What's your next move?", successKeywords: ['descend', 'investigate', 'explore'], failureMessage: "You stay frozen in fear.", successMessage: "You gather your courage and descend into the basement. 🧟‍♂️🔦" },
-                { prompt: "Level 3: The basement reveals a hidden passage. What do you do?", successKeywords: ['enter', 'explore', 'follow'], failureMessage: "You turn back, missing the adventure ahead.", successMessage: "You enter the passage and discover hidden secrets. 🕵️‍♀️🗝️" },
-                { prompt: "Level 4: You find an old diary that hints at a family curse. What's your next step?", successKeywords: ['read', 'investigate', 'uncover'], failureMessage: "You dismiss the diary as irrelevant.", successMessage: "You uncover the curse's origins by reading the diary. 📖🔮" },
-                { prompt: "Level 5: The curse can only be lifted by a special ritual. Describe your actions.", successKeywords: ['perform', 'ritual', 'chant'], failureMessage: "You fail to act in time.", successMessage: "You perform the ritual and lift the curse. ✨🕯️" }
+        const levels = {
+            "ancient-mystery": [
+                { prompt: "Level 1: You find an old map. What do you do?", successKeywords: ['follow', 'map', 'explore', 'track', 'trace', 'discover'], failureMessage: "You missed the treasure!", successMessage: "You follow the map and find the hidden treasure! 💎" },
+                { prompt: "Level 2: The treasure is guarded by a riddle. Solve it to proceed.", successKeywords: ['solve', 'riddle', 'answer', 'decipher', 'unravel', 'interpret'], failureMessage: "You couldn't solve the riddle.", successMessage: "You solve the riddle and the treasure is yours! 🎉" },
+                { prompt: "Level 3: A trap is triggered! How do you escape?", successKeywords: ['escape', 'dodge', 'avoid', 'flee', 'evade', 'run'], failureMessage: "You got caught in the trap!", successMessage: "You successfully escape the trap! 🏃" },
+                { prompt: "Level 4: You encounter a guardian. Convince him to let you pass.", successKeywords: ['convince', 'talk', 'negotiate', 'persuade', 'reason', 'argue'], failureMessage: "The guardian doesn't let you pass.", successMessage: "You convince the guardian and he lets you pass! 🛡️" },
+                { prompt: "Level 5: The final treasure room is ahead. What's your plan?", successKeywords: ['plan', 'strategy', 'approach', 'tactic', 'scheme', 'method'], failureMessage: "Your plan fails.", successMessage: "Your plan works and you get the final treasure! 🏆" },
+                { prompt: "Level 6: A rival treasure hunter appears. What's your move?", successKeywords: ['confront', 'ally', 'outsmart', 'compete', 'challenge', 'defeat'], failureMessage: "The rival takes the treasure.", successMessage: "You outsmart the rival and secure the treasure! 🎖️" }
             ],
-            2: [
-                { prompt: "Level 1: You discover a secret laboratory hidden beneath your school. What do you do first?", successKeywords: ['explore', 'enter', 'investigate'], failureMessage: "You ignore it and walk away.", successMessage: "You enter the lab and start exploring. 🧪🔍" },
-                { prompt: "Level 2: Inside, you find a mysterious device. How do you handle it?", successKeywords: ['examine', 'analyze', 'use'], failureMessage: "You leave it untouched.", successMessage: "You analyze the device and uncover its purpose. 🔬📟" },
-                { prompt: "Level 3: The device leads you to a hidden experiment. What do you do next?", successKeywords: ['investigate', 'experiment', 'research'], failureMessage: "You ignore the experiment.", successMessage: "You delve into the experiment and make a breakthrough. 🧫💡" },
-                { prompt: "Level 4: You find a journal detailing dangerous plans. What's your action?", successKeywords: ['read', 'stop', 'expose'], failureMessage: "You ignore the journal.", successMessage: "You read the journal and plan to expose the plot. 📔🛑" },
-                { prompt: "Level 5: You must stop the experiment before it's too late. Describe your approach.", successKeywords: ['stop', 'destroy', 'sabotage'], failureMessage: "You fail to act in time.", successMessage: "You stop the experiment and save the day. ⚗️🚨" }
+            "modern-detective": [
+                { prompt: "Level 1: A mysterious letter arrives at your office. What do you do?", successKeywords: ['open', 'read', 'analyze', 'examine', 'inspect', 'investigate'], failureMessage: "The letter self-destructs.", successMessage: "You analyze the letter and find a clue! 🔍" },
+                { prompt: "Level 2: You need to tail a suspect. How do you proceed?", successKeywords: ['follow', 'discreet', 'observe', 'shadow', 'track', 'monitor'], failureMessage: "You lose the suspect.", successMessage: "You follow the suspect and gather evidence! 📸" },
+                { prompt: "Level 3: The suspect enters a secure building. What's your plan?", successKeywords: ['infiltrate', 'sneak', 'access', 'enter', 'penetrate', 'bypass'], failureMessage: "You get caught at the entrance.", successMessage: "You sneak in successfully and continue your investigation! 🕵️" },
+                { prompt: "Level 4: A crucial witness is uncooperative. How do you get them to talk?", successKeywords: ['persuade', 'question', 'interrogate', 'convince', 'coax', 'charm'], failureMessage: "The witness stays silent.", successMessage: "You persuade the witness to share valuable information! 💬" },
+                { prompt: "Level 5: The suspect is on the move again. What do you do?", successKeywords: ['track', 'monitor', 'chase', 'pursue', 'follow', 'shadow'], failureMessage: "You lose track of the suspect.", successMessage: "You track the suspect to their hideout! 🏚️" },
+                { prompt: "Level 6: It's time to apprehend the suspect. How do you proceed?", successKeywords: ['arrest', 'confront', 'capture', 'detain', 'apprehend', 'seize'], failureMessage: "The suspect escapes.", successMessage: "You successfully apprehend the suspect! 🚓" }
             ],
-            3: [
-                { prompt: "Level 1: An ancient artifact is stolen from a museum. Where do you start your investigation?", successKeywords: ['interrogate', 'search', 'investigate'], failureMessage: "You waste time looking in the wrong places.", successMessage: "You start your investigation and gather crucial clues. 🏺🕵️‍♂️" },
-                { prompt: "Level 2: The clues lead you to a shady warehouse. What do you do?", successKeywords: ['enter', 'search', 'investigate'], failureMessage: "You hesitate and lose the trail.", successMessage: "You search the warehouse and find more clues. 🏚️🔍" },
-                { prompt: "Level 3: You uncover a hidden room in the warehouse. What's your next move?", successKeywords: ['enter', 'explore', 'investigate'], failureMessage: "You leave without investigating.", successMessage: "You explore the hidden room and find the artifact. 🗝️🏺" },
-                { prompt: "Level 4: The artifact is cursed. How do you handle it?", successKeywords: ['examine', 'research', 'neutralize'], failureMessage: "You ignore the curse.", successMessage: "You research and neutralize the curse. 📜🔮" },
-                { prompt: "Level 5: You need to return the artifact to its rightful place. Describe your actions.", successKeywords: ['return', 'restore', 'place'], failureMessage: "You fail to return the artifact.", successMessage: "You successfully return the artifact and lift the curse. 🏺✨" }
-            ],
-            4: [
-                { prompt: "Level 1: A map leads you to a cursed treasure hidden on an island. How do you begin?", successKeywords: ['sail', 'explore', 'search'], failureMessage: "You get lost at sea.", successMessage: "You sail to the island and start your search. ⛵🏝️" },
-                { prompt: "Level 2: The island is full of traps. What's your strategy?", successKeywords: ['navigate', 'avoid', 'disarm'], failureMessage: "You fall victim to a trap.", successMessage: "You carefully navigate the traps and move forward. 🗺️🚧" },
-                { prompt: "Level 3: You find a hidden cave. What will you do?", successKeywords: ['enter', 'explore', 'investigate'], failureMessage: "You ignore the cave and continue searching elsewhere.", successMessage: "You enter the cave and discover clues to the treasure's location. 🕵️‍♂️🗝️" },
-                { prompt: "Level 4: Inside the cave, you encounter a guardian creature. How do you handle it?", successKeywords: ['negotiate', 'sneak', 'fight'], failureMessage: "You are overpowered by the creature.", successMessage: "You successfully negotiate with the creature or sneak past it. 🐉🤝" },
-                { prompt: "Level 5: You finally reach the treasure. What do you do?", successKeywords: ['open', 'take', 'examine'], failureMessage: "You misjudge the situation and set off a trap.", successMessage: "You safely open the treasure chest and secure your prize. 💰🏆" }
-            ],
-            5: [
-                { prompt: "Level 1: You receive a mysterious invitation to a hidden gallery. How do you proceed?", successKeywords: ['accept', 'explore', 'investigate'], failureMessage: "You decline the invitation and miss out on the mystery.", successMessage: "You accept the invitation and enter the gallery. 🖼️🔍" },
-                { prompt: "Level 2: The gallery is filled with strange and magical artifacts. What's your approach?", successKeywords: ['examine', 'catalog', 'research'], failureMessage: "You overlook key details.", successMessage: "You carefully examine the artifacts and find hidden clues. 🧩🧳" },
-                { prompt: "Level 3: You discover a hidden room in the gallery. What do you do next?", successKeywords: ['enter', 'explore', 'investigate'], failureMessage: "You ignore the hidden room and miss important clues.", successMessage: "You explore the hidden room and find significant evidence. 🕵️‍♀️🔎" },
-                { prompt: "Level 4: The evidence leads you to a secret painting with a hidden message. What do you do?", successKeywords: ['decode', 'examine', 'analyze'], failureMessage: "You misinterpret the message.", successMessage: "You decode the message and uncover a new mystery. 🎨🗝️" },
-                { prompt: "Level 5: The message reveals a hidden location for a final prize. Describe how you uncover it.", successKeywords: ['search', 'find', 'reveal'], failureMessage: "You fail to locate the final prize.", successMessage: "You find the hidden location and claim the final prize. 🎁🏅" }
+            "sci-fi-adventure": [
+                { prompt: "Level 1: Your spaceship encounters a mysterious signal. What do you do?", successKeywords: ['investigate', 'analyze', 'examine', 'inspect', 'explore', 'decode'], failureMessage: "You ignore the signal and miss an opportunity.", successMessage: "You investigate the signal and discover a new planet! 🌍" },
+                { prompt: "Level 2: An alien ship approaches. What's your next move?", successKeywords: ['communicate', 'contact', 'approach', 'greet', 'hail', 'signal'], failureMessage: "The alien ship attacks.", successMessage: "You successfully communicate and establish friendly contact! 👽" },
+                { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! 🛠️" },
+                { prompt: "Level 4: You encounter an unknown space anomaly. What's your plan?", successKeywords: ['analyze', 'study', 'research', 'examine', 'investigate', 'observe'], failureMessage: "The anomaly damages your ship.", successMessage: "You analyze the anomaly and navigate safely! 🌌" },
+                { prompt: "Level 5: You need to make a crucial decision to save your crew. What do you do?", successKeywords: ['decide', 'choose', 'plan', 'execute', 'act', 'lead'], failureMessage: "Your decision leads to a crisis.", successMessage: "Your decision saves the crew and the mission continues! 👩‍🚀👨‍🚀" },
+                { prompt: "Level 6: You discover a habitable planet. How do you proceed?", successKeywords: ['explore', 'land', 'survey', 'investigate', 'settle', 'colonize'], failureMessage: "Your landing attempt fails.", successMessage: "You successfully land and begin exploring the new planet! 🌍🚀" }
             ]
         };
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const menu = document.getElementById('menu');
-            const mysteryWriter = document.getElementById('mystery-writer');
-            const gameDisplay = document.getElementById('game-display');
-            const userResponses = document.getElementById('user-responses');
-            const userInput = document.getElementById('user-input');
-            const submitChallenge = document.getElementById('submit-challenge');
-            const nextLevel = document.getElementById('next-level');
-            const finalMessage = document.getElementById('final-message');
-            const endGame = document.getElementById('end-game');
-            const downloadTxt = document.getElementById('download-txt');
-            const downloadWord = document.getElementById('download-word');
-            const downloadPdf = document.getElementById('download-pdf');
-            const downloadAll = document.getElementById('download-all');
-            const storyChoices = document.querySelectorAll('.story-choice');
-            let currentStory;
-            let currentLevel = 0;
-            let responses = [];
-
-            function startStory(storyId) {
-                currentStory = stories[storyId];
-                currentLevel = 0;
-                responses = [];
-                menu.style.display = 'none';
-                mysteryWriter.style.display = 'block';
-                showPrompt();
-            }
-
-            function showPrompt() {
-                if (currentLevel < currentStory.length) {
-                    const promptData = currentStory[currentLevel];
-                    gameDisplay.innerHTML = `<p>${promptData.prompt}</p>`;
-                    userInput.value = '';
-                    submitChallenge.style.display = 'block';
-                    nextLevel.style.display = 'none';
-                    finalMessage.style.display = 'none';
-                } else {
-                    gameDisplay.innerHTML = '<p>Congratulations! You have completed this story. Choose what to do next:</p>';
-                    submitChallenge.style.display = 'none';
-                    nextLevel.style.display = 'none';
-                    finalMessage.style.display = 'block';
-                }
-            }
-
-            function handleUserResponse() {
-                const userText = userInput.value.toLowerCase();
-                const promptData = currentStory[currentLevel];
-                let success = false;
-
-                if (promptData.successKeywords.some(keyword => userText.includes(keyword))) {
-                    gameDisplay.innerHTML = `<p>${promptData.successMessage}</p>`;
-                    success = true;
-                } else {
-                    gameDisplay.innerHTML = `<p>${promptData.failureMessage}</p>`;
-                }
-
-                responses.push({
-                    level: currentLevel + 1,
-                    response: userText,
-                    result: success ? 'Success' : 'Failure'
-                });
-
-                if (success) {
-                    nextLevel.style.display = 'block';
-                } else {
-                    submitChallenge.style.display = 'none';
-                }
-            }
-
-            function handleContinue() {
-                currentLevel++;
-                showPrompt();
-            }
-
-            function handleStopGame() {
-                mysteryWriter.style.display = 'none';
-                endGame.style.display = 'block';
-            }
-
-            function handleNextSection() {
-                menu.style.display = 'block';
-                mysteryWriter.style.display = 'none';
-                endGame.style.display = 'none';
-            }
-
-            function downloadFile(content, fileName, mimeType) {
-                const blob = new Blob([content], { type: mimeType });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = fileName;
-                link.click();
-                URL.revokeObjectURL(url);
-            }
-
-            function downloadResponses(format) {
-                let content = '';
-                responses.forEach(response => {
-                    content += `Level ${response.level}: ${response.response} - ${response.result}\n`;
-                });
-
-                if (format === 'txt') {
-                    downloadFile(content, 'responses.txt', 'text/plain');
-                } else if (format === 'docx') {
-                    // Generate Word file
-                    // Implement Word generation here (e.g., using a library like docx.js)
-                } else if (format === 'pdf') {
-                    // Generate PDF file
-                    // Implement PDF generation here (e.g., using a library like jsPDF)
-                }
-            }
-
-            storyChoices.forEach(button => {
-                button.addEventListener('click', () => {
-                    startStory(button.getAttribute('data-story'));
-                });
-            });
-
-            submitChallenge.addEventListener('click', handleUserResponse);
-            nextLevel.addEventListener('click', handleContinue);
-            document.getElementById('stop-game').addEventListener('click', handleStopGame);
-            document.getElementById('next-section').addEventListener('click', handleNextSection);
-
-            downloadTxt.addEventListener('click', () => downloadResponses('txt'));
-            downloadWord.addEventListener('click', () => downloadResponses('docx'));
-            downloadPdf.addEventListener('click', () => downloadResponses('pdf'));
-            downloadAll.addEventListener('click', () => {
-                // Implement download all responses
-                // Concatenate all responses and offer as a download
+        document.querySelectorAll('.topic-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const topic = button.getAttribute('data-topic');
+                startGame(topic);
             });
         });
+
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+        });
+
+        let currentLevel = 0;
+        let currentTopic = '';
+        let storyLog = '';
+
+        function startGame(topic) {
+            currentTopic = topic;
+            currentLevel = 0;
+            storyLog = '';
+            document.getElementById('topic-selection').style.display = 'none';
+            document.getElementById('mystery-writer').style.display = 'block';
+            showPrompt();
+        }
+
+        function showPrompt() {
+            const level = levels[currentTopic][currentLevel];
+            const gameDisplay = document.getElementById('game-display');
+            gameDisplay.innerHTML = `<p>${level.prompt}</p>`;
+        }
+
+        document.getElementById('submit-challenge').addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value.toLowerCase();
+            const level = levels[currentTopic][currentLevel];
+            const success = level.successKeywords.some(keyword => userInput.includes(keyword));
+
+            const gameDisplay = document.getElementById('game-display');
+            const feedback = document.getElementById('feedback');
+
+            if (success) {
+                storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
+                gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
+                feedback.textContent = 'Success! 🎉';
+                document.getElementById('next-level').style.display = 'block';
+            } else {
+                gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
+                feedback.textContent = 'Try again! ❌';
+            }
+        });
+
+        document.getElementById('next-level').addEventListener('click', () => {
+            currentLevel++;
+            document.getElementById('user-input').value = '';
+            document.getElementById('next-level').style.display = 'none';
+
+            if (currentLevel < levels[currentTopic].length) {
+                showPrompt();
+            } else {
+                endGame();
+            }
+        });
+
+        function endGame() {
+            document.getElementById('final-message').style.display = 'block';
+            document.getElementById('game-display').innerHTML += '<p>Well done! You completed all levels! 🏆</p>';
+        }
+
+        document.getElementById('continue-game').addEventListener('click', () => {
+            document.getElementById('final-message').style.display = 'none';
+            document.getElementById('next-section').style.display = 'block';
+        });
+
+        document.getElementById('stop-game').addEventListener('click', () => {
+            document.getElementById('end-game').style.display = 'block';
+        });
+
+        document.getElementById('download-txt').addEventListener('click', () => {
+            downloadResponses('txt');
+        });
+
+        document.getElementById('download-word').addEventListener('click', () => {
+            downloadResponses('word');
+        });
+
+        function downloadResponses(format) {
+            const element = document.createElement('a');
+            const file = new Blob([storyLog], { type: 'text/plain' });
+            element.href = URL.createObjectURL(file);
+            element.download = `story.${format}`;
+            document.body.appendChild(element);
+            element.click();
+        }
     </script>
+</body>
+                    
 
               <!-- Character Creation Section -->
 <section id="character-creation" style="display: block;">
