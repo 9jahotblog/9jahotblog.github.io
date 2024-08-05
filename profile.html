@@ -364,8 +364,7 @@
     });
 </script>
 
-        
-    <style>
+        <style>
         body.dark-theme {
             background-color: #121212;
             color: #ffffff;
@@ -407,7 +406,7 @@
     <section id="mystery-writer" style="display: none;">
         <div class="profile-container">
             <button class="theme-toggle">🌙</button>
-            <h2>Mysterious Game!</h2>
+            <h2 id="story-title">Mysterious Game!</h2>
             <p id="intro">Hello, <span id="user-username"></span>! Welcome to the Mystery Writer Challenge. I'm the mysterious 9jahotblog AI, your assistant through this exciting game. Your mission is to uncover the secrets hidden within these mysteries.</p>
             <div id="game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
             <textarea id="user-input" placeholder="Type your response here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
@@ -431,7 +430,7 @@
 
     <script>
     const levels = {
-        "ancient-mystery": [
+        "Ancient Mystery": [
             { prompt: "Level 1: You find an old map. What do you do?", successKeywords: ['follow', 'map', 'explore', 'track', 'trace', 'discover'], failureMessage: "You missed the treasure!", successMessage: "You follow the map and find the hidden treasure! 💎" },
             { prompt: "Level 2: The treasure is guarded by a riddle. Solve it to proceed.", successKeywords: ['solve', 'riddle', 'answer', 'decipher', 'unravel', 'interpret'], failureMessage: "You couldn't solve the riddle.", successMessage: "You solve the riddle and the treasure is yours! 🎉" },
             { prompt: "Level 3: A trap is triggered! How do you escape?", successKeywords: ['escape', 'dodge', 'avoid', 'flee', 'evade', 'run'], failureMessage: "You got caught in the trap!", successMessage: "You successfully escape the trap! 🏃" },
@@ -439,7 +438,7 @@
             { prompt: "Level 5: The final treasure room is ahead. What's your plan?", successKeywords: ['plan', 'strategy', 'approach', 'tactic', 'scheme', 'method'], failureMessage: "Your plan fails.", successMessage: "Your plan works and you get the final treasure! 🏆" },
             { prompt: "Level 6: A rival treasure hunter appears. What's your move?", successKeywords: ['confront', 'ally', 'outsmart', 'compete', 'challenge', 'defeat'], failureMessage: "The rival takes the treasure.", successMessage: "You outsmart the rival and secure the treasure! 🎖️" }
         ],
-        "modern-detective": [
+        "Modern Detective": [
             { prompt: "Level 1: A mysterious letter arrives at your office. What do you do?", successKeywords: ['open', 'read', 'analyze', 'examine', 'inspect', 'investigate'], failureMessage: "The letter self-destructs.", successMessage: "You analyze the letter and find a clue! 🔍" },
             { prompt: "Level 2: You need to tail a suspect. How do you proceed?", successKeywords: ['follow', 'discreet', 'observe', 'shadow', 'track', 'monitor'], failureMessage: "You lose the suspect.", successMessage: "You follow the suspect and gather evidence! 📸" },
             { prompt: "Level 3: The suspect enters a secure building. What's your plan?", successKeywords: ['infiltrate', 'sneak', 'access', 'enter', 'penetrate', 'bypass'], failureMessage: "You get caught at the entrance.", successMessage: "You sneak in successfully and continue your investigation! 🕵️" },
@@ -447,7 +446,7 @@
             { prompt: "Level 5: The suspect is on the move again. What do you do?", successKeywords: ['track', 'monitor', 'chase', 'pursue', 'follow', 'shadow'], failureMessage: "You lose track of the suspect.", successMessage: "You track the suspect to their hideout! 🏚️" },
             { prompt: "Level 6: It's time to apprehend the suspect. How do you proceed?", successKeywords: ['arrest', 'confront', 'capture', 'detain', 'apprehend', 'seize'], failureMessage: "The suspect escapes.", successMessage: "You successfully apprehend the suspect! 🚓" }
         ],
-        "sci-fi-adventure": [
+        "Sci-Fi Adventure": [
             { prompt: "Level 1: Your spaceship encounters a mysterious signal. What do you do?", successKeywords: ['investigate', 'analyze', 'examine', 'inspect', 'explore', 'decode'], failureMessage: "You ignore the signal and miss an opportunity.", successMessage: "You investigate the signal and discover a new planet! 🌍" },
             { prompt: "Level 2: An alien ship approaches. What's your next move?", successKeywords: ['communicate', 'contact', 'approach', 'greet', 'hail', 'signal'], failureMessage: "The alien ship attacks.", successMessage: "You successfully communicate and establish friendly contact! 👽" },
             { prompt: "Level 3: A system malfunction occurs. How do you handle it?", successKeywords: ['repair', 'fix', 'resolve', 'troubleshoot', 'diagnose', 'patch'], failureMessage: "The malfunction worsens.", successMessage: "You successfully repair the malfunction and restore the ship's functions! 🛠️" },
@@ -456,7 +455,7 @@
             { prompt: "Level 6: You discover a habitable planet. How do you proceed?", successKeywords: ['explore', 'land', 'survey', 'investigate', 'settle', 'colonize'], failureMessage: "Your landing attempt fails.", successMessage: "You successfully land and begin exploring the new planet! 🌍🚀" },
             { prompt: "Level 7: You find alien technology on the planet. What's your next step?", successKeywords: ['study', 'analyze', 'reverse-engineer', 'examine', 'utilize', 'exploit'], failureMessage: "The technology backfires.", successMessage: "You harness the alien technology and make groundbreaking discoveries! 🛸✨" }
         ],
-        "haunted-house": [
+        "Haunted House": [
             { prompt: "Level 1: You enter an old, abandoned house at midnight. You hear strange noises. What's your first move? 🏚️👻", successKeywords: ['explore', 'investigate', 'search', 'look', 'observe', 'inspect'], failureMessage: "You run away scared and miss crucial clues.", successMessage: "You bravely explore and find an old diary! 📖" },
             { prompt: "Level 2: The diary hints at a hidden room. How do you find it? 📓🕵️‍♂️", successKeywords: ['search', 'explore', 'investigate', 'look', 'inspect', 'examine'], failureMessage: "You fail to find the hidden room.", successMessage: "You discover the hidden room behind a bookcase! 📚" },
             { prompt: "Level 3: You hear footsteps behind you. How do you handle it? 👣😨", successKeywords: ['turn', 'look', 'confront', 'investigate', 'face', 'check'], failureMessage: "You freeze in fear and miss important details.", successMessage: "You turn around and see a friendly ghost guiding you! 👻😊" },
@@ -465,7 +464,7 @@
             { prompt: "Level 6: The chamber has strange symbols. How do you decipher them? 🔮📜", successKeywords: ['decipher', 'interpret', 'translate', 'study', 'analyze', 'examine'], failureMessage: "You fail to understand the symbols.", successMessage: "You decipher the symbols and reveal a hidden treasure! 💎" },
             { prompt: "Level 7: The treasure is cursed! How do you lift the curse? 😱🧿", successKeywords: ['break', 'lift', 'dispel', 'remove', 'cleanse', 'destroy'], failureMessage: "You trigger the curse and face dire consequences.", successMessage: "You lift the curse and claim the treasure safely! 🏆" }
         ],
-        "time-travel": [
+        "Time Travel": [
             { prompt: "Level 1: You discover a time machine. What year do you travel to first? 🕰️🚀", successKeywords: ['future', 'past', 'ancient', 'medieval', 'modern', 'prehistoric'], failureMessage: "You hesitate and the machine shuts down.", successMessage: "You set the time machine and travel to an exciting era! 🌐" },
             { prompt: "Level 2: You meet a famous historical figure. How do you introduce yourself? 🧑‍🎤🏛️", successKeywords: ['introduce', 'greet', 'meet', 'present', 'approach', 'engage'], failureMessage: "You fail to make a good impression.", successMessage: "You introduce yourself and gain valuable insights! 🧠" },
             { prompt: "Level 3: A crucial event is about to occur. Do you intervene? 🌪️⏳", successKeywords: ['intervene', 'help', 'assist', 'stop', 'prevent', 'act'], failureMessage: "You miss the opportunity to make a difference.", successMessage: "You intervene and change the course of history! 📜" },
@@ -475,123 +474,134 @@
             { prompt: "Level 7: You must return to your own time. How do you ensure a safe trip back? 🏠🕰️", successKeywords: ['return', 'travel', 'go', 'navigate', 'operate', 'use'], failureMessage: "You get stranded in another time.", successMessage: "You successfully navigate back to your own time and complete your adventure! 🎉" }
         ]
     };
-             document.getElementById('start-button').addEventListener('click', startGame);
-        document.querySelector('.theme-toggle').addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
-        });
 
-        let currentLevel = 0;
-        let currentTopicIndex = 0;
-        let storyLog = '';
-        let totalDataReward = 0;
-        const topics = Object.keys(levels);
+    document.getElementById('start-button').addEventListener('click', startGame);
+    document.querySelector('.theme-toggle').addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+    });
 
-        function startGame() {
-            currentTopicIndex = 0;
-            totalDataReward = 0;
-            startTopic(topics[currentTopicIndex]);
-        }
+    let currentLevel = 0;
+    let currentTopicIndex = 0;
+    let storyLog = '';
+    let totalDataReward = 0;
+    const topics = Object.keys(levels);
 
-        function startTopic(topic) {
-            currentLevel = 0;
-            storyLog = '';
-            document.getElementById('start-game').style.display = 'none';
-            document.getElementById('mystery-writer').style.display = 'block';
-            document.getElementById('current-data-reward').textContent = `${totalDataReward}MB`;
-            showPrompt();
-        }
+    function startGame() {
+        currentTopicIndex = 0;
+        totalDataReward = 0;
+        startTopic(topics[currentTopicIndex]);
+    }
 
-        function showPrompt() {
-            const level = levels[topics[currentTopicIndex]][currentLevel];
-            const gameDisplay = document.getElementById('game-display');
-            gameDisplay.innerHTML = `<p>${level.prompt}</p>`;
-        }
+    function startTopic(topic) {
+        currentLevel = 0;
+        storyLog = '';
+        document.getElementById('start-game').style.display = 'none';
+        document.getElementById('mystery-writer').style.display = 'block';
+        document.getElementById('story-title').textContent = topic; // Display story title
+        document.getElementById('current-data-reward').textContent = `${totalDataReward}MB`;
+        showPrompt();
+    }
 
-        document.getElementById('submit-challenge').addEventListener('click', () => {
-            const userInput = document.getElementById('user-input').value.toLowerCase();
-            const level = levels[topics[currentTopicIndex]][currentLevel];
-            const success = level.successKeywords.some(keyword => userInput.includes(keyword));
+    function showPrompt() {
+        const level = levels[topics[currentTopicIndex]][currentLevel];
+        const gameDisplay = document.getElementById('game-display');
+        gameDisplay.innerHTML = `<p>${level.prompt}</p>`;
+    }
 
-            const gameDisplay = document.getElementById('game-display');
-            const feedback = document.getElementById('feedback');
+    document.getElementById('submit-challenge').addEventListener('click', () => {
+        const userInput = document.getElementById('user-input').value.toLowerCase();
+        const level = levels[topics[currentTopicIndex]][currentLevel];
+        const success = level.successKeywords.some(keyword => userInput.includes(keyword));
 
-            gameDisplay.innerHTML += `<p>You: ${userInput}</p>`;
-            gameDisplay.innerHTML += `<p>Analyzing...</p>`;
+        const gameDisplay = document.getElementById('game-display');
+        const feedback = document.getElementById('feedback');
 
-            setTimeout(() => {
-                gameDisplay.innerHTML = gameDisplay.innerHTML.replace('<p>Analyzing...</p>', '');
+        gameDisplay.innerHTML += `<p>You: ${userInput}</p>`;
+        gameDisplay.innerHTML += `<p>Analyzing...</p>`;
 
-                if (success) {
-                    storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
-                    gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
-                    feedback.textContent = 'Success! 🎉 Excellent descriptive power. Good job analyzing the situation.👏👏🫡';
-                    document.getElementById('next-level').style.display = 'block';
-                } else {
-                    gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
-                    feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, don\'t give up my friend! ✍️💪🏾😊';
-                }
-            }, 2000); // 2-second delay to simulate analysis
-        });
+        setTimeout(() => {
+            gameDisplay.innerHTML = gameDisplay.innerHTML.replace('<p>Analyzing...</p>', '');
 
+            if (success) {
+                storyLog += `${level.prompt}\n${level.successMessage}\n\n`;
+                gameDisplay.innerHTML += `<p>${level.successMessage}</p>`;
+                feedback.textContent = 'Success! 🎉 Excellent descriptive power. Good job analyzing the situation.👏👏🫡';
+                document.getElementById('next-level').style.display = 'block';
+            } else {
+                gameDisplay.innerHTML += `<p>${level.failureMessage}</p>`;
+                feedback.textContent = 'Try again! ❌ You need to be more descriptive and specific, don\'t give up my friend! ✍️💪🏾😊';
+            }
+        }, 2000); // 2-second delay to simulate analysis
+    });
         document.getElementById('next-level').addEventListener('click', () => {
-            currentLevel++;
-            document.getElementById('user-input').value = '';
-            document.getElementById('next-level').style.display = 'none';
+        currentLevel++;
+        document.getElementById('user-input').value = '';
+        document.getElementById('next-level').style.display = 'none';
 
-            if (currentLevel < levels[topics[currentTopicIndex]].length) {
-                showPrompt();
-            } else {
-                totalDataReward += 20;
-                endStory();
-            }
-        });
-
-        function endStory() {
-            document.getElementById('final-message').style.display = 'block';
-            document.getElementById('game-display').innerHTML += '<p>Well done! You completed all levels! 🏆</p>';
+        if (currentLevel < levels[topics[currentTopicIndex]].length) {
+            showPrompt();
+        } else {
+            totalDataReward += 20;
+            endStory();
         }
+    });
 
-        document.getElementById('continue-game').addEventListener('click', () => {
-            document.getElementById('final-message').style.display = 'none';
-            if (currentTopicIndex < topics.length - 1) {
-                currentTopicIndex++;
-                startTopic(topics[currentTopicIndex]);
-            } else {
-                endGame();
-            }
-        });
+    function endStory() {
+        document.getElementById('final-message').style.display = 'block';
+        document.getElementById('game-display').innerHTML += '<p>Well done! You completed all levels! 🏆</p>';
+    }
 
-        document.getElementById('stop-game').addEventListener('click', () => {
+    document.getElementById('continue-game').addEventListener('click', () => {
+        document.getElementById('final-message').style.display = 'none';
+        if (currentTopicIndex < topics.length - 1) {
+            currentTopicIndex++;
+            startTopic(topics[currentTopicIndex]);
+        } else {
             endGame();
-        });
-
-        function endGame() {
-            document.getElementById('end-game').style.display = 'block';
-            document.getElementById('total-data-reward').textContent = `${totalDataReward}MB`;
         }
+    });
 
-        document.getElementById('download-txt').addEventListener('click', () => {
-            downloadResponses('txt');
-        });
+    document.getElementById('stop-game').addEventListener('click', () => {
+        endGame();
+    });
 
-        document.getElementById('download-word').addEventListener('click', () => {
-            downloadResponses('word');
-        });
+    function endGame() {
+        document.getElementById('end-game').style.display = 'block';
+        document.getElementById('total-data-reward').textContent = `${totalDataReward}MB`;
+    }
 
-        function downloadResponses(format) {
-            const element = document.createElement('a');
-            const file = new Blob([storyLog], { type: 'text/plain' });
+    document.getElementById('download-txt').addEventListener('click', () => {
+        downloadResponses('txt');
+    });
+
+    document.getElementById('download-word').addEventListener('click', () => {
+        downloadResponses('docx');
+    });
+
+    function downloadResponses(format) {
+        const randomNumbers = Math.floor(Math.random() * 90000) + 10000;
+        const finalLog = storyLog + `\nGenerated by 9jahotblog Storybooks ${randomNumbers}`;
+
+        let element;
+        if (format === 'txt') {
+            const file = new Blob([finalLog], { type: 'text/plain' });
+            element = document.createElement('a');
             element.href = URL.createObjectURL(file);
-            element.download = `story.${format}`;
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
+            element.download = 'story.txt';
+        } else if (format === 'docx') {
+            const file = new Blob([finalLog], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+            element = document.createElement('a');
+            element.href = URL.createObjectURL(file);
+            element.download = 'story.docx';
         }
+        
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
     </script>
 </body>
-    
             
-
 
               <!-- Character Creation Section -->
 <section id="character-creation" style="display: block;">
