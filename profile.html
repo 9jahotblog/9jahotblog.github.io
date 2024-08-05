@@ -607,6 +607,7 @@
 <section id="plot-generator">
     <div class="profile-container">
         <h2>Plot Generator Game</h2>
+        <button class="theme-toggle">🌙</button>
         <p>Welcome to the Plot Generator! Select your preferred genre and themes, and generate a unique story plot.</p>
         
         <div>
@@ -669,6 +670,88 @@
         const plot = `${randomCharacter} ${randomSetting} ${randomConflict} ${randomResolution}.`;
         document.getElementById('plot-content').innerText = `Genre: ${genre}\nTheme: ${theme}\nPlot: ${plot}`;
     });
+</script>
+
+                <!-- X and O Game Section -->
+<section id="tic-tac-toe">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <h2>X and O Game (Tic-Tac-Toe)</h2>
+        <p>Welcome to the classic Tic-Tac-Toe game. Play against the AI and see if you can win!</p>
+        
+        <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px;">
+            <!-- Game cells will be inserted here -->
+        </div>
+        
+        <button id="reset-game" style="margin-top: 20px;">Reset Game</button>
+        
+        <div id="game-status" style="margin-top: 10px; font-weight: bold;"></div>
+    </div>
+</section>
+
+<script>
+    const gameBoard = document.getElementById('game-board');
+    const gameStatus = document.getElementById('game-status');
+    const resetButton = document.getElementById('reset-game');
+    let board;
+    let currentPlayer;
+    
+    function initializeGame() {
+        board = Array(9).fill(null);
+        currentPlayer = 'X';
+        gameStatus.innerText = "Player X's turn";
+        gameBoard.innerHTML = '';
+        
+        for (let i = 0; i < 9; i++) {
+            const cell = document.createElement('div');
+            cell.style.width = '100px';
+            cell.style.height = '100px';
+            cell.style.display = 'flex';
+            cell.style.alignItems = 'center';
+            cell.style.justifyContent = 'center';
+            cell.style.border = '1px solid #000';
+            cell.style.fontSize = '24px';
+            cell.style.cursor = 'pointer';
+            cell.dataset.index = i;
+            cell.addEventListener('click', handleCellClick);
+            gameBoard.appendChild(cell);
+        }
+    }
+    
+    function handleCellClick(event) {
+        const cell = event.target;
+        const index = cell.dataset.index;
+        
+        if (!board[index]) {
+            board[index] = currentPlayer;
+            cell.innerText = currentPlayer;
+            if (checkWin(currentPlayer)) {
+                gameStatus.innerText = `Player ${currentPlayer} wins!`;
+                gameBoard.removeEventListener('click', handleCellClick);
+            } else if (board.every(cell => cell)) {
+                gameStatus.innerText = 'It\'s a tie!';
+            } else {
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                gameStatus.innerText = `Player ${currentPlayer}'s turn`;
+            }
+        }
+    }
+    
+    function checkWin(player) {
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ];
+        
+        return winningCombinations.some(combination => {
+            return combination.every(index => board[index] === player);
+        });
+    }
+    
+    resetButton.addEventListener('click', initializeGame);
+    
+    initializeGame();
 </script>
                 
     
