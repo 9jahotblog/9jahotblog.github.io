@@ -180,16 +180,12 @@
                 </section>
 
                 <!-- Text-to-Speech Section-->
-<section id="tts-section">
+                  <section id="tts-section">
     <div class="profile-container">
         <h2>9jahotblog Audiobook Ai</h2>
         <div id="tts-input" contenteditable="true" style="width: 100%; height: 200px; border: 1px solid #ccc; margin-bottom: 10px; overflow-y: scroll;"></div>
         <div>
-            <button id="convert-speech-wavenet">Convert to Speech (WaveNet)</button>
-            <button id="convert-speech-polyglot">Convert to Speech (Polyglot)</button>
-            <button id="convert-speech-neural2">Convert to Speech (Neural2)</button>
-            <button id="convert-speech-smartphone">Convert to Speech (Smartphone)</button>
-            <button id="convert-speech-speaker">Convert to Speech (Speaker)</button>
+            <button id="convert-speech">Convert to Speech</button>
             <button id="pause-speech">Pause</button>
             <button id="continue-speech">Continue</button>
             <button id="stop-speech">Stop</button>
@@ -229,59 +225,27 @@
         };
     }
 
-    // Function to parse and apply emotions to the text
-    function parseEmotions(text) {
-        const emotionMap = {
-            "angry": { rate: 1, pitch: 1, volume: 1 },
-            "sad": { rate: 0.8, pitch: 0.6, volume: 0.8 },
-            "happy": { rate: 1.2, pitch: 1.5, volume: 1 },
-            "quiet": { rate: 1, pitch: 1, volume: 0.5 },
-            "slow": { rate: 0.7, pitch: 1, volume: 1 },
-            "fast": { rate: 1.5, pitch: 1, volume: 1 },
-            "sobs": { rate: 0.8, pitch: 0.7, volume: 0.8 }
-        };
-
-        return text.split(/\[(.*?)\]/).map((part, index) => {
-            if (index % 2 === 1 && emotionMap[part.toLowerCase()]) {
-                return { text: "", ...emotionMap[part.toLowerCase()] };
-            }
-            return { text: part, rate: 1, pitch: 1, volume: 1 };
-        });
-    }
-
     // Function to create and configure a SpeechSynthesisUtterance
-    function createUtterance(text, voiceConfig) {
-        const parts = parseEmotions(text);
-        return parts.map(part => {
-            const msg = new SpeechSynthesisUtterance(part.text);
-            msg.rate = part.rate;
-            msg.pitch = part.pitch + voiceConfig.pitchAdjust; // Voice pitch adjustment
-            msg.volume = part.volume;
-            msg.voice = voiceConfig.voice; // Voice configuration
-            return msg;
-        });
+    function createUtterance(text, voice) {
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.voice = voice; // Voice configuration
+        return msg;
     }
 
     // Function to speak text with selected voice
-    function speakText(voiceConfig) {
+    function speakText(voice) {
         const text = document.getElementById('tts-input').innerText;
 
         if (text.trim() !== "") {
-            utterances = createUtterance(text, voiceConfig);
+            const utterance = createUtterance(text, voice);
+            utterance.onend = () => {
+                if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                    mediaRecorder.stop();
+                }
+            };
 
-            currentIndex = 0;
-            utterances.forEach((utterance, index) => {
-                utterance.onend = () => {
-                    if (index === currentIndex && currentIndex < utterances.length - 1) {
-                        currentIndex++;
-                        highlightSpokenText(utterances[currentIndex].text, utterances[currentIndex]);
-                        window.speechSynthesis.speak(utterances[currentIndex]);
-                    }
-                };
-            });
-
-            highlightSpokenText(utterances[currentIndex].text, utterances[currentIndex]);
-            window.speechSynthesis.speak(utterances[currentIndex]);
+            highlightSpokenText(text, utterance);
+            window.speechSynthesis.speak(utterance);
 
             // Start recording audio
             if (mediaRecorder && mediaRecorder.state === 'inactive') {
@@ -295,84 +259,45 @@
     // Function to handle audio recording
     function startRecording() {
         audioChunks = [];
-        const stream = new MediaStream();
-        mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+            mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
 
-        mediaRecorder.ondataavailable = event => {
-            if (event.data.size > 0) {
-                audioChunks.push(event.data);
-            }
-        };
+            mediaRecorder.ondataavailable = event => {
+                if (event.data.size > 0) {
+                    audioChunks.push(event.data);
+                }
+            };
 
-        mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            const audioUrl = URL.createObjectURL(audioBlob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = audioUrl;
-            a.download = 'spoken_audio.webm';
-            document.body.appendChild(a);
-            a.click();
-            URL.revokeObjectURL(audioUrl);
-        };
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = audioUrl;
+                a.download = 'spoken_audio.webm';
+                document.body.appendChild(a);
+                a.click();
+                URL.revokeObjectURL(audioUrl);
+            };
+        });
     }
 
     // Load voices and configure voice options
     function loadVoices() {
         const voices = window.speechSynthesis.getVoices();
-        return {
-            wavenet: {
-                voice: voices.find(voice => voice.lang === 'en-US' && voice.name.includes('WaveNet')) || voices[0],
-                pitchAdjust: 0.3
-            },
-            polyglot: {
-                voice: voices.find(voice => voice.lang === 'en-GB' && voice.name.includes('Polyglot')) || voices[1],
-                pitchAdjust: 0.2
-            },
-            neural2: {
-                voice: voices.find(voice => voice.lang === 'en-AU' && voice.name.includes('Neural2')) || voices[2],
-                pitchAdjust: 0.4
-            },
-            smartphone: {
-                voice: voices.find(voice => voice.lang === 'en-IE' && voice.name.includes('Smartphone')) || voices[3],
-                pitchAdjust: 0.1
-            },
-            speaker: {
-                voice: voices.find(voice => voice.lang === 'en-ZA' && voice.name.includes('Speaker')) || voices[4],
-                pitchAdjust: 0.5
-            }
-        };
+        return voices[0] || null; // Default to the first available voice
     }
 
     // Event listeners for TTS buttons
-    document.getElementById('convert-speech-wavenet').addEventListener('click', () => {
+    document.getElementById('convert-speech').addEventListener('click', () => {
         window.speechSynthesis.cancel();
         startRecording();
-        speakText(loadVoices().wavenet);
-    });
-
-    document.getElementById('convert-speech-polyglot').addEventListener('click', () => {
-        window.speechSynthesis.cancel();
-        startRecording();
-        speakText(loadVoices().polyglot);
-    });
-
-    document.getElementById('convert-speech-neural2').addEventListener('click', () => {
-        window.speechSynthesis.cancel();
-        startRecording();
-        speakText(loadVoices().neural2);
-    });
-
-    document.getElementById('convert-speech-smartphone').addEventListener('click', () => {
-        window.speechSynthesis.cancel();
-        startRecording();
-        speakText(loadVoices().smartphone);
-    });
-
-    document.getElementById('convert-speech-speaker').addEventListener('click', () => {
-        window.speechSynthesis.cancel();
-        startRecording();
-        speakText(loadVoices().speaker);
+        const voice = loadVoices();
+        if (voice) {
+            speakText(voice);
+        } else {
+            alert("No voice available for speech synthesis.");
+        }
     });
 
     document.getElementById('pause-speech').addEventListener('click', () => {
@@ -405,15 +330,14 @@
     });
 
     // Load voices when the voices are loaded
-window.speechSynthesis.onvoiceschanged = loadVoices;
+    window.speechSynthesis.onvoiceschanged = loadVoices;
 
-document.addEventListener("DOMContentLoaded", function() {
-    if (window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-    }
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+    });
 </script>
-            
     
                 <!-- Chat Section -->
                 <section id="chat-section">
@@ -477,7 +401,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function to fetch and play TTS audio
     async function fetchAndPlayTTS(text) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA';
-        const url = `https://texttospeech.googleapis.com/v1beta1/text:synthesize=${apiKey}`;
+        const url = `https://texttospeech.googleapis.com/v1beta1/text:synthesize`;
         
         const response = await fetch(url, {
             method: 'POST',
