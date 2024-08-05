@@ -625,7 +625,78 @@
         });
     </script>
 
-                
+              <!-- Character Creation Section -->
+<section id="character-creation" style="display: none;">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <h2>Character Creation Challenge</h2>
+        <p id="char-intro">Welcome to the Character Creation Game! 🎨✨ Your mission is to create a character with unique traits and skills by making critical decisions through various levels. Ready to start?</p>
+        
+        <div id="char-game-display" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+        <textarea id="char-user-input" placeholder="Type your choice here..." style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+        
+        <div>
+            <button id="char-submit-choice">Submit Choice</button>
+            <button id="char-next-level" style="display: none;">Next Level</button>
+        </div>
+        
+        <div id="char-feedback" style="margin-top: 10px;"></div>
+        <div id="char-summary" style="display: none;">
+            <p>Congratulations! 🎉 You've completed the Character Creation Challenge. Review your character's profile below:</p>
+            <div id="char-profile"></div>
+            <button id="download-char-profile">Download Character Profile</button>
+        </div>
+        
+    </div>
+</section>
+
+<script>
+    // Character Creation Data
+    const characterLevels = [
+        { prompt: "Level 1: Choose your character’s background. Will they be a Noble, Merchant, or Adventurer?", successKeywords: ['noble', 'merchant', 'adventurer'], failureMessage: "You didn't make a choice, and your character's background remains unclear.", successMessage: "You have chosen a background for your character!" },
+        { prompt: "Level 2: Pick a special skill for your character. Will they be skilled in Magic, Combat, or Diplomacy?", successKeywords: ['magic', 'combat', 'diplomacy'], failureMessage: "You failed to choose a skill, and your character lacks focus.", successMessage: "Your character now has a special skill!" },
+        { prompt: "Level 3: Choose a defining trait. Will your character be Brave, Wise, or Cunning?", successKeywords: ['brave', 'wise', 'cunning'], failureMessage: "You missed selecting a defining trait, leaving your character's personality vague.", successMessage: "You've defined a key trait of your character!" },
+        { prompt: "Level 4: Decide on an important goal for your character. Will they seek Wealth, Knowledge, or Power?", successKeywords: ['wealth', 'knowledge', 'power'], failureMessage: "You didn't set a goal, and your character lacks direction.", successMessage: "Your character now has a clear goal!" },
+        { prompt: "Level 5: Finalize your character’s name and appearance. What will your character be called and look like?", successKeywords: ['name', 'description'], failureMessage: "You didn't provide a name or description, leaving your character incomplete.", successMessage: "You've given your character a name and appearance!" }
+    ];
+
+    let currentLevel = 0;
+    
+    function displayLevel(levelIndex) {
+        const level = characterLevels[levelIndex];
+        document.getElementById('char-game-display').innerHTML = `<p>${level.prompt}</p>`;
+        document.getElementById('char-submit-choice').style.display = 'block';
+        document.getElementById('char-next-level').style.display = 'none';
+    }
+
+    document.getElementById('char-submit-choice').addEventListener('click', function() {
+        const userInput = document.getElementById('char-user-input').value.toLowerCase();
+        const level = characterLevels[currentLevel];
+        if (level.successKeywords.includes(userInput)) {
+            document.getElementById('char-feedback').innerHTML = `<p>Success! ${level.successMessage}</p>`;
+            currentLevel++;
+            if (currentLevel < characterLevels.length) {
+                document.getElementById('char-next-level').style.display = 'block';
+            } else {
+                document.getElementById('char-summary').style.display = 'block';
+                document.getElementById('char-feedback').innerHTML = `<p>You've completed all levels! ${level.successMessage}</p>`;
+                // Logic to show character profile
+                document.getElementById('char-profile').innerHTML = "Your character profile details...";
+                document.getElementById('download-char-profile').style.display = 'block';
+            }
+        } else {
+            document.getElementById('char-feedback').innerHTML = `<p>Failure. ${level.failureMessage}</p>`;
+        }
+    });
+
+    document.getElementById('char-next-level').addEventListener('click', function() {
+        displayLevel(currentLevel);
+    });
+
+    displayLevel(currentLevel);
+</script>
+
+    
                 <!-- Chat Section -->
                 <section id="chat-section">
                     <div class="profile-container">
