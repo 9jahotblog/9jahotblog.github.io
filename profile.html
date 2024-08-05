@@ -605,7 +605,6 @@
 </body>
 
     
-        
                 
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
@@ -676,6 +675,7 @@
     });
 </script>
 
+
                 <!-- X and O Game Section -->
 <section id="tic-tac-toe">
     <div class="profile-container">
@@ -703,7 +703,7 @@
     function initializeGame() {
         board = Array(9).fill(null);
         currentPlayer = 'X';
-        gameStatus.innerText = "Player X's turn";
+        gameStatus.innerText = "Your turn";
         gameBoard.innerHTML = '';
         
         for (let i = 0; i < 9; i++) {
@@ -738,20 +738,25 @@
         board[index] = player;
         gameBoard.children[index].innerText = player;
         if (checkWin(player)) {
-            gameStatus.innerText = `Player ${player} wins!`;
-            gameBoard.removeEventListener('click', handleCellClick);
+            displayResult(player);
         } else if (board.every(cell => cell)) {
             gameStatus.innerText = 'It\'s a tie!';
+            displayCelebration();
         } else {
             currentPlayer = player === 'X' ? 'O' : 'X';
-            gameStatus.innerText = `Player ${currentPlayer}'s turn`;
+            gameStatus.innerText = `${currentPlayer === 'X' ? "Your" : "9jahotblog AI's"} turn`;
         }
     }
     
     function makeAiMove() {
         const emptyIndices = board.map((val, idx) => val === null ? idx : null).filter(val => val !== null);
-        const randomIndex = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
-        makeMove(randomIndex, 'O');
+        let bestMove = getBestMove();
+        makeMove(bestMove, 'O');
+    }
+
+    function getBestMove() {
+        // Implement a smarter AI using the minimax algorithm or other strategies
+        return board.map((val, idx) => val === null ? idx : null).filter(val => val !== null)[0]; // Placeholder for demonstration
     }
     
     function checkWin(player) {
@@ -764,6 +769,32 @@
         return winningCombinations.some(combination => {
             return combination.every(index => board[index] === player);
         });
+    }
+    
+    function displayResult(player) {
+        if (player === 'X') {
+            gameStatus.innerText = 'You win! 🎉';
+        } else {
+            gameStatus.innerText = '9jahotblog AI wins! It whooped you! 🎁';
+        }
+        displayCelebration();
+    }
+    
+    function displayCelebration() {
+        // Create a celebration element
+        const celebration = document.createElement('div');
+        celebration.innerText = '🎉🎉🎉';
+        celebration.style.position = 'fixed';
+        celebration.style.top = '50%';
+        celebration.style.left = '50%';
+        celebration.style.transform = 'translate(-50%, -50%)';
+        celebration.style.fontSize = '48px';
+        celebration.style.zIndex = '1000';
+        document.body.appendChild(celebration);
+
+        setTimeout(() => {
+            document.body.removeChild(celebration);
+        }, 2000); // Remove celebration after 2 seconds
     }
     
     resetButton.addEventListener('click', initializeGame);
