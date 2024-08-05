@@ -498,7 +498,8 @@
         document.getElementById('start-game').style.display = 'none';
         document.getElementById('mystery-writer').style.display = 'block';
         document.getElementById('story-title').textContent = topic; // Display story title
-        document.getElementById('current-data-reward').textContent = `${totalDataReward}MB`;
+        // Ensure current-data-reward element is updated if used
+        // document.getElementById('current-data-reward').textContent = `${totalDataReward}MB`;
         showPrompt();
     }
 
@@ -533,7 +534,8 @@
             }
         }, 2000); // 2-second delay to simulate analysis
     });
-        document.getElementById('next-level').addEventListener('click', () => {
+
+    document.getElementById('next-level').addEventListener('click', () => {
         currentLevel++;
         document.getElementById('user-input').value = '';
         document.getElementById('next-level').style.display = 'none';
@@ -602,6 +604,8 @@
     </script>
 </body>
 
+    
+        
                 
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
