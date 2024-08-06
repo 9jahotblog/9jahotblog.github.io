@@ -1076,18 +1076,20 @@
     };
 
     document.getElementById('generate-plot').addEventListener('click', () => {
-        const genre = document.getElementById('genre').value;
-        const genrePlots = plots[genre] || {};
-        
-        if (themePlots.length > 0) {
-            const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
-            document.getElementById('plot-content').innerText = `Genre: randomPlot}`;
-        } else {
-            document.getElementById('plot-content').innerText = `No plots available for the selected genre and theme.`;
-        }
-    });
-</script>
-                
+    const genre = document.getElementById('genre').value;
+    const genrePlots = plots[genre] || {};
+    
+    // Get all themes from the selected genre
+    const allThemes = Object.values(genrePlots).flat();
+    
+    if (allThemes.length > 0) {
+        const randomPlot = allThemes[Math.floor(Math.random() * allThemes.length)];
+        document.getElementById('plot-content').innerText = `Genre: ${genre}\nPlot: ${randomPlot}`;
+    } else {
+        document.getElementById('plot-content').innerText = `No plots available for the selected genre.`;
+    }
+});
+</script> 
                 
                 <!-- Chat Section -->
                 <section id="chat-section">
