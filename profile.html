@@ -1002,46 +1002,47 @@
 <section id="memory-match">
     <div class="profile-container">
         <h2>Memory Match Game</h2>
-        <button class="theme-toggle">🌙</button>
-        <p>Test your memory and concentration by finding matching pairs of cards. Click on the cards to reveal them and try to find all the pairs. Your time will be tracked!</p>
+        <p>Find matching pairs of cards to win. The game ends when all pairs are matched. Try to beat the clock!</p>
         
-        <div id="game-board" style="display: grid; grid-template-columns: repeat(4, 100px); gap: 5px;">
-            <!-- Game cards will be inserted here -->
+        <button id="start-game">Start Game</button>
+        <button id="reset-game" style="display: none;">Reset Game</button>
+        
+        <div id="game-board" style="display: grid; grid-template-columns: repeat(4, 100px); gap: 10px; margin-top: 20px;">
+            <!-- Game cells will be inserted here -->
         </div>
         
         <div id="game-status" style="margin-top: 10px; font-weight: bold;"></div>
-        <div id="timer" style="margin-top: 10px;">Time: 0s</div>
-        <button id="reset-game" style="margin-top: 20px;">Reset Game</button>
+        <div id="time-taken" style="margin-top: 10px;">Time: <span id="timer">00:00</span></div>
     </div>
 </section>
 
 <script>
-    const gameBoard = document.getElementById('game-board');
-    const gameStatus = document.getElementById('game-status');
-    const timerDisplay = document.getElementById('timer');
+    const board = document.getElementById('game-board');
+    const startButton = document.getElementById('start-game');
     const resetButton = document.getElementById('reset-game');
-    let board;
-    let flippedCards = [];
-    let matchesFound = 0;
-    let timer;
-    let seconds = 0;
-    const cardImages = [
-        '🍎', '🍌', '🍒', '🍓', '🍇', '🍉', '🍊', '🍋',
-        '🍎', '🍌', '🍒', '🍓', '🍇', '🍉', '🍊', '🍋'
+    const status = document.getElementById('game-status');
+    const timerDisplay = document.getElementById('timer');
+    let cards, flippedCards, matchedPairs, timer, time;
+    
+    const cardValues = [
+        'A', 'A', 'B', 'B', 'C', 'C', 'D', 'D',
+        'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'
     ];
     
     function initializeGame() {
-        board = shuffleArray(cardImages.slice());
+        board.innerHTML = '';
+        status.innerText = '';
         flippedCards = [];
-        matchesFound = 0;
-        seconds = 0;
-        gameStatus.innerText = '';
-        timerDisplay.innerText = 'Time: 0s';
-        gameBoard.innerHTML = '';
+        matchedPairs = 0;
+        time = 0;
+        timerDisplay.innerText = '00:00';
         clearInterval(timer);
+        shuffleArray(cardValues);
         
-        for (let i = 0; i < 16; i++) {
+        cardValues.forEach((value, index) => {
             const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.value = value;
             card.style.width = '100px';
             card.style.height = '100px';
             card.style.display = 'flex';
@@ -1051,55 +1052,47 @@
             card.style.fontSize = '24px';
             card.style.cursor = 'pointer';
             card.style.backgroundColor = '#ddd';
-            card.dataset.index = i;
+            card.innerText = '?';
             card.addEventListener('click', handleCardClick);
-            gameBoard.appendChild(card);
-        }
-        
-        timer = setInterval(() => {
-            seconds++;
-            timerDisplay.innerText = `Time: ${seconds}s`;
-        }, 1000);
+            board.appendChild(card);
+        });
     }
     
     function handleCardClick(event) {
         const card = event.target;
-        const index = card.dataset.index;
         
         if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
-            card.innerText = board[index];
             card.classList.add('flipped');
+            card.innerText = card.dataset.value;
             flippedCards.push(card);
             
             if (flippedCards.length === 2) {
-                checkMatch();
+                checkForMatch();
             }
         }
     }
     
-    function checkMatch() {
+    function checkForMatch() {
         const [card1, card2] = flippedCards;
-        const index1 = card1.dataset.index;
-        const index2 = card2.dataset.index;
         
-        if (board[index1] === board[index2]) {
+        if (card1.dataset.value === card2.dataset.value) {
             card1.classList.add('matched');
             card2.classList.add('matched');
-            matchesFound++;
-            if (matchesFound === cardImages.length / 2) {
-                setTimeout(() => {
-                    clearInterval(timer);
-                    gameStatus.innerText = `Congratulations! You finished in ${seconds}s.`;
-                }, 500);
+            matchedPairs++;
+            
+            if (matchedPairs === cardValues.length / 2) {
+                status.innerText = 'You Win!';
+                clearInterval(timer);
             }
         } else {
             setTimeout(() => {
-                card1.innerText = '';
-                card2.innerText = '';
                 card1.classList.remove('flipped');
                 card2.classList.remove('flipped');
+                card1.innerText = '?';
+                card2.innerText = '?';
             }, 1000);
         }
+        
         flippedCards = [];
     }
     
@@ -1108,14 +1101,43 @@
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
-        return array;
     }
     
-    resetButton.addEventListener('click', initializeGame);
+    function startTimer() {
+        timer = setInterval(() => {
+            time++;
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+    }
     
-    initializeGame();
+    startButton.addEventListener('click', () => {
+        initializeGame();
+        startButton.style.display = 'none';
+        resetButton.style.display = 'inline';
+        startTimer();
+    });
+    
+    resetButton.addEventListener('click', () => {
+        initializeGame();
+        startButton.style.display = 'inline';
+        resetButton.style.display = 'none';
+    });
+    
+    initializeGame();  // Initialize game when the page loads
 </script>
 
+<style>
+    .card.flipped {
+        background-color: #fff;
+        cursor: default;
+    }
+    .card.matched {
+        background-color: #0f0;
+        cursor: default;
+    }
+</style>
 
                 
                 <!-- Chat Section -->
