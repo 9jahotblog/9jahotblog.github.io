@@ -605,7 +605,7 @@
 </body>
 
                 
-<!-- Tic-Tac-Toe Game Section -->
+  <!-- Tic-Tac-Toe Game Section -->
 <section id="tic-tac-toe">
     <div class="profile-container">
         <h2>X and O Game (Tic-Tac-Toe)</h2>
@@ -617,7 +617,7 @@
             <button id="play-multiplayer">Play Multiplayer</button>
         </div>
         
-        <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; margin-top: 20px;">
+        <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; margin-top: 20px; display: none;">
             <!-- Game cells will be inserted here -->
         </div>
         
@@ -647,6 +647,7 @@
     let aiScore = 0;
     let timer;
     let time;
+    let gameTimeout;
 
     function initializeGame() {
         board = Array(9).fill(null);
@@ -655,14 +656,15 @@
         gameBoard.innerHTML = '';
         resetButton.style.display = 'inline';
         menu.style.display = 'none';
+        gameBoard.style.display = 'grid';
         time = 0;
         clearInterval(timer);
+        clearTimeout(gameTimeout);
         timerDisplay.innerText = '00:00';
         startTimer();
-
+        
         for (let i = 0; i < 9; i++) {
             const cell = document.createElement('div');
-            cell.classList.add('cell');
             cell.style.width = '100px';
             cell.style.height = '100px';
             cell.style.display = 'flex';
@@ -780,6 +782,7 @@
         aiScoreDisplay.innerText = aiScore;
         displayCelebration();
         clearInterval(timer);
+        clearTimeout(gameTimeout);
     }
 
     function displayCelebration() {
@@ -805,6 +808,12 @@
             const seconds = time % 60;
             timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
         }, 1000);
+        
+        gameTimeout = setTimeout(() => {
+            gameStatus.innerText = "Time's up!";
+            displayCelebration();
+            clearInterval(timer);
+        }, 10000);  // Game time limit set to 10 seconds
     }
 
     playAiButton.addEventListener('click', () => {
@@ -817,10 +826,17 @@
         initializeGame();
     });
 
-    resetButton.addEventListener('click', initializeGame);
+    resetButton.addEventListener('click', () => {
+        menu.style.display = 'block';
+        gameBoard.style.display = 'none';
+        resetButton.style.display = 'none';
+        clearInterval(timer);
+        clearTimeout(gameTimeout);
+        timerDisplay.innerText = '00:00';
+        gameStatus.innerText = '';
+    });
+</script>       
     
-    initializeGame();
-</script>
                  
             
 
@@ -1051,7 +1067,7 @@
         
         if (themePlots.length > 0) {
             const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
-            document.getElementById('plot-content').innerText = `Genre: ${genre} ${randomPlot}`;
+            document.getElementById('plot-content').innerText = `Genre: randomPlot}`;
         } else {
             document.getElementById('plot-content').innerText = `No plots available for the selected genre and theme.`;
         }
