@@ -1078,97 +1078,83 @@
 </script> 
 
 
-<!-- Memory Match Game Section -->
-<section id="memory-match">
-    <div class="profile-container">
-        <h2>Memory Match Game</h2>
-        <button class="theme-toggle">🌙</button>
-        <p>Find all the matching pairs to complete the game.</p>
 
-        <div id="game-board" class="game-board"></div>
-        <div id="game-info">
-            <p>Time: <span id="time">0</span> seconds</p>
-            <button id="start-game">Start Game</button>
+<!-- Mystery Puzzle Game Section -->
+<section id="mystery-puzzle-game-section">
+    <div class="profile-container">
+        <h2>Mystery Puzzle Game</h2>
+        <div id="puzzle-display">
+            <!-- Clues and story parts will be displayed here -->
         </div>
+        <input type="text" id="puzzle-answer" placeholder="Enter your answer...">
+        <button id="submit-answer">Submit Answer</button>
+        <div id="puzzle-feedback"></div>
     </div>
 </section>
 
 <script>
-    const cardValues = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F'];
-    let firstCard = null;
-    let secondCard = null;
-    let matchedPairs = 0;
-    let startTime = null;
-    let timerInterval = null;
+    const puzzles = [
+        {
+            prompt: "Clue 1: The more you take, the more you leave behind. What am I?",
+            answer: "footsteps",
+            story: "You step into the old mansion. The wooden floors creak under your feet as you make your way down the dimly lit hallway. Suddenly, you hear a whisper: 'The more you take, the more you leave behind. What am I?'"
+        },
+        {
+            prompt: "Clue 2: I speak without a mouth and hear without ears. What am I?",
+            answer: "echo",
+            story: "You find yourself in a large, empty room. The walls are covered in mirrors, reflecting your every move. A voice echoes around you: 'I speak without a mouth and hear without ears. What am I?'"
+        },
+        {
+            prompt: "Clue 3: I have keys but open no locks. What am I?",
+            answer: "piano",
+            story: "In the next room, you see a grand piano. It looks like it hasn't been played in years, but there's something strange about it. A note lies on top: 'I have keys but open no locks. What am I?'"
+        },
+        {
+            prompt: "Clue 4: I fly without wings and cry without eyes. What am I?",
+            answer: "cloud",
+            story: "As you step outside, the sky is overcast. The wind picks up, and you hear a distant rumble of thunder. The clouds seem to form a face, whispering: 'I fly without wings and cry without eyes. What am I?'"
+        },
+        {
+            prompt: "Clue 5: I am not alive, but I grow; I don't have lungs, but I need air. What am I?",
+            answer: "fire",
+            story: "You enter the final room, where a fireplace crackles with a roaring flame. The warmth is comforting, but there's a sense of danger. Above the fireplace, a plaque reads: 'I am not alive, but I grow; I don't have lungs, but I need air. What am I?'"
+        },
+        // Add more clues as needed
+    ];
 
-    document.getElementById('start-game').addEventListener('click', startGame);
+    let currentPuzzleIndex = 0;
 
-    function startGame() {
-        shuffle(cardValues);
-        const gameBoard = document.getElementById('game-board');
-        gameBoard.innerHTML = '';
-        cardValues.forEach(value => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.dataset.value = value;
-            card.addEventListener('click', flipCard);
-            gameBoard.appendChild(card);
-        });
-        matchedPairs = 0;
-        startTime = new Date();
-        clearInterval(timerInterval);
-        timerInterval = setInterval(updateTime, 1000);
-        updateTime();
+    function showPuzzle() {
+        const puzzle = puzzles[currentPuzzleIndex];
+        document.getElementById('puzzle-display').innerHTML = `<p>${puzzle.story}</p><p>${puzzle.prompt}</p>`;
     }
 
-    function shuffle(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-    }
+    document.getElementById('submit-answer').addEventListener('click', () => {
+        const userAnswer = document.getElementById('puzzle-answer').value.toLowerCase();
+        const puzzle = puzzles[currentPuzzleIndex];
+        const feedback = document.getElementById('puzzle-feedback');
 
-    function flipCard() {
-        if (this.classList.contains('flipped') || firstCard && secondCard) return;
-
-        this.classList.add('flipped');
-        this.innerText = this.dataset.value;
-
-        if (!firstCard) {
-            firstCard = this;
-        } else {
-            secondCard = this;
-            checkForMatch();
-        }
-    }
-
-    function checkForMatch() {
-        if (firstCard.dataset.value === secondCard.dataset.value) {
-            matchedPairs++;
-            firstCard = null;
-            secondCard = null;
-            if (matchedPairs === cardValues.length / 2) {
-                clearInterval(timerInterval);
-                setTimeout(() => alert(`Congratulations! You completed the game in ${document.getElementById('time').innerText} seconds.`), 500);
+        if (userAnswer === puzzle.answer) {
+            feedback.textContent = 'Correct! Moving to the next clue...';
+            currentPuzzleIndex++;
+            if (currentPuzzleIndex < puzzles.length) {
+                showPuzzle();
+            } else {
+                feedback.textContent = 'Congratulations! You have solved all the puzzles!';
+                document.getElementById('puzzle-display').innerHTML += '<p>The mystery is solved! 🏆</p>';
             }
         } else {
-            setTimeout(() => {
-                firstCard.classList.remove('flipped');
-                firstCard.innerText = '';
-                secondCard.classList.remove('flipped');
-                secondCard.innerText = '';
-                firstCard = null;
-                secondCard = null;
-            }, 1000);
+            feedback.textContent = 'Incorrect answer. Try again!';
         }
-    }
 
-    function updateTime() {
-        const elapsedTime = Math.floor((new Date() - startTime) / 1000);
-        document.getElementById('time').innerText = elapsedTime;
-    }
+        document.getElementById('puzzle-answer').value = '';
+    });
+
+    // Initial display of the first puzzle
+    showPuzzle();
 </script>
-
+        
+        
 <style>
     .game-board {
         display: grid;
