@@ -604,10 +604,6 @@
     </script>
 </body>
 
- 
-                    
-            
-
                 
 
                 <!-- X and O Game Section -->
@@ -735,7 +731,9 @@
     
     initializeGame();
 </script>
+            </body>
                 
+
 
     <style>
         body.dark-theme {
@@ -831,6 +829,7 @@
         ];
         
         function initializeGame() {
+            console.log('Initializing game...');
             board.innerHTML = '';
             status.innerText = '';
             flippedCards = [];
@@ -905,6 +904,7 @@
         }
         
         startButton.addEventListener('click', () => {
+            console.log('Start button clicked');
             initializeGame();
             startButton.style.display = 'none';
             resetButton.style.display = 'inline';
@@ -912,6 +912,7 @@
         });
         
         resetButton.addEventListener('click', () => {
+            console.log('Reset button clicked');
             initializeGame();
             startButton.style.display = 'inline';
             resetButton.style.display = 'none';
@@ -922,7 +923,9 @@
         initializeGame();  // Initialize game when the page loads
     </script>
 </body>
+                
     
+        
 
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
