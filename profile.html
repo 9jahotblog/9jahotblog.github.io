@@ -1051,7 +1051,7 @@
         
         if (themePlots.length > 0) {
             const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
-            document.getElementById('plot-content').innerText = `Genre: ${genre}\nTheme: ${theme}\nPlot: ${randomPlot}`;
+            document.getElementById('plot-content').innerText = `Genre: ${genre} ${randomPlot}`;
         } else {
             document.getElementById('plot-content').innerText = `No plots available for the selected genre and theme.`;
         }
