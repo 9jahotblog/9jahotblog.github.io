@@ -736,7 +736,7 @@
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
     <div class="profile-container">
-        <h2>Plot Generator Game</h2>
+        <h2>Plot Generator </h2>
         <button class="theme-toggle">🌙</button>
         <p>Welcome to the Plot Generator! Select your preferred genre and theme, and generate a unique story plot.</p>
         
@@ -956,10 +956,7 @@
 
     document.getElementById('generate-plot').addEventListener('click', () => {
         const genre = document.getElementById('genre').value;
-        const theme = document.getElementById('theme').value;
-
         const genrePlots = plots[genre] || {};
-        const themePlots = genrePlots[theme] || [];
         
         if (themePlots.length > 0) {
             const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
