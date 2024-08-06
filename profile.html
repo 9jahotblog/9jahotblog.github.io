@@ -605,21 +605,27 @@
 </body>
 
                 
-
-                <!-- X and O Game Section -->
+<!-- Tic-Tac-Toe Game Section -->
 <section id="tic-tac-toe">
     <div class="profile-container">
         <h2>X and O Game (Tic-Tac-Toe)</h2>
         <button class="theme-toggle">🌙</button>
-        <p>Welcome to the classic Tic-Tac-Toe game. Play against the 9jahotblog AI and see if you can win!</p>
+        <p>Welcome to the classic Tic-Tac-Toe game. Choose a mode to start playing.</p>
         
-        <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px;">
+        <div id="menu">
+            <button id="play-ai">Play with 9jahotblog AI</button>
+            <button id="play-multiplayer">Play Multiplayer</button>
+        </div>
+        
+        <div id="game-board" style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px; margin-top: 20px;">
             <!-- Game cells will be inserted here -->
         </div>
         
-        <button id="reset-game" style="margin-top: 20px;">Reset Game</button>
+        <button id="reset-game" style="margin-top: 20px; display: none;">Reset Game</button>
         
         <div id="game-status" style="margin-top: 10px; font-weight: bold;"></div>
+        <div id="score" style="margin-top: 10px;">Score: <span id="player-score">0</span> - <span id="ai-score">0</span></div>
+        <div id="timer" style="margin-top: 10px;">Time: <span id="time">00:00</span></div>
     </div>
 </section>
 
@@ -627,17 +633,36 @@
     const gameBoard = document.getElementById('game-board');
     const gameStatus = document.getElementById('game-status');
     const resetButton = document.getElementById('reset-game');
+    const playAiButton = document.getElementById('play-ai');
+    const playMultiplayerButton = document.getElementById('play-multiplayer');
+    const menu = document.getElementById('menu');
+    const playerScoreDisplay = document.getElementById('player-score');
+    const aiScoreDisplay = document.getElementById('ai-score');
+    const timerDisplay = document.getElementById('time');
+    
     let board;
     let currentPlayer;
-    
+    let gameMode;
+    let playerScore = 0;
+    let aiScore = 0;
+    let timer;
+    let time;
+
     function initializeGame() {
         board = Array(9).fill(null);
         currentPlayer = 'X';
-        gameStatus.innerText = "Your turn";
+        gameStatus.innerText = `${gameMode === 'ai' ? "Your turn" : "Player X's turn"}`;
         gameBoard.innerHTML = '';
-        
+        resetButton.style.display = 'inline';
+        menu.style.display = 'none';
+        time = 0;
+        clearInterval(timer);
+        timerDisplay.innerText = '00:00';
+        startTimer();
+
         for (let i = 0; i < 9; i++) {
             const cell = document.createElement('div');
+            cell.classList.add('cell');
             cell.style.width = '100px';
             cell.style.height = '100px';
             cell.style.display = 'flex';
@@ -651,44 +676,86 @@
             gameBoard.appendChild(cell);
         }
     }
-    
+
     function handleCellClick(event) {
         const cell = event.target;
         const index = cell.dataset.index;
         
-        if (!board[index] && currentPlayer === 'X') {
-            makeMove(index, 'X');
-            if (!checkWin('X') && !board.every(cell => cell)) {
+        if (!board[index] && (gameMode === 'multiplayer' || currentPlayer === 'X')) {
+            makeMove(index, currentPlayer);
+            if (gameMode === 'ai' && currentPlayer === 'O') {
                 setTimeout(makeAiMove, 500);
             }
         }
     }
-    
+
     function makeMove(index, player) {
         board[index] = player;
         gameBoard.children[index].innerText = player;
         if (checkWin(player)) {
             displayResult(player);
         } else if (board.every(cell => cell)) {
-            gameStatus.innerText = 'It\'s a tie!';
+            gameStatus.innerText = "It's a tie!";
             displayCelebration();
         } else {
             currentPlayer = player === 'X' ? 'O' : 'X';
-            gameStatus.innerText = `${currentPlayer === 'X' ? "Your" : "9jahotblog AI's"} turn`;
+            gameStatus.innerText = `${currentPlayer === 'X' ? (gameMode === 'ai' ? "Your turn" : "Player X's turn") : (gameMode === 'ai' ? "9jahotblog AI's turn" : "Player O's turn")}`;
         }
     }
-    
+
     function makeAiMove() {
-        const emptyIndices = board.map((val, idx) => val === null ? idx : null).filter(val => val !== null);
-        let bestMove = getBestMove();
+        const bestMove = getBestMove();
         makeMove(bestMove, 'O');
     }
 
     function getBestMove() {
-        // Implement a smarter AI using the minimax algorithm or other strategies
-        return board.map((val, idx) => val === null ? idx : null).filter(val => val !== null)[0]; // Placeholder for demonstration
+        // Implementing a smarter AI using minimax algorithm
+        let bestScore = -Infinity;
+        let move;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === null) {
+                board[i] = 'O';
+                let score = minimax(board, 0, false);
+                board[i] = null;
+                if (score > bestScore) {
+                    bestScore = score;
+                    move = i;
+                }
+            }
+        }
+        return move;
     }
-    
+
+    function minimax(board, depth, isMaximizing) {
+        let scores = { 'O': 10, 'X': -10, 'tie': 0 };
+        let result = checkWin('O') ? 'O' : checkWin('X') ? 'X' : board.every(cell => cell) ? 'tie' : null;
+        if (result !== null) return scores[result];
+
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === null) {
+                    board[i] = 'O';
+                    let score = minimax(board, depth + 1, false);
+                    board[i] = null;
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === null) {
+                    board[i] = 'X';
+                    let score = minimax(board, depth + 1, true);
+                    board[i] = null;
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
+
     function checkWin(player) {
         const winningCombinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -700,18 +767,22 @@
             return combination.every(index => board[index] === player);
         });
     }
-    
+
     function displayResult(player) {
         if (player === 'X') {
             gameStatus.innerText = 'You win! 🎉';
+            playerScore++;
         } else {
             gameStatus.innerText = '9jahotblog AI wins! It whooped you! 🎁';
+            aiScore++;
         }
+        playerScoreDisplay.innerText = playerScore;
+        aiScoreDisplay.innerText = aiScore;
         displayCelebration();
+        clearInterval(timer);
     }
-    
+
     function displayCelebration() {
-        // Create a celebration element
         const celebration = document.createElement('div');
         celebration.innerText = '🎉🎉🎉';
         celebration.style.position = 'fixed';
@@ -724,13 +795,33 @@
 
         setTimeout(() => {
             document.body.removeChild(celebration);
-        }, 2000); // Remove celebration after 2 seconds
+        }, 2000); 
     }
-    
+
+    function startTimer() {
+        timer = setInterval(() => {
+            time++;
+            const minutes = Math.floor(time / 60);
+            const seconds = time % 60;
+            timerDisplay.innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    playAiButton.addEventListener('click', () => {
+        gameMode = 'ai';
+        initializeGame();
+    });
+
+    playMultiplayerButton.addEventListener('click', () => {
+        gameMode = 'multiplayer';
+        initializeGame();
+    });
+
     resetButton.addEventListener('click', initializeGame);
     
     initializeGame();
 </script>
+                 
             
 
 <!-- Plot Generator Game Section -->
