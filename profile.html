@@ -862,21 +862,13 @@
         initializeGame();
         startButton.style.display = 'inline';
         resetButton.style.display = 'none';
+        clearInterval(timer);
+        timerDisplay.innerText = '00:00';
     });
     
     initializeGame();  // Initialize game when the page loads
 </script>
-
-<style>
-    .card.flipped {
-        background-color: #fff;
-        cursor: default;
-    }
-    .card.matched {
-        background-color: #0f0;
-        cursor: default;
-    }
-</style>
+    
 
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
