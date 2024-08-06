@@ -604,270 +604,9 @@
     </script>
 </body>
 
-    <!-- Plot Generator Game Section -->
-<section id="plot-generator">
-    <div class="profile-container">
-        <h2>Plot Generator Game</h2>
-        <button class="theme-toggle">🌙</button>
-        <p>Welcome to the Plot Generator! Select your preferred genre and theme, and generate a unique and detailed story plot.</p>
-        
-        <div>
-            <label for="genre">Select Genre:</label>
-            <select id="genre">
-                <option value="Fantasy">Fantasy</option>
-                <option value="Science Fiction">Science Fiction</option>
-                <option value="Mystery">Mystery</option>
-                <option value="Romance">Romance</option>
-                <option value="Horror">Horror</option>
-                <option value="Historical">Historical</option>
-                <option value="Thriller">Thriller</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Drama">Drama</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Billionaire Romance">Billionaire Romance</option>
-                <option value="Anime">Anime</option>
-                <option value="Humor">Humor</option>
-                <option value="Superhero">Superhero</option>
-                <option value="Young Adult">Young Adult</option>
-            </select>
-        </div>
-        
-        <div>
-            <label for="theme">Select Theme:</label>
-            <select id="theme">
-                <option value="Adventure">Adventure</option>
-                <option value="Time Travel">Time Travel</option>
-                <option value="Forbidden Love">Forbidden Love</option>
-                <option value="Haunted House">Haunted House</option>
-                <option value="Heist">Heist</option>
-                <option value="Survival">Survival</option>
-                <option value="Revenge">Revenge</option>
-                <option value="Betrayal">Betrayal</option>
-                <option value="Redemption">Redemption</option>
-                <option value="Discovery">Discovery</option>
-                <option value="Secret Identity">Secret Identity</option>
-                <option value="Corruption">Corruption</option>
-                <option value="Political Intrigue">Political Intrigue</option>
-                <option value="Love Triangle">Love Triangle</option>
-                <option value="Lost Civilization">Lost Civilization</option>
-            </select>
-        </div>
-        
-        <button id="generate-plot">Generate Plot</button>
-        
-        <div id="plot-display" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;">
-            <strong>Your Generated Plot:</strong>
-            <p id="plot-content"></p>
-        </div>
-    </div>
-</section>
-
-<script>
-    const plots = {
-        "Fantasy": {
-            "Adventure": [
-                "A young sorcerer discovers an ancient prophecy that foretells the rise of a dark lord. They must gather allies and magical artifacts to prevent the prophecy from coming true.",
-                "In a magical realm, a group of rebels fights against a tyrannical king who has stolen the power of the gods. They must undertake a perilous journey to reclaim the stolen power and restore balance.",
-                // Add more detailed fantasy adventure plots here
-            ],
-            "Time Travel": [
-                "A time-traveling mage accidentally disrupts the timeline and must team up with their past self to fix the errors before reality collapses.",
-                "An ancient artifact enables a scholar to travel through different historical eras, but each jump reveals hidden magical secrets that could alter the course of history.",
-                // Add more detailed fantasy time travel plots here
-            ],
-            // Add more themes for Fantasy genre
-        },
-        "Science Fiction": {
-            "Adventure": [
-                "A space captain on the brink of retirement is called back into action to prevent an intergalactic war sparked by a rogue AI threatening the galaxy's peace.",
-                "In a dystopian future, a group of rebels discovers a hidden space station with advanced technology that could change humanity's fate. They must navigate political intrigue and corporate espionage to unlock its secrets.",
-                // Add more detailed sci-fi adventure plots here
-            ],
-            "Time Travel": [
-                "A scientist invents a time-travel device that allows people to witness significant historical events. However, when the device is stolen, they must prevent a plot to alter the past for personal gain.",
-                "In a future where time travel is regulated, a black-market traveler uncovers a conspiracy that threatens to rewrite history, leading to a high-stakes chase across time periods.",
-                // Add more detailed sci-fi time travel plots here
-            ],
-            // Add more themes for Science Fiction genre
-        },
-        "Romance": {
-            "Forbidden Love": [
-                "A young woman from a modest background falls in love with a wealthy businessman, but their relationship faces obstacles from both their families and society.",
-                "In a world where social classes are rigidly divided, two lovers from opposing sides must navigate societal expectations and personal sacrifices to be together.",
-                // Add more detailed romance forbidden love plots here
-            ],
-            "Billionaire Romance": [
-                "A successful billionaire develops an unexpected romantic interest in their personal assistant, leading to complications in both their professional and personal lives.",
-                "An aspiring artist captures the heart of a reclusive billionaire, but their relationship is tested by the media scrutiny and the billionaire's hidden past.",
-                // Add more detailed billionaire romance plots here
-            ],
-            // Add more themes for Romance genre
-        },
-        "Horror": {
-            "Haunted House": [
-                "A family moves into an old mansion, only to find that it is haunted by spirits seeking revenge for past wrongs. They must uncover the house's dark history to escape.",
-                "A group of paranormal investigators spends a night in a notorious haunted house, but their skepticism is challenged when they encounter terrifying supernatural phenomena.",
-                // Add more detailed horror haunted house plots here
-            ],
-            "Survival": [
-                "After a plane crash leaves them stranded in a remote forest, a group of survivors must confront both the harsh elements and a sinister force lurking in the shadows.",
-                "A town is cut off from civilization by a supernatural blizzard, and its inhabitants must find a way to survive as they uncover dark secrets about their community.",
-                // Add more detailed horror survival plots here
-            ],
-            // Add more themes for Horror genre
-        },
-        "Historical": {
-            "Political Intrigue": [
-                "In the midst of a historical revolution, a low-ranking official uncovers a conspiracy that threatens to topple the government. They must navigate a web of deceit to protect their country.",
-                "During a turbulent period in history, a diplomat must unravel a complex political plot involving international espionage, secret alliances, and betrayals.",
-                // Add more detailed historical political intrigue plots here
-            ],
-            "Lost Civilization": [
-                "An expedition uncovers the ruins of a long-lost civilization with advanced technology. The team must decode ancient mysteries and prevent a rival faction from exploiting the discoveries.",
-                "A historian discovers evidence of a vanished empire hidden beneath modern cities, leading to a thrilling adventure filled with ancient secrets and dangerous foes.",
-                // Add more detailed historical lost civilization plots here
-            ],
-            // Add more themes for Historical genre
-        },
-        "Thriller": {
-            "Secret Identity": [
-                "A covert operative with a hidden identity must stop a global conspiracy that threatens to unleash chaos. As they dig deeper, they face peril from both enemies and allies.",
-                "A journalist stumbles upon a top-secret organization and must unravel the truth behind their covert operations while evading dangerous pursuers.",
-                // Add more detailed thriller secret identity plots here
-            ],
-            "Corruption": [
-                "An idealistic detective uncovers a network of corruption within the police force and must risk everything to expose the truth while avoiding deadly retribution.",
-                "A corporate whistleblower discovers evidence of massive financial fraud and must navigate a perilous path to bring the perpetrators to justice without becoming a target themselves.",
-                // Add more detailed thriller corruption plots here
-            ],
-            // Add more themes for Thriller genre
-        },
-        "Adventure": {
-            "Lost Treasure": [
-                "A treasure hunter follows an ancient map to a remote island, uncovering a series of puzzles and traps designed to protect a legendary fortune from falling into the wrong hands.",
-                "A group of explorers searches for a fabled lost city rumored to hold unimaginable wealth, but they must contend with rival treasure hunters and the dangers of the uncharted wilderness.",
-                // Add more detailed adventure lost treasure plots here
-            ],
-            "Expedition": [
-                "A daring expedition sets out to explore the deepest parts of the Amazon jungle, discovering hidden tribes, ancient ruins, and a powerful artifact with unknown powers.",
-                "A team of scientists ventures to the Arctic to investigate mysterious signals from beneath the ice, only to find themselves in a race against time to survive a catastrophic event.",
-                // Add more detailed adventure expedition plots here
-            ],
-            // Add more themes for Adventure genre
-        },
-        "Drama": {
-            "Family Secrets": [
-                "After the death of their estranged father, a group of siblings uncovers hidden family secrets that force them to confront their past and redefine their relationships.",
-                "A renowned artist's family struggles with the fallout from a shocking revelation about the artist's life, leading to personal revelations and family conflicts.",
-                // Add more detailed drama family secrets plots here
-            ],
-            "Personal Redemption": [
-                
-            "After a career-ending scandal, former sports star Jack Harris hits rock bottom. With the help of a wise old coach, Jack begins to rebuild his life by mentoring at-risk youth. As he confronts his past mistakes and learns to forgive himself, Jack discovers a new purpose and a chance to redeem his legacy.", 
-            "Haunted by a tragic accident, Dr. Sophia Patel quits her medical practice and escapes to a remote village. There, she meets a young girl in need of life-saving surgery. Sophia must confront her inner demons and face her fears to perform the operation, finding redemption through her selfless act.", 
-            "Ex-con Alex Thompson returns to his hometown determined to make amends for past wrongs. He takes a job at a local diner, where he befriends a single mother and her troubled son. As Alex helps them heal and find hope, he earns a chance to redeem himself and start anew.",
-            "Struggling artist Lily Chen abandons her passion after a harsh critic destroys her confidence. Years later, a chance encounter with a talented street artist inspires Lily to rediscover her creative voice. Through her art, she confronts her self-doubt and finds redemption, emerging stronger and more authentic.",
-            "After inheriting a failing family business, James Lee must confront the mistakes of his ancestors and restore honor to his family's name. Through hard work and determination, James revives the business and makes amends with his community, redeeming his family's legacy and forging a new path forward.",
-            "A former criminal seeking redemption returns to their hometown to make amends, only to find their past actions have left deep scars on those they once hurt.",
-            "An exiled leader strives to reclaim their position and make up for their past mistakes while navigating treacherous political waters and personal betrayals.",
-                // Add more detailed drama personal redemption plots here
-            ],
-        },
-        "Comedy": {
-            "Romantic Comedy": [
-                "Two unlikely individuals meet through a series of comedic misunderstandings and mishaps, gradually discovering that their differences complement each other perfectly.",
-                "A bumbling yet endearing matchmaker's attempts to find true love for their clients lead to a series of hilarious and heartwarming events.",
-                // Add more detailed comedy romantic comedy plots here
-            ],
-            "Workplace Humor": [
-                "An eccentric new manager starts at a quirky company, causing chaos and hilarity as they attempt to implement radical changes and connect with their bizarre staff.",
-                "In a highly competitive office environment, a group of coworkers navigates the ups and downs of their daily grind with humor and camaraderie, leading to unexpected friendships.",
-                // Add more detailed comedy workplace humor plots here
-            ],
-            // Add more themes for Comedy genre
-        },
-        "Billionaire Romance": {
-            "Corporate Drama": [
-                "A billionaire CEO falls for a low-level employee, and their relationship is tested by office politics, corporate rivalries, and public scrutiny.",
-                "After a sudden merger, a billionaire must navigate a whirlwind romance with a business partner while facing the challenges of uniting two vastly different company cultures.",
-                // Add more detailed billionaire romance corporate drama plots here
-            ],
-            "Glamorous Lifestyle": [
-                "A down-to-earth journalist gets involved with a reclusive billionaire, leading to a glamorous yet tumultuous romance filled with high society intrigues and media attention.",
-                "A wealthy philanthropist's relationship with a struggling artist becomes a media sensation, forcing them to confront their differing lifestyles and public expectations.",
-                // Add more detailed billionaire romance glamorous lifestyle plots here
-            ],
-            // Add more themes for Billionaire Romance genre
-        },
-        "Anime": {
-            "High School Drama": [
-                "A new transfer student with a mysterious past shakes up a high school, leading to a series of dramatic events and deep connections with a group of eclectic classmates.",
-                "In a world where students have special powers, a shy teenager discovers their hidden abilities and must navigate friendships, rivalries, and a looming threat to their school.",
-                // Add more detailed anime high school drama plots here
-            ],
-            "Fantasy Adventure": [
-                "A young hero from a small village embarks on a quest to defeat a dark sorcerer, gathering allies with unique abilities and uncovering secrets about their own destiny.",
-                "In a magical world where dreams and reality merge, a group of friends must navigate fantastical realms and face personal challenges to restore balance and peace.",
-                // Add more detailed anime fantasy adventure plots here
-            ],
-            // Add more themes for Anime genre
-        },
-        "Humor": {
-            "Parody": [
-                "A group of friends creates a hilarious parody of popular superhero movies, only to find themselves inadvertently caught up in real-life superhero antics.",
-                "In a fictional world where mythical creatures hold office positions, a bumbling new recruit's attempts to fit in lead to comedic chaos and unexpected heroism.",
-                // Add more detailed humor parody plots here
-            ],
-            "Situational Comedy": [
-                "A group of mismatched roommates navigates the absurdities of daily life in their chaotic apartment, leading to a series of humorous and heartwarming situations.",
-                "In a small town with eccentric residents, a newcomer tries to fit in while dealing with bizarre town traditions and quirky neighbors.",
-                // Add more detailed humor situational comedy plots here
-            ],
-            // Add more themes for Humor genre
-        },
-        "Superhero": {
-            "Origin Story": [
-                "An ordinary person gains superpowers and must balance their new responsibilities with their everyday life while learning to control their abilities and fight emerging threats.",
-                "A seasoned superhero trains a new generation of heroes, facing challenges from a rising villain and personal struggles as they mentor the next wave of protectors.",
-                // Add more detailed superhero origin story plots here
-            ],
-            "Team Dynamics": [
-                "A team of diverse superheroes with clashing personalities must work together to thwart an apocalyptic threat, learning to trust and support each other in the process.",
-                "In a city protected by a team of superheroes, internal conflicts and differing ideologies lead to tension as they confront a villain capable of dividing their unity.",
-                // Add more detailed superhero team dynamics plots here
-            ],
-            // Add more themes for Superhero genre
-        },
-        "Young Adult": {
-            "Coming of Age": [
-                "A teenager navigates the trials of high school while dealing with family issues, budding relationships, and the challenge of discovering their true self.",
-                "In a world where everyone receives a unique gift at eighteen, a young adult struggles with their late blooming ability and the impact it has on their future.",
-                // Add more detailed young adult coming of age plots here
-            ],
-            "Fantasy World": [
-                "A group of high school friends discovers a hidden portal to a magical world where they must come of age while battling dark forces and uncovering their destinies.",
-                "An ordinary student finds themselves transported to a fantasy realm where they must adapt to new rules and responsibilities while dealing with threats from an ancient evil.",
-                // Add more detailed young adult fantasy world plots here
-            ],
-            // Add more themes for Young Adult genre
-        }
-    };
-
-    document.getElementById('generate-plot').addEventListener('click', () => {
-        const genre = document.getElementById('genre').value;
-        const theme = document.getElementById('theme').value;
-
-        const genrePlots = plots[genre] || {};
-        const themePlots = genrePlots[theme] || [];
-        
-        if (themePlots.length > 0) {
-            const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
-            document.getElementById('plot-content').innerText = `Genre: ${genre}\nTheme: ${theme}\nPlot: ${randomPlot}`;
-        } else {
-            document.getElementById('plot-content').innerText = `No plots available for the selected genre and theme.`;
-        }
-    });
-</script>
+ 
+                    
+            
 
                 
 
@@ -1139,6 +878,267 @@
     }
 </style>
 
+<!-- Plot Generator Game Section -->
+<section id="plot-generator">
+    <div class="profile-container">
+        <h2>Plot Generator Game</h2>
+        <button class="theme-toggle">🌙</button>
+        <p>Welcome to the Plot Generator! Select your preferred genre and theme, and generate a unique story plot.</p>
+        
+        <div>
+            <label for="genre">Select Genre:</label>
+            <select id="genre">
+                <option value="Fantasy">Fantasy</option>
+                <option value="Science Fiction">Science Fiction</option>
+                <option value="Mystery">Mystery</option>
+                <option value="Romance">Romance</option>
+                <option value="Horror">Horror</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Billionaire Romance">Billionaire Romance</option>
+                <option value="Anime">Anime</option>
+                <option value="Humor">Humor</option>
+                <option value="Superhero">Superhero</option>
+                <option value="Young Adult">Young Adult</option>
+            </select>
+        </div>
+        
+        <div>
+            <label for="theme">Select Theme:</label>
+            <select id="theme">
+                <option value="Adventure">Adventure</option>
+                <option value="Time Travel">Time Travel</option>
+                <option value="Forbidden Love">Forbidden Love</option>
+                <option value="Haunted House">Haunted House</option>
+                <option value="Heist">Heist</option>
+                <option value="Family Secrets">Family Secrets</option>
+                <option value="Personal Redemption">Personal Redemption</option>
+                <option value="Corporate Drama">Corporate Drama</option>
+                <option value="Glamorous Lifestyle">Glamorous Lifestyle</option>
+                <option value="High School Drama">High School Drama</option>
+                <option value="Fantasy World">Fantasy World</option>
+                <option value="Romantic Comedy">Romantic Comedy</option>
+                <option value="Workplace Humor">Workplace Humor</option>
+                <option value="Parody">Parody</option>
+                <option value="Situational Comedy">Situational Comedy</option>
+                <option value="Origin Story">Origin Story</option>
+                <option value="Team Dynamics">Team Dynamics</option>
+                <option value="Coming of Age">Coming of Age</option>
+            </select>
+        </div>
+        
+        <button id="generate-plot">Generate Plot</button>
+        
+        <div id="plot-display" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px; height: 150px; overflow-y: scroll;">
+            <strong>Your Generated Plot:</strong>
+            <p id="plot-content"></p>
+        </div>
+    </div>
+</section>
+
+<script>
+    const plots = {
+        "Fantasy": {
+            "Adventure": [
+                "A young farmhand discovers an ancient artifact that propels them into a quest to defeat a rising dark sorcerer threatening the realm.",
+                "In a world where magic is forbidden, a group of rebels must find a lost city rumored to hold the key to restoring magic and saving their land.",
+                "An exiled prince returns to reclaim his throne, facing magical creatures and treacherous allies in a land overrun by dark forces.",
+                "A mage and a warrior from rival factions are forced to team up to prevent an ancient prophecy from destroying their world.",
+                "In a land where dreams have tangible effects, a group of adventurers must journey through dreamscapes to stop a nightmare from becoming reality."
+            ],
+            "Time Travel": [
+                "A scientist accidentally travels 100 years into the past and must prevent a catastrophe that will alter the course of history.",
+                "A time traveler from the future lands in a medieval kingdom and must use advanced technology to prevent a dark age.",
+                "A historian discovers a time portal and must navigate different eras to recover stolen artifacts and restore the timeline.",
+                "A teenager with time-traveling abilities must fix historical events they unintentionally changed, risking their own existence in the process.",
+                "A group of explorers travels to different points in history, encountering famous figures and preventing a time-altering conspiracy."
+            ],
+            // Add more themes for Fantasy genre
+        },
+        "Science Fiction": {
+            "Dystopian Future": [
+                "In a future where society is divided into rigid classes, a young rebel leads an uprising against a totalitarian government controlling the populace with technology.",
+                "A futuristic city is controlled by an oppressive regime that uses mind-control devices, and a group of hackers works to liberate the population.",
+                "After a global environmental collapse, survivors live in a massive underground bunker, but a mysterious signal from the surface leads to dangerous exploration.",
+                "In a world where AI has taken over, a rogue scientist tries to create a sentient being capable of leading a revolution against the machines.",
+                "A dystopian society thrives on a fabricated reality, and a group of citizens begins to question the truth behind their existence and the world's true nature."
+            ],
+            "Space Opera": [
+                "A spaceship crew must navigate a galaxy-wide conflict while uncovering a conspiracy that threatens the delicate balance of power between star systems.",
+                "In a future where space travel is common, a diplomat must broker peace between warring alien races while dealing with internal political strife.",
+                "An interstellar smuggler stumbles upon a secret that could change the fate of the universe and must decide whether to use it for personal gain or the greater good.",
+                "A young cadet aboard a military spaceship must prove their worth as they uncover a hidden threat that could spell doom for the entire galaxy.",
+                "In a galaxy where planets are governed by ancient alien relics, a group of rebels seeks to uncover the truth behind these artifacts and their creators."
+            ],
+            // Add more themes for Science Fiction genre
+        },
+        "Mystery": {
+            "Classic Whodunit": [
+                "A famous detective is called to a remote mansion where a high-profile guest is found dead. With a house full of suspects, they must unravel the clues to find the killer.",
+                "During a prestigious gala, a renowned philanthropist is murdered, and a private investigator must sift through lies and secrets to uncover the truth.",
+                "In a quaint village, a series of seemingly unrelated crimes occur, and an amateur sleuth must piece together the clues to solve the mystery before more damage is done.",
+                "A young journalist investigates a string of disappearances linked to a mysterious old estate, uncovering hidden connections and long-buried secrets.",
+                "A retired detective is pulled back into action when a copycat killer mimics their old cases, forcing them to confront their past and solve the new crimes."
+            ],
+            "Psychological Thriller": [
+                "A brilliant psychologist becomes the target of a patient who has turned their sessions into a deadly game of cat and mouse.",
+                "In a high-stakes mental game, a person with amnesia must unravel a web of deceit and psychological manipulation to discover their true identity.",
+                "A psychiatrist is drawn into a complex murder case involving a patient with multiple personalities, each harboring different motives for the crime.",
+                "A successful author finds themselves embroiled in a real-life mystery when their latest book's plot eerily mirrors a series of recent crimes.",
+                "A detective suffering from PTSD must solve a high-profile kidnapping case while grappling with their own psychological demons and unraveling the truth."
+            ],
+            // Add more themes for Mystery genre
+        },
+        "Romance": {
+            "Forbidden Love": [
+                "Two lovers from feuding families must navigate societal pressures and dangerous alliances to be together, despite the obstacles and betrayals in their path.",
+                "In a dystopian future where love is regulated by the state, a couple defies the system and embarks on a dangerous journey to find true freedom together.",
+                "An aristocrat falls in love with a commoner in a strict social hierarchy, leading to a secret romance that threatens to upend their entire world.",
+                "A successful businessperson falls for someone from a rival company, and their relationship must withstand corporate sabotage and familial expectations.",
+                "Two people from different worlds meet under extraordinary circumstances and must overcome societal barriers and personal fears to build a life together."
+            ],
+            "Romantic Comedy": [
+                "A clumsy but lovable matchmaker causes a series of hilarious misunderstandings and romantic entanglements while trying to find true love for their clients.",
+                "An unlikely pair of co-workers are forced to participate in a fake relationship for a charity event, only to find their feelings becoming real amidst the chaos.",
+                "In a city where romance is regulated by a dating app, two individuals with mismatched profiles find themselves in a series of comedic situations as they search for love.",
+                "A wedding planner and a grumpy chef clash over the preparations for a high-profile event, only to discover their mutual dislike masks a deeper connection.",
+                "Two rival food truck owners engage in a humorous battle for the best spot in town, but their competitive relationship turns into a surprising romance."
+            ],
+            // Add more themes for Romance genre
+        },
+        "Horror": {
+            "Haunted House": [
+                "A family moves into a historic mansion with a dark past, only to find themselves haunted by the spirits of its former inhabitants who have their own unfinished business.",
+                "A group of friends explores an abandoned asylum rumored to be haunted, only to uncover a terrifying secret that binds them to the asylum forever.",
+                "An old manor in a small town hides a sinister presence that awakens when a new family moves in, forcing them to confront the horrors that lurk in its shadows.",
+                "A real estate agent becomes trapped in a cursed house while showing it to potential buyers, discovering the horrifying truth about its previous occupants.",
+                "A team of paranormal investigators faces an evil entity that grows stronger with each attempt to communicate, leading to a fight for survival against a relentless force."
+            ],
+            "Psychological Horror": [
+                "A person suffering from severe insomnia starts experiencing disturbing hallucinations that blur the line between reality and nightmare.",
+                "A therapist finds themselves entangled in a patient’s dark fantasies that begin to manifest in their own life, unraveling their sanity with each passing day.",
+                "In a remote cabin, a group of friends confronts their deepest fears as they are haunted by their own psychological traumas brought to life.",
+                "A woman discovers disturbing recordings of herself speaking to an unknown entity, leading to a terrifying journey to uncover the source of the messages.",
+                "After a traumatic event, a man starts receiving anonymous letters describing events that only he could know, leading him to question his own sanity and safety."
+            ],
+            // Add more themes for Horror genre
+        },
+        "Drama": {
+            "Family Secrets": [
+                "A family reunites for a long-awaited gathering, only to have buried secrets come to light, threatening to tear them apart and force them to confront their past.",
+                "An adopted child begins to unravel the mystery of their origins, discovering long-hidden family secrets that challenge their identity and place within the family.",
+                "A successful businessman must deal with the fallout when his estranged sibling returns with incriminating evidence that could ruin his career and personal life.",
+                "During a high-stakes trial, a family’s dark past is exposed, leading to intense confrontations and revelations that change their lives forever.",
+                "A journalist uncovers a family’s secret scandal that has been kept hidden for decades, leading to a dramatic confrontation and reevaluation of family loyalties."
+            ],
+            "Personal Redemption": [
+                "A disgraced former athlete returns to their hometown to make amends for past mistakes, helping to revitalize the community and find personal redemption.",
+                "After serving time in prison for a crime they didn’t commit, an individual struggles to rebuild their life and relationships, facing obstacles from those who still doubt their innocence.",
+                "A successful but morally corrupt CEO must confront their past actions when a former employee exposes unethical practices, leading to a quest for personal and professional redemption.",
+                "A recovering addict returns to their family, seeking forgiveness and a second chance while battling internal demons and external pressures.",
+                "A retired soldier haunted by their past deeds embarks on a journey of self-discovery and forgiveness, helping others along the way to find their own paths to redemption."
+            ],
+            // Add more themes for Drama genre
+        },
+        "Comedy": {
+            "Romantic Comedy": [
+                "A socially awkward writer and a charming actor are forced to work together on a film script, leading to a series of comedic misadventures and unexpected romance.",
+                "Two rival matchmakers find themselves competing to find the perfect partner for a high-profile client, resulting in humorous mishaps and a surprising romance.",
+                "A clumsy but endearing protagonist accidentally ruins their best friend's wedding, leading to a series of comedic attempts to fix the situation and win back their friendship.",
+                "An eccentric inventor and a pragmatic scientist must collaborate on a quirky project that leads to hilarious situations and an unexpected romantic connection.",
+                "In a world where love is controlled by a government agency, two mismatched individuals rebel against the system, resulting in a humorous and heartfelt romance."
+            ],
+            "Workplace Humor": [
+                "A newly hired employee finds themselves in the middle of an office rivalry, leading to a series of comedic misunderstandings and a surprising friendship with their nemesis.",
+                "A group of quirky coworkers attempts to save their failing business through increasingly outrageous and humorous schemes, learning to work together in the process.",
+                "An overzealous manager’s attempts to boost office morale lead to a series of hilarious team-building activities and unexpected consequences.",
+                "In a high-stress corporate environment, an unlikely hero emerges from the janitorial staff, using humor and ingenuity to solve a critical problem.",
+                "A tech startup faces a series of comical setbacks and miscommunications as the team navigates the challenges of launching their innovative product."
+            ],
+            // Add more themes for Comedy genre
+        },
+        "Billionaire Romance": {
+            "Glamorous Lifestyle": [
+                "A young aspiring artist finds themselves entangled in a whirlwind romance with a billionaire philanthropist, navigating the challenges of high society and personal values.",
+                "An ambitious journalist uncovers a scandal involving a wealthy billionaire and falls in love with the enigmatic subject, leading to a romance filled with luxury and intrigue.",
+                "A talented chef is recruited to cater a billionaire’s extravagant party, sparking a romance that must withstand the pressures of fame and fortune.",
+                "A tech genius and a socialite engage in a heated rivalry that turns into a passionate romance, challenging both to balance their personal and professional lives.",
+                "A successful entrepreneur and a struggling nonprofit director meet under unexpected circumstances, leading to a romance that bridges the gap between wealth and purpose."
+            ],
+            // Add more themes for Billionaire Romance genre
+        },
+        "Anime": {
+            "Magical School": [
+                "A teenager discovers they possess magical abilities and enrolls in a prestigious academy, where they must navigate intense training, friendships, and an impending dark threat.",
+                "In a world where magic is common, a new student at a magical academy uncovers a conspiracy threatening the school’s safety and must rally classmates to save it.",
+                "A young mage with a mysterious past joins a group of gifted students at a magical school, uncovering secrets about their lineage and facing a powerful adversary.",
+                "An ordinary student is thrust into a magical academy after an accidental spell, leading to a journey of self-discovery and battle against dark forces threatening the realm.",
+                "At a school for magic, a group of students discovers ancient artifacts that unlock hidden powers and uncover a long-forgotten prophecy about their destinies."
+            ],
+            // Add more themes for Anime genre
+        },
+        "Humor": {
+            "Situational Comedy": [
+                "A mismatched group of roommates navigates the challenges of cohabitation, leading to a series of humorous and heartwarming situations that bring them closer together.",
+                "In a small town where everyone knows everyone, an outsider’s quirky behavior causes a series of comedic misunderstandings and unexpected friendships.",
+                "A family with a history of eccentric behavior faces a series of comedic events during their annual reunion, leading to chaos and bonding over their shared quirks.",
+                "A group of coworkers in a failing office must adapt to a series of bizarre new policies and management styles, leading to a humorous and chaotic workplace environment.",
+                "A retired circus performer and a serious librarian become unlikely friends, leading to a series of comedic escapades that challenge their perspectives on life."
+            ],
+            // Add more themes for Humor genre
+        },
+        "Superhero": {
+            "Origin Story": [
+                "A regular person gains superpowers after a scientific accident and must learn to harness their abilities while facing a rising threat from an old nemesis.",
+                "A young hero discovers their latent powers after surviving a near-death experience, leading to a journey of self-discovery and confrontation with a shadowy organization.",
+                "An ordinary individual gains superpowers through a mystical artifact and must balance their new responsibilities with personal challenges and emerging villains.",
+                "A superhero's origin is revealed through a series of flashbacks, detailing their rise from an average person to a powerful defender of justice and their struggles along the way.",
+                "A team of friends acquires unique abilities after a cosmic event and must band together to form a new superhero group, learning to master their powers and fight a common enemy."
+            ],
+            "Team Dynamics": [
+                "A team of diverse superheroes with clashing personalities must work together to thwart an apocalyptic threat, learning to trust and support each other in the process.",
+                "In a city protected by a team of superheroes, internal conflicts and differing ideologies lead to tension as they confront a villain capable of dividing their unity.",
+                "A newly formed superhero team struggles to balance their personal lives with their responsibilities, facing challenges both within and outside the group as they learn to function as a cohesive unit.",
+                "An established superhero team faces a crisis of leadership when their founder is incapacitated, leading to a power struggle and a re-evaluation of their mission and goals.",
+                "During a critical mission, a superhero team must overcome personal differences and grudges to prevent a global catastrophe, learning valuable lessons about teamwork and sacrifice."
+            ],
+            // Add more themes for Superhero genre
+        },
+        "Young Adult": {
+            "Coming of Age": [
+                "A teenager navigates the trials of high school while dealing with family issues, budding relationships, and the challenge of discovering their true self.",
+                "In a world where everyone receives a unique gift at eighteen, a young adult struggles with their late blooming ability and the impact it has on their future.",
+                "A group of friends faces the challenges of adolescence, including academic pressure, social dynamics, and personal growth, as they transition from high school to adulthood.",
+                "A young person with a troubled past finds themselves in a new school and must overcome their history while forming new friendships and discovering their strengths.",
+                "During a summer break, a group of teens embarks on a series of adventures that help them discover their passions, confront their fears, and prepare for the next stage of life."
+            ],
+            "Fantasy World": [
+                "A group of high school friends discovers a hidden portal to a magical world where they must come of age while battling dark forces and uncovering their destinies.",
+                "An ordinary student finds themselves transported to a fantasy realm where they must adapt to new rules and responsibilities while dealing with threats from an ancient evil.",
+                "A teenager with a mysterious family legacy is drawn into a magical world that mirrors their own, leading to a journey of self-discovery and heroism against a looming threat.",
+                "A young person accidentally uncovers their hidden magical heritage and must navigate a fantastical world of ancient creatures and epic quests to protect their realm.",
+                "In a realm where dreams and reality intertwine, a group of teenagers must solve an ancient riddle to prevent a magical catastrophe that could end their world."
+            ],
+            // Add more themes for Young Adult genre
+        }
+    };
+
+    document.getElementById('generate-plot').addEventListener('click', () => {
+        const genre = document.getElementById('genre').value;
+        const theme = document.getElementById('theme').value;
+
+        const genrePlots = plots[genre] || {};
+        const themePlots = genrePlots[theme] || [];
+        
+        if (themePlots.length > 0) {
+            const randomPlot = themePlots[Math.floor(Math.random() * themePlots.length)];
+            document.getElementById('plot-content').innerText = `Genre: ${genre}\nTheme: ${theme}\nPlot: ${randomPlot}`;
+        } else {
+            document.getElementById('plot-content').innerText = `No plots available for the selected genre and theme.`;
+        }
+    });
+</script>
+                
                 
                 <!-- Chat Section -->
                 <section id="chat-section">
