@@ -734,7 +734,6 @@
             </body>
                 
 
-
     <style>
         body.dark-theme {
             background-color: #121212;
@@ -798,6 +797,7 @@
             background-color: lightgreen;
         }
     </style>
+</head>
 <body>
     <!-- Memory Match Game Section -->
     <section id="memory-match">
@@ -850,6 +850,7 @@
         }
         
         function handleCardClick(event) {
+            console.log('Card clicked');
             const card = event.target;
             
             if (flippedCards.length < 2 && !card.classList.contains('flipped') && !card.classList.contains('matched')) {
@@ -895,6 +896,7 @@
         }
         
         function startTimer() {
+            console.log('Starting timer...');
             timer = setInterval(() => {
                 time++;
                 const minutes = Math.floor(time / 60);
@@ -924,8 +926,8 @@
     </script>
 </body>
                 
+                
     
-        
 
 <!-- Plot Generator Game Section -->
 <section id="plot-generator">
