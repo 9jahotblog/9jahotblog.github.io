@@ -12,51 +12,77 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
+            background-color: #f4f4f4;
+            transition: background-color 0.3s, color 0.3s;
         }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
         .container {
-            width: 80%;
-            max-width: 800px;
-            margin: 0 auto;
             text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
         }
-        .header {
-            margin-bottom: 20px;
+
+        .container.dark-mode {
+            background-color: #1e1e1e;
         }
+
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            color: #333;
         }
+
         .header p {
             font-size: 1.2rem;
             color: #555;
         }
+
         .search-bar {
             position: relative;
-            width: 100%;
+            margin-top: 20px;
         }
+
         .search-bar input {
             width: 100%;
             padding: 15px;
             font-size: 1rem;
-            border: 1px solid #ddd;
+            border: 2px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s;
         }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
         .search-results {
             margin-top: 20px;
             text-align: left;
+            display: none;
         }
+
         .search-results ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
+
         .search-results li {
             background: #fff;
             padding: 15px;
@@ -65,17 +91,47 @@
             border-radius: 5px;
             transition: background 0.3s;
         }
+
         .search-results li a {
             text-decoration: none;
             color: #333;
             font-weight: 500;
+            display: block;
         }
+
         .search-results li:hover {
             background: #f0f0f0;
         }
+
         .search-results li a:hover {
             color: #000;
         }
+
+        .theme-toggle {
+            margin-top: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: #0056b3;
+        }
+
+        body.dark-mode .theme-toggle {
+            background-color: #ffa500;
+            color: #000;
+        }
+
+        body.dark-mode .theme-toggle:hover {
+            background-color: #cc8400;
+        }
+
         .go-top {
             position: fixed;
             bottom: 20px;
@@ -86,6 +142,11 @@
             border-radius: 50%;
             cursor: pointer;
             display: none;
+            z-index: 1000;
+        }
+
+        .go-top.show {
+            display: block;
         }
     </style>
 </head>
@@ -98,9 +159,10 @@
         <div class="search-bar">
             <input type="text" id="searchInput" onkeyup="filterResults()" placeholder="Search for Articles...">
         </div>
-        <div class="search-results" id="searchResults" style="display: none;">
+        <div class="search-results" id="searchResults">
             <ul id="resultList"></ul>
         </div>
+        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
     </div>
     <a href="#top" class="go-top" id="goTopBtn">
         <ion-icon name="chevron-up"></ion-icon>
@@ -181,14 +243,19 @@
             }
         }
 
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.container').classList.toggle('dark-mode');
+        }
+
         window.onscroll = function() {scrollFunction()};
 
         function scrollFunction() {
             const goTopBtn = document.getElementById("goTopBtn");
             if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                goTopBtn.style.display = "block";
+                goTopBtn.classList.add('show');
             } else {
-                goTopBtn.style.display = "none";
+                goTopBtn.classList.remove('show');
             }
         }
 
