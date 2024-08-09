@@ -38,6 +38,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
             width: 300px;
+            display: none; /* Initially hidden */
         }
         #book-info-popup h3 {
             margin-top: 0;
@@ -105,7 +106,7 @@
                     <li><a href="#">Articles/Short stories</a></li>
                     <li><a href="#">Manuscript Submissions</a></li>
                     <li><a href="#">Short stories/Articles submissions</a></li>
-                    <li><a href="#">Adapt Book to Movie</a></li>
+                    <li><a href="#">Books to Movie</a></li>
                     <li><a href="#">Books</a></li>
                     <li><a href="#">WhatsApp Community</a></li>
                     <li><a href="#">Nominate your Book</a></li>
@@ -126,7 +127,7 @@
                     <h2>Featured Books</h2>
                     <div class="book" onclick="showBookInfo('book1')">
                         <img src="https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book 1 Cover">
-                        <p>My experience At The University of Dey Play</p>
+                        <p>My Experience At The University of Dey Play</p>
                     </div>
                     <div class="book" onclick="showBookInfo('book2')">
                         <img src="assets/images/book2-cover.jpg" alt="Book 2 Cover">
@@ -143,7 +144,7 @@
                 </div>
 
                 <!-- Book Info Popup -->
-                <div id="book-info-popup" style="display:none;">
+                <div id="book-info-popup">
                     <h3 id="book-title"></h3>
                     <img id="book-cover" src="" alt="Book Cover">
                     <p id="book-summary"></p>
@@ -151,20 +152,19 @@
                     <img id="author-cover" src="" alt="Author Cover">
                     <p id="author-bio"></p>
                     <button onclick="startPreview()">Preview Book</button>
+                    <button onclick="closePopup()">Close</button> <!-- Add close button -->
                 </div>
 
                 <!-- Preview Section -->
-                <div id="book-preview" style="display:none;">
+                <div id="book-preview">
                     <div class="flipping-book">
                         <button onclick="prevPage()"> &lt; </button>
                         <div id="book-pages">
-                            <img id="page1" src="assets/images/book-page1.jpg" alt="Page 1">
-                            <img id="page2" src="assets/images/book-page2.jpg" alt="Page 2" style="display:none;">
-                            <img id="page3" src="assets/images/book-page3.jpg" alt="Page 3" style="display:none;">
+                            <!-- Dynamic page images will be inserted here -->
                         </div>
                         <button onclick="nextPage()"> &gt; </button>
                     </div>
-                    <audio id="page-flip-sound" src="/bookflipsound.mp3"></audio>
+                    <audio id="page-flip-sound" src="assets/audio/bookflipsound.mp3"></audio>
                     <button onclick="getBook()">Get Book</button>
                 </div>
 
@@ -172,7 +172,7 @@
         </div>
 
         <!-- Notification -->
-        <div class="notification" id="login-notification">
+        <div class="notification" id="login-notification" style="display:none;">
             You're logged in as <span id="username"></span>
         </div>
         
@@ -243,17 +243,15 @@
             book1: {
                 title: "My Experience At The University of Dey Play",
                 cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour!
-Now, before we get down to the nitty-gritty, let's rewind a bit. You see, I was once under the oppressive rule of my dear mother (God bless her soul) and surrounded by the outrageous happenings in my neighborhood. But all that changed when I landed myself a spot at the prestigious, the magnificent, the one and only trenches -- University of Lagos!
-So here I am, your narrator and humble protagonist, moving headfirst into the fantastical era of higher education. We'll encounter eccentric professors, and a motley crew of classmates that'll pepper you than peppersoup!
-Along our journey, we'll bear witness to embarrassing misunderstandings that could rival an episode of Papa Ajasco and Company.
-In between all these, we’ll be sure to witness lively debates, the art of yabbing inclusive. A battle of wits, with students hurling hilarious yabs at each other.
-That’s not all, amusingly named locations, such as the Laughter Hall – a lecture hall where students were more likely to burst into laughter than actually learn anything will sweep you off your feet. Including Gossip Junction, a popular spot where the latest campus news spread faster than the speed of light.
-So grab a cold Star lager, tie your wrapper tight, and prepare to be thrown into the laugh-aminute world of the University of Dey Play. I can promise you, my dear friends, that this is one adventure you won't soon forget!
-All in all, great lessons will be learnt.",
+                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour! [...]",
                 author: "Kolade Philip Ogunlana",
                 authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he studied Mass Communication at Yaba College of Technology and has since pursued a variety of creative endeavors, including web design, social media management, and teaching......",
-                authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
+                authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
+                previewPages: [
+                    "https://i.postimg.cc/KzGM9k0M/book-page1.jpg",
+                    "https://i.postimg.cc/FzZgCLn7/book-page2.jpg",
+                    "https://i.postimg.cc/zvSfr8r2/book-page3.jpg"
+                ]
             },
             book2: {
                 title: "Book 2 Title",
@@ -261,7 +259,12 @@ All in all, great lessons will be learnt.",
                 summary: "Summary of Book 2. A deep dive into the world of romance.",
                 author: "Author 2",
                 authorBio: "Author 2 bio goes here...",
-                authorCover: "assets/images/author2.jpg"
+                authorCover: "assets/images/author2.jpg",
+                previewPages: [
+                    "assets/images/book2-page1.jpg",
+                    "assets/images/book2-page2.jpg",
+                    "assets/images/book2-page3.jpg"
+                ]
             },
             book3: {
                 title: "Book 3 Title",
@@ -269,7 +272,12 @@ All in all, great lessons will be learnt.",
                 summary: "Summary of Book 3. A gripping story of faith and redemption.",
                 author: "Author 3",
                 authorBio: "Author 3 bio goes here...",
-                authorCover: "assets/images/author3.jpg"
+                authorCover: "assets/images/author3.jpg",
+                previewPages: [
+                    "assets/images/book3-page1.jpg",
+                    "assets/images/book3-page2.jpg",
+                    "assets/images/book3-page3.jpg"
+                ]
             },
             book4: {
                 title: "Book 4 Title",
@@ -277,7 +285,12 @@ All in all, great lessons will be learnt.",
                 summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
                 author: "Author 4",
                 authorBio: "Author 4 bio goes here...",
-                authorCover: "assets/images/author4.jpg"
+                authorCover: "assets/images/author4.jpg",
+                previewPages: [
+                    "assets/images/book4-page1.jpg",
+                    "assets/images/book4-page2.jpg",
+                    "assets/images/book4-page3.jpg"
+                ]
             }
         };
 
@@ -292,6 +305,10 @@ All in all, great lessons will be learnt.",
             document.getElementById('book-info-popup').style.display = 'block';
         }
 
+        function closePopup() {
+            document.getElementById('book-info-popup').style.display = 'none';
+        }
+
         function startPreview() {
             document.getElementById('book-info-popup').style.display = 'none';
             document.getElementById('book-preview').style.display = 'block';
@@ -302,16 +319,25 @@ All in all, great lessons will be learnt.",
         let currentPage = 1;
 
         function showPage(pageNumber) {
-            const pages = document.querySelectorAll('#book-pages img');
-            pages.forEach((page, index) => {
-                page.style.display = (index + 1 === pageNumber) ? 'block' : 'none';
+            const pagesContainer = document.getElementById('book-pages');
+            pagesContainer.innerHTML = ''; // Clear previous pages
+            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
+            const pages = books[bookId].previewPages;
+
+            pages.forEach((pageSrc, index) => {
+                const img = document.createElement('img');
+                img.src = pageSrc;
+                img.style.display = (index + 1 === pageNumber) ? 'block' : 'none';
+                pagesContainer.appendChild(img);
             });
         }
 
         function nextPage() {
             const pageFlipSound = document.getElementById('page-flip-sound');
             pageFlipSound.play();
-            if (currentPage < 3) {
+            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
+            const pages = books[bookId].previewPages;
+            if (currentPage < pages.length) {
                 currentPage++;
                 showPage(currentPage);
             }
