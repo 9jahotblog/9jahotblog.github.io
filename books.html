@@ -1,23 +1,95 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, romance, Christian fiction, Read and purchase titles now! </title>
+    <title>9jahotblog BOOK PAGE - Fantasy, Romance, Christian Fiction</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        .notification {
+        /* Style the bookstore and book elements */
+        #bookstore {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .book {
+            text-align: center;
+            margin: 20px;
+            cursor: pointer;
+        }
+        .book img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* Book info popup */
+        #book-info-popup {
             position: fixed;
-            right: 10px;
             top: 50%;
-            transform: translateY(-50%);
-            background: #111;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            width: 300px;
+        }
+        #book-info-popup h3 {
+            margin-top: 0;
+        }
+        #book-info-popup img {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        #book-info-popup button {
+            background: #007bff;
             color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto 0 auto;
+        }
+
+        /* Flipping book preview */
+        #book-preview {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+        .flipping-book {
+            display: inline-flex;
+            align-items: center;
+        }
+        .flipping-book button {
+            background: #007bff;
+            color: #fff;
+            border: none;
             padding: 10px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        #book-pages {
+            width: 300px;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+        #book-pages img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
         }
     </style>
 </head>
@@ -29,25 +101,18 @@
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                    <li><a href="index.html">Homepage</a></li>
+                    <li><a href="#">Articles/Short stories</a></li>
+                    <li><a href="#">Manuscript Submissions</a></li>
+                    <li><a href="#">Short stories/Articles submissions</a></li>
+                    <li><a href="#">Adapt Book to Movie</a></li>
                     <li><a href="#">Books</a></li>
+                    <li><a href="#">WhatsApp Community</a></li>
+                    <li><a href="#">Nominate your Book</a></li>
+                    <li><a href="#">Creative Contests</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Signup</a></li>
+                    <li><a href="#">Log in</a></li>
                 </ul>
             </nav>
         </header>
@@ -55,22 +120,57 @@
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                
 
-    
-    
-        
-                
+                <!-- Bookstore Section -->
+                <div id="bookstore">
+                    <h2>Featured Books</h2>
+                    <div class="book" onclick="showBookInfo('book1')">
+                        <img src="assets/images/book1-cover.jpg" alt="Book 1 Cover">
+                        <p>Book 1 Title</p>
+                    </div>
+                    <div class="book" onclick="showBookInfo('book2')">
+                        <img src="assets/images/book2-cover.jpg" alt="Book 2 Cover">
+                        <p>Book 2 Title</p>
+                    </div>
+                    <div class="book" onclick="showBookInfo('book3')">
+                        <img src="assets/images/book3-cover.jpg" alt="Book 3 Cover">
+                        <p>Book 3 Title</p>
+                    </div>
+                    <div class="book" onclick="showBookInfo('book4')">
+                        <img src="assets/images/book4-cover.jpg" alt="Book 4 Cover">
+                        <p>Book 4 Title</p>
+                    </div>
+                </div>
 
-    
+                <!-- Book Info Popup -->
+                <div id="book-info-popup" style="display:none;">
+                    <h3 id="book-title"></h3>
+                    <img id="book-cover" src="" alt="Book Cover">
+                    <p id="book-summary"></p>
+                    <p><strong>Author:</strong> <span id="book-author"></span></p>
+                    <img id="author-cover" src="" alt="Author Cover">
+                    <p id="author-bio"></p>
+                    <button onclick="startPreview()">Preview Book</button>
+                </div>
 
- 
+                <!-- Preview Section -->
+                <div id="book-preview" style="display:none;">
+                    <div class="flipping-book">
+                        <button onclick="prevPage()"> &lt; </button>
+                        <div id="book-pages">
+                            <img id="page1" src="assets/images/book-page1.jpg" alt="Page 1">
+                            <img id="page2" src="assets/images/book-page2.jpg" alt="Page 2" style="display:none;">
+                            <img id="page3" src="assets/images/book-page3.jpg" alt="Page 3" style="display:none;">
+                        </div>
+                        <button onclick="nextPage()"> &gt; </button>
+                    </div>
+                    <audio id="page-flip-sound" src="/bookflipsound.mp3"></audio>
+                    <button onclick="getBook()">Get Book</button>
+                </div>
+
             </div>
         </div>
 
-
-
-        
         <!-- Notification -->
         <div class="notification" id="login-notification">
             You're logged in as <span id="username"></span>
@@ -109,22 +209,119 @@
             authDomain: "jahotblog-login.firebaseapp.com",
             projectId: "jahotblog-login",
             storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+            messagingSenderId: "770183516720",
+            appId: "1:770183516720:web:a9c9e12383db12109b92df",
+            measurementId: "G-L9PKRLJ3W3"
         };
 
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Check if user is signed in and display their info
+        // Check auth state
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('username').textContent = user.displayName || user.email;
                 document.getElementById('login-notification').style.display = 'block';
             } else {
                 document.getElementById('login-notification').style.display = 'none';
             }
         });
+
+        // Sign out user
+        function signOutUser() {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error('Sign-out Error:', error);
+            });
+        }
+    </script>
+    <script>
+        // Book details
+        const books = {
+            book1: {
+                title: "Book 1 Title",
+                cover: "assets/images/book1-cover.jpg",
+                summary: "Summary of Book 1. A thrilling tale of adventure and intrigue.",
+                author: "Author 1",
+                authorBio: "Author 1 bio goes here...",
+                authorCover: "assets/images/author1.jpg"
+            },
+            book2: {
+                title: "Book 2 Title",
+                cover: "assets/images/book2-cover.jpg",
+                summary: "Summary of Book 2. A deep dive into the world of romance.",
+                author: "Author 2",
+                authorBio: "Author 2 bio goes here...",
+                authorCover: "assets/images/author2.jpg"
+            },
+            book3: {
+                title: "Book 3 Title",
+                cover: "assets/images/book3-cover.jpg",
+                summary: "Summary of Book 3. A gripping story of faith and redemption.",
+                author: "Author 3",
+                authorBio: "Author 3 bio goes here...",
+                authorCover: "assets/images/author3.jpg"
+            },
+            book4: {
+                title: "Book 4 Title",
+                cover: "assets/images/book4-cover.jpg",
+                summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
+                author: "Author 4",
+                authorBio: "Author 4 bio goes here...",
+                authorCover: "assets/images/author4.jpg"
+            }
+        };
+
+        function showBookInfo(bookId) {
+            const book = books[bookId];
+            document.getElementById('book-title').textContent = book.title;
+            document.getElementById('book-cover').src = book.cover;
+            document.getElementById('book-summary').textContent = book.summary;
+            document.getElementById('book-author').textContent = book.author;
+            document.getElementById('author-bio').textContent = book.authorBio;
+            document.getElementById('author-cover').src = book.authorCover;
+            document.getElementById('book-info-popup').style.display = 'block';
+        }
+
+        function startPreview() {
+            document.getElementById('book-info-popup').style.display = 'none';
+            document.getElementById('book-preview').style.display = 'block';
+            currentPage = 1;
+            showPage(currentPage);
+        }
+
+        let currentPage = 1;
+
+        function showPage(pageNumber) {
+            const pages = document.querySelectorAll('#book-pages img');
+            pages.forEach((page, index) => {
+                page.style.display = (index + 1 === pageNumber) ? 'block' : 'none';
+            });
+        }
+
+        function nextPage() {
+            const pageFlipSound = document.getElementById('page-flip-sound');
+            pageFlipSound.play();
+            if (currentPage < 3) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        }
+
+        function prevPage() {
+            const pageFlipSound = document.getElementById('page-flip-sound');
+            pageFlipSound.play();
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        }
+
+        function getBook() {
+            alert('You have selected the book!');
+        }
     </script>
 </body>
 </html>
