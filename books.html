@@ -7,68 +7,103 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        /* Style the bookstore and book elements */
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            background-color: #333;
+        }
+        #page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #ffcc00;
+        }
+        #header {
+            background: #222;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        #nav ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        #nav ul li a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        /* Bookstore Section */
         #bookstore {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             padding: 20px;
             background-color: #444;
         }
         .book {
+            background: #555;
+            padding: 15px;
+            border-radius: 8px;
             text-align: center;
-            margin: 20px;
-            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .book:hover {
+            transform: scale(1.05);
         }
         .book img {
             width: 150px;
             height: 200px;
             object-fit: cover;
+            border-radius: 8px;
+        }
+        .book p {
+            margin-top: 10px;
+            font-weight: bold;
         }
 
-        /* Book info popup */
-        #book-info-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #444;
+        /* Book Details Section */
+        .book-details {
+            display: none;
+            background: #333;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            width: 300px;
-            display: none; /* Initially hidden */
+            margin-top: 20px;
+            color: #fff;
         }
-        #book-info-popup h3 {
+        .book-details img {
+            width: 150px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .book-details h3 {
             margin-top: 0;
         }
-        #book-info-popup img {
-            width: 100px;
-            height: 150px;
-            object-fit: cover;
-            margin-bottom: 10px;
-        }
-        #book-info-popup button {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto 0 auto;
+        .book-details p {
+            margin: 10px 0;
         }
 
-        /* Flipping book preview */
+        /* Flipping Book Preview */
         #book-preview {
             display: none;
-            padding: 20px;
+            margin-top: 20px;
             text-align: center;
         }
         .flipping-book {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
+            margin: 0 auto;
         }
         .flipping-book button {
             background: #007bff;
@@ -86,11 +121,21 @@
             position: relative;
         }
         #book-pages img {
-            position: absolute;
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: opacity 0.3s ease;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            #bookstore {
+                grid-template-columns: 1fr;
+            }
+            #nav ul li {
+                display: block;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -125,37 +170,53 @@
                 <!-- Bookstore Section -->
                 <div id="bookstore">
                     <h2>Featured Books</h2>
-                    <div class="book" onclick="showBookInfo('book1')">
+                    <div class="book" onclick="toggleBookDetails('book1')">
                         <img src="https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book 1 Cover">
                         <p>My Experience At The University of Dey Play</p>
+                        <div id="book1-details" class="book-details">
+                            <img src="https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book Cover">
+                            <h3>My Experience At The University of Dey Play</h3>
+                            <p>Author: Kolade Philip Ogunlana</p>
+                            <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...</p>
+                            <button onclick="startPreview('book1')">Preview Book</button>
+                        </div>
                     </div>
-                    <div class="book" onclick="showBookInfo('book2')">
+                    <div class="book" onclick="toggleBookDetails('book2')">
                         <img src="assets/images/book2-cover.jpg" alt="Book 2 Cover">
                         <p>Book 2 Title</p>
+                        <div id="book2-details" class="book-details">
+                            <img src="assets/images/book2-cover.jpg" alt="Book Cover">
+                            <h3>Book 2 Title</h3>
+                            <p>Author: Author 2</p>
+                            <p>Summary of Book 2. A deep dive into the world of romance.</p>
+                            <button onclick="startPreview('book2')">Preview Book</button>
+                        </div>
                     </div>
-                    <div class="book" onclick="showBookInfo('book3')">
+                    <div class="book" onclick="toggleBookDetails('book3')">
                         <img src="assets/images/book3-cover.jpg" alt="Book 3 Cover">
                         <p>Book 3 Title</p>
+                        <div id="book3-details" class="book-details">
+                            <img src="assets/images/book3-cover.jpg" alt="Book Cover">
+                            <h3>Book 3 Title</h3>
+                            <p>Author: Author 3</p>
+                            <p>Summary of Book 3. A gripping story of faith and redemption.</p>
+                            <button onclick="startPreview('book3')">Preview Book</button>
+                        </div>
                     </div>
-                    <div class="book" onclick="showBookInfo('book4')">
+                    <div class="book" onclick="toggleBookDetails('book4')">
                         <img src="assets/images/book4-cover.jpg" alt="Book 4 Cover">
                         <p>Book 4 Title</p>
+                        <div id="book4-details" class="book-details">
+                            <img src="assets/images/book4-cover.jpg" alt="Book Cover">
+                            <h3>Book 4 Title</h3>
+                            <p>Author: Author 4</p>
+                            <p>Summary of Book 4. A fantasy epic with incredible world-building.</p>
+                            <button onclick="startPreview('book4')">Preview Book</button>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Book Info Popup -->
-                <div id="book-info-popup">
-                    <h3 id="book-title"></h3>
-                    <img id="book-cover" src="" alt="Book Cover">
-                    <p id="book-summary"></p>
-                    <p><strong>Author:</strong> <span id="book-author"></span></p>
-                    <img id="author-cover" src="" alt="Author Cover">
-                    <p id="author-bio"></p>
-                    <button onclick="startPreview()">Preview Book</button>
-                    <button onclick="closePopup()">Close</button> <!-- Add close button -->
-                </div>
-
-                <!-- Preview Section -->
+                <!-- Flipping Book Preview -->
                 <div id="book-preview">
                     <div class="flipping-book">
                         <button onclick="prevPage()"> &lt; </button>
@@ -165,7 +226,7 @@
                         <button onclick="nextPage()"> &gt; </button>
                     </div>
                     <audio id="page-flip-sound" src="/page-flip-47177.mp3"></audio>
-                    <button onclick="getBook()">Get Book</button>
+                    <button class="action-button" onclick="getBook()">Get Book</button>
                 </div>
 
             </div>
@@ -243,7 +304,7 @@
             book1: {
                 title: "My Experience At The University of Dey Play",
                 cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because..",
+                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...",
                 author: "Kolade Philip Ogunlana",
                 authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he....",
                 authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
@@ -294,34 +355,22 @@
             }
         };
 
-        function showBookInfo(bookId) {
-            const book = books[bookId];
-            document.getElementById('book-title').textContent = book.title;
-            document.getElementById('book-cover').src = book.cover;
-            document.getElementById('book-summary').textContent = book.summary;
-            document.getElementById('book-author').textContent = book.author;
-            document.getElementById('author-bio').textContent = book.authorBio;
-            document.getElementById('author-cover').src = book.authorCover;
-            document.getElementById('book-info-popup').style.display = 'block';
+        function toggleBookDetails(bookId) {
+            const details = document.getElementById(`${bookId}-details`);
+            details.style.display = (details.style.display === 'block') ? 'none' : 'block';
         }
 
-        function closePopup() {
-            document.getElementById('book-info-popup').style.display = 'none';
-        }
-
-        function startPreview() {
-            document.getElementById('book-info-popup').style.display = 'none';
+        function startPreview(bookId) {
             document.getElementById('book-preview').style.display = 'block';
             currentPage = 1;
-            showPage(currentPage);
+            showPage(currentPage, bookId);
         }
 
         let currentPage = 1;
 
-        function showPage(pageNumber) {
+        function showPage(pageNumber, bookId) {
             const pagesContainer = document.getElementById('book-pages');
             pagesContainer.innerHTML = ''; // Clear previous pages
-            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
             const pages = books[bookId].previewPages;
 
             pages.forEach((pageSrc, index) => {
@@ -335,20 +384,21 @@
         function nextPage() {
             const pageFlipSound = document.getElementById('page-flip-sound');
             pageFlipSound.play();
-            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
+            const bookId = document.querySelector('.book-details:visible').id.split('-')[0];
             const pages = books[bookId].previewPages;
             if (currentPage < pages.length) {
                 currentPage++;
-                showPage(currentPage);
+                showPage(currentPage, bookId);
             }
         }
 
         function prevPage() {
             const pageFlipSound = document.getElementById('page-flip-sound');
             pageFlipSound.play();
+            const bookId = document.querySelector('.book-details:visible').id.split('-')[0];
             if (currentPage > 1) {
                 currentPage--;
-                showPage(currentPage);
+                showPage(currentPage, bookId);
             }
         }
 
@@ -356,5 +406,48 @@
             alert('You have selected the book!');
         }
     </script>
+    <style>
+        .action-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .action-button:hover {
+            background-color: #218838;
+        }
+
+        .flipping-book button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+      .flipping-book button:hover {
+            background-color: #0056b3;
+        }
+
+        #book-preview {
+            margin-top: 30px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #book-pages img {
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </body>
 </html>
