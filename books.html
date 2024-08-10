@@ -1,12 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, romance, Christian fiction, Read and purchase titles now!</title>
+    <title>9jahotlog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
+        /* Notification Style */
         .notification {
             position: fixed;
             right: 10px;
@@ -19,6 +20,7 @@
             display: none;
         }
 
+        /* Library Style */
         .library {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -32,6 +34,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .book:hover {
+            transform: scale(1.05);
         }
 
         .book img {
@@ -63,6 +70,7 @@
             background: #0056b3;
         }
 
+        /* Flipbook Style */
         .flipbook {
             display: none;
             position: fixed;
@@ -123,27 +131,93 @@
                 height: 70%;
             }
         }
+
+        /* Dropdown Menu Style */
+        #nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #nav li {
+            position: relative;
+        }
+
+        #nav li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        #nav li:hover ul {
+            display: block;
+        }
+
+        #nav li ul li {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #nav li ul li:last-child {
+            margin-bottom: 0;
+        }
+
+        #nav li ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+            display: block;
+            border-radius: 3px;
+        }
+
+        #nav li ul li a:hover {
+            background: #007BFF;
+            color: #fff;
+        }
     </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
-
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Homepage</a></li>
-                    <li><a href="#">Manuscript Submissions</a></li>
-                    <li><a href="#">Short Stories/Article Submissions</a></li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Short Stories/Articles/News</a></li>
-                    <li><a href="#">Adapt Book to Movie</a></li>
-                    <li><a href="#">Creative Contests</a></li>
-                    <li><a href="#">Nominate Your Book (Award)</a></li>
-                    <li><a href="#">Visit Profile</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Submissions</a>
+                        <ul>
+                            <li><a href="#">Manuscript Submissions</a></li>
+                            <li><a href="#">Short Stories/Article Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Books</a>
+                        <ul>
+                            <li><a href="#">All Books</a></li>
+                            <li><a href="#">Fantasy</a></li>
+                            <li><a href="#">Romance</a></li>
+                            <li><a href="#">Christian Fiction</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Creative</a>
+                        <ul>
+                            <li><a href="#">Contests</a></li>
+                            <li><a href="#">Adapt Book to Movie</a></li>
+                            <li><a href="#">Nominate Your Book (Award)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Profile</a>
+                        <ul>
+                            <li><a href="#">Visit Profile</a></li>
+                            <li><a href="#">Sign Up</a></li>
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </nav>
@@ -279,6 +353,8 @@
             document.getElementById('flipbook-img').src = pageData[book][0];
             document.getElementById('flipbook').style.display = 'block';
             playFlipSound();
+            // Scroll to the flipbook section
+            document.getElementById('flipbook').scrollIntoView({ behavior: 'smooth' });
         }
 
         function closePreview() {
