@@ -7,64 +7,139 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        /* Style the bookstore and book elements */
+        /* Global Styles */
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        #header {
+            background-color: #444;
+            padding: 10px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        #header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        #nav {
+            margin-top: 10px;
+        }
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #nav ul li {
+            position: relative;
+            margin: 0 10px;
+        }
+        #nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+        #nav ul li:hover > ul {
+            display: block;
+        }
+        #nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #555;
+            padding: 0;
+            z-index: 1000;
+            min-width: 180px;
+        }
+        #nav ul li ul li {
+            white-space: nowrap;
+        }
+        #nav ul li ul li a {
+            padding: 10px 15px;
+            color: white;
+        }
+
+        /* Bookstore Section */
         #bookstore {
             display: flex;
-            justify-content: space-around;
             flex-wrap: wrap;
+            justify-content: space-between;
             padding: 20px;
-            background-color: #444;
+            background-color: #eaeaea;
         }
         .book {
             text-align: center;
             margin: 20px;
             cursor: pointer;
+            flex: 1 1 45%;
+            max-width: 45%;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         .book img {
+            width: 100%;
+            height: auto;
+            max-width: 150px;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        /* Book Info Section */
+        #book-info {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        #book-info h3 {
+            margin-top: 0;
+        }
+        #book-info img {
             width: 150px;
             height: 200px;
             object-fit: cover;
-        }
-
-        /* Book info popup */
-        #book-info-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #444;
-            padding: 20px;
+            margin-bottom: 10px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            width: 300px;
-            display: none; /* Initially hidden */
         }
-        #book-info-popup h3 {
-            margin-top: 0;
-        }
-        #book-info-popup img {
-            width: 100px;
-            height: 150px;
-            object-fit: cover;
+        #book-info p {
+            text-align: left;
             margin-bottom: 10px;
         }
-        #book-info-popup button {
+        #book-info button {
             background: #007bff;
             color: #fff;
             border: none;
             padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            display: block;
-            margin: 20px auto 0 auto;
         }
 
-        /* Flipping book preview */
+        /* Flipping Book Section */
         #book-preview {
             display: none;
             padding: 20px;
             text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         .flipping-book {
             display: inline-flex;
@@ -93,110 +168,29 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Notification styling */
-        .notification {
-            background-color: #f44336;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            width: 100%;
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .book {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+            #book-pages {
+                width: 100%;
+                height: auto;
+            }
         }
 
-        /* Checkout form styling */
-        .checkout-form {
-            background-color: #f7f7f7;
+        /* Footer */
+        footer {
+            background-color: #444;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            color: white;
             margin-top: 20px;
         }
-        .checkout-form h6 {
-            margin-bottom: 20px;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .checkout-form label {
-            font-weight: bold;
-            margin-top: 10px;
-            display: block;
-        }
-        .checkout-form .form-control {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-        }
-        .checkout-form .btn {
-            background-color: #007bff;
+        footer .icons a {
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        /* Responsive styling */
-        @media (max-width: 768px) {
-            #book-info-popup,
-            #book-preview {
-                width: 90%;
-            }
-            .checkout-form {
-                padding: 15px;
-            }
-            .checkout-form h6 {
-                font-size: 16px;
-            }
-            .checkout-form .btn {
-                font-size: 14px;
-            }
-        }
-
-        /* Dark theme styling */
-        body.dark-mode {
-            background-color: #333;
-            color: #ddd;
-        }
-        body.dark-mode #bookstore {
-            background-color: #222;
-        }
-        body.dark-mode #book-info-popup {
-            background-color: #222;
-        }
-        body.dark-mode .checkout-form {
-            background-color: #555;
-            color: #ddd;
-        }
-
-        /* Dropdown menu styling */
-        #nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        #nav ul li {
-            position: relative;
-        }
-        #nav ul li ul {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #444;
-            padding: 0;
-            z-index: 1000;
-            min-width: 200px;
-        }
-        #nav ul li:hover > ul {
-            display: block;
-        }
-        #nav ul li ul li {
-            white-space: nowrap;
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -213,11 +207,8 @@
                         <ul>
                             <li><a href="#">Articles/Short stories</a></li>
                             <li><a href="#">Manuscript Submissions</a></li>
-                            <li><a href="#">Short stories/Articles submissions</a></li>
                             <li><a href="#">Books to Movie</a></li>
                             <li><a href="#">Books</a></li>
-                            <li><a href="#">WhatsApp Community</a></li>
-                            <li><a href="#">Nominate your Book</a></li>
                             <li><a href="#">Creative Contests</a></li>
                             <li><a href="#">Privacy Policy</a></li>
                         </ul>
@@ -226,10 +217,6 @@
                     <li><a href="#">Log in</a></li>
                 </ul>
             </nav>
-            <div style="position: absolute; right: 10px; top: 10px;">
-                <label for="theme-toggle">Dark Mode</label>
-                <input type="checkbox" id="theme-toggle" onclick="toggleDarkMode()">
-            </div>
         </header>
 
         <!-- Main Content -->
@@ -257,8 +244,8 @@
                     </div>
                 </div>
 
-                <!-- Book Info Popup -->
-                <div id="book-info-popup">
+                <!-- Book Info Section -->
+                <div id="book-info">
                     <h3 id="book-title"></h3>
                     <img id="book-cover" src="" alt="Book Cover">
                     <p id="book-summary"></p>
@@ -266,7 +253,6 @@
                     <img id="author-cover" src="" alt="Author Cover">
                     <p id="author-bio"></p>
                     <button onclick="startPreview()">Preview Book</button>
-                    <button onclick="closePopup()">Close</button>
                 </div>
 
                 <!-- Preview Section -->
@@ -282,234 +268,139 @@
                     <button onclick="getBook()">Get Book</button>
                 </div>
 
-                <!-- Notification -->
-                <div class="notification" id="login-notification" style="display:none;">
-                    You're logged in as <span id="username"></span>
-                </div>
-
-                <!-- Checkout Form -->
-                <div id="checkout-form-container" class="checkout-form" style="display:none;">
-                    <form>
-                        <div class="text-left" style="color:red; font-family: Verdana; font-size: 30px;">SAMPLE CHECKOUT</div>
-                        <h6>Note: Amount should be between $1 to $10,000 (USD), NGN100 to NGN5,000,000 and KSH100 to KSH5,000,000</h6>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email-address" class="form-control" required /><br>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="amount">Amount</label>
-                                <input type="tel" id="amount" class="form-control" required /><br>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label for="book-title-input">Book Title</label>
-                                <input type="text" id="book-title-input" class="form-control" required /><br>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="first-name">First Name</label>
-                                <input type="text" id="first-name" class="form-control" /><br>
-                            </div>
-                            <div class="col-lg-4">
-                                <label for="last-name">Last Name</label>
-                                <input type="text" id="last-name" class="form-control" /><br>
-                            </div>
-                        </div>
-                        <div class="form-submit">
-                            <button type="button" onclick="SquadPay()" class="btn btn-danger">Check Out</button><br><br>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
 
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
-                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
             </ul>
-            <p>&copy; 2024 9JAHOTBLOG. All rights reserved.</p>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li>
+                <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
         </footer>
     </div>
 
-    <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
+    <!-- Scripts -->
     <script>
-        // Function to handle payment
-        function SquadPay() {
-            const squadInstance = new squad({
-                onClose: () => console.log("Widget closed"),
-                onLoad: () => console.log("Widget loaded successfully"),
-                onSuccess: () => console.log(`Linked successfully`),
-                key: "pk_b1b1d2d2db4868ced18ef2e08e013ac15a6b15be",
-                email: document.getElementById("email-address").value,
-                amount: document.getElementById("amount").value * 100,
-                currency_code: "NGN"
-            });
-            squadInstance.setup();
-            squadInstance.open();
-        }
-
-        // Function to show book info in the popup
-        function showBookInfo(bookId) {
-            // Book details
-            const books = {
-                book1: {
-                    title: "My Experience At The University of Dey Play",
-                    cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                    summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...",
-                    author: "Kolade Philip Ogunlana",
-                    authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he....",
-                    authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                    previewPages: [
-                        "https://i.postimg.cc/zXNQkT1Y/1722753879279.jpg",
-                        "https://i.postimg.cc/1XGjQ3wd/1722753882901.jpg",
-                        "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
-                    ]
-                },
-                book2: {
-                    title: "Book 2 Title",
-                    cover: "assets/images/book2-cover.jpg",
-                    summary: "Summary of Book 2. A deep dive into the world of romance.",
-                    author: "Author 2",
-                    authorBio: "Author 2 bio goes here...",
-                    authorCover: "assets/images/author2.jpg",
-                    previewPages: [
-                        "assets/images/book2-page1.jpg",
-                        "assets/images/book2-page2.jpg",
-                        "assets/images/book2-page3.jpg"
-                    ]
-                },
-                book3: {
-                    title: "Book 3 Title",
-                    cover: "assets/images/book3-cover.jpg",
-                    summary: "Summary of Book 3. A gripping story of faith and redemption.",
-                    author: "Author 3",
-                    authorBio: "Author 3 bio goes here...",
-                    authorCover: "assets/images/author3.jpg",
-                    previewPages: [
-                        "assets/images/book3-page1.jpg",
-                        "assets/images/book3-page2.jpg",
-                        "assets/images/book3-page3.jpg"
-                    ]
-                },
-                book4: {
-                    title: "Book 4 Title",
-                    cover: "assets/images/book4-cover.jpg",
-                    summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
-                    author: "Author 4",
-                    authorBio: "Author 4 bio goes here...",
-                    authorCover: "assets/images/author4.jpg",
-                    previewPages: [
-                        "assets/images/book4-page1.jpg",
-                        "assets/images/book4-page2.jpg",
-                        "assets/images/book4-page3.jpg"
-                    ]
-                }
-            };
-
-            const book = books[bookId];
-            if (book) {
-                document.getElementById("book-title").textContent = book.title;
-                document.getElementById("book-cover").src = book.cover;
-                document.getElementById("book-summary").textContent = book.summary;
-                document.getElementById("book-author").textContent = book.author;
-                document.getElementById("author-bio").textContent = book.authorBio;
-                document.getElementById("author-cover").src = book.authorCover;
-                document.getElementById("book-info-popup").style.display = "block";
-            }
-        }
-
-        // Function to close the popup
-        function closePopup() {
-            document.getElementById("book-info-popup").style.display = "none";
-        }
-
-        // Function to start book preview
-        function startPreview() {
-            document.getElementById("book-info-popup").style.display = "none";
-            document.getElementById("book-preview").style.display = "block";
-            loadBookPages();
-        }
-
-        // Function to load book pages for preview
-        function loadBookPages() {
-            const bookPages = document.getElementById("book-pages");
-            bookPages.innerHTML = ""; // Clear previous content
-
-            // Add current book's pages
-            const currentBook = document.getElementById("book-title").textContent;
-            const books = {
-                "My Experience At The University of Dey Play": [
+        const books = {
+            book1: {
+                title: "My Experience At The University of Dey Play",
+                cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
+                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...",
+                author: "Kolade Philip Ogunlana",
+                authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he...",
+                authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
+                previewPages: [
                     "https://i.postimg.cc/zXNQkT1Y/1722753879279.jpg",
                     "https://i.postimg.cc/1XGjQ3wd/1722753882901.jpg",
                     "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
-                ],
-                "Book 2 Title": [
+                ]
+            },
+            book2: {
+                title: "Book 2 Title",
+                cover: "assets/images/book2-cover.jpg",
+                summary: "Summary of Book 2. A deep dive into the world of romance.",
+                author: "Author 2",
+                authorBio: "Author 2 bio goes here...",
+                authorCover: "assets/images/author2.jpg",
+                previewPages: [
                     "assets/images/book2-page1.jpg",
                     "assets/images/book2-page2.jpg",
                     "assets/images/book2-page3.jpg"
-                ],
-                "Book 3 Title": [
+                ]
+            },
+            book3: {
+                title: "Book 3 Title",
+                cover: "assets/images/book3-cover.jpg",
+                summary: "Summary of Book 3. A gripping story of faith and redemption.",
+                author: "Author 3",
+                authorBio: "Author 3 bio goes here...",
+                authorCover: "assets/images/author3.jpg",
+                previewPages: [
                     "assets/images/book3-page1.jpg",
                     "assets/images/book3-page2.jpg",
                     "assets/images/book3-page3.jpg"
-                ],
-                "Book 4 Title": [
+                ]
+            },
+            book4: {
+                title: "Book 4 Title",
+                cover: "assets/images/book4-cover.jpg",
+                summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
+                author: "Author 4",
+                authorBio: "Author 4 bio goes here...",
+                authorCover: "assets/images/author4.jpg",
+                previewPages: [
                     "assets/images/book4-page1.jpg",
                     "assets/images/book4-page2.jpg",
                     "assets/images/book4-page3.jpg"
                 ]
-            };
+            }
+        };
 
-            const pages = books[currentBook] || [];
+        function showBookInfo(bookId) {
+            const book = books[bookId];
+            document.getElementById('book-title').textContent = book.title;
+            document.getElementById('book-cover').src = book.cover;
+            document.getElementById('book-summary').textContent = book.summary;
+            document.getElementById('book-author').textContent = book.author;
+            document.getElementById('author-bio').textContent = book.authorBio;
+            document.getElementById('author-cover').src = book.authorCover;
+            document.getElementById('book-info').style.display = 'block';
+            document.getElementById('book-preview').style.display = 'none';
+        }
+
+        function startPreview() {
+            document.getElementById('book-info').style.display = 'none';
+            document.getElementById('book-preview').style.display = 'block';
+            currentPage = 1;
+            showPage(currentPage);
+        }
+
+        let currentPage = 1;
+
+        function showPage(pageNumber) {
+            const pagesContainer = document.getElementById('book-pages');
+            pagesContainer.innerHTML = ''; // Clear previous pages
+            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
+            const pages = books[bookId].previewPages;
+
             pages.forEach((pageSrc, index) => {
-                const page = document.createElement("img");
-                page.src = pageSrc;
-                page.style.opacity = index === 0 ? "1" : "0"; // Show only the first page initially
-                bookPages.appendChild(page);
+                const img = document.createElement('img');
+                img.src = pageSrc;
+                img.style.display = (index + 1 === pageNumber) ? 'block' : 'none';
+                pagesContainer.appendChild(img);
             });
-
-            currentPageIndex = 0;
         }
 
-        let currentPageIndex = 0;
-
-        // Function to go to the next page
         function nextPage() {
-            const pages = document.getElementById("book-pages").children;
-            if (currentPageIndex < pages.length - 1) {
-                pages[currentPageIndex].style.opacity = "0"; // Hide current page
-                currentPageIndex++;
-                pages[currentPageIndex].style.opacity = "1"; // Show next page
-            } else {
-                alert("You have reached the end of the preview.");
+            const pageFlipSound = document.getElementById('page-flip-sound');
+            pageFlipSound.play();
+            const bookId = Object.keys(books).find(id => books[id].title === document.getElementById('book-title').textContent);
+            const pages = books[bookId].previewPages;
+            if (currentPage < pages.length) {
+                currentPage++;
+                showPage(currentPage);
             }
         }
 
-        // Function to go to the previous page
         function prevPage() {
-            const pages = document.getElementById("book-pages").children;
-            if (currentPageIndex > 0) {
-                pages[currentPageIndex].style.opacity = "0"; // Hide current page
-                currentPageIndex--;
-                pages[currentPageIndex].style.opacity = "1"; // Show previous page
-            } else {
-                alert("You are on the first page.");
+            const pageFlipSound = document.getElementById('page-flip-sound');
+            pageFlipSound.play();
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
             }
         }
 
-        // Function to close the book preview
-        function closePreview() {
-            document.getElementById("book-preview").style.display = "none";
-        }
-
-        // Dark mode toggle
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
+        function getBook() {
+            alert('You have selected the book!');
         }
     </script>
 </body>
