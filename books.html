@@ -1,11 +1,15 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, romance, Christian fiction, Read and purchase titles now! </title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <title>9jahotblog BOOK PAGE, Fantasy, Romance, Christian Fiction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Book flip library -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock/css/bookblock.css">
     <style>
         .notification {
             position: fixed;
@@ -19,11 +23,55 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none; /* Hide by default */
         }
+        /* Custom styles for the book store */
+        .book-store {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+        .book {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .book img {
+            width: 100%;
+            height: auto;
+        }
+        .book-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .book-summary {
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .book-buttons {
+            margin-top: 10px;
+        }
+        .flipbook-container {
+            display: none;
+        }
+        .flipbook, .bb-item {
+            height: 400px;
+        }
+        .form-section {
+            display: none;
+        }
+        .dancing-button {
+            animation: dance 0.5s infinite alternate;
+        }
+        @keyframes dance {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
-
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
@@ -31,20 +79,11 @@
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
+                        <a href="#">Entertainment</a>
                         <ul>
                             <li><a href="#">Articles</a></li>
                             <li><a href="#">News</a></li>
                             <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li><a href="#">Books</a></li>
@@ -55,27 +94,111 @@
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                
+                <!-- Book Store -->
+                <section class="book-store">
+                    <!-- Book 1 -->
+                    <div class="book" id="book1">
+                        <img src="path/to/book1-cover.jpg" alt="Book 1 Cover">
+                        <div class="book-title">Book Title 1</div>
+                        <div class="book-summary">A brief summary of Book 1...</div>
+                        <div class="book-buttons">
+                            <button class="btn btn-primary" onclick="showBookDetails(1)">More Info</button>
+                        </div>
+                    </div>
+                    <!-- Book 2 -->
+                    <div class="book" id="book2">
+                        <img src="path/to/book2-cover.jpg" alt="Book 2 Cover">
+                        <div class="book-title">Book Title 2</div>
+                        <div class="book-summary">A brief summary of Book 2...</div>
+                        <div class="book-buttons">
+                            <button class="btn btn-primary" onclick="showBookDetails(2)">More Info</button>
+                        </div>
+                    </div>
+                    <!-- Book 3 -->
+                    <div class="book" id="book3">
+                        <img src="path/to/book3-cover.jpg" alt="Book 3 Cover">
+                        <div class="book-title">Book Title 3</div>
+                        <div class="book-summary">A brief summary of Book 3...</div>
+                        <div class="book-buttons">
+                            <button class="btn btn-primary" onclick="showBookDetails(3)">More Info</button>
+                        </div>
+                    </div>
+                    <!-- Book 4 -->
+                    <div class="book" id="book4">
+                        <img src="path/to/book4-cover.jpg" alt="Book 4 Cover">
+                        <div class="book-title">Book Title 4</div>
+                        <div class="book-summary">A brief summary of Book 4...</div>
+                        <div class="book-buttons">
+                            <button class="btn btn-primary" onclick="showBookDetails(4)">More Info</button>
+                        </div>
+                    </div>
+                </section>
 
-    
-    
-        
-                
+                <!-- Book Details -->
+                <section class="book-details" id="book-details-section">
+                    <h2>Book Title</h2>
+                    <p>Author Bio: Lorem ipsum dolor sit amet...</p>
+                    <p>Book Profile: Lorem ipsum dolor sit amet...</p>
+                    <div>
+                        <button class="btn btn-secondary" onclick="previewBook()">Preview Book</button>
+                        <button class="btn btn-success" id="get-book-button" onclick="getBook()">Get Book</button>
+                    </div>
+                </section>
 
-    
+                <!-- Book Preview -->
+                <section class="flipbook-container" id="flipbook-section">
+                    <div id="flipbook" class="bb-bookblock">
+                        <!-- Pages -->
+                        <div class="bb-item"><img src="path/to/page1.jpg" alt="Page 1"></div>
+                        <div class="bb-item"><img src="path/to/page2.jpg" alt="Page 2"></div>
+                        <div class="bb-item"><img src="path/to/page3.jpg" alt="Page 3"></div>
+                    </div>
+                </section>
 
- 
+                <!-- Form Section -->
+                <section class="form-section" id="form-section">
+                    <form style="padding-left: 30px;" class="text-center">
+                        <div class="text-left" style="color:red; font-family: Verdana; font-size: 30px;">SAMPLE CHECKOUT</div>
+                        <h6>Note: Amount should be between $1 to $10,000 (USD), NGN100 to NGN5,000,000 and KSH100 to KSH5,000,000</h6>
+                        <div class="row text-center">
+                            <div class="col-lg-4">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email-address" class="form-control" required /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="amount">Amount</label>
+                                <input type="tel" id="amount" class="form-control" required /><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" class="form-control" /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" class="form-control" /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="book-title">Book Title</label>
+                                <input type="text" id="book-title" class="form-control" placeholder="Enter the book title" /><br>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-submit">
+                                <button type="button" onclick="SquadPay()" class="btn btn-danger">Check Out</button><br><br>
+                            </div>
+                        </div>
+                    </form>
+                </section>
             </div>
         </div>
 
-
-
-        
         <!-- Notification -->
         <div class="notification" id="login-notification">
             You're logged in as <span id="username"></span>
         </div>
-        
+
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
@@ -100,6 +223,10 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- Book flip library -->
+    <script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.bookblock.min.js"></script>
+    <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
@@ -125,6 +252,108 @@
                 document.getElementById('login-notification').style.display = 'none';
             }
         });
+
+        // Function to show book details
+        function showBookDetails(bookId) {
+            // Hide book store section
+            document.querySelector('.book-store').style.display = 'none';
+
+            // Update book details section based on bookId (use a switch or if-else for multiple books)
+            let bookTitle, authorBio, bookProfile;
+            switch (bookId) {
+                case 1:
+                    bookTitle = 'Book Title 1';
+                    authorBio = 'Author Bio 1...';
+                    bookProfile = 'Book Profile 1...';
+                    break;
+                case 2:
+                    bookTitle = 'Book Title 2';
+                    authorBio = 'Author Bio 2...';
+                    bookProfile = 'Book Profile 2...';
+                    break;
+                case 3:
+                    bookTitle = 'Book Title 3';
+                    authorBio = 'Author Bio 3...';
+                    bookProfile = 'Book Profile 3...';
+                    break;
+                case 4:
+                    bookTitle = 'Book Title 4';
+                    authorBio = 'Author Bio 4...';
+                    bookProfile = 'Book Profile 4...';
+                    break;
+                default:
+                    break;
+            }
+
+            // Display the book details
+            const detailsSection = document.getElementById('book-details-section');
+            detailsSection.querySelector('h2').textContent = bookTitle;
+            detailsSection.querySelector('p:nth-of-type(1)').textContent = 'Author Bio: ' + authorBio;
+            detailsSection.querySelector('p:nth-of-type(2)').textContent = 'Book Profile: ' + bookProfile;
+
+            // Show book details section
+            detailsSection.style.display = 'block';
+        }
+
+        // Function to preview book
+        function previewBook() {
+            // Hide book details section
+            document.getElementById('book-details-section').style.display = 'none';
+
+            // Show flipbook section
+            const flipbookSection = document.getElementById('flipbook-section');
+            flipbookSection.style.display = 'block';
+
+            // Initialize flipbook
+            $('#flipbook').bookblock({
+                speed: 1000,
+                shadowSides: 0.8,
+                shadowFlip: 0.7,
+                autoplay: true,
+                autoplayDelay: 2000,
+                autoplayPauseOnHover: true,
+                onEnd: function() {
+                    // Show "Get Book" button with animation
+                    document.getElementById('get-book-button').classList.add('dancing-button');
+                }
+            });
+
+            // Play flip sound
+            document.querySelectorAll('.bb-item').forEach((page) => {
+                page.addEventListener('flip', () => {
+                    const flipSound = new Audio('/page-flip-47177.mp3');
+                    flipSound.play();
+                });
+            });
+        }
+
+        // Function to get book and show form
+        function getBook() {
+            // Hide flipbook section
+            document.getElementById('flipbook-section').style.display = 'none';
+
+            // Show form section
+            document.getElementById('form-section').style.display = 'block';
+
+            // Update form's book title input
+            const bookTitle = document.getElementById('book-details-section').querySelector('h2').textContent;
+            document.getElementById('book-title').value = bookTitle;
+        }
+
+        // Function to handle checkout with Squad
+        function SquadPay() {
+            const squadInstance = new squad({
+                onClose: () => console.log("Widget closed"),
+                onLoad: () => console.log("Widget loaded successfully"),
+                onSuccess: () => console.log(`Linked successfully`),
+                key: "pk_b1b1d2d2db4868ced18ef2e08e013ac15a6b15be", // Replace with your live public key
+                email: document.getElementById("email-address").value,
+                amount: document.getElementById("amount").value * 100,
+                currency_code: "NGN"
+            });
+            squadInstance.setup();
+            squadInstance.open();
+        }
     </script>
 </body>
 </html>
