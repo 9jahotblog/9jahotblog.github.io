@@ -1,296 +1,309 @@
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>9jahotblog Storybooks Library</title>
+    <title>9jahotlog BOOK PAGE, Fantasy, romance, Christian fiction, Read and purchase titles now!</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 15px;
-            text-align: center;
-        }
-        nav {
-            background-color: #444;
-            overflow: hidden;
-        }
-        nav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .library {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-        .book {
-            background-color: white;
-            border: 1px solid #ddd;
+        .notification {
+            position: fixed;
+            right: 10px;
+            bottom: 10px;
+            background: #111;
+            color: #fff;
+            padding: 10px;
             border-radius: 5px;
-            padding: 15px;
-            margin: 10px;
-            width: 200px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .library {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .book {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             text-align: center;
         }
+
         .book img {
             max-width: 100%;
-            height: auto;
+            border-radius: 5px;
         }
-        .buttons {
+
+        .book h3 {
+            font-size: 1.5em;
+            margin: 20px 0 10px;
+        }
+
+        .book p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .book button {
+            background: #007BFF;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
             margin-top: 10px;
         }
-        .buttons button {
-            background-color: #333;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 5px;
+
+        .book button:hover {
+            background: #0056b3;
         }
-        .buttons button:hover {
-            background-color: #555;
-        }
-        .preview-section {
+
+        .flipbook {
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: #000;
             padding: 20px;
-            background-color: #f9f9f9;
-            border-top: 2px solid #333;
-            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        .preview-section img {
-            max-width: 100%;
-            height: auto;
+
+        .flipbook img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+
         .flipbook-controls {
-            margin-top: 15px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
         }
+
         .flipbook-controls button {
-            background-color: #444;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
+            background: #fff;
+            color: #000;
+            padding: 10px;
             border-radius: 5px;
-            margin: 5px;
+            cursor: pointer;
         }
+
         .flipbook-controls button:hover {
-            background-color: #666;
+            background: #ddd;
         }
-        .fullscreen {
-            display: inline-block;
+
+        .flipbook-close {
             position: absolute;
             top: 10px;
             right: 10px;
-            padding: 5px 10px;
-            background-color: #000;
+            background: red;
             color: #fff;
+            padding: 10px;
+            border-radius: 50%;
             cursor: pointer;
-            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .library {
+                grid-template-columns: 1fr;
+            }
+
+            .flipbook {
+                width: 100%;
+                height: 70%;
+            }
         }
     </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<header>
-    <h1>9jahotblog Storybooks Library</h1>
-</header>
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Homepage</a></li>
+                    <li><a href="#">Manuscript Submissions</a></li>
+                    <li><a href="#">Short Stories/Article Submissions</a></li>
+                    <li><a href="#">Books</a></li>
+                    <li><a href="#">Short Stories/Articles/News</a></li>
+                    <li><a href="#">Adapt Book to Movie</a></li>
+                    <li><a href="#">Creative Contests</a></li>
+                    <li><a href="#">Nominate Your Book (Award)</a></li>
+                    <li><a href="#">Visit Profile</a></li>
+                    <li><a href="#">Sign Up</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </nav>
+        </header>
 
-<nav>
-    <a href="#home">Home</a>
-    <a href="#articles">Articles/Short Stories</a>
-    <a href="#submissions">Manuscript Submissions</a>
-    <a href="#novels">Read a Novel</a>
-    <!-- Add other menu items as needed -->
-</nav>
-
-<section class="library">
-    <!-- Book 1 -->
-    <div class="book">
-        <img src="book1-cover.jpg" alt="Book 1">
-        <h3>Book Title 1</h3>
-        <p>Author 1</p>
-        <div class="buttons">
-            <button onclick="showPreview(1)">Preview</button>
-            <button onclick="getBook(1)">Get Book</button>
+        <!-- Main Content -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <section>
+                    <header class="major">
+                        <h2>Our Online Library</h2>
+                        <p>Explore our collection of books.</p>
+                    </header>
+                    <div class="library">
+                        <div class="book">
+                            <img src="assets/images/book1.jpg" alt="Book 1 Cover" />
+                            <h3>Book Title 1</h3>
+                            <p>Author: John Doe</p>
+                            <p>Summary of the book goes here. This is a brief description of the book's content.</p>
+                            <button onclick="openPreview('book1')">Preview</button>
+                            <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        </div>
+                        <div class="book">
+                            <img src="assets/images/book2.jpg" alt="Book 2 Cover" />
+                            <h3>Book Title 2</h3>
+                            <p>Author: Jane Smith</p>
+                            <p>Summary of the book goes here. This is a brief description of the book's content.</p>
+                            <button onclick="openPreview('book2')">Preview</button>
+                            <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        </div>
+                        <div class="book">
+                            <img src="assets/images/book3.jpg" alt="Book 3 Cover" />
+                            <h3>Book Title 3</h3>
+                            <p>Author: Mary Johnson</p>
+                            <p>Summary of the book goes here. This is a brief description of the book's content.</p>
+                            <button onclick="openPreview('book3')">Preview</button>
+                            <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        </div>
+                        <div class="book">
+                            <img src="assets/images/book4.jpg" alt="Book 4 Cover" />
+                            <h3>Book Title 4</h3>
+                            <p>Author: Peter Williams</p>
+                            <p>Summary of the book goes here. This is a brief description of the book's content.</p>
+                            <button onclick="openPreview('book4')">Preview</button>
+                            <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </div>
-    </div>
-    <!-- Book 2 -->
-    <div class="book">
-        <img src="book2-cover.jpg" alt="Book 2">
-        <h3>Book Title 2</h3>
-        <p>Author 2</p>
-        <div class="buttons">
-            <button onclick="showPreview(2)">Preview</button>
-            <button onclick="getBook(2)">Get Book</button>
+
+        <!-- Flipbook Section -->
+        <div class="flipbook" id="flipbook">
+            <div class="flipbook-close" onclick="closePreview()">X</div>
+            <div class="flipbook-pages">
+                <img src="assets/images/book1-page1.jpg" alt="Page 1" id="flipbook-img" />
+            </div>
+            <div class="flipbook-controls">
+                <button onclick="previousPage()">&#10094; Prev</button>
+                <button onclick="nextPage()">Next &#10095;</button>
+            </div>
         </div>
-    </div>
-    <!-- Book 3 -->
-    <div class="book">
-        <img src="book3-cover.jpg" alt="Book 3">
-        <h3>Book Title 3</h3>
-        <p>Author 3</p>
-        <div class="buttons">
-            <button onclick="showPreview(3)">Preview</button>
-            <button onclick="getBook(3)">Get Book</button>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
-    </div>
-    <!-- Book 4 -->
-    <div class="book">
-        <img src="book4-cover.jpg" alt="Book 4">
-        <h3>Book Title 4</h3>
-        <p>Author 4</p>
-        <div class="buttons">
-            <button onclick="showPreview(4)">Preview</button>
-            <button onclick="getBook(4)">Get Book</button>
-        </div>
-    </div>
-</section>
 
-<!-- Preview Sections -->
-<div id="preview1" class="preview-section">
-    <div class="fullscreen" onclick="toggleFullscreen('preview1')">Fullscreen</div>
-    <h2>Book Title 1 Preview</h2>
-    <p>Author: Author 1</p>
-    <img id="flip1" src="https://i.postimg.cc/qR3psRLx/Screenshot-20240810-121939-Chrome-Beta.jpg" alt="Book 1 Preview">
-    <div class="flipbook-controls">
-        <button onclick="prevPage(1)">Previous</button>
-        <button onclick="nextPage(1)">Next</button>
-        <button onclick="pauseAutoplay(1)">Pause</button>
-        <button onclick="resumeAutoplay(1)">Play</button>
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
+        </footer>
     </div>
-</div>
 
-<div id="preview2" class="preview-section">
-    <div class="fullscreen" onclick="toggleFullscreen('preview2')">Fullscreen</div>
-    <h2>Book Title 2 Preview</h2>
-    <p>Author: Author 2</p>
-    <img id="flip2" src="book2-page1.jpg" alt="Book 2 Preview">
-    <div class="flipbook-controls">
-        <button onclick="prevPage(2)">Previous</button>
-        <button onclick="nextPage(2)">Next</button>
-        <button onclick="pauseAutoplay(2)">Pause</button>
-        <button onclick="resumeAutoplay(2)">Play</button>
-    </div>
-</div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-<div id="preview3" class="preview-section">
-    <div class="fullscreen" onclick="toggleFullscreen('preview3')">Fullscreen</div>
-    <h2>Book Title 3 Preview</h2>
-    <p>Author: Author 3</p>
-    <img id="flip3" src="book3-page1.jpg" alt="Book 3 Preview">
-    <div class="flipbook-controls">
-        <button onclick="prevPage(3)">Previous</button>
-        <button onclick="nextPage(3)">Next</button>
-        <button onclick="pauseAutoplay(3)">Pause</button>
-        <button onclick="resumeAutoplay(3)">Play</button>
-    </div>
-</div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
 
-<div id="preview4" class="preview-section">
-    <div class="fullscreen" onclick="toggleFullscreen('preview4')">Fullscreen</div>
-    <h2>Book Title 4 Preview</h2>
-    <p>Author: Author 4</p>
-    <img id="flip4" src="book4-page1.jpg" alt="Book 4 Preview">
-    <div class="flipbook-controls">
-        <button onclick="prevPage(4)">Previous</button>
-        <button onclick="nextPage(4)">Next</button>
-        <button onclick="pauseAutoplay(4)">Pause</button>
-        <button onclick="resumeAutoplay(4)">Play</button>
-    </div>
-</div>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-<script>
-    let currentPage = {1: 1, 2: 1, 3: 1, 4: 1};
-    let autoplay = {1: null, 2: null, 3: null, 4: null};
-
-    function showPreview(bookNumber) {
-        document.querySelectorAll('.preview-section').forEach(section => {
-            section.style.display = 'none';
+        // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
         });
-        document.getElementById('preview' + bookNumber).style.display = 'block';
-        startAutoplay(bookNumber);
-    }
 
-    function nextPage(bookNumber) {
-        currentPage[bookNumber]++;
-        if (currentPage[bookNumber] > 3) {
-            currentPage[bookNumber] = 1;
+        // Flipbook functionality
+        let currentBook = '';
+        let currentPage = 1;
+
+        const pageData = {
+            book1: ['assets/images/book1-page1.jpg', 'assets/images/book1-page2.jpg', 'assets/images/book1-page3.jpg'],
+            book2: ['assets/images/book2-page1.jpg', 'assets/images/book2-page2.jpg', 'assets/images/book2-page3.jpg'],
+            book3: ['assets/images/book3-page1.jpg', 'assets/images/book3-page2.jpg', 'assets/images/book3-page3.jpg'],
+            book4: ['assets/images/book4-page1.jpg', 'assets/images/book4-page2.jpg', 'assets/images/book4-page3.jpg']
+        };
+
+        function openPreview(book) {
+            currentBook = book;
+            currentPage = 1;
+            document.getElementById('flipbook-img').src = pageData[book][0];
+            document.getElementById('flipbook').style.display = 'block';
+            playFlipSound();
         }
-        updateFlipbook(bookNumber);
-    }
 
-    function prevPage(bookNumber) {
-        currentPage[bookNumber]--;
-        if (currentPage[bookNumber] < 1) {
-            currentPage[bookNumber] = 3;
+        function closePreview() {
+            document.getElementById('flipbook').style.display = 'none';
         }
-        updateFlipbook(bookNumber);
-    }
 
-    function updateFlipbook(bookNumber) {
-        document.getElementById('flip' + book
-document.getElementById('flip' + bookNumber).src = 'book' + bookNumber + '-page' + currentPage[bookNumber] + '.jpg';
-        playFlipSound();
-    }
-
-    function startAutoplay(bookNumber) {
-        autoplay[bookNumber] = setInterval(() => {
-            nextPage(bookNumber);
-        }, 3000); // Change page every 3 seconds
-    }
-
-    function pauseAutoplay(bookNumber) {
-        clearInterval(autoplay[bookNumber]);
-    }
-
-    function resumeAutoplay(bookNumber) {
-        startAutoplay(bookNumber);
-    }
-
-    function playFlipSound() {
-        let audio = new Audio('flip-sound.mp3'); // Make sure you have this file
-        audio.play();
-    }
-
-    function toggleFullscreen(previewId) {
-        let elem = document.getElementById(previewId);
-        if (!document.fullscreenElement) {
-            elem.requestFullscreen().catch(err => {
-                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-            });
-        } else {
-            document.exitFullscreen();
+        function nextPage() {
+            if (currentPage < pageData[currentBook].length) {
+                currentPage++;
+                document.getElementById('flipbook-img').src = pageData[currentBook][currentPage - 1];
+                playFlipSound();
+            }
         }
-    }
 
-    function getBook(bookNumber) {
-        // Navigate to another page (replace 'getBookPage' with the actual page you want to navigate to)
-        window.location.href = 'getBookPage' + bookNumber + '.html';
-    }
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                document.getElementById('flipbook-img').src = pageData[currentBook][currentPage - 1];
+                playFlipSound();
+            }
+        }
 
-    // Auto-start the first preview section
-    showPreview(1);
-</script>
-
+        function playFlipSound() {
+            const audio = new Audio('assets/sounds/page-flip-47177.mp3');
+            audio.play();
+        }
+    </script>
 </body>
 </html>
