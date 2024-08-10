@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, Romance, Christian Fiction</title>
+    <title>9jahotlog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -9,74 +9,123 @@
     <style>
         .notification {
             position: fixed;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 0;
             background: #111;
             color: #fff;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
+            display: none; /* Hide by default */
         }
-        .library-section {
+
+        .library {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .book {
             background: #222;
+            color: #fff;
             padding: 20px;
             border-radius: 10px;
-        }
-        .book-item {
-            background: #333;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
-        .book-cover {
+
+        .book img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
+            margin-bottom: 10px;
         }
+
+        .book h3 {
+            margin: 10px 0;
+            font-size: 1.25em;
+        }
+
+        .book p {
+            font-size: 0.9em;
+            line-height: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .book button {
+            background: #ff4d4d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .book button:hover {
+            background: #e43e3e;
+        }
+
         .preview-container {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 90%;
+            height: 80%;
             background: #000;
-            padding: 20px;
+            color: #fff;
+            z-index: 1000;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            z-index: 9999;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
+
         .preview-container.active {
             display: block;
         }
-        .preview-controls {
-            margin-top: 10px;
+
+        .preview-container img {
+            width: 100%;
+            height: auto;
         }
+
+        .preview-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
         .preview-controls button {
-            background: #444;
-            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
             border: none;
             padding: 10px;
-            border-radius: 5px;
-            margin: 0 5px;
             cursor: pointer;
         }
+
         .preview-controls button:hover {
-            background: #666;
+            background: rgba(0, 0, 0, 0.8);
         }
+
         .close-preview {
             position: absolute;
             top: 10px;
             right: 10px;
-            background: #ff4444;
-            color: #fff;
+            background: #ff4d4d;
             border: none;
             padding: 10px;
             border-radius: 50%;
             cursor: pointer;
+        }
+
+        .close-preview:hover {
+            background: #e43e3e;
         }
     </style>
 </head>
@@ -88,95 +137,109 @@
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Homepage</a></li>
+                    <li>
+                        <a href="#">Submissions</a>
+                        <ul>
+                            <li><a href="#">Manuscript Submissions</a></li>
+                            <li><a href="#">Short Stories/Article Submissions</a></li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#">Books</a>
                         <ul>
-                            <li><a href="#">Manuscript Submissions</a></li>
-                            <li><a href="#">Short Stories/Articles</a></li>
-                            <li><a href="#">Creative Contests</a></li>
-                            <li><a href="#">Nominate Your Book</a></li>
+                            <li><a href="#">Library</a></li>
+                            <li><a href="#">Short Stories/Articles/News</a></li>
                         </ul>
                     </li>
-                    <li><a href="https://9jahotblog.github.io/book-checkout.html">Get Book</a></li>
+                    <li><a href="#">Adapt Book to Movie</a></li>
+                    <li><a href="#">Creative Contests</a></li>
+                    <li><a href="#">Nominate your Book (Award)</a></li>
                     <li><a href="#">Visit Profile</a></li>
                     <li><a href="#">Sign Up</a></li>
                     <li><a href="#">Login</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </nav>
         </header>
 
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
-            <div class="container library-section">
-                <!-- Library Section -->
-                <div class="book-item">
-                    <img src="assets/images/book1-cover.jpg" alt="Book 1 Cover" class="book-cover" />
-                    <h3>Book Title 1</h3>
-                    <p>Author: John Doe</p>
-                    <p>Summary: This is a brief summary of the book. It gives a sneak peek into the content...</p>
-                    <button onclick="showPreview('book1')">Preview</button>
-                    <a href="https://9jahotblog.github.io/book-checkout.html" class="button">Get Book</a>
-                </div>
-                <div class="book-item">
-                    <img src="assets/images/book2-cover.jpg" alt="Book 2 Cover" class="book-cover" />
-                    <h3>Book Title 2</h3>
-                    <p>Author: Jane Doe</p>
-                    <p>Summary: This is a brief summary of the book. It gives a sneak peek into the content...</p>
-                    <button onclick="showPreview('book2')">Preview</button>
-                    <a href="https://9jahotblog.github.io/book-checkout.html" class="button">Get Book</a>
-                </div>
-                <div class="book-item">
-                    <img src="assets/images/book3-cover.jpg" alt="Book 3 Cover" class="book-cover" />
-                    <h3>Book Title 3</h3>
-                    <p>Author: Alex Smith</p>
-                    <p>Summary: This is a brief summary of the book. It gives a sneak peek into the content...</p>
-                    <button onclick="showPreview('book3')">Preview</button>
-                    <a href="https://9jahotblog.github.io/book-checkout.html" class="button">Get Book</a>
-                </div>
-                <div class="book-item">
-                    <img src="assets/images/book4-cover.jpg" alt="Book 4 Cover" class="book-cover" />
-                    <h3>Book Title 4</h3>
-                    <p>Author: Sarah Johnson</p>
-                    <p>Summary: This is a brief summary of the book. It gives a sneak peek into the content...</p>
-                    <button onclick="showPreview('book4')">Preview</button>
-                    <a href="https://9jahotblog.github.io/book-checkout.html" class="button">Get Book</a>
-                </div>
-
-                <!-- Preview Containers -->
-                <div class="preview-container" id="book1-preview">
-                    <button class="close-preview" onclick="closePreview()">X</button>
-                    <div class="preview-controls">
-                        <button onclick="prevPage('book1')"><</button>
-                        <button onclick="nextPage('book1')">></button>
+            <div class="container">
+                <h2>Online Library</h2>
+                <div class="library">
+                    <!-- Book 1 -->
+                    <div class="book">
+                        <img src="assets/images/book1.jpg" alt="Book 1 Cover" />
+                        <h3>Book Title 1</h3>
+                        <p>Author: Author Name 1</p>
+                        <p>Summary of Book 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <button onclick="showPreview('book1')">Preview</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
-                    <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
-                </div>
-                <div class="preview-container" id="book2-preview">
-                    <button class="close-preview" onclick="closePreview()">X</button>
-                    <div class="preview-controls">
-                        <button onclick="prevPage('book2')"><</button>
-                        <button onclick="nextPage('book2')">></button>
+                    <!-- Book 2 -->
+                    <div class="book">
+                        <img src="assets/images/book2.jpg" alt="Book 2 Cover" />
+                        <h3>Book Title 2</h3>
+                        <p>Author: Author Name 2</p>
+                        <p>Summary of Book 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <button onclick="showPreview('book2')">Preview</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
-                    <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
-                </div>
-                <div class="preview-container" id="book3-preview">
-                    <button class="close-preview" onclick="closePreview()">X</button>
-                    <div class="preview-controls">
-                        <button onclick="prevPage('book3')"><</button>
-                        <button onclick="nextPage('book3')">></button>
+                    <!-- Book 3 -->
+                    <div class="book">
+                        <img src="assets/images/book3.jpg" alt="Book 3 Cover" />
+                        <h3>Book Title 3</h3>
+                        <p>Author: Author Name 3</p>
+                        <p>Summary of Book 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <button onclick="showPreview('book3')">Preview</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
-                    <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
-                </div>
-                <div class="preview-container" id="book4-preview">
-                    <button class="close-preview" onclick="closePreview()">X</button>
-                    <div class="preview-controls">
-                        <button onclick="prevPage('book4')"><</button>
-                        <button onclick="nextPage('book4')">></button>
+                    <!-- Book 4 -->
+                    <div class="book">
+                        <img src="assets/images/book4.jpg" alt="Book 4 Cover" />
+                        <h3>Book Title 4</h3>
+                        <p>Author: Author Name 4</p>
+                        <p>Summary of Book 4. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <button onclick="showPreview('book4')">Preview</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
-                    <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
                 </div>
             </div>
+        </div>
+
+        <!-- Preview Container -->
+        <div class="preview-container" id="book1-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book1')"><</button>
+                <button onclick="nextPage('book1')">></button>
+            </div>
+            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
+        </div>
+        <div class="preview-container" id="book2-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book2')"><</button>
+                <button onclick="nextPage('book2')">></button>
+            </div>
+            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
+        </div>
+        <div class="preview-container" id="book3-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book3')"><</button>
+                <button onclick="nextPage('book3')">></button>
+            </div>
+            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
+        </div>
+        <div class="preview-container" id="book4-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book4')"><</button>
+                <button onclick="nextPage('book4')">></button>
+            </div>
+            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
         </div>
 
         <!-- Notification -->
@@ -234,37 +297,52 @@
             }
         });
 
-        const pageFlipSound = new Audio('/page-flip-47177.mp3');
+        // Book Preview Logic
+        const bookPages = {
+            'book1': ['assets/images/book1-page1.jpg', 'assets/images/book1-page2.jpg', 'assets/images/book1-page3.jpg'],
+            'book2': ['assets/images/book2-page1.jpg', 'assets/images/book2-page2.jpg', 'assets/images/book2-page3.jpg'],
+            'book3': ['assets/images/book3-page1.jpg', 'assets/images/book3-page2.jpg', 'assets/images/book3-page3.jpg'],
+            'book4': ['assets/images/book4-page1.jpg', 'assets/images/book4-page2.jpg', 'assets/images/book4-page3.jpg']
+        };
+
+        let currentPage = {
+            'book1': 0,
+            'book2': 0,
+            'book3': 0,
+            'book4': 0
+        };
 
         function showPreview(bookId) {
-            document.getElementById(`${bookId}-preview`).classList.add('active');
-            document.getElementById('page-wrapper').style.filter = 'blur(5px)';
+            currentPage[bookId] = 0;
+            document.getElementById(bookId + '-img').src = bookPages[bookId][0];
+            document.getElementById(bookId + '-preview').classList.add('active');
         }
 
         function closePreview() {
-            const activePreview = document.querySelector('.preview-container.active');
-            if (activePreview) {
-                activePreview.classList.remove('active');
-                document.getElementById('page-wrapper').style.filter = 'none';
-            }
+            document.querySelectorAll('.preview-container').forEach(container => {
+                container.classList.remove('active');
+            });
         }
 
         function nextPage(bookId) {
-            const imgElement = document.getElementById(`${bookId}-img`);
-            const currentPage = parseInt(imgElement.src.match(/page(\d)/)[1]);
-            if (currentPage < 3) {
-                imgElement.src = imgElement.src.replace(/page\d/, `page${currentPage + 1}`);
-                pageFlipSound.play();
+            if (currentPage[bookId] < bookPages[bookId].length - 1) {
+                currentPage[bookId]++;
+                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                playPageFlipSound();
             }
         }
 
         function prevPage(bookId) {
-            const imgElement = document.getElementById(`${bookId}-img`);
-            const currentPage = parseInt(imgElement.src.match(/page(\d)/)[1]);
-            if (currentPage > 1) {
-                imgElement.src = imgElement.src.replace(/page\d/, `page${currentPage - 1}`);
-                pageFlipSound.play();
+            if (currentPage[bookId] > 0) {
+                currentPage[bookId]--;
+                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                playPageFlipSound();
             }
+        }
+
+        function playPageFlipSound() {
+            const audio = new Audio('/page-flip-47177.mp3');
+            audio.play();
         }
     </script>
 </body>
