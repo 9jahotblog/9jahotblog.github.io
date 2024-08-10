@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock/css/bookblock.css">
     <style>
         body {
-            background-color: #f4f4f4; /* Light background */
-            color: #333; /* Dark text color */
+            background-color: #f0f0f0; /* Light background color */
+            color: #000000; /* Dark text color */
         }
         .notification {
-            position: static;
+            position: static; /* Position it below the footer */
             margin-top: 20px;
             background: #111;
             color: #fff;
@@ -34,14 +34,20 @@
             border: 1px solid #ddd;
             padding: 20px;
             margin: 10px;
-            width: 300px; /* Made broader */
+            width: 250px;
             text-align: center;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .book:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
         }
         .book img {
             width: 100%;
             height: auto;
+            border-radius: 5px;
         }
         .book-title {
             font-weight: bold;
@@ -50,10 +56,14 @@
         .book-summary {
             font-size: 14px;
             margin-top: 10px;
-            color: #555;
         }
         .book-buttons {
             margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .book-buttons button {
+            width: 48%;
         }
         .flipbook, .bb-item {
             height: 400px;
@@ -71,6 +81,9 @@
             color: #fff;
             text-align: center;
         }
+        .book-details, .flipbook-container, .form-section {
+            display: none; /* Hide these sections initially */
+        }
     </style>
 </head>
 <body class="landing">
@@ -81,21 +94,23 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Homepage</a></li>
-                    <li><a href="#">Submissions</a>
+                    <li>
+                        <a href="#">Submissions</a>
                         <ul>
                             <li><a href="#">Manuscript Submission</a></li>
                             <li><a href="#">Short Stories/Articles Submissions</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Short Stories/Articles</a></li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Adapt Book to Movie</a></li>
-                    <li><a href="#">Creative Contests</a></li>
-                    <li><a href="#">Awards</a>
+                    <li>
+                        <a href="#">Content</a>
                         <ul>
-                            <li><a href="#">Nominate your Book</a></li>
+                            <li><a href="#">Short Stories/Articles</a></li>
+                            <li><a href="#">Books</a></li>
                         </ul>
                     </li>
+                    <li><a href="#">Adapt Book to Movie</a></li>
+                    <li><a href="#">Creative Contests</a></li>
+                    <li><a href="#">Awards</a></li>
                     <li><a href="#">Join the Team</a></li>
                     <li><a href="#">Sign up</a></li>
                     <li><a href="#">Login</a></li>
@@ -113,9 +128,9 @@
                     <div class="book" id="book1">
                         <img src="https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book 1 Cover">
                         <div class="book-title">My Experience At The University of Dey Play</div>
-                        <div class="book-summary">Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos...</div>
+                        <div class="book-summary">Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</div>
                         <div class="book-buttons">
-                            <button class="btn btn-secondary" onclick="showBookDetails(1)">Preview</button>
+                            <button class="btn btn-primary" onclick="showBookDetails(1)">Preview</button>
                             <button class="btn btn-success" onclick="scrollToCheckout()">Get Book</button>
                         </div>
                     </div>
@@ -125,7 +140,7 @@
                         <div class="book-title">Book Title 2</div>
                         <div class="book-summary">A brief summary of Book 2...</div>
                         <div class="book-buttons">
-                            <button class="btn btn-secondary" onclick="showBookDetails(2)">Preview</button>
+                            <button class="btn btn-primary" onclick="showBookDetails(2)">Preview</button>
                             <button class="btn btn-success" onclick="scrollToCheckout()">Get Book</button>
                         </div>
                     </div>
@@ -135,7 +150,7 @@
                         <div class="book-title">Book Title 3</div>
                         <div class="book-summary">A brief summary of Book 3...</div>
                         <div class="book-buttons">
-                            <button class="btn btn-secondary" onclick="showBookDetails(3)">Preview</button>
+                            <button class="btn btn-primary" onclick="showBookDetails(3)">Preview</button>
                             <button class="btn btn-success" onclick="scrollToCheckout()">Get Book</button>
                         </div>
                     </div>
@@ -145,7 +160,7 @@
                         <div class="book-title">Book Title 4</div>
                         <div class="book-summary">A brief summary of Book 4...</div>
                         <div class="book-buttons">
-                            <button class="btn btn-secondary" onclick="showBookDetails(4)">Preview</button>
+                            <button class="btn btn-primary" onclick="showBookDetails(4)">Preview</button>
                             <button class="btn btn-success" onclick="scrollToCheckout()">Get Book</button>
                         </div>
                     </div>
@@ -154,9 +169,12 @@
                 <!-- Book Details -->
                 <section class="book-details" id="book-details-section">
                     <h2>Book Title</h2>
-                    <img src="path/to/author-pic.jpg" alt="Author Picture" style="width:150px;">
                     <p>Author Bio: Lorem ipsum dolor sit amet...</p>
                     <p>Book Profile: Lorem ipsum dolor sit amet...</p>
+                    <div>
+                        <button class="btn btn-secondary" onclick="previewBook()">Preview Book</button>
+                        <button class="btn btn-success dancing-button" id="get-book-button" onclick="scrollToCheckout()">Get Book</button>
+                    </div>
                 </section>
 
                 <!-- Book Preview -->
@@ -240,7 +258,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -267,32 +285,29 @@
         // Function to show book details
         function showBookDetails(bookId) {
             const bookDetailsSection = document.getElementById('book-details-section');
-            let bookTitle, authorBio, bookProfile, authorImage;
+            bookDetailsSection.style.display = 'block'; // Show the book details section
+            let bookTitle, authorBio, bookProfile;
 
             switch (bookId) {
                 case 1:
                     bookTitle = 'My Experience At The University of Dey Play';
-                    authorBio = 'Jay, a University of Lagos student, shares his wild experiences.';
-                    bookProfile = 'This book captures the vibrant life and struggles of a university student in Lagos.';
-                    authorImage = 'https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg';
+                    authorBio = 'Author: Jay. This book is a humorous take on the life of a university student in Lagos.';
+                    bookProfile = 'This book captures the essence of the Nigerian university experience, with all its highs and lows.';
                     break;
                 case 2:
                     bookTitle = 'Book Title 2';
                     authorBio = 'Author Bio 2...';
                     bookProfile = 'Book Profile 2...';
-                    authorImage = 'path/to/author2-pic.jpg';
                     break;
                 case 3:
                     bookTitle = 'Book Title 3';
                     authorBio = 'Author Bio 3...';
                     bookProfile = 'Book Profile 3...';
-                    authorImage = 'path/to/author3-pic.jpg';
                     break;
                 case 4:
                     bookTitle = 'Book Title 4';
                     authorBio = 'Author Bio 4...';
                     bookProfile = 'Book Profile 4...';
-                    authorImage = 'path/to/author4-pic.jpg';
                     break;
                 default:
                     break;
@@ -301,12 +316,15 @@
             bookDetailsSection.querySelector('h2').textContent = bookTitle;
             bookDetailsSection.querySelector('p:nth-of-type(1)').textContent = 'Author Bio: ' + authorBio;
             bookDetailsSection.querySelector('p:nth-of-type(2)').textContent = 'Book Profile: ' + bookProfile;
-            bookDetailsSection.querySelector('img').src = authorImage;
+
+            // Scroll to the book details section
+            bookDetailsSection.scrollIntoView({ behavior: 'smooth' });
         }
 
         // Function to preview book
         function previewBook() {
             const flipbookContainer = document.getElementById('flipbook');
+            const flipbookSection = document.getElementById('flipbook-section');
             flipbookContainer.innerHTML = ''; // Clear previous pages
 
             // Generate different content for each book
@@ -355,27 +373,29 @@
             });
 
             // Initialize flipbook
-            $('#flipbook').bookblock({
+            $(flipbookContainer).bookblock({
                 speed: 1000,
                 shadowSides: 0.8,
                 shadowFlip: 0.7,
                 autoplay: true,
                 autoplayDelay: 2000,
-                autoplayPauseOnHover: true
+                autoplayPauseOnHover: true,
+                onEnd: function() {
+                    // Show "Get Book" button with animation
+                    document.getElementById('get-book-button').classList.add('dancing-button');
+                }
             });
 
-            // Play flip sound for each page
-            document.querySelectorAll('.bb-item img').forEach((img) => {
-                img.addEventListener('click', () => {
-                    const flipSound = new Audio('/page-flip-47177.mp3');
-                    flipSound.play();
-                });
-            });
+            // Show the flipbook section
+            flipbookSection.style.display = 'block';
+            flipbookSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Function to scroll to checkout section
+        // Function to scroll to the checkout section
         function scrollToCheckout() {
-            document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
+            const formSection = document.getElementById('form-section');
+            formSection.style.display = 'block'; // Show the form section
+            formSection.scrollIntoView({ behavior: 'smooth' });
         }
 
         // Function to handle checkout with Squad
