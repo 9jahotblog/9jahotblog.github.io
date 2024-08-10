@@ -1,37 +1,76 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, romance, Christian fiction, Read and purchase titles now!</title>
+    <title>9jahotblog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        .notification {
-            position: fixed;
-            right: 10px;
-            bottom: 10px;
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
+        /* Dropdown Menu Styling */
+        #nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
         }
 
+        #nav li {
+            position: relative;
+            display: inline-block;
+        }
+
+        #nav li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #nav li:hover ul {
+            display: block;
+        }
+
+        #nav li ul li {
+            display: block;
+            margin: 0;
+            padding: 0;
+        }
+
+        #nav li ul li a {
+            color: #fff;
+            padding: 10px;
+            display: block;
+            text-decoration: none;
+        }
+
+        #nav li ul li a:hover {
+            background-color: #444;
+        }
+
+        /* Library Styling */
         .library {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
             margin-top: 40px;
         }
 
         .book {
-            background: #fff;
+            background: #f5f5f5;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
+            margin: 20px;
+            width: 250px;
+            transition: transform 0.2s;
+        }
+
+        .book:hover {
+            transform: scale(1.05);
         }
 
         .book img {
@@ -115,7 +154,8 @@
 
         @media (max-width: 768px) {
             .library {
-                grid-template-columns: 1fr;
+                flex-direction: column;
+                align-items: center;
             }
 
             .flipbook {
@@ -134,16 +174,32 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Homepage</a></li>
-                    <li><a href="#">Manuscript Submissions</a></li>
-                    <li><a href="#">Short Stories/Article Submissions</a></li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Short Stories/Articles/News</a></li>
-                    <li><a href="#">Adapt Book to Movie</a></li>
-                    <li><a href="#">Creative Contests</a></li>
-                    <li><a href="#">Nominate Your Book (Award)</a></li>
-                    <li><a href="#">Visit Profile</a></li>
-                    <li><a href="#">Sign Up</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Submissions</a>
+                        <ul>
+                            <li><a href="#">Manuscript Submissions</a></li>
+                            <li><a href="#">Short Stories/Article Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Books</a>
+                        <ul>
+                            <li><a href="#">New Releases</a></li>
+                            <li><a href="#">Best Sellers</a></li>
+                            <li><a href="#">Genres</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Creative Contests</a>
+                        <ul>
+                            <li><a href="#">Writing Contests</a></li>
+                            <li><a href="#">Art Contests</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Profile</a>
+                        <ul>
+                            <li><a href="#">Visit Profile</a></li>
+                            <li><a href="#">Sign Up</a></li>
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </nav>
@@ -192,10 +248,9 @@
                         </div>
                     </div>
                 </section>
-            </div>
-        </div>
+            </div> 
 
-        <!-- Flipbook Section -->
+            <!-- Flipbook Section -->
         <div class="flipbook" id="flipbook">
             <div class="flipbook-close" onclick="closePreview()">X</div>
             <div class="flipbook-pages">
@@ -308,5 +363,3 @@
     </script>
 </body>
 </html>
-
- 
