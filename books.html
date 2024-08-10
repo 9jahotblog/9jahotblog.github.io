@@ -6,28 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="assets/css/main.css">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Book flip library -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock/css/bookblock.css">
     <style>
+        /* Overall Background */
         body {
-            background-color: #000000; /* Dark background */
+            background-color: #121212; /* Revert to dark background */
             color: #ffffff; /* Light text color */
         }
-        .notification {
-            position: static; /* Position it below the footer */
-            margin-top: 20px;
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+
+        /* Book Section Background */
         .book-store {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+            background-color: #f0f0f0; /* Light background for book section */
             padding: 20px;
+            border-radius: 10px;
         }
+
+        /* Book Cards */
         .book {
             border: 1px solid #ddd;
             padding: 20px;
@@ -37,75 +34,105 @@
             background-color: #ffffff;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease-in-out;
+            border-radius: 8px;
         }
+
         .book:hover {
             transform: scale(1.05);
             box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
         }
+
         .book img {
             width: 100%;
             height: auto;
             border-radius: 5px;
         }
+
         .book-title {
             font-weight: bold;
             margin-top: 10px;
             color: #000000;
         }
+
         .book-summary {
             font-size: 14px;
             margin-top: 10px;
             color: #333333;
         }
-        .book-buttons {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
+
+        /* Button Styling */
         .book-buttons button {
             width: 48%;
+            font-size: 14px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        .flipbook-container {
-            display: none; /* Hide initially */
-            background-color: #000000;
+
+        .btn-primary {
+            background-color: #007bff;
             color: #ffffff;
-            padding: 20px;
-            text-align: center;
+            transition: background-color 0.3s ease-in-out;
         }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: #ffffff;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-success:hover {
+            background-color: #1e7e34;
+        }
+
+        .dancing-button {
+            animation: dance 0.5s infinite alternate;
+        }
+
+        @keyframes dance {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        /* Flipbook and Author Info */
+        .flipbook-container {
+            background-color: #ffffff; /* Light background for preview section */
+            color: #000000; /* Dark text color */
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
         .flipbook, .bb-item {
             height: 400px;
             width: 300px;
             margin: 0 auto;
         }
-        .dancing-button {
-            animation: dance 0.5s infinite alternate;
-        }
-        @keyframes dance {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
-        footer {
-            padding: 20px;
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-        }
+
         .author-info {
             display: flex;
             align-items: center;
             margin-top: 20px;
             text-align: left;
         }
+
         .author-info img {
             border-radius: 50%;
             width: 100px;
             height: 100px;
             margin-right: 20px;
         }
+
         .book-description {
             margin-top: 10px;
             font-size: 16px;
         }
+
         .publication-date {
             margin-top: 10px;
             font-size: 14px;
@@ -257,7 +284,7 @@
             messagingSenderId: "661526730601",
             appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
         };
-
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
