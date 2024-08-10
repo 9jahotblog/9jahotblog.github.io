@@ -1,336 +1,294 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>9jahotblog BOOK PAGE - Fantasy, Romance, Christian Fiction</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
-    <!-- Book flip library -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock/css/bookblock.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9jahotblog Storybooks Library</title>
     <style>
-        /* Overall Background */
         body {
-            background-color: #121212; /* Dark background */
-            color: #ffffff; /* Light text color */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
-
-        /* Book Section Background */
-        .book-store {
-            background-color: #f0f0f0; /* Light background for book section */
-            padding: 20px;
-            border-radius: 10px;
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .library {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+            padding: 20px;
         }
-
-        /* Book Cards */
         .book {
+            background-color: white;
             border: 1px solid #ddd;
-            padding: 20px;
+            border-radius: 5px;
+            padding: 15px;
             margin: 10px;
-            width: 250px;
+            width: 200px;
             text-align: center;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-            border-radius: 8px;
         }
-
-        .book:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
         .book img {
-            width: 100%;
+            max-width: 100%;
             height: auto;
-            border-radius: 5px;
         }
-
-        .book-title {
-            font-weight: bold;
+        .buttons {
             margin-top: 10px;
-            color: #000000;
         }
-
-        .book-summary {
-            font-size: 14px;
-            margin-top: 10px;
-            color: #333333;
-        }
-
-        /* Button Styling */
-        .book-buttons button {
-            width: 48%;
-            font-size: 14px;
-            padding: 8px;
+        .buttons button {
+            background-color: #333;
+            color: white;
             border: none;
-            border-radius: 5px;
+            padding: 10px 15px;
             cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
         }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: #ffffff;
-            transition: background-color 0.3s ease-in-out;
+        .buttons button:hover {
+            background-color: #555;
         }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            color: #ffffff;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .btn-success:hover {
-            background-color: #1e7e34;
-        }
-
-        .dancing-button {
-            animation: dance 0.5s infinite alternate;
-        }
-
-        @keyframes dance {
-            from { transform: translateY(0); }
-            to { transform: translateY(-5px); }
-        }
-
-        /* Flipbook and Author Info */
-        .flipbook-container {
-            background-color: #ffffff; /* Light background for preview section */
-            color: #000000; /* Dark text color */
+        .preview-section {
+            display: none;
             padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 2px solid #333;
             margin-top: 20px;
-            border-radius: 10px;
-            display: none; /* Initially hidden */
         }
-
-        .flipbook, .bb-item {
-            height: 400px;
-            width: 300px;
-            margin: 0 auto;
+        .preview-section img {
+            max-width: 100%;
+            height: auto;
         }
-
-        .author-info {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-            text-align: left;
+        .flipbook-controls {
+            margin-top: 15px;
+            text-align: center;
         }
-
-        .author-info img {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            margin-right: 20px;
+        .flipbook-controls button {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
         }
-
-        .book-description {
-            margin-top: 10px;
-            font-size: 16px;
+        .flipbook-controls button:hover {
+            background-color: #666;
         }
-
-        .publication-date {
-            margin-top: 10px;
-            font-size: 14px;
-            font-style: italic;
+        .fullscreen {
+            display: inline-block;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #000;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
         }
     </style>
 </head>
-<body class="landing">
-    <div id="page-wrapper">
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Homepage</a></li>
-                    <li>
-                        <a href="#">Submissions</a>
-                        <ul>
-                            <li><a href="#">Manuscript Submission</a></li>
-                            <li><a href="#">Short Stories/Articles Submissions</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">Content</a>
-                        <ul>
-                            <li><a href="#">Short Stories/Articles</a></li>
-                            <li><a href="#">Books</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Adapt Book to Movie</a></li>
-                    <li><a href="#">Creative Contests</a></li>
-                    <li><a href="#">Awards</a></li>
-                    <li><a href="#">Join the Team</a></li>
-                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Profile</a></li>
-                    <li><a href="#">Sign up</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </nav>
-        </header>
+<body>
 
-        <!-- Main Content -->
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <!-- Book Store -->
-                <section class="book-store">
-                    <!-- Book 1 -->
-                    <div class="book" id="book1">
-                        <img src="https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book 1 Cover">
-                        <div class="book-title">My Experience At The University of Dey Play</div>
-                        <div class="book-summary">Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</div>
-                        <div class="book-buttons">
-                            <button class="btn btn-primary" onclick="showBookDetails(1)">Preview</button>
-                            <button class="btn btn-success dancing-button" onclick="window.location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        </div>
-                    </div>
-                    <!-- Book 2 -->
-                    <div class="book" id="book2">
-                        <img src="path/to/book2-cover.jpg" alt="Book 2 Cover">
-                        <div class="book-title">Book Title 2</div>
-                        <div class="book-summary">A brief summary of Book 2...</div>
-                        <div class="book-buttons">
-                            <button class="btn btn-primary" onclick="showBookDetails(2)">Preview</button>
-                            <button class="btn btn-success dancing-button" onclick="window.location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        </div>
-                    </div>
-                    <!-- Book 3 -->
-                    <div class="book" id="book3">
-                        <img src="path/to/book3-cover.jpg" alt="Book 3 Cover">
-                        <div class="book-title">Book Title 3</div>
-                        <div class="book-summary">A brief summary of Book 3...</div>
-                        <div class="book-buttons">
-                            <button class="btn btn-primary" onclick="showBookDetails(3)">Preview</button>
-                            <button class="btn btn-success dancing-button" onclick="window.location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        </div>
-                    </div>
-                    <!-- Book 4 -->
-                    <div class="book" id="book4">
-                        <img src="path/to/book4-cover.jpg" alt="Book 4 Cover">
-                        <div class="book-title">Book Title 4</div>
-                        <div class="book-summary">A brief summary of Book 4...</div>
-                        <div class="book-buttons">
-                            <button class="btn btn-primary" onclick="showBookDetails(4)">Preview</button>
-                            <button class="btn btn-success dancing-button" onclick="window.location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        </div>
-                    </div>
-                </section>
+<header>
+    <h1>9jahotblog Storybooks Library</h1>
+</header>
 
-                <!-- Book Preview and Details Section -->
-                <section class="flipbook-container" id="flipbook-section">
-                    <div id="flipbook" class="bb-bookblock">
-                        <!-- Content will be dynamically injected based on the selected book -->
-                    </div>
-                    <div class="author-info">
-                        <img id="author-pic" src="" alt="Author Picture">
-                        <div>
-    <h3 id="author-name">Author Name</h3>
-    <p class="book-description" id="book-description">Book description goes here...</p>
-    <p class="publication-date" id="publication-date">Published on: Date</p>
-</div>
-</div>
+<nav>
+    <a href="#home">Home</a>
+    <a href="#articles">Articles/Short Stories</a>
+    <a href="#submissions">Manuscript Submissions</a>
+    <a href="#novels">Read a Novel</a>
+    <!-- Add other menu items as needed -->
+</nav>
+
+<section class="library">
+    <!-- Book 1 -->
+    <div class="book">
+        <img src="book1-cover.jpg" alt="Book 1">
+        <h3>Book Title 1</h3>
+        <p>Author 1</p>
+        <div class="buttons">
+            <button onclick="showPreview(1)">Preview</button>
+            <button onclick="getBook(1)">Get Book</button>
+        </div>
+    </div>
+    <!-- Book 2 -->
+    <div class="book">
+        <img src="book2-cover.jpg" alt="Book 2">
+        <h3>Book Title 2</h3>
+        <p>Author 2</p>
+        <div class="buttons">
+            <button onclick="showPreview(2)">Preview</button>
+            <button onclick="getBook(2)">Get Book</button>
+        </div>
+    </div>
+    <!-- Book 3 -->
+    <div class="book">
+        <img src="book3-cover.jpg" alt="Book 3">
+        <h3>Book Title 3</h3>
+        <p>Author 3</p>
+        <div class="buttons">
+            <button onclick="showPreview(3)">Preview</button>
+            <button onclick="getBook(3)">Get Book</button>
+        </div>
+    </div>
+    <!-- Book 4 -->
+    <div class="book">
+        <img src="book4-cover.jpg" alt="Book 4">
+        <h3>Book Title 4</h3>
+        <p>Author 4</p>
+        <div class="buttons">
+            <button onclick="showPreview(4)">Preview</button>
+            <button onclick="getBook(4)">Get Book</button>
+        </div>
+    </div>
 </section>
-</div>
+
+<!-- Preview Sections -->
+<div id="preview1" class="preview-section">
+    <div class="fullscreen" onclick="toggleFullscreen('preview1')">Fullscreen</div>
+    <h2>Book Title 1 Preview</h2>
+    <p>Author: Author 1</p>
+    <img id="flip1" src="book1-page1.jpg" alt="Book 1 Preview">
+    <div class="flipbook-controls">
+        <button onclick="prevPage(1)">Previous</button>
+        <button onclick="nextPage(1)">Next</button>
+        <button onclick="pauseAutoplay(1)">Pause</button>
+        <button onclick="resumeAutoplay(1)">Play</button>
+    </div>
 </div>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquerypp.custom.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.bookblock.js"></script>
+<div id="preview2" class="preview-section">
+    <div class="fullscreen" onclick="toggleFullscreen('preview2')">Fullscreen</div>
+    <h2>Book Title 2 Preview</h2>
+    <p>Author: Author 2</p>
+    <img id="flip2" src="book2-page1.jpg" alt="Book 2 Preview">
+    <div class="flipbook-controls">
+        <button onclick="prevPage(2)">Previous</button>
+        <button onclick="nextPage(2)">Next</button>
+        <button onclick="pauseAutoplay(2)">Pause</button>
+        <button onclick="resumeAutoplay(2)">Play</button>
+    </div>
+</div>
+
+<div id="preview3" class="preview-section">
+    <div class="fullscreen" onclick="toggleFullscreen('preview3')">Fullscreen</div>
+    <h2>Book Title 3 Preview</h2>
+    <p>Author: Author 3</p>
+    <img id="flip3" src="book3-page1.jpg" alt="Book 3 Preview">
+    <div class="flipbook-controls">
+        <button onclick="prevPage(3)">Previous</button>
+        <button onclick="nextPage(3)">Next</button>
+        <button onclick="pauseAutoplay(3)">Pause</button>
+        <button onclick="resumeAutoplay(3)">Play</button>
+    </div>
+</div>
+
+<div id="preview4" class="preview-section">
+    <div class="fullscreen" onclick="toggleFullscreen('preview4')">Fullscreen</div>
+    <h2>Book Title 4 Preview</h2>
+    <p>Author: Author 4</p>
+    <img id="flip4" src="book4-page1.jpg" alt="Book 4 Preview">
+    <div class="flipbook-controls">
+        <button onclick="prevPage(4)">Previous</button>
+        <button onclick="nextPage(4)">Next</button>
+        <button onclick="pauseAutoplay(4)">Pause</button>
+        <button onclick="resumeAutoplay(4)">Play</button>
+    </div>
+</div>
+
 <script>
-    // Book details data
-    const books = {
-        1: {
-            title: "My Experience At The University of Dey Play",
-            description: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour...",
-            authorName: "Jay",
-            authorPic: "https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg",
-            publicationDate: "August 2024",
-            content: [
-                "Page 1: Once upon a time in Lagos...",
-                "Page 2: The journey continued with excitement...",
-                "Page 3: Challenges arose, but we persevered...",
-                "Page 4: And so the story ends, but the adventure continues..."
-            ]
-        },
-        2: {
-            title: "Book Title 2",
-            description: "A thrilling tale of mystery and suspense...",
-            authorName: "Author 2",
-            authorPic: "path/to/author2-pic.jpg",
-            publicationDate: "July 2024",
-            content: [
-                "Page 1: It was a dark and stormy night...",
-                "Page 2: The mystery deepened as the clues were uncovered...",
-                "Page 3: The suspense was palpable...",
-                "Page 4: The thrilling conclusion left everyone in awe..."
-            ]
-        },
-        3: {
-            title: "Book Title 3",
-            description: "An inspiring journey of love and resilience...",
-            authorName: "Author 3",
-            authorPic: "path/to/author3-pic.jpg",
-            publicationDate: "June 2024",
-            content: [
-                "Page 1: The sun rose on a new day...",
-                "Page 2: Love blossomed in the unlikeliest of places...",
-                "Page 3: Trials tested their resilience...",
-                "Page 4: But in the end, love prevailed..."
-            ]
-        },
-        4: {
-            title: "Book Title 4",
-            description: "A captivating story of adventure and discovery...",
-            authorName: "Author 4",
-            authorPic: "path/to/author4-pic.jpg",
-            publicationDate: "May 2024",
-            content: [
-                "Page 1: The adventure began in the heart of the jungle...",
-                "Page 2: Discovery after discovery revealed hidden secrets...",
-                "Page 3: The journey was fraught with danger...",
-                "Page 4: But in the end, the treasure was found..."
-            ]
+    let currentPage = {1: 1, 2: 1, 3: 1, 4: 1};
+    let autoplay = {1: null, 2: null, 3: null, 4: null};
+
+    function showPreview(bookNumber) {
+        document.querySelectorAll('.preview-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        document.getElementById('preview' + bookNumber).style.display = 'block';
+        startAutoplay(bookNumber);
+    }
+
+    function nextPage(bookNumber) {
+        currentPage[bookNumber]++;
+        if (currentPage[bookNumber] > 3) {
+            currentPage[bookNumber] = 1;
         }
-    };
-
-    // Function to show book details
-    function showBookDetails(bookId) {
-        const book = books[bookId];
-        document.getElementById('flipbook-section').style.display = 'block';
-        document.getElementById('author-name').innerText = book.authorName;
-        document.getElementById('author-pic').src = book.authorPic;
-        document.getElementById('book-description').innerText = book.description;
-        document.getElementById('publication-date').innerText = `Published on: ${book.publicationDate}`;
-        loadFlipbook(book.content);
+        updateFlipbook(bookNumber);
     }
 
-    // Function to load the flipbook
-    function loadFlipbook(pages) {
-        const flipbook = document.getElementById('flipbook');
-        flipbook.innerHTML = ''; // Clear previous content
-
-        pages.forEach((page, index) => {
-            const pageElement = document.createElement('div');
-            pageElement.className = 'bb-item';
-            pageElement.innerHTML = `<div class="bb-custom-side"><div>${page}</div></div>`;
-            flipbook.appendChild(pageElement);
-        });
-
-        // Initialize the flipbook
-        $(flipbook).bookblock({
-            speed: 800,
-            shadowSides: 0.8,
-            shadowFlip: 0.4
-        });
+    function prevPage(bookNumber) {
+        currentPage[bookNumber]--;
+        if (currentPage[bookNumber] < 1) {
+            currentPage[bookNumber] = 3;
+        }
+        updateFlipbook(bookNumber);
     }
+
+    function updateFlipbook(bookNumber) {
+        document.getElementById('flip' + bookNumber).src = 'book' + bookNumber + '-page' + currentPage[bookNumber] + '.jpg';
+        playFlipSound();
+    }
+
+    function startAutoplay(bookNumber) {
+        autoplay[bookNumber] = setInterval(() => {
+            nextPage(bookNumber);
+        }, 3000); // Change page every 3 seconds
+    }
+
+    function pauseAutoplay(bookNumber) {
+        clearInterval(autoplay[bookNumber]);
+    }
+
+    function resumeAutoplay(bookNumber) {
+        startAutoplay(bookNumber);
+    }
+
+    function playFlipSound() {
+        let audio = new Audio('flip-sound.mp3'); // Make sure you have this file
+        audio.play();
+    }
+
+    function toggleFullscreen(previewId) {
+        let elem = document.getElementById(previewId);
+        if (!document.fullscreenElement) {
+            elem.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    function getBook(bookNumber) {
+        // Navigate to another page (replace 'getBookPage' with the actual page you want to navigate to)
+        window.location.href = 'getBookPage' + bookNumber + '.html';
+    }
+
+    // Auto-start the first preview section
+    showPreview(1);
 </script>
+
 </body>
 </html>
