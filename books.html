@@ -11,7 +11,7 @@
     <style>
         /* Overall Background */
         body {
-            background-color: #121212; /* Revert to dark background */
+            background-color: #121212; /* Dark background */
             color: #ffffff; /* Light text color */
         }
 
@@ -20,6 +20,9 @@
             background-color: #f0f0f0; /* Light background for book section */
             padding: 20px;
             border-radius: 10px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
         }
 
         /* Book Cards */
@@ -104,6 +107,7 @@
             padding: 20px;
             margin-top: 20px;
             border-radius: 10px;
+            display: none; /* Initially hidden */
         }
 
         .flipbook, .bb-item {
@@ -227,172 +231,106 @@
                     <div class="author-info">
                         <img id="author-pic" src="" alt="Author Picture">
                         <div>
-                            <h3 id="author-name">Author Name</h3>
-                            <p id="author-bio">Author Bio...</p>
-                            <p id="book-description">Book Description...</p>
-                            <p id="publication-date">Publication Date: </p>
-                        </div>
-                    </div>
-                </section>
+    <h3 id="author-name">Author Name</h3>
+    <p class="book-description" id="book-description">Book description goes here...</p>
+    <p class="publication-date" id="publication-date">Published on: Date</p>
+</div>
+</div>
+</section>
+</div>
+</div>
 
-            </div>
-        </div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquerypp.custom.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.bookblock.js"></script>
+<script>
+    // Book details data
+    const books = {
+        1: {
+            title: "My Experience At The University of Dey Play",
+            description: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour...",
+            authorName: "Jay",
+            authorPic: "https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg",
+            publicationDate: "August 2024",
+            content: [
+                "Page 1: Once upon a time in Lagos...",
+                "Page 2: The journey continued with excitement...",
+                "Page 3: Challenges arose, but we persevered...",
+                "Page 4: And so the story ends, but the adventure continues..."
+            ]
+        },
+        2: {
+            title: "Book Title 2",
+            description: "A thrilling tale of mystery and suspense...",
+            authorName: "Author 2",
+            authorPic: "path/to/author2-pic.jpg",
+            publicationDate: "July 2024",
+            content: [
+                "Page 1: It was a dark and stormy night...",
+                "Page 2: The mystery deepened as the clues were uncovered...",
+                "Page 3: The suspense was palpable...",
+                "Page 4: The thrilling conclusion left everyone in awe..."
+            ]
+        },
+        3: {
+            title: "Book Title 3",
+            description: "An inspiring journey of love and resilience...",
+            authorName: "Author 3",
+            authorPic: "path/to/author3-pic.jpg",
+            publicationDate: "June 2024",
+            content: [
+                "Page 1: The sun rose on a new day...",
+                "Page 2: Love blossomed in the unlikeliest of places...",
+                "Page 3: Trials tested their resilience...",
+                "Page 4: But in the end, love prevailed..."
+            ]
+        },
+        4: {
+            title: "Book Title 4",
+            description: "A captivating story of adventure and discovery...",
+            authorName: "Author 4",
+            authorPic: "path/to/author4-pic.jpg",
+            publicationDate: "May 2024",
+            content: [
+                "Page 1: The adventure began in the heart of the jungle...",
+                "Page 2: Discovery after discovery revealed hidden secrets...",
+                "Page 3: The journey was fraught with danger...",
+                "Page 4: But in the end, the treasure was found..."
+            ]
+        }
+    };
 
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
+    // Function to show book details
+    function showBookDetails(bookId) {
+        const book = books[bookId];
+        document.getElementById('flipbook-section').style.display = 'block';
+        document.getElementById('author-name').innerText = book.authorName;
+        document.getElementById('author-pic').src = book.authorPic;
+        document.getElementById('book-description').innerText = book.description;
+        document.getElementById('publication-date').innerText = `Published on: ${book.publicationDate}`;
+        loadFlipbook(book.content);
+    }
 
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
-    </div>
+    // Function to load the flipbook
+    function loadFlipbook(pages) {
+        const flipbook = document.getElementById('flipbook');
+        flipbook.innerHTML = ''; // Clear previous content
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <!-- Book flip library -->
-    <script src="https://cdn.jsdelivr.net/npm/bookblock/js/jquery.bookblock.min.js"></script>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
+        pages.forEach((page, index) => {
+            const pageElement = document.createElement('div');
+            pageElement.className = 'bb-item';
+            pageElement.innerHTML = `<div class="bb-custom-side"><div>${page}</div></div>`;
+            flipbook.appendChild(pageElement);
         });
 
-        // Function to show book details and scroll to the preview section
-        function showBookDetails(bookId) {
-            const flipbookContainer = document.getElementById('flipbook');
-            const flipbookSection = document.getElementById('flipbook-section');
-            const authorPic = document.getElementById('author-pic');
-            const authorName = document.getElementById('author-name');
-            const authorBio = document.getElementById('author-bio');
-            const bookDescription = document.getElementById('book-description');
-            const publicationDate = document.getElementById('publication-date');
-
-            flipbookContainer.innerHTML = ''; // Clear previous pages
-
-            // Generate different content for each book
-            let pages = [];
-            switch (bookId) {
-                case 1:
-                    pages = [
-                        'https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg',
-                        'https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg',
-                        'https://i.postimg.cc/1XbGjrc6/Screenshot-20240512-162700-WPS-Office.jpg'
-                    ];
-                    authorPic.src = "path/to/author1-pic.jpg";
-                    authorName.textContent = "Jay";
-                    authorBio.textContent = "Jay is a well-known writer who brings humor and insight into the everyday life of Nigerian university students.";
-                    bookDescription.textContent = "This book captures the essence of the Nigerian university experience, with all its highs and lows.";
-                    publicationDate.textContent = "Publication Date: May 12, 2024";
-                    break;
-                case 2:
-                    pages = [
-                        'path/to/book2-page1.jpg',
-                        'path/to/book2-page2.jpg',
-                        'path/to/book2-page3.jpg'
-                    ];
-                    authorPic.src = "path/to/author2-pic.jpg";
-                    authorName.textContent = "Author Name 2";
-                    authorBio.textContent = "Author Bio 2...";
-                    bookDescription.textContent = "Book Description 2...";
-                    publicationDate.textContent = "Publication Date: Date 2";
-                    break;
-                case 3:
-                    pages = [
-                        'path/to/book3-page1.jpg',
-                        'path/to/book3-page2.jpg',
-                        'path/to/book3-page3.jpg'
-                    ];
-                    authorPic.src = "path/to/author3-pic.jpg";
-                    authorName.textContent = "Author Name 3";
-                    authorBio.textContent = "Author Bio 3...";
-                    bookDescription.textContent = "Book Description 3...";
-                    publicationDate.textContent = "Publication Date: Date 3";
-                    break;
-                case 4:
-                    pages = [
-                        'path/to/book4-page1.jpg',
-                        'path/to/book4-page2.jpg',
-                        'path/to/book4-page3.jpg'
-                    ];
-                    authorPic.src = "path/to/author4-pic.jpg";
-                    authorName.textContent = "Author Name 4";
-                    authorBio.textContent = "Author Bio 4...";
-                    bookDescription.textContent = "Book Description 4...";
-                    publicationDate.textContent = "Publication Date: Date 4";
-                    break;
-                default:
-                    break;
-            }
-
-            // Add pages to flipbook
-            pages.forEach((page) => {
-                const pageElement = document.createElement('div');
-                pageElement.classList.add('bb-item');
-                pageElement.innerHTML = `<img src="${page}" alt="Page">`;
-                flipbookContainer.appendChild(pageElement);
-            });
-
-            // Initialize flipbook
-            $(flipbookContainer).bookblock({
-                speed: 1000,
-                shadowSides: 0.8,
-                shadowFlip: 0.7,
-                autoplay: false,
-                nextEl: '#bb-nav-next',
-                prevEl: '#bb-nav-prev'
-            });
-
-            // Play flip sound for each page
-            document.querySelectorAll('.bb-item img').forEach((img) => {
-                img.addEventListener('click', () => {
-                    const flipSound = new Audio('/page-flip-47177.mp3');
-                    flipSound.play();
-                });
-            });
-
-            // Show the flipbook section
-            flipbookSection.style.display = 'block';
-            flipbookSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
+        // Initialize the flipbook
+        $(flipbook).bookblock({
+            speed: 800,
+            shadowSides: 0.8,
+            shadowFlip: 0.4
+        });
+    }
+</script>
 </body>
 </html>
