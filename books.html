@@ -172,6 +172,32 @@
             background-color: #555;
             color: #ddd;
         }
+
+        /* Dropdown menu styling */
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        #nav ul li {
+            position: relative;
+        }
+        #nav ul li ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #444;
+            padding: 0;
+            z-index: 1000;
+            min-width: 200px;
+        }
+        #nav ul li:hover > ul {
+            display: block;
+        }
+        #nav ul li ul li {
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -183,15 +209,19 @@
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Homepage</a></li>
-                    <li><a href="#">Articles/Short stories</a></li>
-                    <li><a href="#">Manuscript Submissions</a></li>
-                    <li><a href="#">Short stories/Articles submissions</a></li>
-                    <li><a href="#">Books to Movie</a></li>
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">WhatsApp Community</a></li>
-                    <li><a href="#">Nominate your Book</a></li>
-                    <li><a href="#">Creative Contests</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">More</a>
+                        <ul>
+                            <li><a href="#">Articles/Short stories</a></li>
+                            <li><a href="#">Manuscript Submissions</a></li>
+                            <li><a href="#">Short stories/Articles submissions</a></li>
+                            <li><a href="#">Books to Movie</a></li>
+                            <li><a href="#">Books</a></li>
+                            <li><a href="#">WhatsApp Community</a></li>
+                            <li><a href="#">Nominate your Book</a></li>
+                            <li><a href="#">Creative Contests</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">Signup</a></li>
                     <li><a href="#">Log in</a></li>
                 </ul>
@@ -249,231 +279,238 @@
                         <button onclick="nextPage()"> &gt; </button>
                     </div>
                     <audio id="page-flip-sound" src="/page-flip-47177.mp3"></audio>
-<button onclick="getBook()">Get Book</button>
-</div>
+                    <button onclick="getBook()">Get Book</button>
+                </div>
 
-<!-- Notification -->
-<div class="notification" id="login-notification" style="display:none;">
-    You're logged in as <span id="username"></span>
-</div>
+                <!-- Notification -->
+                <div class="notification" id="login-notification" style="display:none;">
+                    You're logged in as <span id="username"></span>
+                </div>
 
-<!-- Checkout Form -->
-<div id="checkout-form-container" class="checkout-form" style="display:none;">
-    <form>
-        <div class="text-left" style="color:red; font-family: Verdana; font-size: 30px;">SAMPLE CHECKOUT</div>
-        <h6>Note: Amount should be between $1 to $10,000 (USD), NGN100 to NGN5,000,000 and KSH100 to KSH5,000,000</h6>
-        <div class="row">
-            <div class="col-lg-4">
-                <label for="email">Email Address</label>
-                <input type="email" id="email-address" class="form-control" required /><br>
-            </div>
-            <div class="col-lg-4">
-                <label for="amount">Amount</label>
-                <input type="tel" id="amount" class="form-control" required /><br>
+                <!-- Checkout Form -->
+                <div id="checkout-form-container" class="checkout-form" style="display:none;">
+                    <form>
+                        <div class="text-left" style="color:red; font-family: Verdana; font-size: 30px;">SAMPLE CHECKOUT</div>
+                        <h6>Note: Amount should be between $1 to $10,000 (USD), NGN100 to NGN5,000,000 and KSH100 to KSH5,000,000</h6>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email-address" class="form-control" required /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="amount">Amount</label>
+                                <input type="tel" id="amount" class="form-control" required /><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="book-title-input">Book Title</label>
+                                <input type="text" id="book-title-input" class="form-control" required /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="first-name">First Name</label>
+                                <input type="text" id="first-name" class="form-control" /><br>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="last-name">Last Name</label>
+                                <input type="text" id="last-name" class="form-control" /><br>
+                            </div>
+                        </div>
+                        <div class="form-submit">
+                            <button type="button" onclick="SquadPay()" class="btn btn-danger">Check Out</button><br><br>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4">
-                <label for="first-name">First Name</label>
-                <input type="text" id="first-name" class="form-control" /><br>
-            </div>
-            <div class="col-lg-4">
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" class="form-control" /><br>
-            </div>
-        </div>
-        <div class="form-submit">
-            <button type="button" onclick="SquadPay()" class="btn btn-danger">Check Out</button><br><br>
-        </div>
-    </form>
-</div>
 
-</div>
-</div>
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+            </ul>
+            <p>&copy; 2024 9JAHOTBLOG. All rights reserved.</p>
+        </footer>
+    </div>
 
-<!-- Footer -->
-<footer id="footer">
-    <ul class="icons">
-        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-    </ul>
-    <p>&copy; 2024 9JAHOTBLOG. All rights reserved.</p>
-</footer>
+    <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
+    <script>
+        // Function to handle payment
+        function SquadPay() {
+            const squadInstance = new squad({
+                onClose: () => console.log("Widget closed"),
+                onLoad: () => console.log("Widget loaded successfully"),
+                onSuccess: () => console.log(`Linked successfully`),
+                key: "pk_b1b1d2d2db4868ced18ef2e08e013ac15a6b15be",
+                email: document.getElementById("email-address").value,
+                amount: document.getElementById("amount").value * 100,
+                currency_code: "NGN"
+            });
+            squadInstance.setup();
+            squadInstance.open();
+        }
 
-</div>
+        // Function to show book info in the popup
+        function showBookInfo(bookId) {
+            // Book details
+            const books = {
+                book1: {
+                    title: "My Experience At The University of Dey Play",
+                    cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
+                    summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...",
+                    author: "Kolade Philip Ogunlana",
+                    authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he....",
+                    authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
+                    previewPages: [
+                        "https://i.postimg.cc/zXNQkT1Y/1722753879279.jpg",
+                        "https://i.postimg.cc/1XGjQ3wd/1722753882901.jpg",
+                        "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
+                    ]
+                },
+                book2: {
+                    title: "Book 2 Title",
+                    cover: "assets/images/book2-cover.jpg",
+                    summary: "Summary of Book 2. A deep dive into the world of romance.",
+                    author: "Author 2",
+                    authorBio: "Author 2 bio goes here...",
+                    authorCover: "assets/images/author2.jpg",
+                    previewPages: [
+                        "assets/images/book2-page1.jpg",
+                        "assets/images/book2-page2.jpg",
+                        "assets/images/book2-page3.jpg"
+                    ]
+                },
+                book3: {
+                    title: "Book 3 Title",
+                    cover: "assets/images/book3-cover.jpg",
+                    summary: "Summary of Book 3. A gripping story of faith and redemption.",
+                    author: "Author 3",
+                    authorBio: "Author 3 bio goes here...",
+                    authorCover: "assets/images/author3.jpg",
+                    previewPages: [
+                        "assets/images/book3-page1.jpg",
+                        "assets/images/book3-page2.jpg",
+                        "assets/images/book3-page3.jpg"
+                    ]
+                },
+                book4: {
+                    title: "Book 4 Title",
+                    cover: "assets/images/book4-cover.jpg",
+                    summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
+                    author: "Author 4",
+                    authorBio: "Author 4 bio goes here...",
+                    authorCover: "assets/images/author4.jpg",
+                    previewPages: [
+                        "assets/images/book4-page1.jpg",
+                        "assets/images/book4-page2.jpg",
+                        "assets/images/book4-page3.jpg"
+                    ]
+                }
+            };
 
-<script src="https://checkout.squadco.com/widget/squad.min.js"></script>
-<script>
-    // Function to handle payment
-    function SquadPay() {
-        const squadInstance = new squad({
-            onClose: () => console.log("Widget closed"),
-            onLoad: () => console.log("Widget loaded successfully"),
-            onSuccess: () => console.log(`Linked successfully`),
-            key: "pk_b1b1d2d2db4868ced18ef2e08e013ac15a6b15be",
-            email: document.getElementById("email-address").value,
-            amount: document.getElementById("amount").value * 100,
-            currency_code: "NGN"
-        });
-        squadInstance.setup();
-        squadInstance.open();
-    }
+            const book = books[bookId];
+            if (book) {
+                document.getElementById("book-title").textContent = book.title;
+                document.getElementById("book-cover").src = book.cover;
+                document.getElementById("book-summary").textContent = book.summary;
+                document.getElementById("book-author").textContent = book.author;
+                document.getElementById("author-bio").textContent = book.authorBio;
+                document.getElementById("author-cover").src = book.authorCover;
+                document.getElementById("book-info-popup").style.display = "block";
+            }
+        }
 
-    // Function to show book info in the popup
-    function showBookInfo(bookId) {
-        // Book details
-        const books = {
-            book1: {
-                title: "My Experience At The University of Dey Play",
-                cover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                summary: "Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because...",
-                author: "Kolade Philip Ogunlana",
-                authorBio: "Kolade Philip Ogunlana is a Nigerian Author, storyteller, and creative professional. Born and raised in Lagos, Nigeria, he....",
-                authorCover: "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg",
-                previewPages: [
+        // Function to close the popup
+        function closePopup() {
+            document.getElementById("book-info-popup").style.display = "none";
+        }
+
+        // Function to start book preview
+        function startPreview() {
+            document.getElementById("book-info-popup").style.display = "none";
+            document.getElementById("book-preview").style.display = "block";
+            loadBookPages();
+        }
+
+        // Function to load book pages for preview
+        function loadBookPages() {
+            const bookPages = document.getElementById("book-pages");
+            bookPages.innerHTML = ""; // Clear previous content
+
+            // Add current book's pages
+            const currentBook = document.getElementById("book-title").textContent;
+            const books = {
+                "My Experience At The University of Dey Play": [
                     "https://i.postimg.cc/zXNQkT1Y/1722753879279.jpg",
                     "https://i.postimg.cc/1XGjQ3wd/1722753882901.jpg",
                     "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
-                ]
-            },
-            book2: {
-                title: "Book 2 Title",
-                cover: "assets/images/book2-cover.jpg",
-                summary: "Summary of Book 2. A deep dive into the world of romance.",
-                author: "Author 2",
-                authorBio: "Author 2 bio goes here...",
-                authorCover: "assets/images/author2.jpg",
-                previewPages: [
+                ],
+                "Book 2 Title": [
                     "assets/images/book2-page1.jpg",
                     "assets/images/book2-page2.jpg",
                     "assets/images/book2-page3.jpg"
-                ]
-            },
-            book3: {
-                title: "Book 3 Title",
-                cover: "assets/images/book3-cover.jpg",
-                summary: "Summary of Book 3. A gripping story of faith and redemption.",
-                author: "Author 3",
-                authorBio: "Author 3 bio goes here...",
-                authorCover: "assets/images/author3.jpg",
-                previewPages: [
+                ],
+                "Book 3 Title": [
                     "assets/images/book3-page1.jpg",
                     "assets/images/book3-page2.jpg",
                     "assets/images/book3-page3.jpg"
-                ]
-            },
-            book4: {
-                title: "Book 4 Title",
-                cover: "assets/images/book4-cover.jpg",
-                summary: "Summary of Book 4. A fantasy epic with incredible world-building.",
-                author: "Author 4",
-                authorBio: "Author 4 bio goes here...",
-                authorCover: "assets/images/author4.jpg",
-                previewPages: [
+                ],
+                "Book 4 Title": [
                     "assets/images/book4-page1.jpg",
                     "assets/images/book4-page2.jpg",
                     "assets/images/book4-page3.jpg"
                 ]
-            }
-        };
+            };
 
-        const book = books[bookId];
-        if (book) {
-            document.getElementById("book-title").textContent = book.title;
-            document.getElementById("book-cover").src = book.cover;
-            document.getElementById("book-summary").textContent = book.summary;
-            document.getElementById("book-author").textContent = book.author;
-            document.getElementById("author-bio").textContent = book.authorBio;
-            document.getElementById("author-cover").src = book.authorCover;
-            document.getElementById("book-info-popup").style.display = "block";
+            const pages = books[currentBook] || [];
+            pages.forEach((pageSrc, index) => {
+                const page = document.createElement("img");
+                page.src = pageSrc;
+                page.style.opacity = index === 0 ? "1" : "0"; // Show only the first page initially
+                bookPages.appendChild(page);
+            });
+
+            currentPageIndex = 0;
         }
-    }
 
-    // Function to close the popup
-    function closePopup() {
-        document.getElementById("book-info-popup").style.display = "none";
-    }
+        let currentPageIndex = 0;
 
-    // Function to start book preview
-    function startPreview() {
-        document.getElementById("book-info-popup").style.display = "none";
-        document.getElementById("book-preview").style.display = "block";
-        loadBookPages();
-    }
+        // Function to go to the next page
+        function nextPage() {
+            const pages = document.getElementById("book-pages").children;
+            if (currentPageIndex < pages.length - 1) {
+                pages[currentPageIndex].style.opacity = "0"; // Hide current page
+                currentPageIndex++;
+                pages[currentPageIndex].style.opacity = "1"; // Show next page
+            } else {
+                alert("You have reached the end of the preview.");
+            }
+        }
 
-    // Function to load book pages for preview
-    function loadBookPages() {
-        const bookPages = document.getElementById("book-pages");
-        bookPages.innerHTML = ""; // Clear previous content
+        // Function to go to the previous page
+        function prevPage() {
+            const pages = document.getElementById("book-pages").children;
+            if (currentPageIndex > 0) {
+                pages[currentPageIndex].style.opacity = "0"; // Hide current page
+                currentPageIndex--;
+                pages[currentPageIndex].style.opacity = "1"; // Show previous page
+            } else {
+                alert("You are on the first page.");
+            }
+        }
 
-        // Add current book's pages
-        const currentBook = document.getElementById("book-title").textContent;
-        const books = {
-            "My Experience At The University of Dey Play": [
-                "https://i.postimg.cc/zXNQkT1Y/1722753879279.jpg",
-                "https://i.postimg.cc/1XGjQ3wd/1722753882901.jpg",
-                "https://i.postimg.cc/1XqycsG5/Screenshot-20240512-162700-WPS-Office.jpg"
-            ],
-            "Book 2 Title": [
-                "assets/images/book2-page1.jpg",
-                "assets/images/book2-page2.jpg",
-                "assets/images/book2-page3.jpg"
-            ],
-            "Book 3 Title": [
-                "assets/images/book3-page1.jpg",
-                "assets/images/book3-page2.jpg",
-                "assets/images/book3-page3.jpg"
-            ],
-            "Book 4 Title": [
-                "assets/images/book4-page1.jpg",
-                "assets/images/book4-page2.jpg",
-                "assets/images/book4-page3.jpg"
-            ]
-        };
+        // Function to close the book preview
+        function closePreview() {
+            document.getElementById("book-preview").style.display = "none";
+        }
 
-        const pages = books[currentBook] || [];
-        pages.forEach((pageSrc, index) => {
-            const page = document.createElement("img");
-            page.src = pageSrc;
-            page.style.opacity = index === 0 ? "1" : "0"; // Show only the first page initially
-            bookPages.appendChild(page);
-        });
-
-        currentPageIndex = 0;
-    }
-
-    let currentPageIndex = 0;
-
-    // Function to go to the next page
-    function nextPage() {
-        const pages = document.getElementById("book-pages").children;
-        if (currentPageIndex < pages.length - 1) {
-    pages[currentPageIndex].style.opacity = "0"; // Hide current page
-    currentPageIndex++;
-    pages[currentPageIndex].style.opacity = "1"; // Show next page
-} else {
-    alert("You have reached the end of the preview.");
-}
-}
-
-// Function to go to the previous page
-function prevPage() {
-    const pages = document.getElementById("book-pages").children;
-    if (currentPageIndex > 0) {
-        pages[currentPageIndex].style.opacity = "0"; // Hide current page
-        currentPageIndex--;
-        pages[currentPageIndex].style.opacity = "1"; // Show previous page
-    } else {
-        alert("You are on the first page.");
-    }
-}
-
-// Function to close the book preview
-function closePreview() {
-    document.getElementById("book-preview").style.display = "none";
-}
-</script>
+        // Dark mode toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+    </script>
 </body>
 </html>
