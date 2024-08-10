@@ -1,29 +1,29 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>9jahotblog BOOK PAGE, Fantasy, Romance, Christian Fiction</title>
+    <title>9jahotblog BOOK PAGE - Fantasy, Romance, Christian Fiction</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="assets/css/main.css">
     <noscript><link rel="stylesheet" href="assets/css/noscript.css"></noscript>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Book flip library -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bookblock/css/bookblock.css">
     <style>
+        body {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
         .notification {
-            position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: static; /* Position it below the footer */
+            margin-top: 20px;
             background: #111;
             color: #fff;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
         }
-        /* Custom styles for the book store */
         .book-store {
             display: flex;
             justify-content: space-around;
@@ -36,6 +36,7 @@
             margin: 10px;
             width: 200px;
             text-align: center;
+            background-color: #1e1e1e;
         }
         .book img {
             width: 100%;
@@ -52,14 +53,8 @@
         .book-buttons {
             margin-top: 10px;
         }
-        .flipbook-container {
-            display: none;
-        }
         .flipbook, .bb-item {
             height: 400px;
-        }
-        .form-section {
-            display: none;
         }
         .dancing-button {
             animation: dance 0.5s infinite alternate;
@@ -68,25 +63,33 @@
             from { transform: translateY(0); }
             to { transform: translateY(-10px); }
         }
+        footer {
+            padding: 20px;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+        }
     </style>
 </head>
-<body class="is-preload landing">
+<body class="landing">
     <div id="page-wrapper">
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="#">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="index.html">Homepage</a></li>
+                    <li><a href="#">Manuscript Submission</a></li>
+                    <li><a href="#">Short Stories/Articles Submissions</a></li>
+                    <li><a href="#">Short Stories/Articles</a></li>
                     <li><a href="#">Books</a></li>
+                    <li><a href="#">Adapt Book to Movie</a></li>
+                    <li><a href="#">Creative Contests</a></li>
+                    <li><a href="#">Nominate your Book (Award)</a></li>
+                    <li><a href="#">Join the Team</a></li>
+                    <li><a href="#">Sign up</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </nav>
         </header>
@@ -141,17 +144,14 @@
                     <p>Book Profile: Lorem ipsum dolor sit amet...</p>
                     <div>
                         <button class="btn btn-secondary" onclick="previewBook()">Preview Book</button>
-                        <button class="btn btn-success" id="get-book-button" onclick="getBook()">Get Book</button>
+                        <button class="btn btn-success dancing-button" id="get-book-button" onclick="getBook()">Get Book</button>
                     </div>
                 </section>
 
                 <!-- Book Preview -->
                 <section class="flipbook-container" id="flipbook-section">
                     <div id="flipbook" class="bb-bookblock">
-                        <!-- Pages -->
-                        <div class="bb-item"><img src="path/to/page1.jpg" alt="Page 1"></div>
-                        <div class="bb-item"><img src="path/to/page2.jpg" alt="Page 2"></div>
-                        <div class="bb-item"><img src="path/to/page3.jpg" alt="Page 3"></div>
+                        <!-- Content will be dynamically injected based on the selected book -->
                     </div>
                 </section>
 
@@ -255,11 +255,9 @@
 
         // Function to show book details
         function showBookDetails(bookId) {
-            // Hide book store section
-            document.querySelector('.book-store').style.display = 'none';
-
-            // Update book details section based on bookId (use a switch or if-else for multiple books)
+            const bookDetailsSection = document.getElementById('book-details-section');
             let bookTitle, authorBio, bookProfile;
+
             switch (bookId) {
                 case 1:
                     bookTitle = 'Book Title 1';
@@ -285,24 +283,60 @@
                     break;
             }
 
-            // Display the book details
-            const detailsSection = document.getElementById('book-details-section');
-            detailsSection.querySelector('h2').textContent = bookTitle;
-            detailsSection.querySelector('p:nth-of-type(1)').textContent = 'Author Bio: ' + authorBio;
-            detailsSection.querySelector('p:nth-of-type(2)').textContent = 'Book Profile: ' + bookProfile;
-
-            // Show book details section
-            detailsSection.style.display = 'block';
+            bookDetailsSection.querySelector('h2').textContent = bookTitle;
+            bookDetailsSection.querySelector('p:nth-of-type(1)').textContent = 'Author Bio: ' + authorBio;
+            bookDetailsSection.querySelector('p:nth-of-type(2)').textContent = 'Book Profile: ' + bookProfile;
         }
 
         // Function to preview book
         function previewBook() {
-            // Hide book details section
-            document.getElementById('book-details-section').style.display = 'none';
+            const flipbookContainer = document.getElementById('flipbook');
+            flipbookContainer.innerHTML = ''; // Clear previous pages
 
-            // Show flipbook section
-            const flipbookSection = document.getElementById('flipbook-section');
-            flipbookSection.style.display = 'block';
+            // Generate different content for each book
+            const currentBookTitle = document.getElementById('book-details-section').querySelector('h2').textContent;
+            let pages = [];
+
+            switch (currentBookTitle) {
+                case 'Book Title 1':
+                    pages = [
+                        'path/to/book1-page1.jpg',
+                        'path/to/book1-page2.jpg',
+                        'path/to/book1-page3.jpg'
+                    ];
+                    break;
+                case 'Book Title 2':
+                    pages = [
+                        'path/to/book2-page1.jpg',
+                        'path/to/book2-page2.jpg',
+                        'path/to/book2-page3.jpg'
+                    ];
+                    break;
+                case 'Book Title 3':
+                    pages = [
+                        'path/to/book3-page1.jpg',
+                        'path/to/book3-page2.jpg',
+                        'path/to/book3-page3.jpg'
+                    ];
+                    break;
+                case 'Book Title 4':
+                    pages = [
+                        'path/to/book4-page1.jpg',
+                        'path/to/book4-page2.jpg',
+                        'path/to/book4-page3.jpg'
+                    ];
+                    break;
+                default:
+                    break;
+            }
+
+            // Add pages to flipbook
+            pages.forEach((page) => {
+                const pageElement = document.createElement('div');
+                pageElement.classList.add('bb-item');
+                pageElement.innerHTML = `<img src="${page}" alt="Page">`;
+                flipbookContainer.appendChild(pageElement);
+            });
 
             // Initialize flipbook
             $('#flipbook').bookblock({
@@ -318,9 +352,9 @@
                 }
             });
 
-            // Play flip sound
-            document.querySelectorAll('.bb-item').forEach((page) => {
-                page.addEventListener('flip', () => {
+            // Play flip sound for each page
+            document.querySelectorAll('.bb-item img').forEach((img) => {
+                img.addEventListener('click', () => {
                     const flipSound = new Audio('/page-flip-47177.mp3');
                     flipSound.play();
                 });
@@ -329,12 +363,6 @@
 
         // Function to get book and show form
         function getBook() {
-            // Hide flipbook section
-            document.getElementById('flipbook-section').style.display = 'none';
-
-            // Show form section
-            document.getElementById('form-section').style.display = 'block';
-
             // Update form's book title input
             const bookTitle = document.getElementById('book-details-section').querySelector('h2').textContent;
             document.getElementById('book-title').value = bookTitle;
