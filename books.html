@@ -65,10 +65,20 @@
             margin: 5px;
             border-radius: 5px;
             cursor: pointer;
+            animation: dance 1.5s infinite;
         }
 
         .book button:hover {
             background: #e43e3e;
+        }
+
+        @keyframes dance {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         /* Badges */
@@ -99,77 +109,48 @@
         }
 
         /* Preview Section */
-        .preview-container {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 600px;
-            height: 80%;
-            background: #000;
+        .preview-section {
+            background: #333;
             color: #fff;
-            z-index: 1000;
+            padding: 20px;
             border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            text-align: left;
         }
 
-        .preview-container.active {
-            display: block;
+        .preview-section h4 {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            color: #ff4d4d;
         }
 
-        .preview-container img {
+        .preview-section p {
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .preview-section img {
             width: 100%;
             height: auto;
-        }
-
-        .preview-container .text-page {
-            padding: 20px;
-            font-size: 1em;
-            line-height: 1.5em;
-            text-align: left;
-            background-color: #111;
             border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
-        .preview-controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
-
-        .preview-controls button {
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
             padding: 10px;
-            cursor: pointer;
-            border-radius: 50%;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
         }
 
-        .preview-controls button:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-
-        .close-preview {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4d4d;
-            border: none;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .close-preview:hover {
-            background: #e43e3e;
-        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -217,9 +198,17 @@
                         <div class="expected">Expected 2025</div> <!-- Added Expected Tag -->
                         <h3>My Experience At The University of Dey Play</h3>
                         <p>Author: Kolade Philip O.</p>
-                        <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
-                        <button onclick="showPreview('book1')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <!-- Preview Section -->
+                        <div class="preview-section">
+                            <h4>About the Author:</h4>
+                            <p>Kolade Philip O. is a Lagos-based writer and storyteller known for his humorous and relatable tales set against the vibrant backdrop of Nigerian university life.</p>
+                            <h4>Book Description:</h4>
+                            <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
+                            <img src="https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg" alt="Book 1 Preview Page" />
+                            <img src="assets/images/book1-page2.jpg" alt="Book 1 Preview Page 2" />
+                            <img src="assets/images/book1-page3.jpg" alt="Book 1 Preview Page 3" />
+                        </div>
                     </div>
 
                     <!-- Book 2 -->
@@ -227,9 +216,17 @@
                         <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Book Cover 2: letter to my father" />
                         <h3>Letter To My Father</h3>
                         <p>Author: Joy Daniel</p>
-                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination...</p>
-                        <button onclick="showPreview('book2')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <!-- Preview Section -->
+                        <div class="preview-section">
+                            <h4>About the Author:</h4>
+                            <p>Joy Daniel is an emerging voice in African literature, weaving personal and fictional narratives that resonate with readers across the continent and beyond.</p>
+                            <h4>Book Description:</h4>
+                            <p>Written in a single epistolary style, *Letter to My Father* is a blend of reality and imagination that captures the essence of a daughter's longing, reflection, and reconciliation. Through a series of heartfelt letters, Joy Daniel takes readers on an emotional journey of love, regret, and forgiveness.</p>
+                            <img src="assets/images/book2-page1.jpg" alt="Book 2 Preview Page 1" />
+                            <img src="assets/images/book2-page2.jpg" alt="Book 2 Preview Page 2" />
+                            <img src="assets/images/book2-page3.jpg" alt="Book 2 Preview Page 3" />
+                        </div>
                     </div>
 
                     <!-- Book 3 -->
@@ -237,177 +234,96 @@
                         <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
                         <h3>Bridges</h3>
                         <p>Author: Abraham Amusan</p>
-                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter). It comprises eight different poems, four features, and two different languages aside from the English language. This is his third book.</p>
-<button onclick="showPreview('book3')">Preview</button>
-<button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-</div>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <!-- Preview Section -->
+                        <div class="preview-section">
+                            <h4>About the Author:</h4>
+                            <p>Abraham Amusan, also known as "uglywriter," is a seasoned poet whose works have captivated audiences with their raw emotion and depth. His poetry often explores themes of connection, separation, and the human experience.</p>
+                            <h4>Book Description:</h4>
+                            <p>*Bridges* is a collection of poetry that spans languages and cultures. It includes eight original poems and four features, making it a rich tapestry of thoughts and emotions. This book is a testament to Amusan's ability to bridge gaps—between languages, people, and ideas.</p>
+                            <img src="assets/images/book3-page1.jpg" alt="Book 3 Preview Page 1" />
+                            <img src="assets/images/book3-page2.jpg" alt="Book 3 Preview Page 2" />
+                            <img src="assets/images/book3-page3.jpg" alt="Book 3 Preview Page 3" />
+                        </div>
+                    </div>
 
-<!-- Book 4 -->
-<div class="book">
-    <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
-    <div class="best-seller">Best Seller</div> <!-- Added Best Seller Tag -->
-    <h3>The Enchantress: Angela's Tale</h3>
-    <p>Author: Kolade Philip O.</p>
-    <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
-    <button onclick="showPreview('book4')">Preview</button>
-    <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-</div>
-</div>
-</div>
-</div>
+                    <!-- Book 4 -->
+                    <div class="book">
+                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
+                        <div class="best-seller">Best Seller</div> <!-- Added Best Seller Tag -->
+                        <h3>The Enchantress: Angela's Tale</h3>
+                        <p>Author: Kolade Philip O.</p>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <!-- Preview Section -->
+                        <div class="preview-section">
+                            <h4>About the Author:</h4>
+                            <p>Kolade Philip O. is a versatile author who explores the realms of fantasy, romance, and Christian fiction. His work often delves into themes of transformation, power, and faith, captivating readers with both depth and creativity.</p>
+                            <h4>Book Description:</h4>
+                            <p>In *The Enchantress: Angela's Tale,* Angela's journey from grief to power unfolds in a story of love, loss, and magic. As a widow turned enchantress, Angela navigates a world where faith and magic collide, leading to a transformative adventure that challenges her very beliefs.</p>
+                            <img src="assets/images/book4-page1.jpg" alt="Book 4 Preview Page 1" />
+                            <img src="assets/images/book4-page2.jpg" alt="Book 4 Preview Page 2" />
+                            <img src="assets/images/book4-page3.jpg" alt="Book 4 Preview Page 3" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!-- Preview Containers -->
-<div class="preview-container" id="book1-preview">
-    <button class="close-preview" onclick="closePreview()">X</button>
-    <div class="preview-controls">
-        <button onclick="prevPage('book1')"><</button>
-        <button onclick="nextPage('book1')">></button>
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li>
+                <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
+        </footer>
     </div>
-    <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Preview Page" />
-</div>
 
-<div class="preview-container" id="book2-preview">
-    <button class="close-preview" onclick="closePreview()">X</button>
-    <div class="preview-controls">
-        <button onclick="prevPage('book2')"><</button>
-        <button onclick="nextPage('book2')">></button>
-    </div>
-    <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Preview Page" />
-</div>
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-<div class="preview-container" id="book3-preview">
-    <button class="close-preview" onclick="closePreview()">X</button>
-    <div class="preview-controls">
-        <button onclick="prevPage('book3')"><</button>
-        <button onclick="nextPage('book3')">></button>
-    </div>
-    <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Preview Page" />
-</div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+        };
 
-<div class="preview-container" id="book4-preview">
-    <button class="close-preview" onclick="closePreview()">X</button>
-    <div class="preview-controls">
-        <button onclick="prevPage('book4')"><</button>
-        <button onclick="nextPage('book4')">></button>
-    </div>
-    <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Preview Page" />
-</div>
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-<!-- Notification -->
-<div class="notification" id="login-notification">
-    You're logged in as <span id="username"></span>
-</div>
-
-<!-- Footer -->
-<footer id="footer">
-    <ul class="icons">
-        <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-        <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-        <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-        <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-        <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-    </ul>
-    <ul class="copyright">
-        <li>&copy; 9jahotblog. All rights reserved.</li>
-        <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-    </ul>
-</footer>
-</div>
-
-<!-- Scripts -->
-<script src="assets/js/jquery.min.js"></script>
-<script src="assets/js/jquery.scrolly.min.js"></script>
-<script src="assets/js/jquery.dropotron.min.js"></script>
-<script src="assets/js/jquery.scrollex.min.js"></script>
-<script src="assets/js/browser.min.js"></script>
-<script src="assets/js/breakpoints.min.js"></script>
-<script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-        authDomain: "jahotblog-login.firebaseapp.com",
-        projectId: "jahotblog-login",
-        storageBucket: "jahotblog-login.appspot.com",
-        messagingSenderId: "661526730601",
-        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Check if user is signed in and display their info
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('username').textContent = user.displayName || 'User';
-            document.getElementById('login-notification').style.display = 'block';
-        } else {
-            document.getElementById('login-notification').style.display = 'none';
-        }
-    });
-
-    // Book Preview Logic
-    const bookPages = {
-        'book1': ['https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg', 'assets/images/book1-page2.jpg', 'assets/images/book1-page3.jpg', 'assets/images/book1-page4.jpg'],
-        'book2': ['assets/images/book2-page1.jpg', 'assets/images/book2-page2.jpg', 'assets/images/book2-page3.jpg', 'assets/images/book2-page4.jpg'],
-        'book3': ['assets/images/book3-page1.jpg', 'assets/images/book3-page2.jpg', 'assets/images/book3-page3.jpg', 'assets/images/book3-page4.jpg'],
-        'book4': ['assets/images/book4-page1.jpg', 'assets/images/book4-page2.jpg', 'assets/images/book4-page3.jpg', 'assets/images/book4-page4.jpg']
-    };
-
-    let currentPage = {
-        'book1': 0,
-        'book2': 0,
-        'book3': 0,
-        'book4': 0
-    };
-
-    function showPreview(bookId) {
-        currentPage[bookId] = 0;
-        updatePreview(bookId);
-        document.getElementById(bookId + '-preview').classList.add('active');
-    }
-
-    function closePreview() {
-        document.querySelectorAll('.preview-container').forEach(container => {
-            container.classList.remove('active');
+        // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
         });
-    }
-
-    function nextPage(bookId) {
-        if (currentPage[bookId] < bookPages[bookId].length - 1) {
-            currentPage[bookId]++;
-            updatePreview(bookId);
-            playPageFlipSound();
-        }
-    }
-
-    function prevPage(bookId) {
-        if (currentPage[bookId] > 0) {
-            currentPage[bookId]--;
-            updatePreview(bookId);
-            playPageFlipSound();
-        }
-    }
-
-    function updatePreview(bookId) {
-        const pageContent = bookPages[bookId][currentPage[bookId]];
-        const previewElement = document.getElementById(bookId + '-img');
-        if (pageContent.endsWith('.jpg') || pageContent.endsWith('.png')) {
-            previewElement.src = pageContent;
-            previewElement.classList.remove('text-page');
-        } else {
-            previewElement.textContent = pageContent;
-            previewElement.classList.add('text-page');
-        }
-    }
-
-    function playPageFlipSound() {
-        const audio = new Audio('/page-flip-47177.mp3');
-        audio.play();
-    }
-</script>
+    </script>
 </body>
 </html>
