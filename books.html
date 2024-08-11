@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -250,70 +252,227 @@
                                 <img src="assets/images/book1-page3.jpg" alt="Book 1 Page 3" />
                             </div>
                             <div class="preview-controls">
-                                <button onclick="changePage('book1', -1)">Previous</button>
-                                <button onclick="changePage('book1', 1)">Next</button>
+                                <button onclick="prevPage('book1')">❮ Previous</button>
+                                <button onclick="nextPage('book1')">Next ❯</button>
                             </div>
-                            <button class="close-preview" onclick="togglePreview('book1')">Close Preview</button>
+                            <button class="close-preview" onclick="closePreview('book1-preview')">Close Preview</button>
                         </div>
                     </div>
 
-                    <!-- Additional Books -->
-                    <!-- Repeat the book structure for more books as needed -->
+                    <!-- Book 2 -->
+                    <div class="book">
+                        <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Letter to My Father Cover" />
+                        <h3>Letter To My Father</h3>
+                        <p>Author: Joy Daniel</p>
+                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <button onclick="togglePreview('book2')">Preview</button>
+                        
+                        <!-- Preview Section for Book 2 -->
+                        <div id="book2-preview" class="preview-content">
+                            <div id="book2-page1" class="preview-page active">
+                                <div class="author-info">
+                                    <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Author Photo" />
+                                    <h4>Joy Daniel</h4>
+                                </div>
+                                <p>Joy Daniel is a talented writer known for her emotive and engaging storytelling. With a background in literature, she brings a unique voice to her works...</p>
+                            </div>
+                            <div id="book2-page2" class="preview-page">
+                                <img src="assets/images/book2-page1.jpg" alt="Book 2 Page 1" />
+                            </div>
+                            <div id="book2-page3" class="preview-page">
+                                <img src="assets/images/book2-page2.jpg" alt="Book 2 Page 2" />
+                            </div>
+                            <div id="book2-page4" class="preview-page">
+                                <img src="assets/images/book2-page3.jpg" alt="Book 2 Page 3" />
+                            </div>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book2')">❮ Previous</button>
+                                <button onclick="nextPage('book2')">Next ❯</button>
+                            </div>
+                            <button class="close-preview" onclick="closePreview('book2-preview')">Close Preview</button>
+                        </div>
+                    </div>
 
+                    <!-- Book 3 -->
+                    <div class="book">
+                        <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
+                        <h3>Bridges</h3>
+                        <p>Author: Abraham Amusan</p>
+                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <button onclick="togglePreview('book3')">Preview</button>
+                        
+                        <!-- Preview Section for Book 3 -->
+                        <div id="book3-preview" class="preview-content">
+                            <div id="book3-page1" class="preview-page active">
+                                <div class="author-info">
+                                    <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Author Photo" />
+                                    <h4>Abraham Amusan</h4>
+                                </div>
+                                <p>Abraham Amusan, also known as "uglywriter," is a poet and storyteller with a deep passion for exploring complex emotions and themes...</p>
+                            </div>
+                            <div id="book3-page2" class="preview-page">
+                                <img src="assets/images/book3-page1.jpg" alt="Book 3 Page 1" />
+                            </div>
+                            <div id="book3-page3" class="preview-page">
+                                <img src="assets/images/book3-page2.jpg" alt="Book 3 Page 2" />
+                            </div>
+                            <div id="book3-page4" class="preview-page">
+                                <img src="assets/images/book3-page3.jpg" alt="Book 3 Page 3" />
+                            </div>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book3')">❮ Previous</button>
+                                <button onclick="nextPage('book3')">Next ❯</button>
+                            </div>
+                            <button class="close-preview" onclick="closePreview('book3-preview')">Close Preview</button>
+                        </div>
+                    </div>
+
+                    <!-- Book 4 -->
+                    <div class="book">
+                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
+                        <div class="best-seller">Best Seller</div>
+                        <h3>The Enchantress: Angela's Tale</h3>
+                        <p>Author: Kolade Philip O.</p>
+                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <button onclick="togglePreview('book4')">Preview</button>
+                        
+                        <!-- Preview Section for Book 4 -->
+                        <div id="book4-preview" class="preview-content">
+                            <div id="book4-page1" class="preview-page active">
+                                <div class="author-info">
+                                    <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="Author Photo" />
+                                    <h4>Kolade Philip Ogunlana</h4>
+                                </div>
+                                <p>Kolade Philip Ogunlana returns with another epic tale. In this story, Angela's journey takes center stage as she uncovers her powers and faces formidable challenges...</p>
+                            </div>
+                            <div id="book4-page2" class="preview-page">
+                                <img src="assets/images/book4-page1.jpg" alt="Book 4 Page 1" />
+                            </div>
+                            <div id="book4-page3" class="preview-page">
+                                <img src="assets/images/book4-page2.jpg" alt="Book 4 Page 2" />
+                            </div>
+                            <div id="book4-page4" class="preview-page">
+                                <img src="assets/images/book4-page3.jpg" alt="Book 4 Page 3" />
+                            </div>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book4')">❮ Previous</button>
+                                <button onclick="nextPage('book4')">Next ❯</button>
+                            </div>
+                            <button class="close-preview" onclick="closePreview('book4-preview')">Close Preview</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
 
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
-                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
             </ul>
             <ul class="copyright">
-                <li>&copy; 9JAHOTBLOG. All rights reserved.</li><li>Design: <a href="https://9jahotblog.github.io">9JAHOTBLOG</a></li>
+                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
             </ul>
         </footer>
-
-    </div>
-
-    <!-- Notification -->
-    <div class="notification" id="notification">
-        You clicked the button!
     </div>
 
     <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
     <script>
-        // Toggle Preview Functionality
+        // Book Preview Logic
         function togglePreview(bookId) {
-            var previewSection = document.getElementById(bookId + '-preview');
-            previewSection.classList.toggle('active');
+            const previewElement = document.getElementById(`${bookId}-preview`);
+            previewElement.classList.toggle('active');
+            resetPreviewPages(bookId);
         }
 
-        // Change Preview Page
-        function changePage(bookId, direction) {
-            var activePage = document.querySelector('#' + bookId + '-preview .preview-page.active');
-            var allPages = document.querySelectorAll('#' + bookId + '-preview .preview-page');
-            var currentIndex = Array.prototype.indexOf.call(allPages, activePage);
+        function resetPreviewPages(bookId) {
+            const previewPages = document.querySelectorAll(`#${bookId}-preview .preview-page`);
+            previewPages.forEach(page => page.classList.remove('active'));
+            previewPages[0].classList.add('active');  // Start with the first page
+        }
 
-            var newIndex = currentIndex + direction;
+        function nextPage(bookId) {
+            const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
+            const nextPage = currentActivePage.nextElementSibling;
 
-            if (newIndex >= 0 && newIndex < allPages.length) {
-                activePage.classList.remove('active');
-                allPages[newIndex].classList.add('active');
+            if (nextPage && nextPage.classList.contains('preview-page')) {
+                currentActivePage.classList.remove('active');
+                nextPage.classList.add('active');
             }
         }
 
-        // Example notification function
-        function showNotification() {
-            var notification = document.getElementById('notification');
-            notification.style.display = 'block';
-            setTimeout(function () {
-                notification.style.display = 'none';
-            }, 3000);
+        function prevPage(bookId) {
+            const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
+            const prevPage = currentActivePage.previousElementSibling;
+
+            if (prevPage && prevPage.classList.contains('preview-page')) {
+                currentActivePage.classList.remove('active');
+                prevPage.classList.add('active');
+            }
         }
+
+        function closePreview(previewId) {
+            const previewElement = document.getElementById(previewId);
+            previewElement.classList.remove('active');
+        }
+
+        // Firebase Authentication for login notification
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-38V179JCWD');
     </script>
 </body>
 </html>
