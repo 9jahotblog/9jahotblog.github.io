@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
-        /* Base styles */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -35,8 +34,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            position: relative;
-            transition: transform 0.3s ease-in-out;
+            position: relative; /* For badge positioning */
         }
 
         .book img {
@@ -44,8 +42,7 @@
             height: auto;
             border-radius: 5px;
             margin-bottom: 10px;
-            border: 5px solid #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
         }
 
         .book h3 {
@@ -67,36 +64,35 @@
             margin: 5px;
             border-radius: 5px;
             cursor: pointer;
+            animation: dance 1s infinite alternate; /* Dance effect */
         }
 
         .book button:hover {
             background: #e43e3e;
         }
 
-        /* "Best Seller" and "Expected 2025" Icons */
-        .book .badge {
+        @keyframes dance {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(10px); }
+        }
+
+        .badge {
             position: absolute;
             top: 10px;
             left: 10px;
-            background: #ffdf00;
+            background: #ffcc00;
             color: #000;
             padding: 5px 10px;
-            font-size: 0.75em;
+            border-radius: 5px;
+            font-size: 0.8em;
             font-weight: bold;
-            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-        .book .badge.bestseller {
-            background: #ff4d4d;
-            color: #fff;
+        .expected {
+            background: #00ccff;
         }
 
-        .book .badge.expected {
-            background: #007bff;
-            color: #fff;
-        }
-
-        /* Book Preview */
         .preview-container {
             display: none;
             position: fixed;
@@ -157,50 +153,37 @@
             background: #e43e3e;
         }
 
-        /* Theme Toggle */
         .theme-toggle {
-            cursor: pointer;
-            margin-bottom: 20px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            background: #555;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #444;
             color: #fff;
-            text-align: center;
-            font-size: 1em;
-            transition: background-color 0.3s;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        /* Book Flip Animation */
-        .flip-container {
-            perspective: 1000px;
+        .theme-toggle:hover {
+            background: #555;
         }
 
-        .flipper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
+        @keyframes colorChange {
+            0% { background: #ff4d4d; }
+            10% { background: #ffcc00; }
+            20% { background: #00ccff; }
+            30% { background: #cc00ff; }
+            40% { background: #00ffcc; }
+            50% { background: #ff9900; }
+            60% { background: #66ff66; }
+            70% { background: #ff6699; }
+            80% { background: #6699ff; }
+            90% { background: #ffcc66; }
+            100% { background: #ff4d4d; }
         }
 
-        .flipper.flipped {
-            transform: rotateY(180deg);
-        }
-
-        /* Get Book Button Dance */
-        .get-book {
-            position: relative;
-            animation: dance 1s infinite;
-        }
-
-        @keyframes dance {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(10px);
-            }
+        .theme-animate {
+            animation: colorChange 10s infinite;
         }
     </style>
 </head>
@@ -244,159 +227,112 @@
                 <h2>Featured.</h2>
                 <div class="library">
                     <!-- Book 1 -->
-                    <div class="book" id="book1-section">
+                    <div class="book">
                         <img src="https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg" alt="Unideyplay book Cover" />
                         <h3>My Experience At The University of Dey Play</h3>
                         <p>Author: Kolade Philip O.</p>
                         <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
+                        <div class="theme-toggle" onclick="toggleTheme('book1')">🌙</div>
+                        <div class="badge expected">Expected 2025</div>
                         <button onclick="showPreview('book1')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'" class="get-book">Get Book</button>
-                        <div class="expected-icon">Expected 2025</div>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
                     <!-- Book 2 -->
-                    <div class="book" id="book2-section">
+                    <div class="book">
                         <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Book Cover 2: letter to my father" />
                         <h3>Letter To My Father</h3>
                         <p>Author: Joy Daniel</p>
-                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father who, days to her adorable birthday, travels on a distant years-spanning journey. During his unpremeditated departure and absence, Angela, the main character recounts the mixture of ugly and beautiful experiences in a piece to her father. Her father's odyssey has really brought to the fore the true visages of friends, relatives and even foes. Will they overcome against all odds?</p>
+                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father who, days to her adorable birthday, travels on a distant years-spanning journey. During his unpremeditated departure and absence, Angela, the main character, recounts the mixture of ugly and beautiful experiences in a piece to her father. Her father's odyssey transforms the fabric of her existence, and she hopes he receives the message at the journey's end.</p>
+                        <div class="theme-toggle" onclick="toggleTheme('book2')">🌙</div>
                         <button onclick="showPreview('book2')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'" class="get-book">Get Book</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
                     <!-- Book 3 -->
-                    <div class="book" id="book3-section">
-                        <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
-                        <h3>Bridges</h3>
-                        <p>Author: Abraham Amusan</p>
-                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems, four features and two different languages aside from the English language. This is his third book.</p>
-                        <button onclick="showPreview('book3')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'" class="get-book">Get Book</button>
-                    </div>
-                    <!-- Book 4 -->
-                    <div class="book" id="book4-section">
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The enchantress Cover" />
+                    <div class="book">
+                        <img src="https://i.postimg.cc/MTbmk68d/IMG-20230621-WA0007.jpg" alt="The Enchantress: Angela's Tale Book Cover" />
                         <h3>The Enchantress: Angela's Tale</h3>
-                        <p>Author: Kolade Philip O.</p>
-                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress. After her husband Anthony's death and the subsequent tragic loss of her daughters Taiwo and Kehinde, Angela is offered the chance to become the next enchantress. This role imbues her with the ability to control destinies and devour humans. But it also comes with a heavy burden and the temptation of vengeance. Did her Joy as an enchantress become short-lived too? Find out. There are lessons, betrayals, and gripping plot twists.</p>
-                        <button onclick="showPreview('book4')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'" class="get-book">Get Book</button>
-                        <div class="best-seller-icon">Best Seller</div>
+                        <p>Author: Maria U.</p>
+                        <p>The Enchantress: Angela's Tale is a story that delves into a world of mystique, power, and destiny. Angela discovers her latent powers as an enchantress and is thrown into a battle between light and darkness. With the fate of her world hanging in the balance, Angela must harness her powers, uncover the secrets of her past, and rise to become the savior of her people.</p>
+                        <div class="theme-toggle" onclick="toggleTheme('book3')">🌙</div>
+                        <div class="badge">Best Seller</div>
+                        <button onclick="showPreview('book3')">Preview</button>
+                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Preview Container -->
-        <div class="preview-container" id="book1-preview">
+        <!-- Preview Section -->
+        <div id="preview-container" class="preview-container">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
-                <button onclick="prevPage('book1')"><</button>
-                <button onclick="nextPage('book1')">></button>
+                <button onclick="prevPage()">&#10094; Prev</button>
+                <button onclick="nextPage()">Next &#10095;</button>
             </div>
-            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
-        </div>
-        <div class="preview-container" id="book2-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book2')"><</button>
-                <button onclick="nextPage('book2')">></button>
-            </div>
-            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
-        </div>
-        <div class="preview-container" id="book3-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book3')"><</button>
-                <button onclick="nextPage('book3')">></button>
-            </div>
-            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
-        </div>
-        <div class="preview-container" id="book4-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book4')"><</button>
-                <button onclick="nextPage('book4')">></button>
-            </div>
-            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
-        </div>
-
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
+            <img id="preview-image" src="" alt="Book Preview" />
+            <audio id="flip-sound" src="flip-sound.mp3"></audio>
         </div>
 
         <!-- Footer -->
         <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
+            <div class="inner">
+                <h2>9JAHOTBLOG</h2>
+                <p>Explore the best of Nigerian literature and discover new worlds through stories and creative writing.</p>
+            </div>
         </footer>
-    </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+        <!-- Notification -->
+        <div class="notification">Logged in successfully!</div>
 
-    <!-- Custom Script for Book Preview -->
-    <script>
-        function showPreview(bookId) {
-            document.getElementById(bookId + '-preview').style.display = 'block';
-        }
+        <script>
+            function showPreview(bookId) {
+                const previewContainer = document.getElementById('preview-container');
+                const previewImage = document.getElementById('preview-image');
+                const flipSound = document.getElementById('flip-sound');
+                previewContainer.classList.add('active');
+                
+                // Add book-specific preview logic here
+                if (bookId === 'book1') {
+                    previewImage.src = 'path_to_your_preview_image1.jpg';
+                } else if (bookId === 'book2') {
+                    previewImage.src = 'path_to_your_preview_image2.jpg';
+                } else if (bookId === 'book3') {
+                    previewImage.src = 'path_to_your_preview_image3.jpg';
+                }
 
-        function closePreview() {
-            var previews = document.getElementsByClassName('preview-container');
-            for (var i = 0; i < previews.length; i++) {
-                previews[i].style.display = 'none';
+                flipSound.play();
             }
-        }
 
-        function prevPage(bookId) {
-            // Logic to change to the previous page in the preview
-        }
+            function closePreview() {
+                const previewContainer = document.getElementById('preview-container');
+                previewContainer.classList.remove('active');
+            }
 
-        function nextPage(bookId) {
-            // Logic to change to the next page in the preview
-        }
+            function toggleTheme(bookId) {
+                const book = document.querySelector('.book');
+                book.classList.toggle('theme-animate');
+            }
 
-        // Adding the theme toggle feature
-        function toggleTheme() {
-            const colors = ['#FF6347', '#4682B4', '#6A5ACD', '#D2691E', '#32CD32', '#FFD700', '#FF4500', '#00CED1', '#FF1493', '#BDB76B'];
-            let index = 0;
+            function prevPage() {
+                const flipSound = document.getElementById('flip-sound');
+                flipSound.play();
+                // Logic to go to the previous page in the preview
+            }
 
-            setInterval(() => {
-                document.body.style.backgroundColor = colors[index];
-                index = (index + 1) % colors.length;
-            }, 1000);
-        }
-        toggleTheme();
+            function nextPage() {
+                const flipSound = document.getElementById('flip-sound');
+                flipSound.play();
+                // Logic to go to the next page in the preview
+            }
 
-        // Animate 'Get Book' button
-        document.querySelectorAll('.get-book').forEach(button => {
-            button.addEventListener('mouseover', () => {
-                button.style.transform = 'scale(1.05)';
-                button.style.transition = 'transform 0.2s ease-in-out';
+            document.addEventListener('DOMContentLoaded', function () {
+                const notification = document.querySelector('.notification');
+                notification.style.display = 'block';
+                setTimeout(function () {
+                    notification.style.display = 'none';
+                }, 3000);
             });
-            button.addEventListener('mouseout', () => {
-                button.style.transform = 'scale(1)';
-            });
-        });
-
-        // Custom script for profile page notifications
-        window.onload = function() {
-            const username = "Philip";  // Replace with dynamic username if applicable
-            document.getElementById('username').textContent = username;
-        };
-    </script>
+        </script>
+    </div>
 </body>
 </html>
