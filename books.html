@@ -5,8 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" />
-    </noscript>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <style>
         .notification {
             position: fixed;
@@ -102,18 +101,15 @@
         /* Preview Container */
         .preview-container {
             display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 80%;
+            position: relative;
+            width: 100%;
             background: #000;
             color: #fff;
-            z-index: 1000;
             border-radius: 10px;
-            overflow: hidden;
+            margin-top: 20px;
+            padding: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
         }
 
         .preview-container.active {
@@ -121,28 +117,29 @@
         }
 
         .preview-container img {
-            width: 100%;
+            width: 80%;
             height: auto;
+            max-height: 300px;
+            border-radius: 5px;
+            margin-bottom: 10px;
         }
 
         .preview-controls {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
             display: flex;
             justify-content: space-between;
+            margin-top: 10px;
         }
 
         .preview-controls button {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.2);
             border: none;
             padding: 10px;
             cursor: pointer;
+            border-radius: 5px;
         }
 
         .preview-controls button:hover {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.5);
         }
 
         .close-preview {
@@ -170,16 +167,17 @@
             to { transform: translateY(-5px); }
         }
 
-        /* Theme Toggle */
+        /* Theme Toggle Icon */
         .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 1.2em;
             color: #007bff;
-            margin-top: 5px;
-            display: inline-block;
-            border: 1px solid #007bff;
-            border-radius: 5px;
             padding: 5px;
+            border-radius: 50%;
+            border: 1px solid #007bff;
         }
 
         .theme-toggle:hover {
@@ -235,9 +233,20 @@
                         <p>Author: Kolade Philip O.</p>
                         <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
                         <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        <button onclick="showPreview('book1')">Preview</button>
-                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
+                        <button onclick="togglePreview('book1')">Preview</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">🎨</span>
+                        
+                        <!-- Preview Container for Book 1 -->
+                        <div class="preview-container" id="book1-preview">
+                            <button class="close-preview" onclick="closePreview('book1-preview')">X</button>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book1')">❮</button>
+                                <button onclick="nextPage('book1')">❯</button>
+                            </div>
+                            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
+                        </div>
                     </div>
+
                     <!-- Book 2 -->
                     <div class="book">
                         <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Letter to My Father Cover" />
@@ -245,8 +254,18 @@
                         <p>Author: Joy Daniel</p>
                         <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father...</p>
                         <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        <button onclick="showPreview('book2')">Preview</button>
-                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
+                        <button onclick="togglePreview('book2')">Preview</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">🎨</span>
+                        
+                        <!-- Preview Container for Book 2 -->
+                        <div class="preview-container" id="book2-preview">
+                            <button class="close-preview" onclick="closePreview('book2-preview')">X</button>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book2')">❮</button>
+                                <button onclick="nextPage('book2')">❯</button>
+                            </div>
+                            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
+                        </div>
                     </div>
 
                     <!-- Book 3 -->
@@ -256,8 +275,18 @@
                         <p>Author: Abraham Amusan</p>
                         <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems...</p>
                         <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        <button onclick="showPreview('book3')">Preview</button>
-                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
+                        <button onclick="togglePreview('book3')">Preview</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">🎨</span>
+                        
+                        <!-- Preview Container for Book 3 -->
+                        <div class="preview-container" id="book3-preview">
+                            <button class="close-preview" onclick="closePreview('book3-preview')">X</button>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book3')">❮</button>
+                                <button onclick="nextPage('book3')">❯</button>
+                            </div>
+                            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
+                        </div>
                     </div>
 
                     <!-- Book 4 -->
@@ -268,74 +297,21 @@
                         <p>Author: Kolade Philip O.</p>
                         <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
                         <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
-                        <button onclick="showPreview('book4')">Preview</button>
-                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
+                        <button onclick="togglePreview('book4')">Preview</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">🎨</span>
+                        
+                        <!-- Preview Container for Book 4 -->
+                        <div class="preview-container" id="book4-preview">
+                            <button class="close-preview" onclick="closePreview('book4-preview')">X</button>
+                            <div class="preview-controls">
+                                <button onclick="prevPage('book4')">❮</button>
+                                <button onclick="nextPage('book4')">❯</button>
+                            </div>
+                            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- In-Page Preview Section -->
-        <div id="preview-section" class="wrapper style2">
-            <div class="container">
-                <h2>Book Previews</h2>
-                <div class="preview-carousel">
-                    <div class="preview-slide" id="preview1">
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="Book 1 Page 1" />
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="Book 1 Page 2" />
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="Book 1 Page 3" />
-                    </div>
-                    <div class="preview-slide" id="preview2">
-                        <img src="assets/images/book2-page1.jpg" alt="Book 2 Page 1" />
-                        <img src="assets/images/book2-page2.jpg" alt="Book 2 Page 2" />
-                        <img src="assets/images/book2-page3.jpg" alt="Book 2 Page 3" />
-                    </div>
-                    <div class="preview-slide" id="preview3">
-                        <img src="assets/images/book3-page1.jpg" alt="Book 3 Page 1" />
-                        <img src="assets/images/book3-page2.jpg" alt="Book 3 Page 2" />
-                        <img src="assets/images/book3-page3.jpg" alt="Book 3 Page 3" />
-                    </div>
-                    <div class="preview-slide" id="preview4">
-                        <img src="assets/images/book4-page1.jpg" alt="Book 4 Page 1" />
-                        <img src="assets/images/book4-page2.jpg" alt="Book 4 Page 2" />
-                        <img src="assets/images/book4-page3.jpg" alt="Book 4 Page 3" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Preview Container for Modal Style -->
-        <div class="preview-container" id="book1-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book1')"><</button>
-                <button onclick="nextPage('book1')">></button>
-            </div>
-            <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" id="book1-img" alt="Book 1 Page 1" />
-        </div>
-        <div class="preview-container" id="book2-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book2')"><</button>
-                <button onclick="nextPage('book2')">></button>
-            </div>
-            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
-        </div>
-        <div class="preview-container" id="book3-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book3')"><</button>
-                <button onclick="nextPage('book3')">></button>
-            </div>
-            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
-        </div>
-        <div class="preview-container" id="book4-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book4')"><</button>
-                <button onclick="nextPage('book4')">></button>
-            </div>
-            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
         </div>
 
         <!-- Notification -->
@@ -379,7 +355,7 @@
                 messagingSenderId: "661526730601",
                 appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
             };
-        
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
@@ -424,22 +400,21 @@
             'book4': 0
         };
 
-        function showPreview(bookId) {
-            currentPage[bookId] = 0;
-            document.getElementById(bookId + '-img').src = bookPages[bookId][0];
-            document.getElementById(bookId + '-preview').classList.add('active');
+        function togglePreview(bookId) {
+            const previewContainer = document.getElementById(`${bookId}-preview`);
+            previewContainer.classList.toggle('active');
+            currentPage[bookId] = 0; // Reset to first page
+            document.getElementById(`${bookId}-img`).src = bookPages[bookId][0];
         }
 
-        function closePreview() {
-            document.querySelectorAll('.preview-container').forEach(container => {
-                container.classList.remove('active');
-            });
+        function closePreview(previewId) {
+            document.getElementById(previewId).classList.remove('active');
         }
 
         function nextPage(bookId) {
             if (currentPage[bookId] < bookPages[bookId].length - 1) {
                 currentPage[bookId]++;
-                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                document.getElementById(`${bookId}-img`).src = bookPages[bookId][currentPage[bookId]];
                 playPageFlipSound();
             }
         }
@@ -447,7 +422,7 @@
         function prevPage(bookId) {
             if (currentPage[bookId] > 0) {
                 currentPage[bookId]--;
-                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                document.getElementById(`${bookId}-img`).src = bookPages[bookId][currentPage[bookId]];
                 playPageFlipSound();
             }
         }
@@ -474,15 +449,17 @@
             }, 300);
         }
     </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-38V179JCWD');
+    </script>
 </body>
 </html>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-38V179JCWD');
-</script> 
