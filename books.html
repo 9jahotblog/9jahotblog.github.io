@@ -100,7 +100,7 @@
 
         /* Preview Section */
         .preview-container {
-            display: none;
+            display: none; /* Hidden by default */
             position: fixed;
             top: 50%;
             left: 50%;
@@ -120,9 +120,16 @@
             display: block;
         }
 
-        .preview-container img {
+        .preview-container img, .preview-container .description {
             width: 100%;
             height: auto;
+        }
+
+        .preview-container .description {
+            padding: 20px;
+            text-align: left;
+            font-size: 1em;
+            line-height: 1.5;
         }
 
         .preview-controls {
@@ -225,21 +232,21 @@
 
                     <!-- Book 3 -->
                     <div class="book">
-                        <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
-                        <h3>Bridges</h3>
-                        <p>Author: Abraham Amusan</p>
-                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems, four features, and two different languages aside from the English language. This is his third book.</p>
+                        <img src="https://i.postimg.cc/zBD4S7Pb/IMG-20230203-WA0025.jpg" alt="Book Cover 3: The Queen's Reign" />
+                        <div class="best-seller">Best Seller</div> <!-- Added Best Seller Tag -->
+                        <h3>The Queen's Reign</h3>
+                        <p>Author: Victoria Adewale</p>
+                        <p>In a world where women are not meant to rule, Queen Zaria must fight for her throne, her people, and her life...</p>
                         <button onclick="showPreview('book3')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
 
                     <!-- Book 4 -->
                     <div class="book">
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
-                        <div class="best-seller">Best Seller</div> <!-- Added Best Seller Tag -->
-                        <h3>The Enchantress: Angela's Tale</h3>
-                        <p>Author: Kolade Philip O.</p>
-                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
+                        <img src="https://i.postimg.cc/dQmXtYZ2/IMG-20230301-WA0040.jpg" alt="Book Cover 4: Beyond The Veil" />
+                        <h3>Beyond The Veil</h3>
+                        <p>Author: Samuel Oluwatobi</p>
+                        <p>A thrilling tale of mystery, magic, and secrets long buried beneath the surface...</p>
                         <button onclick="showPreview('book4')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
@@ -247,146 +254,106 @@
             </div>
         </div>
 
-        <!-- Preview Containers -->
-        <div class="preview-container" id="book1-preview">
+        <!-- Preview Container -->
+        <div id="preview-container" class="preview-container">
             <button class="close-preview" onclick="closePreview()">X</button>
+            <img id="preview-image" src="" alt="Book Preview" />
+            <div id="preview-description" class="description" style="display:none;"></div>
             <div class="preview-controls">
-                <button onclick="prevPage('book1')"><</button>
-                <button onclick="nextPage('book1')">></button>
+                <button onclick="prevImage()">&#60;</button>
+                <button onclick="nextImage()">&#62;</button>
             </div>
-            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Preview Page" />
         </div>
 
-        <div class="preview-container" id="book2-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book2')"><</button>
-                <button onclick="nextPage('book2')">></button>
-            </div>
-            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Preview Page" />
-        </div>
-
-        <div class="preview-container" id="book3-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book3')"><</button>
-                <button onclick="nextPage('book3')">></button>
-            </div>
-            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Preview Page" />
-        </div>
-
-        <div class="preview-container" id="book4-preview">
-            <button class="close-preview" onclick="closePreview()">X</button>
-            <div class="preview-controls">
-                <button onclick="prevPage('book4')"><</button>
-                <button onclick="nextPage('book4')">></button>
-            </div>
-            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Preview Page" />
-        </div>
-
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li>
-                <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
+    <script>
+        const previews = {
+            book1: {
+                images: [
+                    'https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg',
+                    'https://i.postimg.cc/zvRfJbNg/IMG-20230301-WA0042.jpg', // additional images
+                    'https://i.postimg.cc/Z0x2W1XP/IMG-20230301-WA0043.jpg'
+                ],
+                description: 'My Experience At The University of Dey Play by Kolade Philip O. is a hilarious and insightful journey through the Nigerian university experience...'
+            },
+            book2: {
+                images: [
+                    'https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg',
+                    'https://i.postimg.cc/L5GrB1Vv/IMG-20221217-WA0037.jpg',
+                    'https://i.postimg.cc/qRhjNRzy/IMG-20221217-WA0036.jpg'
+                ],
+                description: 'Letter To My Father by Joy Daniel is a poignant and heartfelt exploration of family ties and personal identity...'
+            },
+            book3: {
+                images: [
+                    'https://i.postimg.cc/zBD4S7Pb/IMG-20230203-WA0025.jpg',
+                    'https://i.postimg.cc/vHDgsk9x/IMG-20230203-WA0026.jpg',
+                    'https://i.postimg.cc/XvWhdwmX/IMG-20230203-WA0027.jpg'
+                ],
+                description: 'The Queen\'s Reign by Victoria Adewale is a powerful story of courage, leadership, and resilience in a patriarchal society...'
+            },
+            book4: {
+                images: [
+                    'https://i.postimg.cc/dQmXtYZ2/IMG-20230301-WA0040.jpg',
+                    'https://i.postimg.cc/L5JhB1Zz/IMG-20230301-WA0041.jpg',
+                    'https://i.postimg.cc/KjR3Qd7J/IMG-20230301-WA0042.jpg'
+                ],
+                description: 'Beyond The Veil by Samuel Oluwatobi is a captivating narrative that blends fantasy with reality, revealing dark secrets and untold truths...'
             }
-        });
-
-        // Book Preview Logic
-        const bookPages = {
-            'book1': ['https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg', 'https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg', 'https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg'],
-            'book2': ['assets/images/book2-page1.jpg', 'assets/images/book2-page2.jpg', 'assets/images/book2-page3.jpg'],
-            'book3': ['assets/images/book3-page1.jpg', 'assets/images/book3-page2.jpg', 'assets/images/book3-page3.jpg'],
-            'book4': ['assets/images/book4-page1.jpg', 'assets/images/book4-page2.jpg', 'assets/images/book4-page3.jpg']
         };
 
-        let currentPage = {
-            'book1': 0,
-            'book2': 0,
-            'book3': 0,
-            'book4': 0
-        };
+        let currentBook = '';
+        let currentIndex = 0;
 
         function showPreview(bookId) {
-            currentPage[bookId] = 0;
-            document.getElementById(bookId + '-img').src = bookPages[bookId][0];
-            document.getElementById(bookId + '-preview').classList.add('active');
+            currentBook = bookId;
+            currentIndex = 0;
+            updatePreview();
+            document.getElementById('preview-container').classList.add('active');
         }
 
         function closePreview() {
-            document.querySelectorAll('.preview-container').forEach(container => {
-                container.classList.remove('active');
-            });
+            document.getElementById('preview-container').classList.remove('active');
         }
 
-        function nextPage(bookId) {
-            if (currentPage[bookId] < bookPages[bookId].length - 1) {
-                currentPage[bookId]++;
-                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
-                playPageFlipSound();
+        function updatePreview() {
+            const preview = previews[currentBook];
+            if (currentIndex < preview.images.length) {
+                document.getElementById('preview-image').src = preview.images[currentIndex];
+                document.getElementById('preview-image').style.display = 'block';
+                document.getElementById('preview-description').style.display = 'none';
+            } else {
+                document.getElementById('preview-image').style.display = 'none';
+                document.getElementById('preview-description').style.display = 'block';
+                document.getElementById('preview-description').textContent = preview.description;
             }
         }
 
-        function prevPage(bookId) {
-            if (currentPage[bookId] > 0) {
-                currentPage[bookId]--;
-                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
-                playPageFlipSound();
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updatePreview();
             }
         }
 
-        function playPageFlipSound() {
-            const audio = new Audio('/page-flip-47177.mp3');
-            audio.play();
+        function nextImage() {
+            const preview = previews[currentBook];
+            if (currentIndex < preview.images.length) {
+                currentIndex++;
+                updatePreview();
+            }
         }
     </script>
 </body>
 </html>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-38V179JCWD');
+</script>
