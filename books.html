@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
-    <title>9jahotlog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
+    <title>9jahotblog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -34,6 +34,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
+            position: relative;
         }
 
         .book img {
@@ -41,6 +42,8 @@
             height: auto;
             border-radius: 5px;
             margin-bottom: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(15deg); /* Add a slight perspective */
         }
 
         .book h3 {
@@ -68,6 +71,34 @@
             background: #e43e3e;
         }
 
+        /* Badges */
+        .best-seller {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: gold;
+            color: #000;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .expected {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Preview Section */
         .preview-container {
             display: none;
             position: fixed;
@@ -75,6 +106,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
+            max-width: 600px;
             height: 80%;
             background: #000;
             color: #fff;
@@ -100,6 +132,7 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
+            padding: 0 20px;
         }
 
         .preview-controls button {
@@ -107,34 +140,8 @@
             border: none;
             padding: 10px;
             cursor: pointer;
+            border-radius: 50%;
         }
-
-         /* Badges */
-        .best-seller {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: gold;
-            color: #000;
-            padding: 5px 10px;
-            font-size: 0.8em;
-            border-radius: 5px;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .expected {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #007bff;
-            color: #fff;
-            padding: 5px 10px;
-            font-size: 0.8em;
-            border-radius: 5px;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            }
 
         .preview-controls button:hover {
             background: rgba(0, 0, 0, 0.8);
@@ -193,43 +200,46 @@
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                <h2>Featured.</h2>
+                <h2>Featured Books</h2>
                 <div class="library">
                     <!-- Book 1 -->
                     <div class="book">
                         <img src="https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg" alt="Unideyplay book Cover" />
-                        <div class="expected">Expected 2025</div>
+                        <div class="expected">Expected 2025</div> <!-- Added Expected Tag -->
                         <h3>My Experience At The University of Dey Play</h3>
                         <p>Author: Kolade Philip O.</p>
                         <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
                         <button onclick="showPreview('book1')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
+
                     <!-- Book 2 -->
                     <div class="book">
                         <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Book Cover 2: letter to my father" />
                         <h3>Letter To My Father</h3>
                         <p>Author: Joy Daniel</p>
-                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father who, days to her adorable birthday, travels on a distant years-spanning journey. During his unpremeditated departure and absence, Angela, the main character recounts the mixture of ugly and beautiful experiences in a piece to her father. Her father's odyssey has really brought to the fore the true visages of friends, relatives and even foes. Will they overcome against all odds?</p>
+                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination...</p>
                         <button onclick="showPreview('book2')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
+
                     <!-- Book 3 -->
                     <div class="book">
                         <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
                         <h3>Bridges</h3>
                         <p>Author: Abraham Amusan</p>
-                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems, four features and two different languages aside from the English language. This is his third book.</p>
+                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems, four features, and two different languages aside from the English language. This is his third book.</p>
                         <button onclick="showPreview('book3')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
+
                     <!-- Book 4 -->
                     <div class="book">
-                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The enchantress Cover" />
-                        <div class="best-seller">Best Seller</div>
+                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
+                        <div class="best-seller">Best Seller</div> <!-- Added Best Seller Tag -->
                         <h3>The Enchantress: Angela's Tale</h3>
                         <p>Author: Kolade Philip O.</p>
-                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress. After her husband Anthony's death and the subsequent tragic loss of her daughters Taiwo and Kehinde, Angela is offered the chance to become the next enchantress. This role imbues her with the ability to control destinies and devour humans. But it also comes with a heavy burden and the temptation of vengeance. Did her Joy as an enchantress become short-lived too? Find out. There are lessons, betrayals, and gripping plot twists.</p>
+                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
                         <button onclick="showPreview('book4')">Preview</button>
                         <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                     </div>
@@ -237,38 +247,41 @@
             </div>
         </div>
 
-        <!-- Preview Container -->
+        <!-- Preview Containers -->
         <div class="preview-container" id="book1-preview">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
                 <button onclick="prevPage('book1')"><</button>
                 <button onclick="nextPage('book1')">></button>
             </div>
-            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
+            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Preview Page" />
         </div>
+
         <div class="preview-container" id="book2-preview">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
                 <button onclick="prevPage('book2')"><</button>
                 <button onclick="nextPage('book2')">></button>
             </div>
-            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
+            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Preview Page" />
         </div>
+
         <div class="preview-container" id="book3-preview">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
                 <button onclick="prevPage('book3')"><</button>
                 <button onclick="nextPage('book3')">></button>
             </div>
-            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
+            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Preview Page" />
         </div>
+
         <div class="preview-container" id="book4-preview">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
                 <button onclick="prevPage('book4')"><</button>
                 <button onclick="nextPage('book4')">></button>
             </div>
-            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
+            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Preview Page" />
         </div>
 
         <!-- Notification -->
@@ -286,7 +299,8 @@
                 <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
             </ul>
             <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+                <li>&copy; 9jahotblog. All rights reserved.</li>
+                <li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
             </ul>
         </footer>
     </div>
