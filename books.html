@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <title>9jahotlog BOOK PAGE, Fantasy, Romance, Christian Fiction, Read and Purchase Titles Now!</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" />
+    </noscript>
     <style>
         .notification {
             position: fixed;
@@ -17,7 +18,7 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
+            display: none;
         }
 
         .library {
@@ -34,7 +35,7 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
-            position: relative; /* For badge positioning */
+            position: relative;
         }
 
         .book img {
@@ -42,7 +43,8 @@
             height: auto;
             border-radius: 5px;
             margin-bottom: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transform: perspective(1000px) rotateY(10deg); /* Make it look like a book */
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .book h3 {
@@ -64,35 +66,40 @@
             margin: 5px;
             border-radius: 5px;
             cursor: pointer;
-            animation: dance 1s infinite alternate; /* Dance effect */
         }
 
         .book button:hover {
             background: #e43e3e;
         }
 
-        @keyframes dance {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(10px); }
-        }
-
-        .badge {
+        /* Badges */
+        .best-seller {
             position: absolute;
             top: 10px;
             left: 10px;
-            background: #ffcc00;
+            background: gold;
             color: #000;
             padding: 5px 10px;
-            border-radius: 5px;
             font-size: 0.8em;
+            border-radius: 5px;
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
         .expected {
-            background: #00ccff;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
+        /* Preview Container */
         .preview-container {
             display: none;
             position: fixed;
@@ -153,37 +160,31 @@
             background: #e43e3e;
         }
 
+        /* Dancing Button */
+        .dancing-button {
+            animation: dance 0.5s infinite alternate;
+        }
+
+        @keyframes dance {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+
+        /* Theme Toggle */
         .theme-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #444;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
             cursor: pointer;
+            font-size: 0.9em;
+            color: #007bff;
+            margin-top: 5px;
+            display: inline-block;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            padding: 5px;
         }
 
         .theme-toggle:hover {
-            background: #555;
-        }
-
-        @keyframes colorChange {
-            0% { background: #ff4d4d; }
-            10% { background: #ffcc00; }
-            20% { background: #00ccff; }
-            30% { background: #cc00ff; }
-            40% { background: #00ffcc; }
-            50% { background: #ff9900; }
-            60% { background: #66ff66; }
-            70% { background: #ff6699; }
-            80% { background: #6699ff; }
-            90% { background: #ffcc66; }
-            100% { background: #ff4d4d; }
-        }
-
-        .theme-animate {
-            animation: colorChange 10s infinite;
+            background-color: #007bff;
+            color: #fff;
         }
     </style>
 </head>
@@ -213,7 +214,7 @@
                     <li><a href="#">Adapt Book to Movie</a></li>
                     <li><a href="#">Creative Contests</a></li>
                     <li><a href="#">Nominate your Book (Award)</a></li>
-                    <li><a href="#">Visit Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Profile</a></li>
                     <li><a href="#">Sign Up</a></li>
                     <li><a href="#">Login</a></li>
                     <li><a href="#">Privacy Policy</a></li>
@@ -224,125 +225,254 @@
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                <h2>Featured.</h2>
+                <h2>Featured Books</h2>
                 <div class="library">
                     <!-- Book 1 -->
                     <div class="book">
                         <img src="https://i.postimg.cc/TwHyk1r7/Screenshot-20240512-162700-WPS-Office.jpg" alt="Unideyplay book Cover" />
+                        <div class="expected">Expected 2025</div>
                         <h3>My Experience At The University of Dey Play</h3>
                         <p>Author: Kolade Philip O.</p>
                         <p>Howzit, my people! It's your boy, Jay, coming at you live and direct from the hallowed halls of the University of Lagos. Strap yourselves in, because this story is about to get wilder than a Lagos traffic jam during rush hour....</p>
-                        <div class="theme-toggle" onclick="toggleTheme('book1')">🌙</div>
-                        <div class="badge expected">Expected 2025</div>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                         <button onclick="showPreview('book1')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
                     </div>
                     <!-- Book 2 -->
                     <div class="book">
-                        <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Book Cover 2: letter to my father" />
+                        <img src="https://i.postimg.cc/7YBP8hbw/IMG-20221217-WA0038.jpg" alt="Letter to My Father Cover" />
                         <h3>Letter To My Father</h3>
                         <p>Author: Joy Daniel</p>
-                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father who, days to her adorable birthday, travels on a distant years-spanning journey. During his unpremeditated departure and absence, Angela, the main character, recounts the mixture of ugly and beautiful experiences in a piece to her father. Her father's odyssey transforms the fabric of her existence, and she hopes he receives the message at the journey's end.</p>
-                        <div class="theme-toggle" onclick="toggleTheme('book2')">🌙</div>
+                        <p>Written in a single epistolary style, Letter to My Father is a blend of reality and imagination. Angela pens an emotive and emotional missive to her beloved father...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                         <button onclick="showPreview('book2')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
                     </div>
+
                     <!-- Book 3 -->
                     <div class="book">
-                        <img src="https://i.postimg.cc/MTbmk68d/IMG-20230621-WA0007.jpg" alt="The Enchantress: Angela's Tale Book Cover" />
-                        <h3>The Enchantress: Angela's Tale</h3>
-                        <p>Author: Maria U.</p>
-                        <p>The Enchantress: Angela's Tale is a story that delves into a world of mystique, power, and destiny. Angela discovers her latent powers as an enchantress and is thrown into a battle between light and darkness. With the fate of her world hanging in the balance, Angela must harness her powers, uncover the secrets of her past, and rise to become the savior of her people.</p>
-                        <div class="theme-toggle" onclick="toggleTheme('book3')">🌙</div>
-                        <div class="badge">Best Seller</div>
+                        <img src="https://i.postimg.cc/q7NxXN6R/n.jpg" alt="Bridges Cover" />
+                        <h3>Bridges</h3>
+                        <p>Author: Abraham Amusan</p>
+                        <p>BRIDGES is a collection of poetry, an extended read-list coming off the desk of Amusan Abraham (uglywriter), it comprises eight different poems...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
                         <button onclick="showPreview('book3')">Preview</button>
-                        <button onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
+                    </div>
+
+                    <!-- Book 4 -->
+                    <div class="book">
+                        <img src="https://i.postimg.cc/x1vXrnrR/The-enchantress-dark-cover.jpg" alt="The Enchantress Cover" />
+                        <div class="best-seller">Best Seller</div>
+                        <h3>The Enchantress: Angela's Tale</h3>
+                        <p>Author: Kolade Philip O.</p>
+                        <p>Angela is the central character who transforms from a grieving widow into a powerful enchantress...</p>
+                        <button class="dancing-button" onclick="location.href='https://9jahotblog.github.io/book-checkout.html'">Get Book</button>
+                        <button onclick="showPreview('book4')">Preview</button>
+                        <span class="theme-toggle" onclick="toggleTheme(this.parentElement)">Change Theme</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Preview Section -->
-        <div id="preview-container" class="preview-container">
+        <!-- In-Page Preview Section -->
+        <div id="preview-section" class="wrapper style2">
+            <div class="container">
+                <h2>Book Previews</h2>
+                <div class="preview-carousel">
+                    <div class="preview-slide" id="preview1">
+                        <img src="assets/images/book1-page1.jpg" alt="Book 1 Page 1" />
+                        <img src="assets/images/book1-page2.jpg" alt="Book 1 Page 2" />
+                        <img src="assets/images/book1-page3.jpg" alt="Book 1 Page 3" />
+                    </div>
+                    <div class="preview-slide" id="preview2">
+                        <img src="assets/images/book2-page1.jpg" alt="Book 2 Page 1" />
+                        <img src="assets/images/book2-page2.jpg" alt="Book 2 Page 2" />
+                        <img src="assets/images/book2-page3.jpg" alt="Book 2 Page 3" />
+                    </div>
+                    <div class="preview-slide" id="preview3">
+                        <img src="assets/images/book3-page1.jpg" alt="Book 3 Page 1" />
+                        <img src="assets/images/book3-page2.jpg" alt="Book 3 Page 2" />
+                        <img src="assets/images/book3-page3.jpg" alt="Book 3 Page 3" />
+                    </div>
+                    <div class="preview-slide" id="preview4">
+                        <img src="assets/images/book4-page1.jpg" alt="Book 4 Page 1" />
+                        <img src="assets/images/book4-page2.jpg" alt="Book 4 Page 2" />
+                        <img src="assets/images/book4-page3.jpg" alt="Book 4 Page 3" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview Container for Modal Style -->
+        <div class="preview-container" id="book1-preview">
             <button class="close-preview" onclick="closePreview()">X</button>
             <div class="preview-controls">
-                <button onclick="prevPage()">&#10094; Prev</button>
-                <button onclick="nextPage()">Next &#10095;</button>
+                <button onclick="prevPage('book1')"><</button>
+                <button onclick="nextPage('book1')">></button>
             </div>
-            <img id="preview-image" src="" alt="Book Preview" />
-            <audio id="flip-sound" src="flip-sound.mp3"></audio>
+            <img src="assets/images/book1-page1.jpg" id="book1-img" alt="Book 1 Page 1" />
+        </div>
+        <div class="preview-container" id="book2-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book2')"><</button>
+                <button onclick="nextPage('book2')">></button>
+            </div>
+            <img src="assets/images/book2-page1.jpg" id="book2-img" alt="Book 2 Page 1" />
+        </div>
+        <div class="preview-container" id="book3-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book3')"><</button>
+                <button onclick="nextPage('book3')">></button>
+            </div>
+            <img src="assets/images/book3-page1.jpg" id="book3-img" alt="Book 3 Page 1" />
+        </div>
+        <div class="preview-container" id="book4-preview">
+            <button class="close-preview" onclick="closePreview()">X</button>
+            <div class="preview-controls">
+                <button onclick="prevPage('book4')"><</button>
+                <button onclick="nextPage('book4')">></button>
+            </div>
+            <img src="assets/images/book4-page1.jpg" id="book4-img" alt="Book 4 Page 1" />
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
 
         <!-- Footer -->
         <footer id="footer">
-            <div class="inner">
-                <h2>9JAHOTBLOG</h2>
-                <p>Explore the best of Nigerian literature and discover new worlds through stories and creative writing.</p>
-            </div>
+            <ul class="icons">
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
         </footer>
-
-        <!-- Notification -->
-        <div class="notification">Logged in successfully!</div>
-
-        <script>
-            function showPreview(bookId) {
-                const previewContainer = document.getElementById('preview-container');
-                const previewImage = document.getElementById('preview-image');
-                const flipSound = document.getElementById('flip-sound');
-                previewContainer.classList.add('active');
-                
-                // Add book-specific preview logic here
-                if (bookId === 'book1') {
-                    previewImage.src = 'path_to_your_preview_image1.jpg';
-                } else if (bookId === 'book2') {
-                    previewImage.src = 'path_to_your_preview_image2.jpg';
-                } else if (bookId === 'book3') {
-                    previewImage.src = 'path_to_your_preview_image3.jpg';
-                }
-
-                flipSound.play();
-            }
-
-            function closePreview() {
-                const previewContainer = document.getElementById('preview-container');
-                previewContainer.classList.remove('active');
-            }
-
-            function toggleTheme(bookId) {
-                const book = document.querySelector('.book');
-                book.classList.toggle('theme-animate');
-            }
-
-            function prevPage() {
-                const flipSound = document.getElementById('flip-sound');
-                flipSound.play();
-                // Logic to go to the previous page in the preview
-            }
-
-            function nextPage() {
-                const flipSound = document.getElementById('flip-sound');
-                flipSound.play();
-                // Logic to go to the next page in the preview
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                const notification = document.querySelector('.notification');
-                notification.style.display = 'block';
-                setTimeout(function () {
-                    notification.style.display = 'none';
-                }, 3000);
-            });
-        </script>
     </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/jquery.dropotron.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        const firebaseConfig = {
+                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+                authDomain: "jahotblog-login.firebaseapp.com",
+                projectId: "jahotblog-login",
+                storageBucket: "jahotblog-login.appspot.com",
+                messagingSenderId: "661526730601",
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+            };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+
+        // Book Preview Logic
+        const bookPages = {
+            'book1': [
+                'assets/images/book1-page1.jpg',
+                'assets/images/book1-page2.jpg',
+                'assets/images/book1-page3.jpg'
+            ],
+            'book2': [
+                'assets/images/book2-page1.jpg',
+                'assets/images/book2-page2.jpg',
+                'assets/images/book2-page3.jpg'
+            ],
+            'book3': [
+                'assets/images/book3-page1.jpg',
+                'assets/images/book3-page2.jpg',
+                'assets/images/book3-page3.jpg'
+            ],
+            'book4': [
+                'assets/images/book4-page1.jpg',
+                'assets/images/book4-page2.jpg',
+                'assets/images/book4-page3.jpg'
+            ]
+        };
+
+        let currentPage = {
+            'book1': 0,
+            'book2': 0,
+            'book3': 0,
+            'book4': 0
+        };
+
+        function showPreview(bookId) {
+            currentPage[bookId] = 0;
+            document.getElementById(bookId + '-img').src = bookPages[bookId][0];
+            document.getElementById(bookId + '-preview').classList.add('active');
+        }
+
+        function closePreview() {
+            document.querySelectorAll('.preview-container').forEach(container => {
+                container.classList.remove('active');
+            });
+        }
+
+        function nextPage(bookId) {
+            if (currentPage[bookId] < bookPages[bookId].length - 1) {
+                currentPage[bookId]++;
+                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                playPageFlipSound();
+            }
+        }
+
+        function prevPage(bookId) {
+            if (currentPage[bookId] > 0) {
+                currentPage[bookId]--;
+                document.getElementById(bookId + '-img').src = bookPages[bookId][currentPage[bookId]];
+                playPageFlipSound();
+            }
+        }
+
+        function playPageFlipSound() {
+            const audio = new Audio('/page-flip-47177.mp3');
+            audio.play();
+        }
+
+        // Theme Toggle Function
+        function toggleTheme(bookElement) {
+            const colors = ['#ff4d4d', '#007bff', '#28a745', '#ffc107', '#17a2b8', '#6f42c1', '#e83e8c', '#fd7e14', '#20c997', '#343a40'];
+            let i = 0;
+
+            const interval = setInterval(() => {
+                bookElement.style.backgroundColor = colors[i];
+                i = (i + 1) % colors.length;
+
+                // Revert to the original color
+                if (i === 0) {
+                    clearInterval(interval);
+                    bookElement.style.backgroundColor = '#222';
+                }
+            }, 300);
+        }
+    </script>
 </body>
 </html>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-38V179JCWD');
-</script>
