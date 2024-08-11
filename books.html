@@ -400,42 +400,41 @@
         document.addEventListener("DOMContentLoaded", function() {
 
             // Book Preview Logic
-            function togglePreview(bookId) {
-                const previewElement = document.getElementById(`${bookId}-preview`);
-                previewElement.classList.toggle('active');
-                resetPreviewPages(bookId);
-            }
+function togglePreview(bookId) {
+  const previewElement = document.getElementById(`${bookId}-preview`);
+  previewElement.classList.toggle('active');
+  resetPreviewPages(bookId);
+}
 
-            function resetPreviewPages(bookId) {
-                const previewPages = document.querySelectorAll(`#${bookId}-preview .preview-page`);
-                previewPages.forEach(page => page.classList.remove('active'));
-                previewPages[0].classList.add('active');  // Start with the first page
-            }
+function resetPreviewPages(bookId) {
+  const previewPages = document.querySelectorAll(`#${bookId}-preview .preview-page`);
+  previewPages.forEach(page => page.classList.remove('active'));
+  previewPages[0].classList.add('active'); // Start with the first page
+}
 
-            function nextPage(bookId) {
-                const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
-                const nextPage = currentActivePage.nextElementSibling;
+function nextPage(bookId) {
+  const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
+  const nextPage = currentActivePage.nextElementSibling;
+  if (nextPage && nextPage.classList.contains('preview-page')) {
+    currentActivePage.classList.remove('active');
+    nextPage.classList.add('active');
+  }
+}
 
-                if (nextPage && nextPage.classList.contains('preview-page')) {
-                    currentActivePage.classList.remove('active');
-                    nextPage.classList.add('active');
-                }
-            }
+function prevPage(bookId) {
+  const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
+  const prevPage = currentActivePage.previousElementSibling;
+  if (prevPage && prevPage.classList.contains('preview-page')) {
+    currentActivePage.classList.remove('active');
+    prevPage.classList.add('active');
+  }
+}
 
-            function prevPage(bookId) {
-                const currentActivePage = document.querySelector(`#${bookId}-preview .preview-page.active`);
-                const prevPage = currentActivePage.previousElementSibling;
-
-                if (prevPage && prevPage.classList.contains('preview-page')) {
-                    currentActivePage.classList.remove('active');
-                    prevPage.classList.add('active');
-                }
-            }
-
-            function closePreview(previewId) {
-                const previewElement = document.getElementById(previewId);
-                previewElement.classList.remove('active');
-            }
+function closePreview(previewId) {
+  const previewElement = document.getElementById(previewId);
+  previewElement.classList.remove('active');
+}
+```
 
             // Firebase Authentication for login notification
             import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
