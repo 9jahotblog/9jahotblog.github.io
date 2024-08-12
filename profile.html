@@ -120,24 +120,24 @@
                     <h1>Welcome to 9jahotblog Storybooks, <span id="user-name"></span>!</h1>
                 </header>
 
-                <!-- Profile Section -->
+            <!-- Profile Section -->
 <section id="profile-section">
     <div class="profile-container">
         <button class="theme-toggle">🌙</button>
-        <div>
+        <div style="text-align: center;">
             <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;" />
         </div>
-        <input type="file" id="profile-image-upload" accept="image/*" style="display: block; margin: 10px auto;" />
         <p>Email: <span id="user-email"></span></p>
         <p>Username: <span id="user-username"></span></p>
         <p>Earnings: ₦0.00</p>
         <p>Short Stories/Articles: N/A</p>
         <p>Books: N/A</p>
         <p>Level: <span id="user-level">9jahotblogger</span></p>
-        <button id="edit-profile">Edit Profile</button>
-        <button id="logout">Logout</button>
+        <button id="edit-profile" class="btn btn-primary mt-3">Edit Profile</button>
+        <button id="logout" class="btn btn-danger mt-2">Logout</button>
+        <hr />
+        <p style="font-size: 0.9em; color: #555;">Don't have a link for an image to display on your profile? Go to <a href="https://postimg.cc" target="_blank">postimg.cc</a>, upload an image, get the link, and paste it here. Your image will automatically display after refreshing.</p>
     </div>
-    <hr />
 </section>
 
 
@@ -1620,57 +1620,56 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
 document.getElementById("edit-profile").addEventListener("click", () => {
     const newUsername = prompt("Enter new username (leave blank to keep current):");
     const newEmail = prompt("Enter new email (leave blank to keep current):");
+    const newPhotoURL = prompt("Enter new photo URL (leave blank to keep current):");
 
     const user = auth.currentUser;
-    const fileInput = document.getElementById("profile-image-upload");
-    const file = fileInput.files[0];
 
     if (user) {
-        // Function to update the profile
-        const updateProfileDetails = (photoURL) => {
-            const updates = {};
-            if (newUsername) updates.displayName = newUsername;
-            if (photoURL) updates.photoURL = photoURL;
+        const updates = {};
 
-            return updateProfile(user, updates).then(() => {
-                const userRef = doc(db, "users", user.uid);
-                const firestoreUpdates = {};
+        // Check if new values are provided, and if so, add them to the updates object
+        if (newUsername) {
+            updates.displayName = newUsername;
+        }
+        if (newPhotoURL) {
+            updates.photoURL = newPhotoURL;
+        }
 
-                if (newUsername) firestoreUpdates.username = newUsername;
-                if (newEmail) firestoreUpdates.email = newEmail;
-                if (photoURL) firestoreUpdates.photoURL = photoURL;
+        // Update profile if there are changes in displayName or photoURL
+        const updateProfilePromise = Object.keys(updates).length > 0 ? updateProfile(user, updates) : Promise.resolve();
 
-                return updateDoc(userRef, firestoreUpdates);
-            }).then(() => {
+        updateProfilePromise
+            .then(() => {
+                // Update email if it's provided
+                if (newEmail) {
+                    return updateEmail(user, newEmail);
+                }
+            })
+            .then(() => {
+                // Update the Firestore document if any updates were made
+                if (newUsername || newEmail || newPhotoURL) {
+                    const userRef = doc(db, "users", user.uid);
+                    const firestoreUpdates = {};
+
+                    if (newUsername) firestoreUpdates.username = newUsername;
+                    if (newEmail) firestoreUpdates.email = newEmail;
+                    if (newPhotoURL) firestoreUpdates.photoURL = newPhotoURL;
+
+                    return updateDoc(userRef, firestoreUpdates);
+                }
+            })
+            .then(() => {
+                // Update the UI
                 if (newUsername) document.getElementById("user-username").innerText = newUsername;
                 if (newEmail) document.getElementById("user-email").innerText = newEmail;
-                if (photoURL) document.getElementById("profile-photo").src = photoURL;
+                if (newPhotoURL) document.getElementById("profile-photo").src = newPhotoURL;
 
                 alert("Profile updated successfully! Please refresh the page to see the changes.");
-            }).catch((error) => {
+            })
+            .catch((error) => {
                 console.error("Error updating profile:", error);
                 alert("An error occurred while updating the profile. Please try again.");
             });
-        };
-
-        if (file) {
-            const storageRef = firebase.storage().ref();
-            const userProfileImageRef = storageRef.child(`profileImages/${user.uid}/${file.name}`);
-
-            // Upload the file
-            userProfileImageRef.put(file).then(snapshot => {
-                return snapshot.ref.getDownloadURL();
-            }).then(photoURL => {
-                // Update the profile with the new photo URL
-                return updateProfileDetails(photoURL);
-            }).catch(error => {
-                console.error("Error uploading profile image:", error);
-                alert("Failed to upload profile image.");
-            });
-        } else {
-            // Update the profile without a new photo
-            updateProfileDetails();
-        }
     } else {
         alert("No user is currently signed in.");
     }
