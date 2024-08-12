@@ -121,23 +121,26 @@
                 </header>
 
                 <!-- Profile Section -->
-                <section id="profile-section">
-                    <div class="profile-container">
-                        <button class="theme-toggle">🌙</button>
-                        <div>
-                            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
-                        </div>
-                        <p>Email: <span id="user-email"></span></p>
-                        <p>Username: <span id="user-username"></span></p>
-                        <p>Earnings: ₦0.00</p>
-                        <p>Short Stories/Articles: N/A</p>
-                        <p>Books: N/A</p>
-                        <p>Level: <span id="user-level">9jahotblogger</span></p>
-                        <button id="edit-profile">Edit Profile</button>
-                        <button id="logout">Logout</button>
-                    </div>
-                    <hr />
-                </section>
+<section id="profile-section">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <div>
+            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" />
+        </div>
+        <p>Email: <span id="user-email"></span></p>
+        <p>Username: <span id="user-username"></span></p>
+        <p>Earnings: ₦0.00</p>
+        <p>Short Stories/Articles: N/A</p>
+        <p>Books: N/A</p>
+        <p>Level: <span id="user-level">9jahotblogger</span></p>
+        <button id="edit-profile">Edit Profile</button>
+        <button id="logout">Logout</button>
+        <!-- File input for image upload -->
+        <input type="file" id="profile-image-upload" style="display:none;" />
+    </div>
+    <hr />
+</section>
+
 
                 <!-- Library Section -->
                 <section id="library-section">
@@ -1613,47 +1616,88 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
             console.error("Error signing out:", error);
         });
     });
+    
+    // For profile edit
+    
+    document.getElementById("edit-profile").addEventListener("click", () => {
+    const newUsername = prompt("Enter new username (leave blank to keep current):");
+    const newEmail = prompt("Enter new email (leave blank to keep current):");
 
-    // Handle edit profile
-document.getElementById("edit-profile").addEventListener("click", () => {
-    const newUsername = prompt("Enter new username:");
-    const newEmail = prompt("Enter new email:");
-    const newPhotoURL = prompt("Enter new photo URL:");
+    const user = auth.currentUser;
 
-    if (newUsername && newEmail && newPhotoURL) {
-        const user = auth.currentUser;
+    if (user) {
+        // Handle image upload
+        const fileInput = document.getElementById("profile-image-upload");
+        fileInput.click(); // Trigger file input click
 
-        if (user) {
-            // Update the user's profile (displayName and photoURL)
-            updateProfile(user, {
-                displayName: newUsername,
-                photoURL: newPhotoURL
-            }).then(() => {
-                // Update the user's email
-                return updateEmail(user, newEmail);
-            }).then(() => {
-                // Update the Firestore document
-                const userRef = doc(db, "users", user.uid);
-                return updateDoc(userRef, {
-                    username: newUsername,
-                    email: newEmail,
-                    photoURL: newPhotoURL
+        fileInput.onchange = function() {
+            const file = fileInput.files[0];
+            if (file) {
+                const storageRef = firebase.storage().ref();
+                const userProfileImageRef = storageRef.child(`profileImages/${user.uid}/${file.name}`);
+
+                // Upload the file
+                userProfileImageRef.put(file).then(snapshot => {
+                    return snapshot.ref.getDownloadURL(); // Get the download URL
+                }).then(photoURL => {
+                    // Update the user's profile with the new photo URL
+                    const updates = { photoURL };
+                    if (newUsername) updates.displayName = newUsername;
+
+                    return updateProfile(user, updates).then(() => {
+                        // Update Firestore document if necessary
+                        const userRef = doc(db, "users", user.uid);
+                        const firestoreUpdates = {};
+                        if (newUsername) firestoreUpdates.username = newUsername;
+                        if (newEmail) firestoreUpdates.email = newEmail;
+                        firestoreUpdates.photoURL = photoURL;
+
+                        return updateDoc(userRef, firestoreUpdates);
+                    }).then(() => {
+                        // Update the UI
+                        if (newUsername) document.getElementById("user-username").innerText = newUsername;
+                        if (newEmail) document.getElementById("user-email").innerText = newEmail;
+                        document.getElementById("profile-photo").src = photoURL;
+
+                        alert("Profile updated successfully! Please refresh the page to see the changes.");
+                    });
+                }).catch(error => {
+                    console.error("Error updating profile:", error);
+                    alert("An error occurred while updating the profile. Please try again.");
                 });
+            }
+        };
+
+        // Handle updating email if no new image was selected
+        if (!fileInput.files.length && (newUsername || newEmail)) {
+            const updates = {};
+            if (newUsername) updates.displayName = newUsername;
+
+            updateProfile(user, updates).then(() => {
+                if (newEmail) {
+                    return updateEmail(user, newEmail);
+                }
+            }).then(() => {
+                // Update Firestore
+                const userRef = doc(db, "users", user.uid);
+                const firestoreUpdates = {};
+                if (newUsername) firestoreUpdates.username = newUsername;
+                if (newEmail) firestoreUpdates.email = newEmail;
+
+                return updateDoc(userRef, firestoreUpdates);
             }).then(() => {
                 // Update the UI
-                alert("Profile updated successfully!");
-                document.getElementById("user-username").innerText = newUsername;
-                document.getElementById("user-email").innerText = newEmail;
-                document.getElementById("profile-photo").src = newPhotoURL;
+                if (newUsername) document.getElementById("user-username").innerText = newUsername;
+                if (newEmail) document.getElementById("user-email").innerText = newEmail;
+
+                alert("Profile updated successfully! Please refresh the page to see the changes.");
             }).catch((error) => {
                 console.error("Error updating profile:", error);
                 alert("An error occurred while updating the profile. Please try again.");
             });
-        } else {
-            alert("No user is currently signed in.");
         }
     } else {
-        alert("All fields must be filled out.");
+        alert("No user is currently signed in.");
     }
 });
 
