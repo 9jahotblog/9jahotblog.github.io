@@ -1615,39 +1615,47 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
     });
 
     // Handle edit profile
-    document.getElementById("edit-profile").addEventListener("click", () => {
-        const newUsername = prompt("Enter new username:");
-        const newEmail = prompt("Enter new email:");
-        const newPhotoURL = prompt("Enter new photo URL:");
+document.getElementById("edit-profile").addEventListener("click", () => {
+    const newUsername = prompt("Enter new username:");
+    const newEmail = prompt("Enter new email:");
+    const newPhotoURL = prompt("Enter new photo URL:");
 
-        if (newUsername && newEmail && newPhotoURL) {
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    updateProfile(user, {
-                        displayName: newUsername,
-                        email: newEmail,
-                        photoURL: newPhotoURL
-                    }).then(() => {
-                        const userRef = doc(db, "users", user.uid);
-                        updateDoc(userRef, {
-                            username: newUsername,
-                            email: newEmail,
-                            photoURL: newPhotoURL
-                        }).then(() => {
-                            alert("Profile updated successfully!");
-                            document.getElementById("user-name").innerText = newUsername;
-                            document.getElementById("user-email").innerText = newEmail;
-                            document.getElementById("profile-photo").src = newPhotoURL;
-                        }).catch((error) => {
-                            console.error("Error updating Firestore:", error);
-                        });
-                    }).catch((error) => {
-                        console.error("Error updating profile:", error);
-                    });
-                }
+    if (newUsername && newEmail && newPhotoURL) {
+        const user = auth.currentUser;
+
+        if (user) {
+            // Update the user's profile (displayName and photoURL)
+            updateProfile(user, {
+                displayName: newUsername,
+                photoURL: newPhotoURL
+            }).then(() => {
+                // Update the user's email
+                return updateEmail(user, newEmail);
+            }).then(() => {
+                // Update the Firestore document
+                const userRef = doc(db, "users", user.uid);
+                return updateDoc(userRef, {
+                    username: newUsername,
+                    email: newEmail,
+                    photoURL: newPhotoURL
+                });
+            }).then(() => {
+                // Update the UI
+                alert("Profile updated successfully!");
+                document.getElementById("user-username").innerText = newUsername;
+                document.getElementById("user-email").innerText = newEmail;
+                document.getElementById("profile-photo").src = newPhotoURL;
+            }).catch((error) => {
+                console.error("Error updating profile:", error);
+                alert("An error occurred while updating the profile. Please try again.");
             });
+        } else {
+            alert("No user is currently signed in.");
         }
-    });
+    } else {
+        alert("All fields must be filled out.");
+    }
+});
 
     async function callGoogleGeminiAI(userMessage) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
