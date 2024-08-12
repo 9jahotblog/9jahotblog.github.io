@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>9jahotblog Storybooks</title>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .form-heading {
+            color: red;
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-submit {
+            text-align: center;
+        }
+        .btn-danger {
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .menu-bar {
+            background-color: #343a40;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        .menu-bar a {
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+        .menu-bar a:hover {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menu Bar -->
+    <nav class="menu-bar text-center">
+        <a href="#">Homepage</a>
+        <a href="#">Books</a>
+        <a href="#">Visit Profile</a>
+    </nav>
+
+    <div class="container">
+        <div class="form-heading">9jahotblog Storybooks - Sample Checkout</div>
+        <h6 class="text-center">Note: Amount should be between $1 to $10,000 (USD), NGN100 to NGN5,000,000 and KSH100 to KSH5,000,000</h6>
+
+        <form class="mt-4">
+            <div class="mb-3">
+                <label for="email-address" class="form-label">Email Address</label>
+                <input type="email" id="email-address" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">9jahotblog Storybooks Username</label>
+                <input type="text" id="username" class="form-control" placeholder="Optional">
+                <small class="form-text text-muted">
+                    Don't have an account? <a href="https://9jahotblog.github.io/login-page.html">Create one</a>
+                </small>
+            </div>
+
+            <div class="mb-3">
+                <label for="book-select" class="form-label">Choose the book you want to make a payment for:</label>
+                <select id="book-select" class="form-select" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="The Enchantress: Angela's Tale - Kolade O.">The Enchantress: Angela's Tale - Kolade O.</option>
+                    <option value="My Experience At The University of Dey Play - Kolade O.">My Experience At The University of Dey Play - Kolade O.</option>
+                    <option value="Letter to My Father - Joy Daniel">Letter to My Father - Joy Daniel</option>
+                    <option value="Bridges - Abraham Amusan">Bridges - Abraham Amusan</option>
+                    <option value="Donation">Donation</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount</label>
+                <input type="tel" id="amount" class="form-control" required>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 mb-3">
+                    <label for="first-name" class="form-label">First Name</label>
+                    <input type="text" id="first-name" class="form-control">
+                </div>
+                <div class="col-lg-6 mb-3">
+                    <label for="last-name" class="form-label">Last Name</label>
+                    <input type="text" id="last-name" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-submit">
+                <button type="button" onclick="SquadPay()" class="btn btn-danger">Check Out</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://checkout.squadco.com/widget/squad.min.js"></script>
+
+    <script>
+        function SquadPay() {
+            const squadInstance = new squad({
+                onClose: () => console.log("Widget closed"),
+                onLoad: () => console.log("Widget loaded successfully"),
+                onSuccess: () => console.log(`Payment successful`),
+                key: "pk_b1b1d2d2db4868ced18ef2e08e013ac15a6b15be",
+                email: document.getElementById("email-address").value,
+                amount: document.getElementById("amount").value * 100, // Base value Kobo/cent
+                currency_code: "NGN",
+                metadata: {
+                    book: document.getElementById("book-select").value,
+                    username: document.getElementById("username").value || "Guest"
+                }
+            });
+            squadInstance.setup();
+            squadInstance.open();
+        }
+    </script>
+</body>
+  </html>
