@@ -17,9 +17,9 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
+            display: none; /* Hide by default */
+            z-index: 1000; /* Ensure it appears on top */
         }
-        /* Additional styles for comment section */
         #comments-section {
             margin: 20px 0;
             padding: 10px;
@@ -69,6 +69,7 @@
             height: 100px;
             padding: 10px;
             margin-bottom: 10px;
+            display: block; /* Ensure it is displayed */
         }
 
         #comment-form button {
@@ -78,6 +79,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: block; /* Ensure it is displayed */
         }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.1/dist/index.min.css">
@@ -115,77 +117,84 @@
         <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                <!-- Creative Contests Section -->
-                <section id="creative-contests" class="wrapper style2">
-                    <div class="container">
-                        <header class="major">
-                            <h2>9jahotblog Storybooks Writing Contests: Unlock Your Creativity!</h2>
-                            <p>Join our contests to showcase your writing talent, engage with readers, and win exciting prizes!</p>
-                        </header>
+                
 
-                        <!-- Contest Timeline -->
-                        <section>
-                            <h3>Contest Timeline:</h3>
-                            <ul>
-                                <li><strong>December 15th - January 15th:</strong> Registration Phase (₦1,000 fee)</li>
-                                <li><strong>January 16th - January 31st:</strong> Submission Phase (stories must be 2,000 words or more)</li>
-                                <li><strong>February 1st - February 13th:</strong> Sharing and Engagement Phase</li>
-                                <li><strong>February 14th:</strong> Winner Announcement (Valentine's Day treats for winners!)</li>
-                            </ul>
-                        </section>
+<!-- Creative Contests Section -->
+<section id="creative-contests" class="wrapper style2">
+<div class="container">
+<header class="major">
+<h2>9jahotblog Storybooks Writing Contests: Unlock Your Creativity!</h2>
+<p>Join our contests to showcase your writing talent, engage with readers, and win exciting prizes!</p>
+</header>
 
-                        <!-- Contest Schedule -->
-                        <section>
-                            <h3>Contest Schedule:</h3>
-                            <ul>
-                                <li><strong>January - February:</strong> Winter Contest</li>
-                                <li><strong>May:</strong> Spring Contest</li>
-                                <li><strong>August:</strong> Summer Contest</li>
-                                <li><strong>October:</strong> Autumn Contest</li>
-                            </ul>
-                        </section>
+<!-- Contest Timeline -->
+<section>
+<h3>Contest Timeline:</h3>
+<ul>
+<li><strong>December 15th - January 15th:</strong> Registration Phase (₦1,000 fee)</li>
+<li><strong>January 16th - January 31st:</strong> Submission Phase (stories must be 2,000 words or more)</li>
+<li><strong>February 1st - February 13th:</strong> Sharing and Engagement Phase</li>
+<li><strong>February 14th:</strong> Winner Announcement (Valentine's Day treats for winners!)</li>
+</ul>
+</section>
 
-                        <!-- Prizes -->
-                        <section>
-                            <h3>Prizes:</h3>
-                            <ul>
-                                <li><strong>1st Place:</strong> ₦50,000 (or more, depending on donations) + Valentine package + publication in our anthology + feature on our website</li>
-                                <li><strong>2nd Place:</strong> ₦30,000 (or more) + Valentine package + publication in our anthology</li>
-                                <li><strong>3rd Place:</strong> ₦20,000 (or more) + Valentine package + publication in our anthology</li>
-                            </ul>
-                        </section>
+<!-- Contest Schedule -->
+<section>
+<h3>Contest Schedule:</h3>
+<ul>
+<li><strong>January - February:</strong> Winter Contest</li>
+<li><strong>May:</strong> Spring Contest</li>
+<li><strong>August:</strong> Summer Contest</li>
+<li><strong>October:</strong> Autumn Contest</li>
+</ul>
+</section>
 
-                        <!-- Additional Benefits -->
-                        <section>
-                            <h3>Additional Benefits:</h3>
-                            <ul>
-                                <li><strong>All Participants:</strong> Receive airtime, bonuses, and badges on our website</li>
-                                <li><strong>Free Promotions:</strong> Get prioritized rankings and free promotions on submissions</li>
-                                <li><strong>Expert Feedback:</strong> Our editors are experienced lecturers, tutors, and industry professionals</li>
-                            </ul>
-                        </section>
+<!-- Prizes -->
+<section>
+<h3>Prizes:</h3>
+<ul>
+<li><strong>1st Place:</strong> ₦50,000 (or more, depending on donations) + Valentine package + publication in our anthology + feature on our website</li>
+<li><strong>2nd Place:</strong> ₦30,000 (or more) + Valentine package + publication in our anthology</li>
+<li><strong>3rd Place:</strong> ₦20,000 (or more) + Valentine package + publication in our anthology</li>
+</ul>
+</section>
 
-                        <!-- How to Enter -->
-                        <section>
-                            <h3>How to Enter:</h3>
-                            <ol>
-                                <li>Visit our website <a href="https://9jahotblog.github.io/book-checkout.html" target="_blank">here</a>.</li>
-                                <li>Select "Creative Contest".</li>
-                                <li>Fill out the registration form (₦1,000 fee).</li>
-                                <li>Upload your story (docx or pdf format) during the Submission Phase.</li>
-                            </ol>
-                            <p><strong>Note:</strong> Registration fees may be waived in some contests, depending on sponsorships and donations.</p>
-                        </section>
+<!-- Additional Benefits -->
+<section>
+<h3>Additional Benefits:</h3>
+<ul>
+<li><strong>All Participants:</strong> Receive airtime, bonuses, and badges on our website</li>
+<li><strong>Free Promotions:</strong> Get prioritized rankings and free promotions on submissions</li>
+<li><strong>Expert Feedback:</strong> Our editors are experienced lecturers, tutors, and industry professionals</li>
+</ul>
+</section>
 
-                        <p>Don't miss this opportunity to showcase your writing talent, engage with readers, and win exciting prizes! Enter our contests today and take the first step towards publishing success.</p>
-                    </div>
-                </section>
+<!-- How to Enter -->
+<section>
+<h3>How to Enter:</h3>
+<ol>
+<li>Visit our website <a href="(link unavailable)" target="_blank">here</a>.</li>
+<li>Select "Creative Contest".</li>
+<li>Fill out the registration form (₦1,000 fee).</li>
+<li>Upload your story (docx or pdf format) during the Submission Phase.</li>
+</ol>
+<p><strong>Note:</strong> Registration fees may be waived in some contests, depending on sponsorships and donations.</p>
+</section>
 
+<p>Don't miss this opportunity to showcase your writing talent, engage with readers, and win exciting prizes! Enter our contests today and take the first step towards publishing success.</p>
+</div>
+</section>
+
+
+
+
+
+                
                 <!-- Comments Section -->
                 <section id="comments-section">
                     <h3>Comments</h3>
                     <div id="comments-list"></div>
-                    <div id="comment-form" style="display:none;">
+                    <div id="comment-form" style="display:none;"> <!-- Initially hidden, shown when logged in -->
                         <textarea id="comment-text" placeholder="Write a comment..."></textarea>
                         <button id="emoji-button">😊</button>
                         <button id="submit-comment">Post Comment</button>
@@ -223,13 +232,13 @@
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
+                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+                authDomain: "jahotblog-login.firebaseapp.com",
+                projectId: "jahotblog-login",
+                storageBucket: "jahotblog-login.appspot.com",
+                messagingSenderId: "661526730601",
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+            };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -277,7 +286,7 @@
                     const commentId = e.target.dataset.id;
                     const commentRef = doc(db, "comments", commentId);
                     await updateDoc(commentRef, { likes: increment(1) });
-                    renderComments();
+                    renderComments(); // Refresh comments after updating
                 });
 
                 // Helpful button event listener
@@ -285,7 +294,7 @@
                     const commentId = e.target.dataset.id;
                     const commentRef = doc(db, "comments", commentId);
                     await updateDoc(commentRef, { helpful: increment(1) });
-                    renderComments();
+                    renderComments(); // Refresh comments after updating
                 });
 
                 // Not Helpful button event listener
@@ -293,7 +302,7 @@
                     const commentId = e.target.dataset.id;
                     const commentRef = doc(db, "comments", commentId);
                     await updateDoc(commentRef, { notHelpful: increment(1) });
-                    renderComments();
+                    renderComments(); // Refresh comments after updating
                 });
 
                 // Reply button event listener
@@ -309,12 +318,12 @@
                             if (replyText.trim() !== "") {
                                 await addDoc(commentsCollection, {
                                     text: replyText,
-                                    username: user.displayName,
-                                    profilePic: user.photoURL || "https://via.placeholder.com/50",
+                                    username: auth.currentUser.displayName,
+                                    profilePic: auth.currentUser.photoURL || "https://via.placeholder.com/50",
                                     timestamp: new Date(),
-                                    parentId: e.target.dataset.id
+                                    parentId: e.target.dataset.id // Indicate this is a reply
                                 });
-                                renderComments();
+                                renderComments(); // Refresh comments after submitting reply
                             }
                         });
                     }
@@ -327,6 +336,8 @@
             if (user) {
                 document.getElementById("comment-form").style.display = "block";
                 document.getElementById("login-message").style.display = "none";
+                document.getElementById("username").textContent = user.displayName || 'User';
+                document.getElementById("login-notification").style.display = "block";
                 document.getElementById("submit-comment").addEventListener("click", async () => {
                     const commentText = document.getElementById("comment-text").value;
                     if (commentText.trim() !== "") {
@@ -338,15 +349,16 @@
                             likes: 0,
                             helpful: 0,
                             notHelpful: 0,
-                            parentId: null // indicates this is a top-level comment
+                            parentId: null // Indicates this is a top-level comment
                         });
                         document.getElementById("comment-text").value = "";
-                        renderComments();
+                        renderComments(); // Refresh comments after submitting new comment
                     }
                 });
             } else {
                 document.getElementById("comment-form").style.display = "none";
                 document.getElementById("login-message").style.display = "block";
+                document.getElementById("login-notification").style.display = "none";
             }
         });
 
