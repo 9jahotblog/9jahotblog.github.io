@@ -219,212 +219,211 @@
             You're logged in as <span id="username"></span>
         </div>
 
-        <!-- Footer-->
+        <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
                 <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
                 <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
                 <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
-    </div>
-    
-    <!-- Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+<li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+<li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+</ul>
+<ul class="copyright">
+    <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+</ul>
+</footer>
+</div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
+<!-- Scripts -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const commentsCollection = collection(db, "comments");
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+    };
 
-        // Emoji Picker Initialization
-        const emojiButton = document.getElementById("emoji-button");
-        const emojiPicker = document.getElementById("emoji-picker");
-        const commentText = document.getElementById("comment-text");
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const commentsCollection = collection(db, "comments");
 
-        const emojis = ["😊", "😂", "😍", "😒", "😎", "😭", "😡"];
-        emojis.forEach(emoji => {
-            const emojiElement = document.createElement("img");
-            emojiElement.src = `https://twemoji.maxcdn.com/v/latest/72x72/${emoji.codePointAt(0).toString(16)}.png`;
-            emojiElement.addEventListener("click", () => {
-                commentText.value += emoji;
-                emojiPicker.style.display = "none";
-            });
-            emojiPicker.appendChild(emojiElement);
+    // Emoji Picker Initialization
+    const emojiButton = document.getElementById("emoji-button");
+    const emojiPicker = document.getElementById("emoji-picker");
+    const commentText = document.getElementById("comment-text");
+
+    const emojis = ["😊", "😂", "😍", "😒", "😎", "😭", "😡"];
+    emojis.forEach(emoji => {
+        const emojiElement = document.createElement("img");
+        emojiElement.src = `https://twemoji.maxcdn.com/v/latest/72x72/${emoji.codePointAt(0).toString(16)}.png`;
+        emojiElement.addEventListener("click", () => {
+            commentText.value += emoji;
+            emojiPicker.style.display = "none";
         });
+        emojiPicker.appendChild(emojiElement);
+    });
 
-        emojiButton.addEventListener("click", () => {
-            emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
-        });
+    emojiButton.addEventListener("click", () => {
+        emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
+    });
 
-        // Function to render comments
-        async function renderComments() {
-            const q = query(commentsCollection, orderBy("timestamp", "desc"));
-            const querySnapshot = await getDocs(q);
-            const commentsList = document.getElementById("comments-list");
-            commentsList.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const commentData = doc.data();
-                const commentElement = document.createElement("div");
-                commentElement.classList.add("comment");
-                commentElement.innerHTML = `
-                    <div style="display: flex; align-items: center;">
-                        <img src="${commentData.profilePic}" alt="Profile Picture">
-                        <div>
-                            <strong>${commentData.username}</strong>
-                            <p>${commentData.text}</p>
-                            <div class="comment-actions">
-                                <i class="fas fa-thumbs-up" data-id="${doc.id}" data-action="like"> ${commentData.likes || 0} Like</i>
-                                <i class="fas fa-thumbs-down" data-id="${doc.id}" data-action="dislike"> ${commentData.dislikes || 0} Dislike</i>
-                                <i class="fas fa-reply" data-id="${doc.id}"> Reply</i>
-                                <i class="fas fa-check" data-id="${doc.id}" data-action="helpful"> Helpful</i>
-                                <i class="fas fa-times" data-id="${doc.id}" data-action="not-helpful"> Not Helpful</i>
-                            </div>
-                            <div class="replies" id="replies-${doc.id}"></div>
+    // Function to render comments
+    async function renderComments() {
+        const q = query(commentsCollection, orderBy("timestamp", "desc"));
+        const querySnapshot = await getDocs(q);
+        const commentsList = document.getElementById("comments-list");
+        commentsList.innerHTML = "";
+        querySnapshot.forEach((doc) => {
+            const commentData = doc.data();
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+            commentElement.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <img src="${commentData.profilePic}" alt="Profile Picture">
+                    <div>
+                        <strong>${commentData.username}</strong>
+                        <p>${commentData.text}</p>
+                        <div class="comment-actions">
+                            <i class="fas fa-thumbs-up" data-id="${doc.id}" data-action="like"> ${commentData.likes || 0} Like</i>
+                            <i class="fas fa-thumbs-down" data-id="${doc.id}" data-action="dislike"> ${commentData.dislikes || 0} Dislike</i>
+                            <i class="fas fa-reply" data-id="${doc.id}"> Reply</i>
+                            <i class="fas fa-check" data-id="${doc.id}" data-action="helpful"> Helpful</i>
+                            <i class="fas fa-times" data-id="${doc.id}" data-action="not-helpful"> Not Helpful</i>
                         </div>
+                        <div class="replies" id="replies-${doc.id}"></div>
                     </div>
-                `;
-                commentsList.appendChild(commentElement);
+                </div>
+            `;
+            commentsList.appendChild(commentElement);
 
-                // Add event listeners for comment actions
-                commentElement.querySelectorAll(".comment-actions i").forEach(icon => {
-                    icon.addEventListener("click", async (event) => {
-                        const commentId = event.target.getAttribute("data-id");
-                        const action = event.target.getAttribute("data-action");
+            // Add event listeners for comment actions
+            commentElement.querySelectorAll(".comment-actions i").forEach(icon => {
+                icon.addEventListener("click", async (event) => {
+                    const commentId = event.target.getAttribute("data-id");
+                    const action = event.target.getAttribute("data-action");
 
-                        const commentDoc = doc(db, "comments", commentId);
-                        const commentSnapshot = await getDoc(commentDoc);
-                        const commentData = commentSnapshot.data();
+                    const commentDoc = doc(db, "comments", commentId);
+                    const commentSnapshot = await getDoc(commentDoc);
+                    const commentData = commentSnapshot.data();
 
-                        switch(action) {
-                            case "like":
-                                await updateDoc(commentDoc, {
-                                    likes: (commentData.likes || 0) + 1
-                                });
-                                break;
-                            case "dislike":
-                                await updateDoc(commentDoc, {
-                                    dislikes: (commentData.dislikes || 0) + 1
-                                });
-                                break;
-                            case "helpful":
-                                await updateDoc(commentDoc, {
-                                    helpful: (commentData.helpful || 0) + 1
-                                });
-                                break;
-                            case "not-helpful":
-                                await updateDoc(commentDoc, {
-                                    notHelpful: (commentData.notHelpful || 0) + 1
-                                });
-                                break;
-                        }
-
-                        renderComments(); // Re-render comments to reflect updates
-                    });
-                });
-
-                // Handle reply functionality
-                commentElement.querySelector(".fa-reply").addEventListener("click", (event) => {
-                    const replyId = event.target.getAttribute("data-id");
-                    const replyText = prompt("Enter your reply:");
-
-                    if (replyText) {
-                        addDoc(collection(db, "comments", replyId, "replies"), {
-                            text: replyText,
-                            username: auth.currentUser.displayName,
-                            profilePic: auth.currentUser.photoURL || "https://via.placeholder.com/50",
-                            timestamp: new Date()
-                        }).then(() => {
-                            renderComments();
-                        }).catch((error) => {
-                            console.error("Error posting reply:", error);
-                        });
+                    switch(action) {
+                        case "like":
+                            await updateDoc(commentDoc, {
+                                likes: (commentData.likes || 0) + 1
+                            });
+                            break;
+                        case "dislike":
+                            await updateDoc(commentDoc, {
+                                dislikes: (commentData.dislikes || 0) + 1
+                            });
+                            break;
+                        case "helpful":
+                            await updateDoc(commentDoc, {
+                                helpful: (commentData.helpful || 0) + 1
+                            });
+                            break;
+                        case "not-helpful":
+                            await updateDoc(commentDoc, {
+                                notHelpful: (commentData.notHelpful || 0) + 1
+                            });
+                            break;
                     }
+
+                    renderComments(); // Re-render comments to reflect updates
                 });
-
-                // Render replies
-                renderReplies(commentData.replies || [], `replies-${doc.id}`);
             });
-        }
 
-        // Function to render replies
-        async function renderReplies(replies, containerId) {
-            const repliesContainer = document.getElementById(containerId);
-            repliesContainer.innerHTML = ""; // Clear existing replies
+            // Handle reply functionality
+            commentElement.querySelector(".fa-reply").addEventListener("click", (event) => {
+                const replyId = event.target.getAttribute("data-id");
+                const replyText = prompt("Enter your reply:");
 
-            replies.forEach((replyData) => {
-                const replyElement = document.createElement("div");
-                replyElement.classList.add("reply");
-                replyElement.innerHTML = `
-                    <div style="display: flex; align-items: center;">
-                        <img src="${replyData.profilePic}" alt="Profile Picture">
-                        <div>
-                            <strong>${replyData.username}</strong>
-                            <p>${replyData.text}</p>
-                        </div>
-                    </div>
-                `;
-                repliesContainer.appendChild(replyElement);
-            });
-        }
-
-        // Check if user is logged in and show/hide comment form
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById("comment-form").style.display = "block";
-                document.getElementById("login-message").style.display = "none";
-                document.getElementById("username").textContent = user.displayName || "User";
-                document.getElementById("login-notification").style.display = "block";
-
-                document.getElementById("submit-comment").addEventListener("click", async () => {
-                    const commentText = document.getElementById("comment-text").value;
-                    if (commentText.trim() !== "") {
-                        await addDoc(commentsCollection, {
-                            text: commentText,
-                            username: user.displayName,
-                            profilePic: user.photoURL || "https://via.placeholder.com/50",
-                            timestamp: new Date()
-                        });
-                        document.getElementById("comment-text").value = "";
+                if (replyText) {
+                    addDoc(collection(db, "comments", replyId, "replies"), {
+                        text: replyText,
+                        username: auth.currentUser.displayName,
+                        profilePic: auth.currentUser.photoURL || "https://via.placeholder.com/50",
+                        timestamp: new Date()
+                    }).then(() => {
                         renderComments();
-                    }
-                });
-            } else {
-                document.getElementById("comment-form").style.display = "none";
-                document.getElementById("login-message").style.display = "block";
-                document.getElementById("login-notification").style.display = "none";
-            }
+                    }).catch((error) => {
+                        console.error("Error posting reply:", error);
+                    });
+                }
+            });
+
+            // Render replies
+            renderReplies(commentData.replies || [], `replies-${doc.id}`);
         });
+    }
 
-        // Initial render of comments
-        renderComments();
+    // Function to render replies
+    async function renderReplies(replies, containerId) {
+        const repliesContainer = document.getElementById(containerId);
+        repliesContainer.innerHTML = ""; // Clear existing replies
 
-        // Handle post like/dislike
-        document.getElementById("like-post").addEventListener("click", () => {
-            alert("You liked this post!");
+        replies.forEach((replyData) => {
+            const replyElement = document.createElement("div");
+            replyElement.classList.add("reply");
+            replyElement.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <img src="${replyData.profilePic}" alt="Profile Picture">
+                    <div>
+                        <strong>${replyData.username}</strong>
+                        <p>${replyData.text}</p>
+                    </div>
+                </div>
+            `;
+            repliesContainer.appendChild(replyElement);
         });
+    }
 
-        document.getElementById("dislike-post").addEventListener("click", () => {
-            alert("You disliked this post!");
-        });
+    // Check if user is logged in and show/hide comment form
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById("comment-form").style.display = "block";
+            document.getElementById("login-message").style.display = "none";
+            document.getElementById("username").textContent = user.displayName || "User";
+            document.getElementById("login-notification").style.display = "block";
 
-    </script>
+            document.getElementById("submit-comment").addEventListener("click", async () => {
+                const commentText = document.getElementById("comment-text").value;
+                if (commentText.trim() !== "") {
+                    await addDoc(commentsCollection, {
+                        text: commentText,
+                        username: user.displayName,
+                        profilePic: user.photoURL || "https://via.placeholder.com/50",
+                        timestamp: new Date()
+                    });
+                    document.getElementById("comment-text").value = "";
+                    renderComments();
+                }
+            });
+        } else {
+            document.getElementById("comment-form").style.display = "none";
+            document.getElementById("login-message").style.display = "block";
+            document.getElementById("login-notification").style.display = "none";
+        }
+    });
+
+    // Initial render of comments
+    renderComments();
+
+    // Handle post like/dislike
+    document.getElementById("like-post").addEventListener("click", () => {
+        alert("You liked this post!");
+    });
+
+    document.getElementById("dislike-post").addEventListener("click", () => {
+        alert("You disliked this post.");
+    });
+</script>
 </body>
 </html>
