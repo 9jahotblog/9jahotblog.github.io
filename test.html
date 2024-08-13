@@ -1,76 +1,25 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <title>My 9jahotblog</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .notification {
-            position: fixed;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
-        }
-    </style>
-</head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
-
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Books</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Main Content -->
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                
-
-    
-    <style>
-        /* Basic styles for the comment section */
         #comments-section {
             margin: 20px 0;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #111111;
+            background-color: #111;
+            color: #fff;
         }
 
         #comments-list .comment {
-            display: flex;
-            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
             margin-bottom: 10px;
         }
 
@@ -86,6 +35,10 @@
             height: 100px;
             padding: 10px;
             margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+            border: 1px solid #444;
         }
 
         #comment-form button {
@@ -96,25 +49,125 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .comment-actions {
+            margin-top: 5px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .comment-actions i {
+            cursor: pointer;
+        }
+
+        #emoji-picker {
+            position: absolute;
+            display: none;
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        #emoji-picker img {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        #login-notification {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        #post-reactions {
+            margin: 10px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        #post-reactions i {
+            cursor: pointer;
+        }
     </style>
 </head>
-<body>
-    <!-- Comments Section -->
-    <section id="comments-section">
-        <h3>Comments</h3>
-        <div id="comments-list"></div>
-        <div id="comment-form" style="display:none;">
-            <textarea id="comment-text" placeholder="Write a comment..."></textarea>
-            <button id="submit-comment">Post Comment</button>
-        </div>
-        <p id="login-message" style="display:none;">Please <a href="login-page.html">login</a> to comment.</p>
-    </section>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a></li>
+                    <li><a href="#">Books</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <h2>Post Title</h2>
+                <p>Post content...</p>
+
+                <!-- Post Reactions -->
+                <div id="post-reactions">
+                    <i id="like-post" class="fas fa-thumbs-up"> Like</i>
+                    <i id="dislike-post" class="fas fa-thumbs-down"> Dislike</i>
+                </div>
+
+                <!-- Comments Section -->
+                <section id="comments-section">
+                    <h3>Comments</h3>
+                    <div id="comments-list"></div>
+                    <div id="comment-form" style="display:none;">
+                        <textarea id="comment-text" placeholder="Write a comment..."></textarea>
+                        <button id="emoji-button">😊</button>
+                        <button id="submit-comment">Post Comment</button>
+                        <div id="emoji-picker"></div>
+                    </div>
+                    <p id="login-message" style="display:none;">Please <a href="login-page.html">login</a> to comment.</p>
+                </section>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+        
+        <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <ul class="copyright">
+                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
+            </ul>
+        </footer>
+    </div>
+    
     <!-- Scripts -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -128,8 +181,27 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         const commentsCollection = collection(db, "comments");
+
+        // Emoji Picker Initialization
+        const emojiButton = document.getElementById("emoji-button");
+        const emojiPicker = document.getElementById("emoji-picker");
+        const commentText = document.getElementById("comment-text");
+
+        const emojis = ["😊", "😂", "😍", "😒", "😎", "😭", "😡"];
+        emojis.forEach(emoji => {
+            const emojiElement = document.createElement("img");
+            emojiElement.src = `https://twemoji.maxcdn.com/v/latest/72x72/${emoji.codePointAt(0).toString(16)}.png`;
+            emojiElement.addEventListener("click", () => {
+                commentText.value += emoji;
+                emojiPicker.style.display = "none";
+            });
+            emojiPicker.appendChild(emojiElement);
+        });
+
+        emojiButton.addEventListener("click", () => {
+            emojiPicker.style.display = emojiPicker.style.display === "block" ? "none" : "block";
+        });
 
         // Function to render comments
         async function renderComments() {
@@ -140,14 +212,105 @@
             querySnapshot.forEach((doc) => {
                 const commentData = doc.data();
                 const commentElement = document.createElement("div");
+                commentElement.classList.add("comment");
                 commentElement.innerHTML = `
-                    <div class="comment">
+                    <div style="display: flex; align-items: center;">
                         <img src="${commentData.profilePic}" alt="Profile Picture">
-                        <strong>${commentData.username}</strong>
-                        <p>${commentData.text}</p>
+                        <div>
+                            <strong>${commentData.username}</strong>
+                            <p>${commentData.text}</p>
+                            <div class="comment-actions">
+                                <i class="fas fa-thumbs-up" data-id="${doc.id}" data-action="like"> ${commentData.likes || 0} Like</i>
+                                <i class="fas fa-thumbs-down" data-id="${doc.id}" data-action="dislike"> ${commentData.dislikes || 0} Dislike</i>
+                                <i class="fas fa-reply" data-id="${doc.id}"> Reply</i>
+                                <i class="fas fa-check" data-id="${doc.id}" data-action="helpful"> Helpful</i>
+                                <i class="fas fa-times" data-id="${doc.id}" data-action="not-helpful"> Not Helpful</i>
+                            </div>
+                            <div class="replies" id="replies-${doc.id}"></div>
+                        </div>
                     </div>
                 `;
                 commentsList.appendChild(commentElement);
+
+                // Add event listeners for comment actions
+                commentElement.querySelectorAll(".comment-actions i").forEach(icon => {
+                    icon.addEventListener("click", async (event) => {
+                        const commentId = event.target.getAttribute("data-id");
+                        const action = event.target.getAttribute("data-action");
+
+                        const commentDoc = doc(db, "comments", commentId);
+                        const commentSnapshot = await getDoc(commentDoc);
+                        const commentData = commentSnapshot.data();
+
+                        switch(action) {
+                            case "like":
+                                await updateDoc(commentDoc, {
+                                    likes: (commentData.likes || 0) + 1
+                                });
+                                break;
+                            case "dislike":
+                                await updateDoc(commentDoc, {
+                                    dislikes: (commentData.dislikes || 0) + 1
+                                });
+                                break;
+                            case "helpful":
+                                await updateDoc(commentDoc, {
+                                    helpful: (commentData.helpful || 0) + 1
+                                });
+                                break;
+                            case "not-helpful":
+                                await updateDoc(commentDoc, {
+                                    notHelpful: (commentData.notHelpful || 0) + 1
+                                });
+                                break;
+                        }
+
+                        renderComments(); // Re-render comments to reflect updates
+                    });
+                });
+
+                // Handle reply functionality
+                commentElement.querySelector(".fa-reply").addEventListener("click", (event) => {
+                    const replyId = event.target.getAttribute("data-id");
+                    const replyText = prompt("Enter your reply:");
+
+                    if (replyText) {
+                        addDoc(collection(db, "comments", replyId, "replies"), {
+                            text: replyText,
+                            username: auth.currentUser.displayName,
+                            profilePic: auth.currentUser.photoURL || "https://via.placeholder.com/50",
+                            timestamp: new Date()
+                        }).then(() => {
+                            renderComments();
+                        }).catch((error) => {
+                            console.error("Error posting reply:", error);
+                        });
+                    }
+                });
+
+                // Render replies
+                renderReplies(commentData.replies || [], `replies-${doc.id}`);
+            });
+        }
+
+        // Function to render replies
+        async function renderReplies(replies, containerId) {
+            const repliesContainer = document.getElementById(containerId);
+            repliesContainer.innerHTML = ""; // Clear existing replies
+
+            replies.forEach((replyData) => {
+                const replyElement = document.createElement("div");
+                replyElement.classList.add("reply");
+                replyElement.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <img src="${replyData.profilePic}" alt="Profile Picture">
+                        <div>
+                            <strong>${replyData.username}</strong>
+                            <p>${replyData.text}</p>
+                        </div>
+                    </div>
+                `;
+                repliesContainer.appendChild(replyElement);
             });
         }
 
@@ -177,79 +340,14 @@
 
         // Initial render of comments
         renderComments();
-    </script>
-</body>
-</html>
-    
-        
-                
 
-    
+        // Handle post like/dislike
+        document.getElementById("like-post").addEventListener("click", () => {
+            alert("You liked this post!");
+        });
 
- 
-            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-        
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
-    </div>
-
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
+        document.getElementById("dislike-post").addEventListener("click", () => {
+            alert("You disliked this post!");
         });
     </script>
 </body>
