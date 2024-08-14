@@ -1588,12 +1588,39 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
 
         // Display congratulatory message based on word count
         let message = "";
-        if (words.length >= 10) message = "Great start! Keep going.";
-        if (words.length >= 50) message = "Impressive! You're on fire.";
-        if (words.length >= 100) message = "Amazing! You're a true writer.";
-        if (words.length >= 200) message = "Outstanding! Keep up the excellent work.";
-        if (words.length >= 500) message = "Congratulations! You've written a masterpiece.";
-        document.getElementById("congratulatory-message").innerText = message;
+if (words.length >= 1) message = "You've started! Keep writing, you've got this!";
+if (words.length >= 10) message = "Great job! You're building momentum!";
+if (words.length >= 25) message = "Excellent! Your ideas are flowing!";
+if (words.length >= 50) message = "Impressive! You're on a roll!";
+if (words.length >= 75) message = "Fantastic! Your story is taking shape!";
+if (words.length >= 100) message = "Amazing! You're a true writer!";
+if (words.length >= 125) message = "Outstanding! Your creativity is shining!";
+if (words.length >= 150) message = "Wow! You're really cooking now!";
+if (words.length >= 200) message = "Incredible! Keep up the fantastic work!";
+if (words.length >= 250) message = "Unbelievable! You're a writing rockstar!";
+if (words.length >= 300) message = "Sensational! Your writing is captivating!";
+if (words.length >= 350) message = "Exceptional! You're making great progress!";
+if (words.length >= 400) message = "Magnificent! Your story is coming alive!";
+if (words.length >= 450) message = "Phenomenal! Keep pushing the boundaries!";
+if (words.length >= 500) message = "Congratulations! You've written a masterpiece!";
+if (words.length >= 550) message = "Bravo! Your dedication is paying off!";
+if (words.length >= 600) message = "Inspirational! Your writing is a true achievement!";
+if (words.length >= 650) message = "Stupendous! You're a writing sensation!";
+if (words.length >= 700) message = "Breathtaking! Your story is a work of art!";
+if (words.length >= 750) message = "Don't forget to proofread and edit – you're almost there!";
+if (words.length >= 800) message = "You're on fire! Keep the momentum going!";
+if (words.length >= 850) message = "Your writing is electrifying! Keep pushing the limits!";
+if (words.length >= 1000) message = "Wow, 1000 words! Take a break, then review for consistency and flow.";
+if (words.length >= 1050) message = "Remember to check for grammar, punctuation, and spelling errors.";
+if (words.length >= 1100) message = "Your story is really taking shape! Consider getting feedback from beta readers.";
+if (words.length >= 1150) message = "You're getting close! Make sure to edit and revise before calling it done.";
+if (words.length >= 1200) message = "Keep going! You're almost at the finish line!";
+if (words.length >= 1250) message = "Your dedication is paying off! Keep pushing forward!";
+if (words.length >= 1300) message = "You're a writing machine! Keep the words flowing!";
+if (words.length >= 1500) message = "Your story is a masterpiece! Take pride in your work!";
+if (words.length >= 1750) message = "You're a rockstar writer! Keep shining!";
+if (words.length >= 2000) message = "Congratulations! You've reached 2000 words! Take a moment to celebrate, then edit and polish.";
+document.getElementById("congratulatory-message").innerText = message;
     });
 
     document.getElementById("publish-story").addEventListener("click", (event) => {
