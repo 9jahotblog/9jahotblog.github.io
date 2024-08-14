@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>9jahotblog Storybooks - Authentication</title>
+  <title>Create a 9jahotblog Storybooks Account - Authentication - Write, Publish, Join Contests, Win - The future is here!</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -83,6 +83,7 @@
   <div class="auth-container">
     <img src="https://i.postimg.cc/y8ndfNxb/IMG-20240720-172101-879.jpg" alt="logo" />
     <h2>Create an Account</h2>
+    <h1 style="display: inline-block; animation: dance 1s infinite; font-size: 3em; color: #333;">The future is here 🚀✨</h1><style>@keyframes dance {0% { transform: translateY(0); } 50% { transform: translateY(-20px) rotate(-10deg); } 100% { transform: translateY(0) rotate(10deg); }}</style>
     <form id="signup-form">
       <input type="text" id="signup-username" placeholder="Username" required />
       <input type="text" id="signup-fullname" placeholder="Full Name" required />
@@ -99,8 +100,20 @@
       <select id="signup-country" required>
         <option value="">Select Country</option>
         <!-- Add options for countries here -->
-        <option value="Nigeria">Nigeria</option>
-        <option value="United States">United States</option>
+<option value="Nigeria">Nigeria</option>
+<option value="United States">United States</option>
+<option value="Canada">Canada</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="South Africa">South Africa</option>
+<option value="Kenya">Kenya</option>
+<option value="Egypt">Egypt</option>
+<option value="Germany">Germany</option>
+<option value="France">France</option>
+<option value="Japan">Japan</option>
+<option value="China">China</option>
+<option value="Brazil">Brazil</option>
+<option value="India">India</option>
+<option value="Australia">Australia</option>
         <!-- Add other countries as needed -->
       </select>
       <label>
@@ -167,7 +180,7 @@
           updateProfile(userCredential.user, {
             displayName: username
           });
-          document.getElementById('status').innerText = 'Sign-up successful! Verification email sent. Please verify your email before logging in.';
+          document.getElementById('status').innerText = 'Sign-up successful! Verification email sent. Please verify your email before logging into your 9jahotblogStorybooks account.';
           if (twoStepVerification) {
             // Add your two-step verification setup here
           }
@@ -189,7 +202,7 @@
             document.getElementById('status').innerText = 'Login successful!';
             setTimeout(() => window.location.href = 'profile.html', 2000);
           } else {
-            document.getElementById('status').innerText = 'Please verify your email before logging in.';
+            document.getElementById('status').innerText = 'Please verify your email before logging in. Check inbox and head back here to login.';
           }
         })
         .catch((error) => {
@@ -203,7 +216,7 @@
       if (email) {
         sendPasswordResetEmail(auth, email)
           .then(() => {
-            document.getElementById('status').innerText = 'Password reset email sent!';
+            document.getElementById('status').innerText = '9jahotblog Password reset email sent!';
           })
           .catch((error) => {
             document.getElementById('status').innerText = `Error: ${error.message}`;
