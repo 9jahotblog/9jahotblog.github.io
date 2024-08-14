@@ -110,6 +110,30 @@
                     <li><a href="#library-section">Featured Story of the Month</a></li>
                     <li><a href="#benefits-section">Profile Benefits</a></li>
                 </ul>
+                <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    
+                        <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
             </nav>
         </header>
 
@@ -1500,7 +1524,7 @@
         "prompt": "Clue 20: I am not alive, but I can grow; I don’t have eyes, but you can see me. What am I?",
         "answer": "crystal",
         "story": "An intricate crystal formation is displayed on a pedestal. A note beside it reads: 'I am not alive, but I can grow; I don’t have eyes, but you can see me. What am I?'"
-    }
+    },
     
     ];
 
@@ -1936,22 +1960,105 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
     }
 
     const suggestions = {
-        "Once": "Once upon a time",
-        "In": "In a land far away",
-        "The": "The hero embarked on a journey",
-        "I don't": "I don't know",
-        "He is": "He is a brave warrior",
-        "She was": "She was a kind soul",
-        "They went": "They went on an adventure",
-        "It was": "It was a dark and stormy night",
-        "There is": "There is a secret door",
-        "We can": "We can make it through",
-        "A long": "A long time ago",
-        "Far away": "Far away in a distant land",
-        "In the": "In the beginning",
-        "I am": "I am ready for the challenge"
-    };
-
+    "I love": [
+        "I love you more than words can say",
+        "I love the way you make me feel",
+        "I love spending time with you",
+        "I love the smell of fresh coffee",
+        "I love how the rain sounds"
+    ],
+    "Once": [
+        "Once in a lifetime",
+        "Once upon a time",
+        "Once the sun sets",
+        "Once the truth is revealed",
+        "Once the music starts"
+    ],
+    "In": [
+        "In a world where dreams come true",
+        "In the middle of nowhere",
+        "In the heart of the city",
+        "In the dead of night",
+        "In a moment of clarity"
+    ],
+    "The": [
+        "The sun began to set",
+        "The mystery deepens",
+        "The adventure starts here",
+        "The door creaked open",
+        "The hero arrived just in time"
+    ],
+    "He is": [
+        "He is a man of honor",
+        "He is the chosen one",
+        "He is lost in thought",
+        "He is stronger than he seems",
+        "He is always on time"
+    ],
+    "She was": [
+        "She was a vision of grace",
+        "She was caught off guard",
+        "She was waiting for the signal",
+        "She was never afraid to speak up",
+        "She was a beacon of hope"
+    ],
+    "They went": [
+        "They went in search of treasure",
+        "They went on a daring quest",
+        "They went their separate ways",
+        "They went to the edge of the world",
+        "They went to fight for their cause"
+    ],
+    "It was": [
+        "It was a beautiful day",
+        "It was the best of times",
+        "It was a shocking revelation",
+        "It was the moment they had waited for",
+        "It was an unforgettable experience"
+    ],
+    "There is": [
+        "There is a place of magic",
+        "There is a story untold",
+        "There is always hope",
+        "There is a reason for everything",
+        "There is more than meets the eye"
+    ],
+    "We can": [
+        "We can overcome any obstacle",
+        "We can make a difference",
+        "We can find our way",
+        "We can achieve greatness",
+        "We can start anew"
+    ],
+    "A long": [
+        "A long journey awaits",
+        "A long time ago",
+        "A long night of reflection",
+        "A long path to redemption",
+        "A long day at the office"
+    ],
+    "Far away": [
+        "Far away in a distant land",
+        "Far away from home",
+        "Far away in the stars",
+        "Far away from reality",
+        "Far away in the mountains"
+    ],
+    "In the": [
+        "In the blink of an eye",
+        "In the midst of chaos",
+        "In the heart of the storm",
+        "In the shadows of the past",
+        "In the still of the night"
+    ],
+    "I am": [
+        "I am ready for anything",
+        "I am here for you",
+        "I am not alone",
+        "I am filled with hope",
+        "I am always learning"
+    ]
+};
     document.getElementById("new-prompt-btn").addEventListener("click", () => {
         const newPrompt = fetchNewPrompt();
         document.getElementById("writing-prompt").innerText = newPrompt;
