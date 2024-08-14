@@ -1486,12 +1486,68 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
 
     function fetchNewPrompt() {
         const prompts = {
-            "Christian fiction": ["Write about a miracle that changes a person's life.", "Describe a journey of faith."],
-            "Racism": ["Describe a character's struggle against prejudice.", "Write about an event that challenges a community's beliefs."],
-            "Fantasy": ["Create a world where magic is real.", "Describe a hero's quest to find a lost artifact."],
-            "Science Fiction": ["Imagine a future where humans live on Mars.", "Write about a robot that gains consciousness."],
-            "Mystery": ["Describe a detective solving a crime.", "Write about a person who finds a hidden treasure map."]
-        };
+    "Christian fiction": [
+        "A young woman, raised in doubt, experiences a life-altering miracle that not only transforms her but also becomes a beacon of hope for her struggling community.",
+        "Explore the spiritual journey of a man grappling with deep-rooted guilt. Through unwavering faith and divine intervention, he finds redemption and becomes a pillar of strength for others.",
+        "In a world ravaged by despair, a group of diverse individuals come together, united by their shared faith, to overcome insurmountable challenges and create a lasting impact on their society.",
+        "A renowned scientist, skeptical of religious beliefs, embarks on a quest to find scientific proof of miracles. Instead, he undergoes a profound spiritual awakening that challenges his worldview.",
+        "Write a story about a small town facing a devastating natural disaster. Amidst the chaos, a selfless act of faith inspires hope and resilience, leading to a miraculous recovery.",
+        "A young orphan finds solace and purpose in a hidden monastery, where she discovers her true calling and becomes a catalyst for spiritual renewal within the monastery and beyond.",
+        "Explore the complex relationship between faith and doubt through the eyes of a struggling pastor. As he confronts personal challenges, he rediscovers the power of belief and inspires his congregation.",
+        "In a dystopian future where religion is outlawed, a secret underground church emerges, offering hope and resistance. Follow the journey of a young believer as they navigate a dangerous world.",
+        "Write a story about a group of friends who embark on a pilgrimage to a sacred site. Along the way, they encounter personal trials and spiritual revelations that deepen their bond and faith.",
+        "A renowned atheist writer is challenged to write a book about faith. Through extensive research and personal experiences, they undergo a transformative journey that leads to unexpected conclusions."
+    ],
+    "Racism": [
+        "A talented Black athlete faces intense racial prejudice and discrimination as they strive to achieve their dreams. Explore the challenges they overcome and the impact they have on their community.",
+        "In a small, predominantly white town, a young biracial woman grapples with her identity and experiences firsthand the harsh realities of racism. Follow her journey of self-discovery and resilience.",
+        "A group of diverse activists come together to fight against systemic racism and inequality. Explore the challenges they face, the victories they achieve, and the impact of their work on society.",
+        "A white police officer develops a deep-rooted conscience about the racial injustices within their department. Follow their internal struggle as they navigate a complex moral dilemma.",
+        "A historical fiction story set during the Civil Rights Movement, focusing on the lives of ordinary people who risked everything to fight for equality. Explore the courage, sacrifice, and hope that fueled the movement.",
+        "A young Black writer faces rejection and criticism due to their race and background. Follow their journey as they overcome obstacles and find their voice in the literary world.",
+        "A workplace microaggressions and systemic biases that impact the lives of Black employees. Explore the challenges they face and the strategies they employ to create a more inclusive environment.",
+        "A coming-of-age story about a mixed-race teenager navigating their identity and facing prejudice from both sides of their heritage. Explore their search for belonging and self-acceptance.",
+        "A powerful drama exploring the complexities of interracial relationships and the challenges faced by couples who defy societal norms. Focus on the love, resilience, and strength required to overcome prejudice.",
+        "A thought-provoking exploration of the lasting impact of historical racism on present-day society. Examine the systemic issues and the individual stories that highlight the ongoing struggle for racial justice."
+    ],
+    "Fantasy": [
+        "In a world where magic is intertwined with technology, a young inventor discovers a hidden power that could reshape the world. Follow their journey as they navigate a dangerous world filled with mythical creatures and ancient secrets.",
+        "A group of unlikely heroes, each with unique magical abilities, embark on a quest to defeat a powerful dark wizard who threatens to plunge the kingdom into eternal darkness.",
+        "Explore a world where dreams are tangible and can be harnessed as a powerful force. Follow the story of a young dreamer who discovers their extraordinary abilities and the challenges that come with them.",
+        "In a realm where mythical creatures coexist with humans, a young woman forms an unlikely bond with a dragon. Together, they must protect their world from a growing evil.",
+        "A young orphan discovers they are the last descendant of an ancient order of magic users. As they train to master their powers, they uncover a dark conspiracy that threatens to destroy their world.",
+        "A group of friends stumble upon a hidden portal to another dimension filled with fantastical creatures and breathtaking landscapes. They must navigate this new world while trying to find their way back home.",
+        "In a world where magic is fading, a young wizard sets out on a quest to find the lost source of magic and restore it to its former glory.",
+        "A young woman with the ability to control the elements discovers a hidden prophecy that foretells of a great battle between good and evil. She must embrace her destiny and become the hero her world needs.",
+        "Explore a world where magic is a forbidden art. Follow the story of a young rebel who defies the law and uses their powers to help those in need.",
+        "A group of adventurers embark on a perilous journey to find a legendary artifact that has the power to grant immortality. But they soon discover that the artifact is more dangerous than they ever imagined."
+    ],
+    "Science Fiction": [
+        "In a future where Earth is uninhabitable, a group of astronauts embark on a perilous mission to colonize Mars. Explore the challenges they face, the discoveries they make, and the impact of their mission on humanity.",
+        "A brilliant scientist develops a groundbreaking technology that has the potential to revolutionize human existence. However, the technology falls into the wrong hands, leading to a dystopian future.",
+        "In a world where artificial intelligence has become sentient, a young AI grapples with their identity and purpose. Explore their journey of self-discovery and the ethical dilemmas they face.",
+        "A group of rebels fight against a powerful corporation that controls the world's resources. Follow their struggle for freedom and the sacrifices they make to protect humanity.",
+        "A time-traveling agent is sent back to prevent a catastrophic event that will change the course of history. But they soon discover that altering the past has unintended consequences.",
+        "In a future where humans have evolved beyond their physical bodies, a group of individuals must confront the challenges of their new existence and the ethical implications of their enhanced abilities.",
+        "A young woman wakes up to find herself in a virtual reality world where she can't distinguish between reality and simulation. As she explores this new world, she begins to question her own existence.",
+        "A group of scientists discover a mysterious alien artifact that holds the key to unlocking the secrets of the universe. But the artifact also poses a threat to humanity.",
+        "In a future where humans have lost touch with nature, a young botanist embarks on a quest to restore the planet's ecosystem and reconnect people with the natural world.",
+        "A world where humans have developed the ability to upload their consciousness into a digital realm. Explore the ethical implications of this technology and the challenges faced by those who choose to live in this new reality."
+    ],
+    "Mystery": [
+        "A reclusive writer is found dead in their isolated home. A young detective with a troubled past is assigned to the case and must unravel the complex web of secrets and lies surrounding the victim.",
+        "A treasure hunter discovers an ancient map hidden within a priceless painting. As they follow the clues, they become entangled in a dangerous mystery with deadly consequences.",
+        "A small town is rocked by a series of mysterious disappearances. A local journalist teams up with a retired detective to uncover the truth behind the vanishings.",
+        "A renowned art collector acquires a painting with a dark history. As they delve deeper into the painting's origins, they uncover a hidden message that could lead to a shocking discovery.",
+        "A young woman inherits a seemingly ordinary house from a distant relative. As she begins to explore the house, she discovers hidden rooms and cryptic clues that suggest a dark secret lies within its walls.",
+        "A detective with a photographic memory is tasked with solving a complex murder case involving multiple suspects and a web of intricate lies.",
+        "A group of friends on a camping trip stumble upon a hidden cave filled with ancient artifacts. As they explore the cave, they uncover a mystery that could change the course of history.",
+        "A renowned psychic is hired to investigate a series of unexplained events at a haunted mansion. As they delve deeper into the mystery, they realize they may be in over their heads.",
+        "A young woman with a unique ability to see glimpses of the future helps a detective solve a series of seemingly unrelated crimes. Together, they must race against time to prevent a catastrophic event.",
+        "A detective with a troubled past is drawn into a dangerous world of espionage and intrigue. As they uncover a plot to undermine national security, they must protect themselves and their loved ones."
+    ]
+};
+
         const genres = Object.keys(prompts);
         const randomGenre = genres[Math.floor(Math.random() * genres.length)];
         const randomPrompt = prompts[randomGenre][Math.floor(Math.random() * prompts[randomGenre].length)];
