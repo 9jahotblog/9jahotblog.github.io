@@ -210,27 +210,33 @@
     })();
 
     // Like button functionality
-    let likeCount = 0;
+    const likeButton = document.querySelector('.like-button');
+const dislikeButton = document.querySelector('.dislike-button'); // Add a dislike button in HTML similarly
 
-    function likeFunction(button) {
-        likeCount++;
-        const likeSpan = button.querySelector('.like-count');
-        likeSpan.textContent = likeCount;
-        
-        // Optional: Display notification on like
-        const notification = document.createElement('div');
-        notification.className = 'notification';
-        notification.textContent = 'Thank you for liking!';
-        document.body.appendChild(notification);
-        
-        // Show and hide the notification
-        notification.style.display = 'block';
-        setTimeout(() => {
-            notification.style.display = 'none';
-            document.body.removeChild(notification);
-        }, 2000);
-    }
+// Get the current like count from Firebase
+database.ref('articleLikes').once('value').then((snapshot) => {
+    const count = snapshot.val() || 0;
+    likeButton.querySelector('.like-count').innerText = count;
+});
 
+function likeFunction(button) {
+    // Get the current count
+    database.ref('articleLikes').once('value').then((snapshot) => {
+        let count = snapshot.val() || 0;
+        count++;
+
+        // Update the count in Firebase
+        database.ref('articleLikes').set(count);
+
+        // Update the button text
+        button.querySelector('.like-count').innerText = count;
+        button.disabled = true; // Prevent multiple likes
+    });
+}
+
+function dislikeFunction(button) {
+    // Handle dislikes similarly
+}
 </script>
 
                       </div>
