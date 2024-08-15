@@ -125,9 +125,7 @@
 
 <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 
-<span style="font-size: 16px; font-weight: bold; vertical-align: middle;">
-  Kolade Philip O.<i class="fas fa-check-circle" style="color: #1DA1F2; font-size: 18px; margin-left: 5px; vertical-align: middle;"> </i>
-</span>
+<p>Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:20px;height:20px;vertical-align:middle;margin-right:5px;border-radius:50%;" /></p>
 <p style="margin-top: 5px; font-weight: 500; color: #1DA1F2;">
   Editor/Updater 2024
 </p>
@@ -208,104 +206,6 @@
         </footer>
     </div>
 
-    <script>
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const database = firebase.database();
-
-    const articleId = "article1"; // Unique identifier for the article
-
-    // On page load, check the like and dislike count
-    window.onload = function() {
-        // Get the current like and dislike counts from Firebase
-        database.ref('articles/' + articleId).once('value').then((snapshot) => {
-            const data = snapshot.val();
-            const likeCount = data?.likeCount || 0;
-            const dislikeCount = data?.dislikeCount || 0;
-
-            document.querySelector('.like-count').innerText = likeCount;
-            document.querySelector('.dislike-count').innerText = dislikeCount;
-
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    const userId = user.uid;
-
-                    // Check if the user has already liked or disliked
-                    if (data?.likes?.[userId]) {
-                        document.querySelector('.like-button').disabled = true;
-                    }
-                    if (data?.dislikes?.[userId]) {
-                        document.querySelector('.dislike-button').disabled = true;
-                    }
-                } else {
-                    // Redirect to login if not logged in
-                    window.location.href = "https://9jahotblog.github.io/login-page.html";
-                }
-            });
-        });
-    }
-
-    // Like function
-    function likeFunction(button) {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const userId = user.uid;
-
-                // Update the like count in Firebase
-                database.ref('articles/' + articleId).once('value').then((snapshot) => {
-                    let data = snapshot.val() || { likeCount: 0, dislikeCount: 0, likes: {}, dislikes: {} };
-
-                    if (!data.likes[userId]) {
-                        data.likeCount++;
-                        data.likes[userId] = true;
-
-                        if (data.dislikes[userId]) {
-                            data.dislikeCount--;
-                            delete data.dislikes[userId];
-                            document.querySelector('.dislike-count').innerText = data.dislikeCount;
-                        }
-
-                        database.ref('articles/' + articleId).set(data);
-                        document.querySelector('.like-count').innerText = data.likeCount;
-                        button.disabled = true;
-                        document.querySelector('.dislike-button').disabled = false;
-                    }
-                });
-            }
-        });
-    }
-
-    // Dislike function
-    function dislikeFunction(button) {
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                const userId = user.uid;
-
-                // Update the dislike count in Firebase
-                database.ref('articles/' + articleId).once('value').then((snapshot) => {
-                    let data = snapshot.val() || { likeCount: 0, dislikeCount: 0, likes: {}, dislikes: {} };
-
-                    if (!data.dislikes[userId]) {
-                        data.dislikeCount++;
-                        data.dislikes[userId] = true;
-
-                        if (data.likes[userId]) {
-                            data.likeCount--;
-                            delete data.likes[userId];
-                            document.querySelector('.like-count').innerText = data.likeCount;
-                        }
-
-                        database.ref('articles/' + articleId).set(data);
-                        document.querySelector('.dislike-count').innerText = data.dislikeCount;
-                        button.disabled = true;
-                        document.querySelector('.like-button').disabled = false;
-                    }
-                });
-            }
-        });
-    }
-</script>
  
     <!-- Scripts -->
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
