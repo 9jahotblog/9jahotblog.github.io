@@ -125,8 +125,13 @@
 
 <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 
-<p>Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width:20px;height:20px;vertical-align:middle;margin-right:5px;border-radius:50%;" /></p>
-<p style="margin-top: 5px; font-weight: 500; color: #1DA1F2;">
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.
+  <img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" 
+       alt="9jahotblog Verified Badge" 
+       style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
   Editor/Updater 2024
 </p>
         
@@ -188,40 +193,59 @@
     document.addEventListener("DOMContentLoaded", function() {
         const articleId = "article1"; // Unique identifier for the article
 
-        // Check if the user has already liked or disliked
-        const liked = localStorage.getItem(`${articleId}-liked`);
-        const disliked = localStorage.getItem(`${articleId}-disliked`);
+        // Load like and dislike counts from localStorage
+        const likeCount = localStorage.getItem(`${articleId}-likeCount`) || 0;
+        const dislikeCount = localStorage.getItem(`${articleId}-dislikeCount`) || 0;
 
-        // Update button states based on previous actions
-        if (liked) {
+        document.querySelector('.like-count').innerText = likeCount;
+        document.querySelector('.dislike-count').innerText = dislikeCount;
+
+        // Check if the user has already liked or disliked
+        if (localStorage.getItem(`${articleId}-liked`)) {
             document.querySelector('.like-button').disabled = true;
         }
 
-        if (disliked) {
+        if (localStorage.getItem(`${articleId}-disliked`)) {
             document.querySelector('.dislike-button').disabled = true;
         }
 
         // Like function
         window.likeFunction = function(button) {
+            let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
+            likeCount++;
+            localStorage.setItem(`${articleId}-likeCount`, likeCount);
             localStorage.setItem(`${articleId}-liked`, true);
+
+            document.querySelector('.like-count').innerText = likeCount;
             button.disabled = true;
             document.querySelector('.dislike-button').disabled = false;
 
-            // Remove dislike if it exists
-            if (disliked) {
+            if (localStorage.getItem(`${articleId}-disliked`)) {
+                let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
+                dislikeCount--;
+                localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
                 localStorage.removeItem(`${articleId}-disliked`);
+                document.querySelector('.dislike-count').innerText = dislikeCount;
             }
         }
 
         // Dislike function
         window.dislikeFunction = function(button) {
+            let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
+            dislikeCount++;
+            localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
             localStorage.setItem(`${articleId}-disliked`, true);
+
+            document.querySelector('.dislike-count').innerText = dislikeCount;
             button.disabled = true;
             document.querySelector('.like-button').disabled = false;
 
-            // Remove like if it exists
-            if (liked) {
+            if (localStorage.getItem(`${articleId}-liked`)) {
+                let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
+                likeCount--;
+                localStorage.setItem(`${articleId}-likeCount`, likeCount);
                 localStorage.removeItem(`${articleId}-liked`);
+                document.querySelector('.like-count').innerText = likeCount;
             }
         }
     });
