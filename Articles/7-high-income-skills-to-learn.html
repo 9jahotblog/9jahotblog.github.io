@@ -184,6 +184,68 @@
 
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const articleId = "article1"; // Unique identifier for the article
+
+        // Load like and dislike counts from localStorage
+        const likeCount = localStorage.getItem(`${articleId}-likeCount`) || 0;
+        const dislikeCount = localStorage.getItem(`${articleId}-dislikeCount`) || 0;
+
+        document.querySelector('.like-count').innerText = likeCount;
+        document.querySelector('.dislike-count').innerText = dislikeCount;
+
+        // Check if the user has already liked or disliked
+        if (localStorage.getItem(`${articleId}-liked`)) {
+            document.querySelector('.like-button').disabled = true;
+        }
+
+        if (localStorage.getItem(`${articleId}-disliked`)) {
+            document.querySelector('.dislike-button').disabled = true;
+        }
+
+        // Like function
+        window.likeFunction = function(button) {
+            let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
+            likeCount++;
+            localStorage.setItem(`${articleId}-likeCount`, likeCount);
+            localStorage.setItem(`${articleId}-liked`, true);
+
+            document.querySelector('.like-count').innerText = likeCount;
+            button.disabled = true;
+            document.querySelector('.dislike-button').disabled = false;
+
+            if (localStorage.getItem(`${articleId}-disliked`)) {
+                let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
+                dislikeCount--;
+                localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
+                localStorage.removeItem(`${articleId}-disliked`);
+                document.querySelector('.dislike-count').innerText = dislikeCount;
+            }
+        }
+
+        // Dislike function
+        window.dislikeFunction = function(button) {
+            let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
+            dislikeCount++;
+            localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
+            localStorage.setItem(`${articleId}-disliked`, true);
+
+            document.querySelector('.dislike-count').innerText = dislikeCount;
+            button.disabled = true;
+            document.querySelector('.like-button').disabled = false;
+
+            if (localStorage.getItem(`${articleId}-liked`)) {
+                let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
+                likeCount--;
+                localStorage.setItem(`${articleId}-likeCount`, likeCount);
+                localStorage.removeItem(`${articleId}-liked`);
+                document.querySelector('.like-count').innerText = likeCount;
+            }
+        }
+    });
+</script>
+
                       </div>
                     </div>
                 </div>
@@ -233,100 +295,16 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    const articleId = "article1"; // Unique identifier for the article
-
-    // Check if user is signed in and display their info
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('username').textContent = user.displayName || 'User';
-            document.getElementById('login-notification').style.display = 'block';
-
-            // On page load, check the like and dislike count
-            get(ref(database, 'articles/' + articleId)).then((snapshot) => {
-                const data = snapshot.val();
-                const likeCount = data?.likeCount || 0;
-                const dislikeCount = data?.dislikeCount || 0;
-
-                document.querySelector('.like-count').innerText = likeCount;
-                document.querySelector('.dislike-count').innerText = dislikeCount;
-
-                // Check if the user has already liked or disliked
-                if (data?.likes?.[user.uid]) {
-                    document.querySelector('.like-button').disabled = true;
-                }
-                if (data?.dislikes?.[user.uid]) {
-                    document.querySelector('.dislike-button').disabled = true;
-                }
-            });
-        } else {
-            document.getElementById('login-notification').style.display = 'none';
-            // Redirect to login if not logged in
-            window.location.href = "https://9jahotblog.github.io/login-page.html";
-        }
-    });
-
-    // Like function
-    window.likeFunction = function(button) {
+        
+     // Check if user is signed in and display their info
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const userId = user.uid;
-
-                // Update the like count in Firebase
-                get(ref(database, 'articles/' + articleId)).then((snapshot) => {
-                    let data = snapshot.val() || { likeCount: 0, dislikeCount: 0, likes: {}, dislikes: {} };
-
-                    if (!data.likes[userId]) {
-                        data.likeCount++;
-                        data.likes[userId] = true;
-
-                        if (data.dislikes[userId]) {
-                            data.dislikeCount--;
-                            delete data.dislikes[userId];
-                            document.querySelector('.dislike-count').innerText = data.dislikeCount;
-                        }
-
-                        set(ref(database, 'articles/' + articleId), data);
-                        document.querySelector('.like-count').innerText = data.likeCount;
-                        button.disabled = true;
-                        document.querySelector('.dislike-button').disabled = false;
-                    }
-                });
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
             }
         });
-    }
-
-    // Dislike function
-    window.dislikeFunction = function(button) {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const userId = user.uid;
-
-                // Update the dislike count in Firebase
-                get(ref(database, 'articles/' + articleId)).then((snapshot) => {
-                    let data = snapshot.val() || { likeCount: 0, dislikeCount: 0, likes: {}, dislikes: {} };
-
-                    if (!data.dislikes[userId]) {
-                        data.dislikeCount++;
-                        data.dislikes[userId] = true;
-
-                        if (data.likes[userId]) {
-                            data.likeCount--;
-                            delete data.likes[userId];
-                            document.querySelector('.like-count').innerText = data.likeCount;
-                        }
-
-                        set(ref(database, 'articles/' + articleId), data);
-                        document.querySelector('.dislike-count').innerText = data.dislikeCount;
-                        button.disabled = true;
-                        document.querySelector('.like-button').disabled = false;
-                    }
-                });
-            }
-        });
-    }
-
 </script>
 </body>
 </html>
