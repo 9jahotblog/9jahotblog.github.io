@@ -126,58 +126,32 @@
 <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 
 <style>
-  .verified-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    font-size: 12px;
-    font-weight: bold;
-    color: white;
-    background-color: #1DA1F2;
-    border-radius: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .verified-badge::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(60deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
-    transform: rotate(25deg);
-    pointer-events: none;
-    transition: all 0.3s ease;
-  }
-
-  .verified-badge:hover::before {
-    transform: rotate(45deg);
-  }
-
-  .verified-badge::after {
-    content: '✔';
-    position: absolute;
-    right: -4px;
-    top: -4px;
-    width: 20px;
-    height: 20px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 12px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
   .name-title {
     font-size: 16px;
     font-weight: bold;
     vertical-align: middle;
     color: #333;
+  }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background-color: #1DA1F2; /* Blue color for the badge */
+    color: white;
+    border-radius: 50%; /* Makes the badge circular */
+    margin-left: 6px;
+    position: relative;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .verified-badge::after {
+    content: '✓'; /* Checkmark */
+    font-size: 12px;
   }
 
   .position-title {
@@ -189,8 +163,8 @@
 
 <span class="name-title">
   Kolade Philip O.
-<span class="verified-badge"></span>
-</span> 
+  <span class="verified-badge"></span>
+</span>
 <p class="position-title">Editor/Updater 2024</p>
         
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
