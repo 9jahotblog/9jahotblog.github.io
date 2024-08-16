@@ -199,19 +199,53 @@
         }, 3000);
     }
 
+    function saveUserChoice(choice) {
+        localStorage.setItem('userChoice', choice);
+    }
+
+    function getUserChoice() {
+        return localStorage.getItem('userChoice');
+    }
+
     function likeFunction(button) {
-        button.disabled = true;
-        button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
-        document.querySelector('.dislike-button').disabled = false;
-        showNotification('Thank you for liking this post! Please leave a comment');
+        const userChoice = getUserChoice();
+
+        if (userChoice !== 'liked') {
+            saveUserChoice('liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector('.dislike-button').disabled = true;
+            document.querySelector('.dislike-button').innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
     }
 
     function dislikeFunction(button) {
-        button.disabled = true;
-        button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
-        document.querySelector('.like-button').disabled = false;
-        showNotification('Thank you for your feedback!');
+        const userChoice = getUserChoice();
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice('disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector('.like-button').disabled = true;
+            document.querySelector('.like-button').innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
     }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const userChoice = getUserChoice();
+
+        if (userChoice === 'liked') {
+            document.querySelector('.like-button').disabled = true;
+            document.querySelector('.like-button').innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector('.dislike-button').disabled = true;
+        } else if (userChoice === 'disliked') {
+            document.querySelector('.dislike-button').disabled = true;
+            document.querySelector('.dislike-button').innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector('.like-button').disabled = true;
+        }
+    });
 </script>
 
 
