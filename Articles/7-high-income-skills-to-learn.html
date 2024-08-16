@@ -132,24 +132,28 @@
   Editor/Updater 2024
 </p>
         
+<div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback! Leave a comment.
+</div>
+
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <p class="w3-left">
-        <button class="w3-button w3-green w3-round like-button" onclick="likeFunction(this)">
-            <i class="fa fa-thumbs-up"></i> Like <span class="like-count">0</span>
+        <button class="w3-button w3-round like-button" onclick="likeFunction(this)" style="background-color: #28a745; color: white; padding: 10px 20px; font-size: 16px;">
+            <i class="fa fa-thumbs-up"></i> Like
         </button>
     </p>
     <p class="w3-left" style="margin-left: 10px;">
-        <button class="w3-button w3-red w3-round dislike-button" onclick="dislikeFunction(this)">
-            <i class="fa fa-thumbs-down"></i> Dislike <span class="dislike-count">0</span>
+        <button class="w3-button w3-round dislike-button" onclick="dislikeFunction(this)" style="background-color: #dc3545; color: white; padding: 10px 20px; font-size: 16px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
         </button>
     </p>
     <p class="w3-right">
-        <button class="w3-button w3-blue w3-round">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 10px 20px; font-size: 16px;">
             <a href="https://9jahotblog.github.io/Articles/7-most-profitable-ways-to-invest-in.html" style="color: blue; text-decoration: none;">NEXT ARTICLE »</a>
         </button>
     </p>
     <div style="clear: both;"></div>
-</div>   
+</div>
     </div>
          </div> 
             </div>
@@ -186,50 +190,53 @@
 
 </script>
 
+<div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback! Leave a comment.
+</div>
+
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <p class="w3-left">
+        <button class="w3-button w3-round like-button" onclick="likeFunction(this)" style="background-color: #28a745; color: white; padding: 10px 20px; font-size: 16px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+    </p>
+    <p class="w3-left" style="margin-left: 10px;">
+        <button class="w3-button w3-round dislike-button" onclick="dislikeFunction(this)" style="background-color: #dc3545; color: white; padding: 10px 20px; font-size: 16px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </p>
+    <p class="w3-right">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 10px 20px; font-size: 16px;">
+            <a href="https://9jahotblog.github.io/Articles/7-most-profitable-ways-to-invest-in.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </p>
+    <div style="clear: both;"></div>
+</div>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const articleId = "article1"; // Unique identifier for the article
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.backgroundColor = "#4CAF50";
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-        // Check if the user has already liked or disliked
-        if (localStorage.getItem(`${articleId}-liked`)) {
-            document.querySelector('.like-button').innerText = "Liked";
-            document.querySelector('.like-button').disabled = true;
-        }
+    function likeFunction(button) {
+        button.disabled = true;
+        document.querySelector('.dislike-button').disabled = false;
+        showNotification('Thank you for liking this post! Leave a comment.');
+    }
 
-        if (localStorage.getItem(`${articleId}-disliked`)) {
-            document.querySelector('.dislike-button').innerText = "Disliked";
-            document.querySelector('.dislike-button').disabled = true;
-        }
-
-        // Like function
-        window.likeFunction = function(button) {
-            localStorage.setItem(`${articleId}-liked`, true);
-
-            button.innerText = "Liked";
-            button.disabled = true;
-            document.querySelector('.dislike-button').disabled = false;
-            document.querySelector('.dislike-button').innerText = "Dislike";
-
-            if (localStorage.getItem(`${articleId}-disliked`)) {
-                localStorage.removeItem(`${articleId}-disliked`);
-            }
-        }
-
-        // Dislike function
-        window.dislikeFunction = function(button) {
-            localStorage.setItem(`${articleId}-disliked`, true);
-
-            button.innerText = "Disliked";
-            button.disabled = true;
-            document.querySelector('.like-button').disabled = false;
-            document.querySelector('.like-button').innerText = "Like";
-
-            if (localStorage.getItem(`${articleId}-liked`)) {
-                localStorage.removeItem(`${articleId}-liked`);
-            }
-        }
-    });
+    function dislikeFunction(button) {
+        button.disabled = true;
+        document.querySelector('.like-button').disabled = false;
+        showNotification('Thank you for your feedback! Please leave a comment.');
+    }
 </script>
+
 
                       </div>
                     </div>
