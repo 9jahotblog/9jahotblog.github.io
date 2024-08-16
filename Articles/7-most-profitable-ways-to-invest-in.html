@@ -146,16 +146,16 @@
 
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <div style="display: inline-block; vertical-align: top;">
-        <button class="w3-button w3-round like-button" onclick="likeFunction(this)" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid1" onclick="likeFunction(this, 'articleid1')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
             <i class="fa fa-thumbs-up"></i> Like
         </button>
-        <button class="w3-button w3-round dislike-button" onclick="dislikeFunction(this)" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid1" onclick="dislikeFunction(this, 'articleid1')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
             <i class="fa fa-thumbs-down"></i> Dislike
         </button>
     </div>
     <div style="float: right;">
         <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
-            <a href="https://9jahotblog.github.io/Articles/2023-elections-voting-determines.html" style="color: blue; text-decoration: none;">NEXT ARTICLE »</a>
+            <a href="https://9jahotblog.github.io/Articles/2023-elections-voting-determines.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
         </button>
     </div>
     <div style="clear: both;"></div>
@@ -206,54 +206,58 @@
         }, 3000);
     }
 
-    function saveUserChoice(choice) {
-        localStorage.setItem('userChoice', choice);
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
     }
 
-    function getUserChoice() {
-        return localStorage.getItem('userChoice');
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
     }
 
-    function likeFunction(button) {
-        const userChoice = getUserChoice();
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
 
         if (userChoice !== 'liked') {
-            saveUserChoice('liked');
+            saveUserChoice(articleId, 'liked');
             button.disabled = true;
             button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
-            document.querySelector('.dislike-button').disabled = true;
-            document.querySelector('.dislike-button').innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
             showNotification('Thank you for liking this post! Please leave a comment');
         }
     }
 
-    function dislikeFunction(button) {
-        const userChoice = getUserChoice();
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
 
         if (userChoice !== 'disliked') {
-            saveUserChoice('disliked');
+            saveUserChoice(articleId, 'disliked');
             button.disabled = true;
             button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
-            document.querySelector('.like-button').disabled = true;
-            document.querySelector('.like-button').innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
             showNotification('Thank you for your feedback!');
         }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        const userChoice = getUserChoice();
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
 
-        if (userChoice === 'liked') {
-            document.querySelector('.like-button').disabled = true;
-            document.querySelector('.like-button').innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
-            document.querySelector('.dislike-button').disabled = true;
-        } else if (userChoice === 'disliked') {
-            document.querySelector('.dislike-button').disabled = true;
-            document.querySelector('.dislike-button').innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
-            document.querySelector('.like-button').disabled = true;
-        }
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
     });
 </script>
+    
 
 
                       </div>
