@@ -190,59 +190,42 @@
     document.addEventListener("DOMContentLoaded", function() {
         const articleId = "article1"; // Unique identifier for the article
 
-        // Load like and dislike counts from localStorage
-        const likeCount = localStorage.getItem(`${articleId}-likeCount`) || 0;
-        const dislikeCount = localStorage.getItem(`${articleId}-dislikeCount`) || 0;
-
-        document.querySelector('.like-count').innerText = likeCount;
-        document.querySelector('.dislike-count').innerText = dislikeCount;
-
         // Check if the user has already liked or disliked
         if (localStorage.getItem(`${articleId}-liked`)) {
+            document.querySelector('.like-button').innerText = "Liked";
             document.querySelector('.like-button').disabled = true;
         }
 
         if (localStorage.getItem(`${articleId}-disliked`)) {
+            document.querySelector('.dislike-button').innerText = "Disliked";
             document.querySelector('.dislike-button').disabled = true;
         }
 
         // Like function
         window.likeFunction = function(button) {
-            let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
-            likeCount++;
-            localStorage.setItem(`${articleId}-likeCount`, likeCount);
             localStorage.setItem(`${articleId}-liked`, true);
 
-            document.querySelector('.like-count').innerText = likeCount;
+            button.innerText = "Liked";
             button.disabled = true;
             document.querySelector('.dislike-button').disabled = false;
+            document.querySelector('.dislike-button').innerText = "Dislike";
 
             if (localStorage.getItem(`${articleId}-disliked`)) {
-                let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
-                dislikeCount--;
-                localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
                 localStorage.removeItem(`${articleId}-disliked`);
-                document.querySelector('.dislike-count').innerText = dislikeCount;
             }
         }
 
         // Dislike function
         window.dislikeFunction = function(button) {
-            let dislikeCount = parseInt(localStorage.getItem(`${articleId}-dislikeCount`) || 0);
-            dislikeCount++;
-            localStorage.setItem(`${articleId}-dislikeCount`, dislikeCount);
             localStorage.setItem(`${articleId}-disliked`, true);
 
-            document.querySelector('.dislike-count').innerText = dislikeCount;
+            button.innerText = "Disliked";
             button.disabled = true;
             document.querySelector('.like-button').disabled = false;
+            document.querySelector('.like-button').innerText = "Like";
 
             if (localStorage.getItem(`${articleId}-liked`)) {
-                let likeCount = parseInt(localStorage.getItem(`${articleId}-likeCount`) || 0);
-                likeCount--;
-                localStorage.setItem(`${articleId}-likeCount`, likeCount);
                 localStorage.removeItem(`${articleId}-liked`);
-                document.querySelector('.like-count').innerText = likeCount;
             }
         }
     });
