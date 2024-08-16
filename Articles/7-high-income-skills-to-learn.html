@@ -133,25 +133,23 @@
 </p>
         
 <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
-    Thank you for your feedback! Leave a comment.
+    Thank you for your feedback!
 </div>
 
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
-    <p class="w3-left">
-        <button class="w3-button w3-round like-button" onclick="likeFunction(this)" style="background-color: #28a745; color: white; padding: 10px 20px; font-size: 16px;">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" onclick="likeFunction(this)" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
             <i class="fa fa-thumbs-up"></i> Like
         </button>
-    </p>
-    <p class="w3-left" style="margin-left: 10px;">
-        <button class="w3-button w3-round dislike-button" onclick="dislikeFunction(this)" style="background-color: #dc3545; color: white; padding: 10px 20px; font-size: 16px;">
+        <button class="w3-button w3-round dislike-button" onclick="dislikeFunction(this)" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
             <i class="fa fa-thumbs-down"></i> Dislike
         </button>
-    </p>
-    <p class="w3-right">
-        <button class="w3-button w3-round" style="background-color: #007bff; padding: 10px 20px; font-size: 16px;">
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
             <a href="https://9jahotblog.github.io/Articles/7-most-profitable-ways-to-invest-in.html" style="color: blue; text-decoration: none;">NEXT ARTICLE »</a>
         </button>
-    </p>
+    </div>
     <div style="clear: both;"></div>
 </div>
     </div>
@@ -190,11 +188,11 @@
 
 </script>
 
+
 <script>
     function showNotification(message) {
         const notification = document.getElementById('notification');
         notification.textContent = message;
-        notification.style.backgroundColor = "#4CAF50";
         notification.style.display = 'block';
         setTimeout(() => {
             notification.style.display = 'none';
@@ -203,14 +201,16 @@
 
     function likeFunction(button) {
         button.disabled = true;
+        button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
         document.querySelector('.dislike-button').disabled = false;
-        showNotification('Thank you for liking this post! Leave a comment.');
+        showNotification('Thank you for liking this post! Please leave a comment');
     }
 
     function dislikeFunction(button) {
         button.disabled = true;
+        button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
         document.querySelector('.like-button').disabled = false;
-        showNotification('Thank you for your feedback! Please leave a comment.');
+        showNotification('Thank you for your feedback!');
     }
 </script>
 
