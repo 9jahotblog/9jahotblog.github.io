@@ -1,260 +1,307 @@
-
-
-
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="google-site-verification" content="d9RZ6AiQSIxGQws-tSJZvHLiG76SVSvq_4O5zJ4wD-A" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> Prices of Staples Increment -- People Lament</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Africa's Largest Market </h1>
+                    <p>Lamentations on Hike In prices of Goods...</p>
+                </header>
+
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3>Peter Sonibare</h3>
+        <h5> Prices of Staples Increasing....<span class="w3-opacity"></span>| | 19 Aug, 2024 </h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/mkxYK7Xb/tomatoes.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+
+Prices of staples like rice, beans, garri, that used to be easily afforded by average Nigerians have increased by a great percentage leading over 7 million people in the country into poverty.
+
+Although the COVID-19 pandemic affected the production and distribution of staples all over the country, the prices keep increasing drastically.
+
+<p>According to UNICEF, Nigeria has the second highest burden of stunted children in the world with a prevalence rate of 32 percent of children under five. An estimated 2 million children in Nigeria suffer from malnutrition, but only two of every 10 children affected currently receive treatment. Malnutrition, in addition to an increased risk of death, is linked to poor production and circulation of food in the country.
+
+<p>According to the selected food price watch data for May 2022 released by the National Bureau of Statistics (NBS), major consumer staples showed significant increases year on year and month on month. Year-on-year, all prices of the 43 food items that make up the food watch basket increased considerably.
+
+The price of beans, which is a major commodity and Nigeria’s highest supplier of plant proteins, has gone up.
+The story has not been much different for rice with the staple seeing a little over a 10 percent rise in price, despite the fact that the majority of our rice consumed here is locally produced. Imported rice that enters through ports has a tariff rate of 70 percent imposed on it to discourage the business, while a ban remains on rice imported through our borders. Despite this, locally produced rice has not seen the stability in price that one might expect, with increases of over 12 percent across various types of rice.
+
+<p>On a month-on-month basis, aside from tomatoes, all food items have risen considerably. The monthly increase can be linked to elevated energy prices due to the rising cost of diesel, impacting the transport costs of food items. This increase was reflected in the monthly increase in food inflation, which rose 2.01 percent.
+
+These rising food costs have a significant negative impact on the lives of Nigerian citizens. Many people can no longer afford nutritious meals, leading to an increase in malnutrition and nutrition-related diseases like marasmus and kwashiorkor, which are now more common among children.
+
+<p>Mrs. David Ada'aja, during a phone interview, explained how things have not been easy since the increase in food prices. “The prices of food in Nigeria have increased drastically. Things are getting harder by the day, and the government is doing nothing about it.”
+
+Prices of common staples, even those produced in Nigeria, are now almost as high as or higher than imported goods. Mrs. David continued, “Although Boko Haram is also a factor in the constant increase in food prices, for example, beans that me and my mum used to buy in Minna, Niger State, we would pick whatever beans we wanted. But because of the insecurities happening in the North, few people go to the farm, and they bring whatever they find, and we have no choice but to buy, whether good or bad.”
+
+<p>“Even garri (cassava flakes) that we used to buy for N16,000 per bag is now N25,000 per bag, and palm oil that was N12,000 to N13,000 per 25 liters is now N17,000 to N18,000 per 25 liters. The government should act fast about it. It is really affecting us, the common people. You would see small children on the road, so thin and underfed, begging for money.”
+
+Mr. Samuel Ayobami, a trader who sells provisions at Yaba Market, lamented that the current administration knows the solution to this concern. According to him, “Before, we used to sell a carton of Indomie for N850, but now we are buying it for N2,500. The loaf of bread that I used to buy for N150 now goes for double the price due to the high cost of flour, milk, and sugar.”
+
+<p>“Why do I have to buy a tuber of yam at N2,000?” said Mr. Adeyemo, who wanted to buy yam at the Anifowoshe market in Somolu. He further explained how frustrated he is with the surge in food prices. “This thing is getting out of hand; feeding my children three times daily is getting difficult for me. And the government is not helping. They are not even concerned about how we fend for ourselves despite the low minimum wage and the increase in food prices. It is really getting out of hand.”
+
+<p>The NBS report says the average price of a bottle of palm oil increased by 42.81 percent from N593.36 in May 2021 to N847.39 in May 2022. It also rose by 0.55 percent on a month-on-month basis between April and May. The report showed that the average price of 1kg of boneless beef rose by 34.11 percent on a year-on-year basis from N1,513.43 in May 2021 to N2,029.59 in May 2022. It added that the average price of one bottle of groundnut oil stood at N1,040.88 in May 2022, showing an increase of 47.99 percent compared to N703.36 in May 2021.
+
+<p>“On a month-on-month basis, it rose by 3.29 percent from N1,007.68 in April 2022,”</p> the NBS stated.
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
+</div>
+    
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
 </div>
 
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid10" onclick="likeFunction(this, 'articleid10')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid10" onclick="dislikeFunction(this, 'articleid10')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
+
+    /* - - - CONFIGURATION VARIABLES - - - */
+
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
+
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
+
+        // configure your variables here
+
+    }
+
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
+
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
 </script>
-   </body>
-</html> 
- 
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>PRICES OF STAPLES INCREASEMENT</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
 
 
- <div class="w3-content" style="max-width:1400px">
-
- 
-<!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
-    
-<!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-
-<img src="https://i.postimg.cc/mkxYK7Xb/tomatoes.jpg" width="250" height="250">
-    <p style="color:#000000">PRICES OF STAPLES INCREASING.</p>
-    <p style="color:#000000"> By Peter Sonibare.</p>
-    
- Prices of staples like rice, beans, garri, that used to be easily afforded by average Nigerians have increased by a great percentage leading over 7million people in the country into poverty. 
- 
-Although, the COVID-19 pandemic affected the production and distribution of staples all over the country, nonetheless the prices keeps increasing drastically.
-
- <p style="color:#000000">According to UNICEF, Nigeria has the second highest burden of stunted children in the world with a prevalence rate of 32 percent of children under five. An estimated 2 million children in Nigeria suffer from malnutrition, but only two of every 10 children affected is currently reached treatment. Malnutrition, in addition to an increased risk of death, is linked to poor production and circulation of food in the country.
-
-<p style="color:#000000">According to the selected food price watch data for May 2022 released by the National Bureau of Statistics (NBS), major consumer staples showed significant increases year on year and month on month. Y/y, all prices of the 43 food items that make up the food watch basket increased considerably.
-
- The price of beans, which is a major commodity and Nigeria’s highest supplier of plant proteins has gone up forcing a number of families to reduce its consumption. 
-
- <p style="color:#000000">The story has not been much different for rice with the staple increasing a little above 10 percentage rise in price despite the fact that a majority of our rice consumed here is locally produced as whatever rice that is allowed to be imported must do so through the ports with a tariff rate of 70 percent imposed on such imports to discourage the business while a subsisting ban hovers over the importation of rice through our borders. One wonders why despite the long run as well as the increase in rice farming in states like Kebbi, Ebonyi, Jigawa, Ekiti and Kano the much needed push in the demand for the staple has not readily provided the much needed investment in the sector as well as allow for price stability since a majority of our consumed rice is no longer subject to our exchange rates. Rice in all its variants when compared to other food items has increased moderately, from agric sold loose (+13.9% y/y) to local sold loose (+12.5% y/y), medium grained (+12.6% y/y), and imported high quality sold (+13.9% y/y). It is also safe to assume that related transport and other incidental costs may have also caused the modest increase. To a great extent, the government has been relatively successful in stimulating local rice production using incentives such as subsidized loans, cheap fertilizers, free farmland, and tax rebates.
-
-<p style="color:#000000">Also, on a m/m basis, save for Tomato, all food items rose considerably. In our view, the monthly increase can be associated with the impact of elevated energy prices caused by increased diesel cost, and its pass-through effect on transport costs for food items. This was reflected in the m/m increase in food inflation, which rose 2.01% m/m.
-
- All these have their negative effects on the lives of the Nigerian citizens. The hiked cost of foodstuffs have hampered the livelihood of most people. People can no longer afford good meals again, they eat all sorts of that unhealthy  foods thereby leading to malnourishment, and in turn gives a rise to nutrition diseases like Marasmus and kwashiorkor which are rampant in average Nigerian children.
- 
-<p style="color:#000000">Mrs David Ada'aja, during a phone interview explains how things have not been easy since the increase in food prices. “The prices of food in Nigeria has increased seriously, things are getting hard day by day and the government are doing nothing about it”
-
- However, prices of common staples, things we produce in Nigeria are now almost even more than the prices of goods we import into the country. Mrs David went further to say “Although, Boko Haram is also a factor to contributing to constant increase in food prices, take for example, beans that me and my mum used to go to Minna, Niger State to buy, we would pick whatever beans we want but because of the insecurities happening in the North, few people go to the farm they would bring whatever they see and we have no choice than to buy whether good or bad. 
- 
-<p style="color:#000000">Even garri (cassava flakes) that we used to buy 16 thousand Naira per bag is now 25 thousand per bag and Palm oil that was 12 to 13 thousand Naira per 25 litre is now 17 to 18 thousand Naira per 25 litre. The government should act fast about it. It is really affecting we the common people you would see small children on the road so thin and under fed begging for money”
-
- Mr Samuel Ayobami a Trader who sells provision at Yaba market laments that Buhari knows the solution to the disturbing concern.
- According to him, “Before, we used to sell a carton of indomie for N850, but now, we are buying it for 2,500. The loaf of bread that I used to buy at N150, now it goes for double the price due to the high cost of the flour, milk and sugar.
- 
-<p style="color:#000000">Why do I have to buy a tuber of yam at N2,000 said Mr Adeyemo , who wanted to buy yam at the Anifowoshe market in somolu. He further went on to explain his ideal on how frustrated he is with the surge in food prices. “This thing is getting out of hand, to feed my children three times daily is getting difficult for me. And the government are not helping issues. They are not even concerned on how we fend for ourselves despite the low minimum wage and the increase in food prices. It is really getting out of hand”.
-
- <p style="color:#000000">NBS report says average price of a bottle of palm oil increased by 42.81 per cent from N593.36 in May 2021 to N847.39 in May 2022.
-It also rose by 0.55 per cent on a month-on-month basis between APRIL and May.
-The report showed that the average price of 1kg of boneless beef rose by 34.11 per cent on a year-on-year basis from N1,513.43 in May 2021 to N 2,029.59 in May 2022.
-It added that the average price of one bottle of groundnut oil stood at N1,040.88 in May 2022, showing an increase of 47.99 per cent compared to N703.36 in May 2021.
-
-<p style="color:#000000">“On a month-on-month basis, it rose by 3.29 per cent from N 1,007.68 in April 2022,’’</p>the NBS stated.
-
-
-</div>
-
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-
-</div>
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-  
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html&media=&description=Prices%20of%20staples%20like%20rice,%20beans,%20garri,%20that%20used%20to%20be%20easily%20afforded%20by%20average%20Nigerians%20have%20increased%20by%20a%20great%20percentage%20leading%20over%207million%20people%20in%20the%20country%20into%20poverty."><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html&text=Prices%20of%20staples%20like%20rice,%20beans,%20garri,%20that%20used%20to%20be%20easily%20afforded%20by%20average%20Nigerians%20have%20increased%20by%20a%20great%20percentage%20leading%20over%207million%20people%20in%20the%20country%20into%20poverty."><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*_Prices%20of%20staples%20like%20rice%2C%20beans%2C%20garri%2C%20that%20used%20to%20be%20easily%20afforded%20by%20average%20Nigerians%20have%20increased%20by%20a%20great%20percentage%20leading%20over%207million%20people%20in%20the%20country%20into%20poverty._*%20%F0%9F%A4%A7%F0%9F%91%87%0A%0Ahttps%3A%2F%2F9jahotblog.github.io%2FArticles%2Fprices-of-staples-increasement.html%0A%20"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html%0APrices%20of%20staples%20like%20rice,%20beans,%20garri,%20that%20used%20to%20be%20easily%20afforded%20by%20average%20Nigerians%20have%20increased%20by%20a%20great%20percentage%20leading%20over%207million%20people%20in%20the%20country%20into%20poverty."><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2FArticles%2Fprices-of-staples-increasement.html&text=Prices%20of%20staples%20like%20rice%2C%20beans%2C%20garri%2C%20that%20used%20to%20be%20easily%20afforded%20by%20average%20Nigerians%20have%20increased%20by%20a%20great%20percentage%20leading%20over%207million%20people%20in%20the%20country%20into%20poverty."><i class="fa fa-telegram w3-hover-opacity"></i></a>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
-      </div>
-      <hr>
-     
-   
- <!-- Posts -->
-  <div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>Read Also (Click Image)</h4>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Articles/charcoal-becoming-imminent.html"><img src="https://i.postimg.cc/6QBmw2nF/IMG-20220724-WA0011.jpg" alt="tomatoes" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Use of Charcoal becoming imminent!!</span><br>
-        <span>Everything that is wrong with Nigeria's economy is explained by the ongoing increase in Liquefied Petroleum Gas (LPG/cooking gas) prices, which is why our economic managers should make a conscious effort to foster an environment of optimism. For many Nigerians, both those who live in urban areas and those in rural regions, cooking gas is beneficial and helpful for their daily needs. Nigeria is fortunate to have access to LPG, with the ninth-largest resource in the world as of 2019 (about 207 trillion standard cubic feet).......
-..</span>
-      </li>  
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Articles/random-news-stories.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">RANDOM NEWS STORIES</span><br>
-        <span> 
-Man arrested for stealing tomatoes worth over N50,000 in Lagos market.
-...
-</span>
-      </li>   
-<li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Articles/policeman-killed-by-suspected-cyclist.html"><img src="https://i.postimg.cc/vZVN9Wfy/IMG-20220612-WA0012.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">POLICEMAN KILLED BY SUSPECTED CYCLIST</span><br>
-        <span> 
-The Oyo State Police Command has vowed to arrest some suspected cyclists who attacked and killed a traffic warden at Ibadan .........
-</span>
-      </li>   
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">Change & Correction of names by mere Affidavit is no longer Valid</span><br>
-        <span>By Jerome Kalu. For instance, when one loses a Sim Card, certain details about the person is required,......</span>
-      </li>   
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Articles/nigerian-army-harrases-nysc-member.html"><img src="https://i.postimg.cc/X7W900v1/harassing.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:50px"></a>
-        <span class="w3-large">NIGERIAN ARMY OFFICER HARASSES NATION YOUTH SERVICE CORP MEMBER.</span><br>
-        <span>For the records, the ugly incident happened in 13 brigade calabar. Where a female officer was seen dehumanizing a member of the Nation Youth Service Corp (NYSC)....... </span>
-      </li>  
-    </ul>
-  </div>
-  <hr> 
 
-  
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
-
-
-
-
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -265,15 +312,4 @@ The Oyo State Police Command has vowed to arrest some suspected cyclists who att
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/entertainment/we-are-all-clueless.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/charcoal-becoming-imminent.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
