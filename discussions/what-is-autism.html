@@ -1,270 +1,358 @@
-
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> Indepth Analysis of Autism -- Forms, Effects, Causes, Symptoms and more -- Genamie Rotimi Theola</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Comprehensive Overview of Autism</h1>
+                    <p>Symptoms, Causes and Treatments..</p>
+                </header>
+
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3><a href="https://www.instagram.com/genamie_?igsh=dHdyYmJudGtnYmR5">Genamie Rotimi</h3></a>
+        <h5> Autism...<span class="w3-opacity"></span>|| 22 Aug, 2024 </h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/mkxYK7Xb/tomatoes.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+
+<p><strong>WHAT IS AUTISM?</strong></p>
+<p>Autism, or autism spectrum disorder (ASD), is a neurodevelopmental condition characterized by challenges with social skills, repetitive behaviors, speech, and non-verbal communication. ASD is a broad spectrum, meaning that it affects individuals differently, with varying degrees of intensity. People with autism may have a wide range of strengths and challenges, influencing how they learn, think, and problem-solve.</p>
+
+<p>Autism is found globally, across all racial, ethnic, cultural, and economic backgrounds. Some individuals with ASD may require significant support in their daily lives, while others may live independently and even excel in their careers—much like the fictional character Shaun from "The Good Doctor."</p>
+
+<p>Several factors contribute to the development of autism, and it is often accompanied by sensory sensitivities and other medical issues, such as gastrointestinal disorders, seizures, and sleep disorders. Additionally, individuals with autism may experience mental health challenges, including anxiety, depression, and attention issues.</p>
+
+<p><strong>WHAT ARE THE SYMPTOMS OF AUTISM?</strong></p>
+<p>Autism is diagnosed based on behavior and developmental history, as there are no medical tests (such as blood tests or brain imaging) specifically for ASD. The symptoms of autism vary widely, as it is a spectrum disorder, but they typically become noticeable by age 2 or 3. However, some developmental delays associated with autism can appear even earlier, sometimes as early as 18 months.</p>
+
+<p>The DSM-5 (Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition) categorizes the symptoms of ASD into two main categories:</p>
+
+<ol>
+    <li>Problems with communication and social interactions</li>
+    <li>Restricted or repetitive patterns of behavior or activities</li>
+</ol>
+
+<p>For an individual to be diagnosed with autism, they must exhibit symptoms in both categories.</p>
+
+<h3>Problems with Communication and Social Interaction</h3>
+<p>ASD can involve a range of difficulties with communication, many of which become apparent before age 5. Here's a general timeline of possible signs:</p>
+
+<ul>
+    <li><strong>From birth:</strong> Difficulty maintaining eye contact.</li>
+    <li><strong>By 9 months:</strong> Not responding to their name; lack of facial expressions reflecting emotions like surprise or anger.</li>
+    <li><strong>By 12 months:</strong> Not engaging in basic interactive games like peek-a-boo; limited use of hand gestures (e.g., waving).</li>
+    <li><strong>By 15 months:</strong> Not sharing interests with others (e.g., showing someone a favorite toy).</li>
+    <li><strong>By 18 months:</strong> Not pointing or following where others point.</li>
+    <li><strong>By 24 months:</strong> Not noticing when others are sad or hurt.</li>
+    <li><strong>By 30 months:</strong> Difficulty engaging in pretend play (e.g., caring for a doll).</li>
+    <li><strong>By 36 months:</strong> Trouble expressing their feelings or understanding the feelings of others.</li>
+    <li><strong>By 60 months:</strong> Difficulty playing turn-taking games.</li>
+</ul>
+
+<p>As children with autism age, they may develop language skills at an uneven pace. For example, they might develop a strong vocabulary in a topic of interest but struggle with broader communication. Some may exhibit hyperlexia, where they can read beyond their age level but struggle with comprehension.</p>
+
+<p>Non-verbal communication challenges, such as difficulty maintaining eye contact or interpreting body language, may persist into adulthood.</p>
+
+<h3>Restricted or Repetitive Patterns of Behavior or Activities</h3>
+<p>Individuals with autism may display symptoms related to body movements and behavior, including:</p>
+
+<ul>
+    <li>Repetitive movements, such as rocking, flapping arms, spinning, or running back and forth.</li>
+    <li>Lining up objects in strict orders and becoming upset when the order is disturbed.</li>
+    <li>Attachment to strict routines, such as those around bedtime or daily schedules.</li>
+    <li>Repeating words or phrases they hear repeatedly (echolalia).</li>
+    <li>Becoming distressed by minor changes in their environment.</li>
+    <li>Intense focus on specific parts of objects, like the wheels of a toy truck.</li>
+    <li>Unusual reactions to sensory inputs, such as sounds, smells, or tastes.</li>
+    <li>Obsessive interests in particular topics or objects.</li>
+    <li>Exceptional abilities, such as musical talent or extraordinary memory skills.</li>
+</ul>
+
+<h3>STIMMING</h3>
+<p>"Stimming" refers to self-stimulating behaviors often involving repetitive motions or speech, such as hand-flapping, rubbing an object, or repeating a phrase. Although stimming is commonly associated with autism, nearly everyone engages in some form of stimming, such as biting nails or tapping fingers.</p>
+
+<p>For individuals with autism, stimming can sometimes interfere with daily life or even cause physical harm. However, it can also serve as a helpful coping mechanism for managing sensory overload or stressful situations.</p>
+
+<h3>What Are the Causes of Autism?</h3>
+<p>Autism spectrum disorder is not a disease or illness, so there is no single known cause. Research indicates that genetics and environmental factors both play roles in the development of autism.</p>
+
+<h3>Is Autism a Disorder or a Disability?</h3>
+<p>To understand autism better, it's essential to differentiate between a disorder and a disability:</p>
+
+<ul>
+    <li><strong>Disorder:</strong> A health condition that affects the typical functions of the mind and body. Autism is considered a mental disorder because of its neurological, psychological, and social impacts.</li>
+    <li><strong>Disability:</strong> A condition of the body or mind that makes it more challenging for the person to perform certain activities or interact with the world. Legally, autism is considered a disability, making individuals with ASD eligible for protections under the Disabilities Act.</li>
+</ul>
+
+<p>Medically, autism is viewed as a disorder, while legally, it is seen as a disability. However, self-identification varies, and some individuals may not identify as disabled or disordered.</p>
+
+<p><strong>Conclusion:</strong> Autism is a complex and broad condition that requires ongoing research and understanding. The more we learn, the more we realize its complexity. This article is part of a series, where future discussions will delve deeper into various aspects of autism.</p>
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
 
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor/Updater
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
 
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid13" onclick="likeFunction(this, 'articleid13')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid13" onclick="dislikeFunction(this, 'articleid13')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/Education/functions-of-movie-production-project.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
+
+    /* - - - CONFIGURATION VARIABLES - - - */
+
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
+
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
+
+        // configure your variables here
+
+    }
+
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
+
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
 </script>
-   </body>
-</html> 
 
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>WHAT IS AUTISM</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
-
-
- <!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
-
-  <!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-    <p style="color:#000000">TODAY'S DISCUSSION</p>
-    <p style="color:#000000"> AUTISM </p>
-    <p style="color:#000000">SYMPTOMS</p>
-    <p style="color:#000000">PROBLEMS & More.....</p>
-                             
-    <p style="color:#00000/">WHAT IS AUTISM??</p>
-Autism or autism spectrum disorder is a broad term used to describe a group of neurodevelopmental conditions. These conditions are characterized by challenges with social skills, repetitive behaviors, speech and non-verbal communication. ASD is found in people around the world regardless of race, ethicality, culture or economic background. 
-<p style="color:#000000">Because autism is a spectrum disorder, each person with autism has a distinct set of strengths and challenges. The ways in which people with autism learn, think ad problem-solve can vary from highly skilled to severely challenged some people with ASD may require significant support in their daily lives while other may need less support and in some case live entirely independently {just like Shaun from the “GOOD DOCTOR”}.
-<p style="color:#000000">Several factors may influence the development of autism and it is often accompanied by sensory sensitivities and medical issues such as gastrointestinal disorders, seizures, sleep disorders as well as mental health challenges such as anxiety, depression and attention issues,
-<p style="color:#000000">What are the symptoms of Autism?</p>
-There are no medical tests such as blood or imaging tests, that can help expects diagnose autism, instead doctors examine a person’s behavior and development. Autism is spectrum disorder and that means it includes a range of linked conditions, symptoms also extending to include singular symptoms or traits. All this however, varies from person to person.
-Signs of autism appears by age 2 or 3. Some associated development delays can appear even earlier, and often it can be diagnosed as early as 18 months. The DMS-5 divides symptoms of ASD into the following categories:
-<p style="color:#000000">Problems with communication and social interactions.</p>
-<p style="color:#000000">Restricted or repetitive patterns of behavior or activities.</p>
-To be diagnosed with autism a person must experience symptoms in both of these categories.
-<p style="color:#000000">Problems with communication and social interaction</p>
-ASD can involve a range of difficulties with communication, many of which appear before age 5.
-Here’s a general timeline of what this might look like:
-
-From birth: trouble with maintaining eye contact.
-<p style="color:#000000">By 9 months: not responding to their name.</p>
-<p style="color:#000000">By 9 months: not displaying facial expressions reflective of their emotions. (Like surprise and anger).</p>
-<p style="color:#000000">By 12 months: not engaging in basic interactions games. (Like peek-a-boo or pat-a-cake)</p>
-<p style="color:#000000">By 12 months: not using) or only using a few_ hand gestures. (Like hand waving).</p>
-<p style="color:#000000">By 15 months: not sharing their interests with others (for example- not showing someone a favorite toy)</p>
-<p style="color:#000000">By 18 months: not pointing or looking where others point.</p>
-<p style="color:#000000">By 24 months: not noticing when others appear sad or hurt.</p>
-<p style="color:#000000">By 30 months: not engaging in “pretend paly”. (Like caring for a baby doll or play with figurines)</p>
-<p style="color:#000000">By 36 months: having trouble expressing their feelings or understanding those of others.</p>
-<p style="color:#000000">By 60 months of age: not playing turn taking games.</p>
-<p style="color:#000000">As they age, they might have difficulty talking or very limited speaking skills.</p>
-<p style="color:#000000">Other children with autism might development language skills at an uneven pace. (For example: if there’s a topic particularly interesting to them, they might develop a very strong vocabulary for talking about that one topic. But they might have difficulty communicating about other things).</p>
-<p style="color:#000000">They might also show signs of hyperlexia,</p> which involves reading beyond what’s expected of their age, children on the autism spectrum might learn to read as early as age 2. But they tend to not comprehend what they are reading.
-<p style="color:#000000">As they interact with others,</p> children that have autism might have some difficulty with non-verbal communication. (Like maintaining eye contact or body language, might also remain difficult). These challenges with communication might persist throughout adulthood.
-<p style="color:#000000">Note: hyperlexia does not always accompany autism, research suggests nearly 84% of children with hyperlexia are on the autism spectrum.</p>
-<p style="color:#000000">Restricted or repetitive patterns of behavior or activities.</p>
-Autism also includes symptoms related to body movements and behavior and these may include:
-<p style="color:#000000">Repetitive movements, (like rocking, flapping their arms, spinning or running back and forth.)</p>
-<p style="color:#000000">Lining objects, (like toys up in stick orders and getting upset when that order is disturbed).</p>
-<p style="color:#000000">Attachment to strict routines, like those around bedtime or getting to school.</p>
-<p style="color:#000000">Repeating words or phrases they hear someone say over and over again.</p>
-<p style="color:#000000">Getting upset at minor changes.</p>
-<p style="color:#000000">Focusing intently on parts of objects, (like on parts wheel of a toy truck or the hair of a doll.)</p>
-<p style="color:#000000">Unusual reactions to sensory inputs, (like sounds, smells and tastes.)</p>
-<p style="color:#000000">Obsessive interests.</p>
-<p style="color:#000000">Exceptional abilities, (like musical talent or memory capabilities.)</p>
-<p style="color:#000000">STIMMIMG.</p>
-“Stimming” is term used to describe self Stimming behaviors, often involving repetitive movement’s motions or speech. (For example: someone might clap their hands, rub an object or repeating a phrase). Even though typically associated with people that have autism, but nearly everyone does some form of Stimming whether that’s rubbing their hands together or biting their nails. 
-<p style="color:#000000">For people that have autism, Stimming can sometimes get in the way of daily life or cause physical harm. But it can also serve as a helpful coping mechanism for dealing with sensory overload or navigating uncomfortable situations.
-<p style="color:#000000">What are the causes of ASD?</p>
-Autism spectrum disorder is not a disease or illness, so there is no known cause. The most recent research explains  that there’s no single cause.
-<p style="color:#000000">Is autism a disorder or a disability?</p>
-In order to understand the different perspectives of autism, it will help to know the difference between a disorder and a disability.
-<p style="color:#000000">A disorder is a health condition, that affects the typical functions of the mind and body. Specifically a mental disorder involves cognitive, emotional and behavioral problems. From a medical perspective autism is a mental disorder, this is because of the neurological, psychological and social impact it can have on one’s life.
-While,
-According to the center of disease control and prevention… 
-A disability is any condition of the body and mind that makes it more difficult for the person with the condition to do certain activities and interact with the world around them. Legally autism is considered a disability, that’s because its symptoms can make it difficult for a person to navigate neurological norms. This means that people with autism are protected under disabilities act.
-<p style="color:#000000">Medically and legally, autism is considered a disorder and a disability, respectively. But when it comes to self-identification, this isn’t always the case. In other words, some people identify as disabled or disordered while others don’t. 
-In conclusion, Autism like everything else is complex and broad, and the more you learn about it the more complicated it gets. So I will be making this a series so that as I learn and research I can share as well.
-<p style="color:#000000"><a href="https://Instagram.com/genamie_">Follow Me on Instagram @GENAMIE</a></p>
-
-
-
-
-
-</div>
-
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-
-</div>
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-  
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/discussions/what-is-autism.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/discussions/what-is-autism.html&media=&description=What%20is%20Autism?%20Symptoms,%20Problems%20&%20more....%20Read%20here%20%F0%9F%94%A5"><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/discussions/what-is-autism.html&text=What%20is%20Autism?%20Symptoms,%20Problems%20&%20more....%20Read%20here%20%F0%9F%94%A5"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/discussions/what-is-autism.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*_What%20is%20Autism%3F%20Symptoms%2C%20Problems%2C%20Read%20here%20%F0%9F%94%A5%F0%9F%94%A5_*%0A%0Ahttps%3A%2F%2F9jahotblog.github.io%2Fdiscussions%2Fwhat-is-autism.html%0A"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/discussions/what-is-autism.html%0AWhat%20is%20Autism?%20Symptoms,%20Problems%20&%20more....%20Read%20here%20%F0%9F%94%A5"><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2Fdiscussions%2Fwhat-is-autism.html&text=What%20is%20Autism%3F%20Symptoms%2C%20%26%20problems%2C%20read%20full%20article%20here%20%F0%9F%94%A5%F0%9F%94%A5"><i class="fa fa-telegram w3-hover-opacity"></i></a>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
-      </div>
-      <hr>
-     
-<!-- Posts -->
-  <div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>Trending Now (Click Image)</h4>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom-us-bank-stocks.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">THE BIG4 LEGIT WAYS TO FINANCIAL FREEDOM continuation...... </span><br>
-        <span>The concept of bank stocks can be quite confusing to those that do not take time to study it and understand. Here, I will be explaining bank stocks like I would to a 10-year-old.......
- </span>
-      </li>  
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/citizenship-topic.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Citizenship Education Full Topic</span><br>
-        <span>Definition, Rights, Limits, who is a citizen? 6 things you don't know about acquiring citizenship.......</span>
-      </li>  
-     <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">THE BIG4 LEGIT WAYS TO FINANCIAL FREEDOM. </span><br>
-        <span>Let's Start with CRYPTOCURRENCY, cryptocurrency was invented in 2008 by an unknown person or group of people using the name Satoshi Nakamoto. The currency began use in 2009 when its implementation was released as open-source software.  While Bitcoin may have been the first major cryptocurrency to hit the market – it debuted in 2009 – many others have become highly popular, even if not quite as large as the original....
- </span>
-      </li>  
-    <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/olympus-12-greek-gods.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Greek Gods </span><br>
-        <span>Poseidon was a very greedy, moody & bad-tempered god. He was a brother to Zeus & Hades. Son of Cronus & Rhea. 
-He is the god of the sea & earthquakes. He was the creator of the storms,  Poseidon helped Zeus overthrow is father.......
- </span>
-      </li>  
-      </ul>
-  </div>
-  <hr> 
 
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
-
-
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -275,15 +363,4 @@ He is the god of the sea & earthquakes. He was the creator of the storms,  Posei
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/policeman-killed-by-suspected-cyclist.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Education/why-I-hate-the-word-dreams.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
