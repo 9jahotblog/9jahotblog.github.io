@@ -1,490 +1,333 @@
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="google-site-verification" content="d9RZ6AiQSIxGQws-tSJZvHLiG76SVSvq_4O5zJ4wD-A" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> Function and Roles of Everyone -- For a Movie Production Project</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Functions and Roles</h1>
+                    <p>To a Successful Movie Production Project</p>
+                </header>
+
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3></h3>
+        <h5> Movie Production Project...<span class="w3-opacity"></span>|| 23 Aug, 2024 </h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/V6TwjYZF/IMG-20240818-WA0031.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+
+<p><strong>Producer:</strong> The producer is the financial backbone of a film, securing investments and funding for the production. They oversee the business operations, hiring key team members like the director, cinematographer, and casting agents. They work closely with the director and ensure the production stays within budget, while also handling logistics such as scheduling and rehearsals.</p>
+
+<p><strong>Director:</strong> The director interprets the script, setting the tone and style of the film. They collaborate with various departments, such as casting, camera, and design, to bring their vision to life. The director is involved in script revisions, actor rehearsals, and approving production budgets. They ensure that each scene is shot to their satisfaction before moving on.</p>
+
+<p><strong>Associate Director:</strong> The associate director is responsible for the daily progress of the film, maintaining the well-being of the crew, and managing schedules. They prepare call sheets, check the cast and crew, and estimate the time required for each scene. They serve as a backstage manager and ensure smooth communication across departments.</p>
+
+<p><strong>Camera Operator:</strong> The camera operator controls and maintains the camera equipment, working closely with the director and lighting team to capture the desired shots. They set up and adjust the equipment, follow the camera script, and ensure all aspects of the scene are recorded accurately.</p>
+
+<p><strong>Lighting Director:</strong> The lighting director "paints" the scene using light, creating the desired mood and atmosphere. They determine the electrical needs, plan the stage lighting, and work with the camera and set design teams to achieve the correct visual effect. Their work involves both the technical setup and creative use of lighting.</p>
+
+<p><strong>Audio Engineer:</strong> The audio engineer manages the sound equipment, recording, mixing, and balancing audio for the film. They ensure that sound quality meets the director's vision, adjusting equipment as needed, and collaborating with other production staff to achieve the best results. They also monitor and repair sound equipment as necessary.</p>
+
+<p><strong>Sound Recordists:</strong> Sound recordists capture live sound on set, planning their equipment and operations based on the script. They work to minimize background noise, set up microphones, and manage sound budgets. They collaborate closely with the director and other departments to align with the overall production goals.</p>
+
+<p><strong>Graphic Designer:</strong> The graphic designer creates visual content such as logos, illustrations, and labels that align with the film's style and period. They work with other departments to ensure that the visual elements contribute effectively to the storytelling and help establish the film's visual identity.</p>
+
+<p><strong>Video Editor:</strong> The video editor transforms raw footage into a finished product, following the director's vision. They study the script, guide scene development, and coordinate sound and visual effects during post-production. Their work involves meticulous editing and collaboration with the director to ensure the final cut aligns with the intended story.</p>
+
+<p><strong>Art Director:</strong> The art director oversees the visual elements of a film, working closely with the production designer to create the sets and props. They coordinate the work of artists and construction teams, ensuring that the visual identity of the film supports the narrative and style.</p>
+
+<p><strong>Set Designer:</strong> The set designer is responsible for creating and designing the physical environment in which the film takes place. They work with costume designers, directors, and producers to plan and manage the set, ensuring it meets the production's requirements while staying within budget.</p>
+
+<p><strong>Sound Producer:</strong> The sound producer manages all sound-related aspects of the film, from selecting and setting up sound effects to ensuring the sound quality during rehearsals. They work closely with the director to create the sound design and train the sound team, contributing to the overall production's auditory experience.</p>
+
+<p><strong>Costume Designer:</strong> The costume designer creates the wardrobe for the film's characters, ensuring it aligns with the script's setting and time period. They research fashion trends, design costumes for each character, and work closely with other departments to ensure consistency and practicality in the costumes.</p>
+
+<p><strong>Makeup Artist:</strong> The makeup artist designs and applies makeup to actors, creating the characters' visual appearance. They coordinate with the lighting and film directors to ensure the makeup suits the scene's requirements and maintain consistency throughout the shooting. They are responsible for the longevity and application of cosmetics on set.</p>
+
+<p><strong>Executive Producer:</strong> The executive producer oversees the entire production, from scriptwriting to securing financing. They supervise other producers, maintain production quality, and ensure the project meets its competitive goals. They lead all departments, acting as the figurehead and taking ownership of decisions and outcomes.</p>
+
+<p><strong>Casting Director:</strong> The casting director is responsible for finding and hiring actors who bring the characters to life. They study the script, meet with producers, and negotiate actors' deals, ensuring that the right talent is cast for each role. They also manage the casting budget and prepare casting advice notes.</p>
+
+<p><strong>Content Marketer:</strong> The content marketer plans and creates campaigns to promote the film, understanding the audience and creating valuable content that turns viewers into repeat customers. They act as a mediator between the production and its audience, ensuring the film reaches its target market.</p>
+
+<p><strong>Scriptwriter:</strong> The scriptwriter creates the detailed narrative for the film, understanding the storyline and target audience. They work with the production team to revise the script, ensuring it complies with regulatory requirements and avoiding copyright issues. They research characters and write the script's dialogue and scenes.</p>
+
+<p><strong>Production Manager:</strong> The production manager handles the day-to-day business side of the production, managing budgets, schedules, and staff. They organize the production's logistical needs, prepare necessary documents and permits, and ensure the production stays on track. They also hire workers and assign tasks to ensure smooth operations.</p>
+
+<p><strong>Production Assistant:</strong> The production assistant supports the production by printing and distributing scripts, running errands for producers and directors, and helping with set equipment and props. They ensure the production runs smoothly and assist various departments as needed.</p>
+
+<p><strong>Director of Photography:</strong> The director of photography controls everything the camera captures, including lighting, filters, and camera movements. They lead the camera and lighting crews and play a key role in the storytelling process by creating the film's visual style.</p>
+
+<p><strong>Stunt Coordinator:</strong> The stunt coordinator plans and directs dangerous scenes, ensuring the safety of everyone on set. They choreograph stunts to align with the script and director's vision, ensuring that action scenes look realistic and are performed safely.</p>
+
+<p><strong>Visual Effects Producer:</strong> The visual effects producer assembles a team of VFX artists and manages the schedules and budget for visual effects work. They collaborate with the live-action production team and the editor during post-production to ensure the visual effects integrate seamlessly with the film.</p>
+
+<p><strong>SFX Artist:</strong> The SFX artist creates special effects that cannot be achieved through traditional filming techniques, adding elements like creatures or fantastical environments. They work on set or during post-production to make the film's world believable and authentic, often collaborating with VFX artists for a cohesive result.</p>
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
 
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Writer
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid14" onclick="likeFunction(this, 'articleid14')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid14" onclick="dislikeFunction(this, 'articleid14')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/Education/functions-of-movie-production-project.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
+
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
+
+    /* - - - CONFIGURATION VARIABLES - - - */
+
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
+
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
+
+        // configure your variables here
+
+    }
+
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
+
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
 </script>
-   </body>
-</html> 
 
 
-<!DOCTYPE html>
-<html>
-<head>
-<title>FUNCTIONS & ROLE OF MOVIE PRODUCTION PROJECT</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
- 
-
-<!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-<!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-
-
-    <p style="color:#000000"> TODAY'S TOPIC</p>
-    <p style="color:#000000"> FUNCTIONS/ROLE OF MOVIE PRODUCTION PROJECT</p>
-    <p style="color:#000000"> LET'S KICKSTART WITH THE PRODUCER</p>
-    <p style="color:#0C090A">-He Finances the movie.</p>
-<p style="color:#0C090A">-The producer gathers investments. </p>
-<p style="color:#0C090A">-He reaches out to actors for leading roles.</p> 
-<p style="color:#0C090A">-He Arranges a team to manage business operations.</p>
-<p style="color:#0C090A">-He Supervises the production.</p>
-<p style="color:#0C090A">-Works with the director.</p> 
-<p style="color:#0C090A">-Assigns a cinematographer, a production designer, & casting agents.</p>
-<p style="color:#0C090A">-Determines how much the production will cost.</p>
-<p style="color:#0C090A">-Setting up the rehearsals & schedules.</p>
-<p style="color:#0C090A">-Selects cast members.</p> 
-<p style="color:#0C090A">-Secures funding for the production. </p>
-
-<p style="color:#000000">DIRECTOR</p>
-<p style="color:#0C090A">-He reviews and interprets the script.</p>
-<p style="color:#0C090A">-Works with other departments on set.</p>
-<p style="color:#0C090A">-Works with casting, camera & design.</p>
-<p style="color:#0C090A">-Selects assistant directors.</p>
-<p style="color:#0C090A">-Creates the film's tone.</p>
-<p style="color:#0C090A">-Approves the film's production budgets.</p> 
-<p style="color:#0C090A">-Works with editors.</p>
-<p style="color:#0C090A">-Works with other departments to produce the final version of the film.</p> 
-<p style="color:#0C090A">-Writes the script, makes comments, edits, or changes the script.</p>
-<p style="color:#0C090A">-Works with the actors during rehearsals.</p>
-<p style="color:#0C090A">-Happy with takes before moving to the next scene.</p>
-
-<p style="color:#000000">ASSOCIATE DIRECTOR</p>
-<p style="color:#0C090A">-Ensures daily progress in the film production.</p> 
-<p style="color:#0C090A">-Arranges the health care of the crew.</p>
-<p style="color:#0C090A">-Maintaining wellness & order among the crew.</p> 
-<p style="color:#0C090A">-Prepares daily to-do or call sheets.</p> 
-<p style="color:#0C090A">-Checks the cast & crew.</p> 
-<p style="color:#0C090A">-Estimates how long a scene would take.</p>
-<p style="color:#0C090A">-Shortens a scene running a few pages long.</p>
-<p style="color:#0C090A">-Serves as a backstage manager.</p> 
-<p style="color:#0C090A">-Supervises the second, third, & assistant director trainees.</p>
-<p style="color:#0C090A">-Basic knowledge and understanding of all the various departments found on a film set.</p>
-<p style="color:#0C090A">-Must have smooth communication skills.</p>
-<p style="color:#0C090A">-Plans the filming schedule.</p>
-<p style="color:#0C090A">-Works with the director, & other heads of the department to ensure a perfect shoot.</p>
-
-<p style="color:#000000">CAMERA OPERATOR</p>
-<p style="color:#0C090A">-Controls camera equipments.</p>
-<p style="color:#0C090A">-Sets up equipments.</p>
-<p style="color:#0C090A">-Works accordingly to the camera scripts.</p> 
-<p style="color:#0C090A">-Creates actions (framing & capturing).</p>
-<p style="color:#0C090A">-Responding instantaneously to directions.</p>
-<p style="color:#0C090A">-Capture & records all aspects & scenes of the film production.</p>
-<p style="color:#0C090A">-Follows the principles of staging & lightning.</p>  
-<p style="color:#0C090A">-Adjust camera controls & printers.</p>
-<p style="color:#0C090A">-Works on camera movements, lightning requirements, and filming.</p>
-<p style="color:#0C090A">-Arranges the Studio to the state that best suites the setting of the camera.</p> 
-<p style="color:#0C090A">-Test, maintain, & clean all broadcasting equipments.</p>
-<p style="color:#0C090A">-Works with other lighting directors.</p>
-
-<p style="color:#000000">LIGHTNING DIRECTOR</p>
-<p style="color:#0C090A">-They "paint the scene" with placements of lights.</p>
-<p style="color:#0C090A">-Determines how much electricity needed to light the scene.</p>
-<p style="color:#0C090A">-Paints with light or absence of light.</p> 
-<p style="color:#0C090A">-Creates the colour or mood of filming.</p> 
-<p style="color:#0C090A">-Uses variety of lighting effects.</p>
-<p style="color:#0C090A">-Reduces form & colour.</p> 
-<p style="color:#0C090A">-Ensures integral lightning for set design.</p>
-<p style="color:#0C090A">-Installation & operation of lightning.</p>
-<p style="color:#0C090A">-Colour vision.</p> 
-<p style="color:#0C090A">-Planning the stage before the scene.</p> 
-
-<p style="color:#000000">AUDIO ENGINEER</p>
-<p style="color:#0C090A">-Maintains technical equipment for sound.</p>
-<p style="color:#0C090A">-Records the sounds in set or location.</p> 
-<p style="color:#0C090A">-Mixes & balances the sounds of the pre-recorded audio.</p>
-<p style="color:#0C090A">-Get directions from the sound supervisor & abide to it.</p>
-<p style="color:#0C090A">-Adjust & position the sound equipment.</p> 
-<p style="color:#0C090A">-Communicate with other production staff to ensure sound requirements.</p>
-<p style="color:#0C090A">-Apply technical knowledge for determination of artistic objectives.</p> 
-<p style="color:#0C090A">-Record sounds into hard disk or audio tape.</p> 
-<p style="color:#0C090A">-Abide to all relevant safety precautions.</p>
-<p style="color:#0C090A">-Repair sound equipment.</p>
-<p style="color:#0C090A">-Monitor & detect sounds.</p>
-
-<p style="color:#000000">SOUND RECORDISTS</p>
-<p style="color:#0C090A">-Records live sound..</p>
-<p style="color:#0C090A">-Capture according to the director's vision.</p>
-<p style="color:#0C090A">-They must read the scripts of the film so as to determine the equipment to utilize & it's technical requirements.</p>
-<p style="color:#0C090A">-Plan in detail before the shoot..</p>
-<p style="color:#0C090A">-Responsible for all sound operations.</p>
-<p style="color:#0C090A">-Manage equipments & budgets.</p> 
-<p style="color:#0C090A">-Interact with other departments.</p>
-<p style="color:#0C090A">-Set & placement of mics.</p>
-<p style="color:#0C090A">-Works on issues of background noise.</p>
-<p style="color:#0C090A">-Works with a sound supervisor.</p>
-
-<p style="color:#000000">GRAPHIC DESIGNER</p>
-<p style="color:#0C090A">-Works with other members to produce effective content.</p>
-<p style="color:#0C090A">-Designs visual concept.</p>
-<p style="color:#0C090A">-Creates illustration & logos.</p>
-<p style="color:#0C090A">-Create labels to portray they are from a certain time. (90's film. e t.c)</p>
-<p style="color:#0C090A">-Creates guidelines on how the logo's & illustration will be used.</p>
-<p style="color:#0C090A">-Helps make design choices.</p>
-<p style="color:#0C090A">-plays an Integral part of story telling.</p>
-
-<p style="color:#000000">VIDEO EDITOR</p>
-<p style="color:#0C090A">-Responsible for turning footages from a film into a finished project.</p>
-<p style="color:#0C090A">-Studying film scripts.</p>
-<p style="color:#0C090A">-Guides scene development.</p>
-<p style="color:#0C090A">-Coordinating sound and visual effects in post-production.</p>
-<p style="color:#0C090A">-Put together the visions of the director's script. Experience the story as it is recorded on film from the Director’s point of view.</p>
-<p style="color:#0C090A">-Edit frame by frame as needed to complete the film.</p>
-<p style="color:#0C090A">-Interact with appropriate people for the vision, goal & editing.</p>
-<p style="color:#0C090A">-Manages camera footage.</p>
-<p style="color:#0C090A">-Manages Sound effects.</p>
-<p style="color:#0C090A">-Manages Graphics to produce a final film or movie.</p>
-
-<p style="color:#000000">ART DIRECTOR</p>
-<p style="color:#0C090A">-Reports to the production designer.</p> 
-<p style="color:#0C090A">-Designs the set.</p> 
-<p style="color:#0C090A">-Coordinate the artists & construction workers..</p> 
-<p style="color:#0C090A">-Helps determine the overall look of a film or movie production.</p> 
-<p style="color:#0C090A">-Set props & graphics to create visual identity of the film.</p> 
-<p style="color:#0C090A">-Supervises the models. Characters, creatures & sets.</p> 
-<p style="color:#0C090A">-Works with the teams who builds & design sets.</p>
-
-<p style="color:#000000">SET DESIGNER</p>
-<p style="color:#0C090A">-Creating & designing sets in Programmes & In theatre appearance.</p>
-<p style="color:#0C090A">-Working with costume designers, directors & producers.</p> 
-<p style="color:#0C090A">-Preparing the cost of set.</p>
-<p style="color:#0C090A">-Planning.</p>
-<p style="color:#0C090A">-Managing budgets.</p>
-<p style="color:#0C090A">-Discussing production requirements with the producer & director.</p> 
-<p style="color:#0C090A">-Monitors design budget.</p>
-<p style="color:#0C090A">-Laying out ideas involving the production.</p>
-<p style="color:#0C090A">-Researching effects.</p> 
-<p style="color:#0C090A">-Interacts with costume designer, lights & sound directors.</p>
-
-<p style="color:#000000">SOUND PRODUCER</p> 
-<p style="color:#0C090A">-Obtains all sound effects.</p>
-<p style="color:#0C090A">-Sets up sound playbacks.</p>
-<p style="color:#0C090A">-Discuss with the director sound Design for the show.</p> 
-<p style="color:#0C090A">-Selects musical effects.</p>
-<p style="color:#0C090A">-Sets up sound reinforcement.</p>
-<p style="color:#0C090A">-Attends all rehearsals.</p> 
-<p style="color:#0C090A">-Ensure the board operator is trained.</p> 
-<p style="color:#0C090A">-Familiar with computer editing.</p> 
-<p style="color:#0C090A">- Must attend all production meetings and specific meetings with the Director.</p>
-
-<p style="color:#000000">COSTUME DESIGNER</p>
-<p style="color:#0C090A">-Designs the costume for production.</p>
-<p style="color:#0C090A">-Being practical for the performer.</p>
-<p style="color:#0C090A">-Reads the full script & notes the place needing costume.</p> 
-<p style="color:#0C090A">-Research the setting & time period of the play.</p>
-<p style="color:#0C090A">-Researches the fashion for the time period, and places.</p>
-<p style="color:#0C090A">-Designs the costume for each character.</p>
-<p style="color:#0C090A">-Communicate & present ideas.</p> 
-<p style="color:#0C090A">-Competent in sewing.</p>
-<p style="color:#0C090A">-Ability to work alone as well as with other departments relating to the play.</p>
-
-<p style="color:#000000">MAKEUP ARTIST</p> 
-<p style="color:#0C090A">-Designs the characters look.</p>
-<p style="color:#0C090A">-Apply makeup products on actor's body & faces.</p> 
-<p style="color:#0C090A">-Creates special make up effects.</p> 
-<p style="color:#0C090A">-Coordinates with lightning & film directors.</p>
-<p style="color:#0C090A">-Store make up tools.</p> 
-<p style="color:#0C090A">-Interact with the production team for tools needed.</p>
-<p style="color:#0C090A">-Responsible for make up style consistency throughout the shooting.</p>
-<p style="color:#0C090A">-Apply long lasting cosmetics.</p>
-<p style="color:#0C090A">-Apply make up according to each character's description.</p>
-<p style="color:#0C090A">-Calculate the time required for make up & inform the production team.</p>
-
-<p style="color:#000000">EXECUTIVE PRODUCER</p>
-<p style="color:#0C090A">-Supervision of the performance. Web series, television show or film.</p> 
-<p style="color:#0C090A">-Writes the script.</p>
-<p style="color:#0C090A">-Thinks of ideas & concepts.</p> 
-<p style="color:#0C090A">-Assuring production quality.</p> 
-<p style="color:#0C090A">-Meets the project competitive goals.</p>
-<p style="color:#0C090A">-Supervises other producers.</p> 
-<p style="color:#0C090A">-Maintaining the approval & budget schedules.</p>
-<p style="color:#0C090A">-Secures the financing for the production.</p>
-<p style="color:#0C090A">-Lead all departments from top.</p>
-<p style="color:#0C090A">-Acts as the figure head.</p>
-<p style="color:#0C090A">-Takes ownership of decision & outcomes.</p>
-
-<p style="color:#000000">CASTING DIRECTOR</p>
-<p style="color:#0C090A">-Find the stars to bring to the characters to life.</p>
-<p style="color:#0C090A">-Responsible for matching actors to roles.</p>
-<p style="color:#0C090A">-Reads the script & meet with producers to know the type of person they're looking for.</p>
-<p style="color:#0C090A">-Negotiate actors deal, points & conditions which they put into casting advice note or deal memo.</p>
-<p style="color:#0C090A">-Attend theatre productions and graduation shows to spot potential actors.</p> 
-<p style="color:#0C090A">-Considers actors availability & fees.</p> 
-<p style="color:#0C090A">-Study the script to understand speaking roles.</p>
-<p style="color:#0C090A">-Prepare casting budgets.</p>
-
-<p style="color:#000000">CONTENT MARKETER</p>
-<p style="color:#0C090A">-Creating & planning valuable content to attract customers into repeat buyers.</p>
-<p style="color:#0C090A">-Knowing the audience & what they can do for them...</p>
-<p style="color:#0C090A">-Creates campaign to bring a TV drama to the audience attention.</p>
-<p style="color:#0C090A">-Mediator between the business they represent and the interests of a specific audience.</p>
-<p style="color:#0C090A">-Responsible for sharing content to grow the readership and relationship for the company they represent.</p>
-
-<p style="color:#000000">SCRIPT WRITER</p>
-<p style="color:#0C090A">-Creates details of the script based on his concepts.</p>
-<p style="color:#0C090A">-Create stories for production with understanding of the storyline & target audience.</p>
-<p style="color:#0C090A">-Works with the production team revising the script to suit audiences.</p> 
-<p style="color:#0C090A">-Ensures regulatory requirements are followed.</p>
-<p style="color:#0C090A">-Knowledge to translate scripts.</p>
-<p style="color:#0C090A">-Ensure there's no copyright issues with the script.</p> 
-<p style="color:#0C090A">-Identify research sources to assist scriptwriting process.</p> 
-<p style="color:#0C090A">-Writes the narrative script.</p>
-<p style="color:#0C090A">-Revise the written materials.</p>
-<p style="color:#0C090A">-Make researches to understand the characters.</p>
-
-<p style="color:#000000">PRODUCTION MANAGER</p> 
-<p style="color:#0C090A">-Responsible for shooting schedules.</p>
-<p style="color:#0C090A">-Responsible for managing the day-to-day business side of a production.</p>
-<p style="color:#0C090A">-Makes budgetary decisions.</p> 
-<p style="color:#0C090A">-Organize all the necessary needs of a production staff.</p>
-<p style="color:#0C090A">-Prepares documents & permits.</p>
-<p style="color:#0C090A">-Assists in daily production tasks.</p> 
-<p style="color:#0C090A">-Ensures the schedules for production are met.</p>
-<p style="color:#0C090A">-Hires catering services.</p>
-<p style="color:#0C090A">-Schedules meetings.</p>
-<p style="color:#0C090A">-Hires workers & assign people to daily task.</p>
-
-<p style="color:#000000">PRODUCTION ASSISTANT.</p>
-<p style="color:#0C090A">-Prints & distributes script.</p> 
-<p style="color:#0C090A">-Run errands for producers & directors.</p>
-<p style="color:#0C090A">-Ensures production runs smoothly to finish.</p> 
-<p style="color:#0C090A">-Helps with set lights equipments & props.</p>
-<p style="color:#0C090A">-Assists directors & costume designers.</p>
-<p style="color:#0C090A">-Distributes & prints daily paperwork.</p>
-
-<p style="color:#000000">DIRECTOR OF PHOTOGRAPHY.</p>
-<p style="color:#0C090A">-Controls everything the camera captures.</p>
-<p style="color:#0C090A">-Controls lightning, filters & camera movements.</p> 
-<p style="color:#0C090A">-He is the head of the camera and lighting crews on set.</p>
-<p style="color:#0C090A">-Selects the lenses & filters to be used on shoot.</p>
-<p style="color:#0C090A">-Plays an Integral part in the story telling process.</p>
-<p style="color:#0C090A">-Creates the look of the film.</p>
-<p style="color:#0C090A">-Introduces ideas and concepts the director may not have considered.</p>
-<p style="color:#0C090A">-Reads the screenplay & discusses with the director the look of the film.</p>
-
-<p style="color:#000000">STUNT COORDINATOR</p>
-<p style="color:#0C090A">-Plans dangerous scenes & skilled movements on movies..</p>
-<p style="color:#0C090A">-Ensures everyone on set remains safe.</p>
-<p style="color:#0C090A">-Responsible for making action scenes look realistic.</p>
-<p style="color:#0C090A">-Direct complex feats, so actors can perform the stunts in realistic & appealing way.</p>
-<p style="color:#0C090A">-Choreographs the stunt to suit the script & director's vision.</p>
-<p style="color:#0C090A">-Ensures adequate rehearsals.</p>
-
-<p style="color:#000000">VISUAL EFFECTS PRODUCER</p>
-<p style="color:#0C090A">-Puts together the team of VFX artists and other technical staff.</p>
-<p style="color:#0C090A">-Set the schedules for the work.</p>
-<p style="color:#0C090A">-Works with the live action production team.</p>
-<p style="color:#0C090A">-Works with the editor in post-production.</p>
-<p style="color:#0C090A">-They set the schedules for the work and they manage the budget.</p>
-<p style="color:#0C090A">-They communicate between the editor and crew.</p>
-
-<p style="color:#000000">SFX ARTIST</p>
-<p style="color:#0C090A">-Creates effects that aren't possible by mere filming.</p>
-<p style="color:#000000">-(Most of marvel movies e.g Advengers were work of talented special effects artists).</p>
-<p style="color:#0C090A">-Creating a different world in which amazing things can happen. Things like beasts..</p>
-<p style="color:#0C090A">-SFX is applied either on set or before shooting a scene.</p> 
-<p style="color:#0C090A">-VFX are added in post-production.</p>
-<p style="color:#0C090A">-VFX is via graphic design programs, and computer tools.</p>
-<p style="color:#0C090A">-SFX is trickery, convincing the audience of the authencity of the story's world.</p>
-
-<p style="color:#000000">CONTUINITY</p>
-It's just about Making sure that all details in a film or TV show are consistent from shot to shot...
-
-
-
-
-
-Thank you for staying with us 😌✍🏽. 
-
-
-</div>
-
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-
-</div>
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/Education/functions-of-movie-production-project.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/Education/functions-of-movie-production-project.html&media=&description=FUNCTIONS%20&%20ROLE%20OF%20MOVIE%20PRODUCTION%20PROJECT,%20from%20the%20director%20to%20CONTUINITY%20read%20it%20full%20here%F0%9F%98%B1"><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/Education/functions-of-movie-production-project.html&text=FUNCTIONS%20&%20ROLE%20OF%20MOVIE%20PRODUCTION%20PROJECT,%20from%20the%20director%20to%20CONTUINITY%20read%20it%20full%20here%F0%9F%98%B1"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/Education/functions-of-movie-production-project.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*_FUNCTIONS%20%26%20ROLE%20OF%20MOVIE%20PRODUCTION%20PROJECT%2C%20from%20the%20director%20to%20CONTUINITY%20read%20it%20full%20here%F0%9F%98%B1_*%0Ahttps%3A%2F%2F9jahotblog.github.io%2FEducation%2Ffunctions-of-movie-production-project.html"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/Education/functions-of-movie-production-project.html%0AFUNCTIONS%20&%20ROLE%20OF%20MOVIE%20PRODUCTION%20PROJECT,%20from%20the%20director%20to%20CONTUINITY%20read%20it%20full%20here%F0%9F%98%B1"><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2FEducation%2Ffunctions-of-movie-production-project.html&text=FUNCTIONS%20%26%20ROLE%20OF%20MOVIE%20PRODUCTION%20PROJECT%2C%20from%20the%20director%20to%20CONTUINITY%20read%20it%20full%20here%F0%9F%98%B1"><i class="fa fa-telegram w3-hover-opacity"></i></a>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
-      </div>
-      <hr>
-     
-<!-- Posts -->
-  <div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>You Might also Like (Click Image)</h4>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-      <li class="w3-padding-16">
-       <a href="https://9jahotblog.github.io/Education/word-classes.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Word Classes Summary </span><br>
-        <span>Scholars argue of how many parts of speech we have, generally it's 8. Most cases (higher institution) 9, & even some goes as far as saying there's 14.
- </span>
-      </li>  
-      <li class="w3-padding-16">
-       <a href="https://9jahotblog.github.io/Education/olympus-12-greek-gods.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Meet the Greek Gods </span><br>
-        <span>Poseidon was a very greedy, moody & bad-tempered god. He was a brother to Zeus & Hades. Son of Cronus & Rhea. 
-    He is the god of the sea & earthquakes. He was the creator of the storms,  Poseidon helped Zeus overthrow is father.......
- </span>
-      </li>
-      <li class="w3-padding-16">
-       <a href="https://9jahotblog.github.io/Education/personality-traits.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">20 Unique Personality Traits</span><br>
-        <span> AMBITIOUSNESS
-The path to success gets floppy sometimes, but it can be narrow & easy at the same time, only if one drives for success. Present & future ambition matters, as long as you're driving for success. You can't stop but get through it, because failure is not an option.
- </span>
-       </li>
-     <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/citizenship-topic.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Citizenship Education Full Topic</span><br>
-        <span>Definition, Rights, Limits, who is a citizen? 6 things you don't know about acquiring citizenship.......</span>
-      </li> 
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/the-sustainable-development-goals.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">SDG development goals </span><br>
-        <span>The 8 Millennium Development Goals are international development goals which aims at improving health, combat diseases, & eradication of poverty.......
- </span>
-      </li>  
-      </ul>
-  </div>
-  <hr> 
 
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
-
-
-
-
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -495,15 +338,4 @@ The path to success gets floppy sometimes, but it can be narrow & easy at the sa
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/nigerian-army-harrases-nysc-member.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Education/the-sustainable-development-goals.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
