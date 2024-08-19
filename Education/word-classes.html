@@ -1,327 +1,384 @@
-
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="google-site-verification" content="d9RZ6AiQSIxGQws-tSJZvHLiG76SVSvq_4O5zJ4wD-A" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> Parts of Speech/Word Classes in English Language -- Brief Summary</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
-</div>
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
 
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Word Classes Brief Summary</h1>
+                    <p>Parts of Speech in The English Language</p>
+                </header>
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
-
-<script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
-</script>
-   </body>
-</html> 
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>WORD CLASSES SUMMARY</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
-
-
- <!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
-   
-<!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-
-    <p style="color:#000000">WORD CLASSES</p>
-    <p style="color:#000000">BRIEF SUMMARY</p>
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3></h3>
+        <h5> Word Classes...<span class="w3-opacity"></span>|| Jann16, 2023</h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/V6TwjYZF/IMG-20240818-WA0031.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
 
 Scholars argue of how many parts of speech we have, generally it's 8. Most cases (higher institution) 9, & even some goes as far as saying there's 14. 
-<p style="color:#000000">Nouns</p>
-<p style="color:#000000">Pronouns</p>
-<p style="color:#000000">Adjective</p>
-<p style="color:#000000">Conjunction</p>
-<p style="color:#000000">Adverbs</p>
-<p style="color:#000000">Prepositions</p>
-<p style="color:#000000">Verbs</p>
-<p style="color:#000000">Interjection</p>
+<ul>
+<li> Nouns</p>
+<li>Pronouns</li>
+<li>Adjective</li>
+<li>Conjunction</li>
+<li>Adverbs</li>
+<li>Prepositions</li>
+<li>Verbs</li>
+<li>Interjection</li>
+</ul>
 
    Additionally, they are not limited to "Determiners" Because determiners helps to indicate additional information about a particular noun. They come before nouns to provide additional information or to either introduce them & they're small words. e.g  "This book". Determiners are modifying words..  
 
-<p style="color:#000000">NOUN</p>
+<p>NOUN</p>
 Nouns give titles to places, ideas, people & things. They're considered to be naming words.. e.g Philip, Lagos, Colombia, December, Lecturer, Pen, book. 
 
-<p style="color:#000000">CLASSIFICATION OF NOUNS</p>
+<p>CLASSIFICATION OF NOUNS</p>
 
-<p style="color:#000000">CONCRETE NOUNS {objects that can be felt, heard, seen}. Duster, pot, stone.</p>
+<p>CONCRETE NOUNS {objects that can be felt, heard, seen}. Duster, pot, stone.</p>
 
-<p style="color:#000000">PROPER NOUNS {Important places, days of the week.} January, Canada.</p>
+<p>PROPER NOUNS {Important places, days of the week.} January, Canada.</p>
 
-<p style="color:#000000">COMMON NOUNS {Ordinary things, concept & object}. Actor, woman, hill.</p>
+<p>COMMON NOUNS {Ordinary things, concept & object}. Actor, woman, hill.</p>
 
-<p style="color:#000000">ABSTRACT NOUNS {Imaginary things} hunger, death, truth, pain, relief.</p>
+<p>ABSTRACT NOUNS {Imaginary things} hunger, death, truth, pain, relief.</p>
 
-<p style="color:#000000">COLLECTIVE NOUNS {Implies mass, group or togetherness} team, audience, congregation.</p>
+<p>COLLECTIVE NOUNS {Implies mass, group or togetherness} team, audience, congregation.</p>
 
-<p style="color:#000000">COUNTABLE & UNCOUNTABLE {Determines if they can or can't be counted}. Chairs, Tables, Furniture, Water, rice, sand.</p>
+<p>COUNTABLE & UNCOUNTABLE {Determines if they can or can't be counted}. Chairs, Tables, Furniture, Water, rice, sand.</p>
 
-<p style="color:#000000">POSSESSIVE NOUNS {Ownership} "company's" worker. "Daddy's" house. 
+<p>POSSESSIVE NOUNS {Ownership} "company's" worker. "Daddy's" house. 
 "Kiki's" investment. </p>
 
-<p style="color:#000000">PRONOUNS</p> 
+<p>PRONOUNS</p> 
 They're used as the replacement of a noun, to also avoid unnecessary repetitive nouns. 
 
-<p style="color:#000000">PERSONAL PRONOUN {represent definite things or persons} Mine, you, her, she.</p>
+<p>PERSONAL PRONOUN {represent definite things or persons} Mine, you, her, she.</p>
 
-<p style="color:#000000">POSSESSIVE PRONOUN {laying emphasis, show possession} Our, My, Their.</p>
+<p>POSSESSIVE PRONOUN {laying emphasis, show possession} Our, My, Their.</p>
 
-<p style="color:#000000">RECIPROCAL PRONOUN {Expression, exchange of action, interactive}  Each other, one another.</p> 
+<p>RECIPROCAL PRONOUN {Expression, exchange of action, interactive}  Each other, one another.</p> 
 
-<p style="color:#000000">REFLEXIVE PRONOUN {reflects back or to} Itself, ourselves, himself.</p>
+<p>REFLEXIVE PRONOUN {reflects back or to} Itself, ourselves, himself.</p>
 
-<p style="color:#000000">RELATIVE PRONOUNS{refers to other pronoun or noun, called it's anticident}who, which, whom..</p>
+<p>RELATIVE PRONOUNS{refers to other pronoun or noun, called it's anticident}who, which, whom..</p>
 
-<p style="color:#000000">DEMONSTRATIVE PRONOUNS{direct attention to specific things} this, that, these.</p>
+<p>DEMONSTRATIVE PRONOUNS{direct attention to specific things} this, that, these.</p>
 
-<p style="color:#000000">INTERROGATIVE PRONOUNS {made up of 'wh' words} why, when, who.</p>
+<p>INTERROGATIVE PRONOUNS {made up of 'wh' words} why, when, who.</p>
 
-<p style="color:#000000">INDEFINITE PRONOUNS{neither definite or specific} All, Everyone, Few, Little, Several.</p>
+<p>INDEFINITE PRONOUNS{neither definite or specific} All, Everyone, Few, Little, Several.</p>
 
-<p style="color:#000000">IMPERSONAL PRONOUNS{refer people in general or to an undefined person} I, nowadays, They.</p>
+<p>IMPERSONAL PRONOUNS{refer people in general or to an undefined person} I, nowadays, They.</p>
 
-<p style="color:#000000">VERB</p>
+<p>VERB</p>
 Expresses action, event or state. "Doing word". 
 
-<p style="color:#000000">VERB PHRASE {verb is composed with 2 or more words} are working, have been, must have..</p>
+<p>VERB PHRASE {verb is composed with 2 or more words} are working, have been, must have..</p>
 
-<p style="color:#000000">AUXILIARY VERB{help verbs express their meaning clearly} could, would, dare, may, can't.</p>
+<p>AUXILIARY VERB{help verbs express their meaning clearly} could, would, dare, may, can't.</p>
 
-<p style="color:#000000">LEXICAL VERB{stand & function alone} wrote, washed, won.</p>
+<p>LEXICAL VERB{stand & function alone} wrote, washed, won.</p>
 
-<p style="color:#000000">FINITE VERB{controlled by a subject}
+<p>FINITE VERB{controlled by a subject}
 NON-FINITE{not affected by the person, number of subject}</p>
 
-<p style="color:#000000">TRANSITIVE & INTRANSITIVE {transitive followed by an object in it's sentence, intransitive isn't followed by an object} 
+<p>TRANSITIVE & INTRANSITIVE {transitive followed by an object in it's sentence, intransitive isn't followed by an object} 
 Trans=Threw, Wrote. 
 Intrans= Laughed, Smiles. </p>
 
-<p style="color:#000000">IRREGULAR VERB {don't have present tenses, infinitive or regular d or ed to their base}.. </p>
+<p>IRREGULAR VERB {don't have present tenses, infinitive or regular d or ed to their base}.. </p>
 
-<p style="color:#000000">ADVERB</p> 
-Modifies & adds to the verb. Describe verbs, adjectives, other adverbs. 
+<p>ADVERB</p> 
+Modifies and adds to the verb. Describe verbs, adjectives, other adverbs. 
 
-<p style="color:#000000">ADJUNCTS {extent the action is performed} slowly, quickly, far.</p>
+<p>ADJUNCTS {extent the action is performed} slowly, quickly, far.</p>
 
-<p style="color:#000000">DISJUNCTS {expresses viewpoint, attitude} foolishly, certainly, luckily.</p>
+<p>DISJUNCTS {expresses viewpoint, attitude} foolishly, certainly, luckily.</p>
 
-<p style="color:#000000">ADJECTIVE</p>
+<p>ADJECTIVE</p>
 gives more info about pronouns or noun. Adds life & color to language. 
 tall, short, heavy. 
 
-<p style="color:#000000">CONJUNCTION 
+<p>CONJUNCTION 
 Links other clauses, phrases & sentences together. In addition, therefore.</p> 
 
-<p style="color:#000000">PREPOSITION 
+<p>PREPOSITION 
 Relationship between 2 words or phrases in a sentence. During, Since, Towards, within.</p> 
 
-<p style="color:#000000">INTERJECTION 
+<p>INTERJECTION 
 Expresses & shows intense feelings, anger, disgust or joy. 
 Aha! Never! Wow!</p>
 
-<p style="color:#000000">Phrase: Does not contain finite verb, (Finite verb agrees with the subject in person and in number).
+<p>Phrase: Does not contain finite verb, (Finite verb agrees with the subject in person and in number).
 
 Clause: Has its own subject & verb. </p>
 
 
-
-
-
-    
-Thank you for staying with us . 
-
-
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
 
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor 
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
 </div>
 
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-  
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
-        </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/Education/word-classes.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/Education/word-classes.html&media=&description=Parts%20of%20Speech%20brief%20summary"><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/Education/word-classes.html&text=Parts%20of%20Speech%20brief%20summary"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/Education/word-classes.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*%24WORD%20CLASSES(%2C%20PARTS%20OF%20SPEECH)%20PHRASE%20%26%20CLAUSE%20BRIEF%20SUNMARY_*%F0%9F%A7%9A%0Ahttps%3A%2F%2F9jahotblog.github.io%2FEducation%2Fword-classes.html"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/Education/word-classes.html%0AParts%20of%20Speech%20brief%20summary"><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2FEducation%2Fword-classes.html&text=Parts%20of%20speech%20brief%20summary%20ENGLISH"><i class="fa fa-telegram w3-hover-opacity"></i></a>
-        </div>
-      </div>
-      <hr>
-     
-<!-- Posts -->
-  <div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>You Might also Like (Click Image)</h4>
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid20" onclick="likeFunction(this, 'articleid20')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid20" onclick="dislikeFunction(this, 'articleid20')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-    <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/the-sustainable-development-goals.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">SDG development goals </span><br>
-        <span>The 8 Millennium Development Goals are international development goals which aims at improving health, combat diseases, & eradication of poverty.......
- </span>
-      </li>  
-     <li class="w3-padding-16">
-       <a href="https://9jahotblog.github.io/Education/personality-traits.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">20 Unique Personality Traits</span><br>
-        <span> AMBITIOUSNESS
-The path to success gets floppy sometimes, but it can be narrow & easy at the same time, only if one drives for success. Present & future ambition matters, as long as you're driving for success. You can't stop but get through it, because failure is not an option.
- </span>
-       </li>
-      <li class="w3-padding-16">
-       <a href="https://9jahotblog.github.io/Education/olympus-12-greek-gods.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Meet the Greek Gods </span><br>
-        <span>Poseidon was a very greedy, moody & bad-tempered god. He was a brother to Zeus & Hades. Son of Cronus & Rhea. 
-    He is the god of the sea & earthquakes. He was the creator of the storms,  Poseidon helped Zeus overthrow is father.......
- </span>
-      </li>  
-     <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/citizenship-topic.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Citizenship Education Full Topic</span><br>
-        <span>Definition, Rights, Limits, who is a citizen? 6 things you don't know about acquiring citizenship.......</span>
-      </li>  
-     <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/functions-of-movie-production-project.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="KO" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">Movie Production Project</span><br>
-        <span>LET'S KICKSTART WITH THE PRODUCER
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/Education/how-to-use-punctuations.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
 
--He Finances the movie.
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
 
--The producer gathers investments.
+    /* - - - CONFIGURATION VARIABLES - - - */
 
--He reaches out to actors for leading roles.
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
 
--He Arranges a team to manage business operations......</span>
-      </li> 
-      </ul>
-  </div>
-  <hr> 
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
 
+        // configure your variables here
 
+    }
 
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
 
 
+<script>
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
+</script>
+
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
+    </div>
+
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -332,15 +389,4 @@ The path to success gets floppy sometimes, but it can be narrow & easy at the sa
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Education/personality-traits.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/random-news-stories.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
