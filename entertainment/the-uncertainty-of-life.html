@@ -1,218 +1,292 @@
-
-  
- <!DOCTYPE html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="google-site-verification" content="d9RZ6AiQSIxGQws-tSJZvHLiG76SVSvq_4O5zJ4wD-A" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> The Uncertainty Of Life - Genamie's Thoughts</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>The Uncertainty Of Life</h1>
+                    <p></p>
+                </header>
+
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3><a href="https://www.instagram.com/genamie_?igsh=dHdyYmJudGtnYmR5">Genamie Rotimi</h3></a>
+        <h5>Uncertainty ..<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
+    </div>
+    
+ <div class="w3-justify">
+    
+<p>This days I have been focusing all my THINKING energy on the future and what’s to come. And I can’t help but wonder what if things don’t go the way I and others have planned be it good or bad. It may surprise but some people make good plans for themselves and shit still go wrong for them, you don’t believe me? OK then, let me tell you a story;
+<p>Obi Is a boy turned man who had the sheer opportunity to study in England, I know you might be thinking what’s so special about that I mean Nigerians study in England all the time no fuss needs to be made but let inform you if you were unaware that In the 90’s only like one in hundred Nigerian had that opportunity. Even though now it’s common to see parents send their children at obi’s own time it was hardly attainable that was why for him to travel his whole community had to come together to gather the money which he will eventually pay back after four years of him studying law  at least  so they thought but when he got there he changed the plans or maybe that was his plan all along and he didn’t mention but to the villagers that contributed and sent him to the big ,glamorous ABROAD it was a drastic change of PLANS. Not much is known about his stay in England only that he studied English, hooked up to girls of different races and he fell in love on boat while coming back to Nigeria.
+<p>When he came back to his beloved country everything went particularly <i>“as planned”</i> he got a job and paid he extremely well, had an car, good roof over his head and a beautiful, educated girlfriend soon to be fiancée , in short he had everything that will make man absolutely comfortable but he was a bad spender and he had his scholarship bills to paid back, he had younger siblings, older siblings and even  parents to take care of especially he’s mom cause she was sick but she will eventually die which was rather sad… but life goes on, I’m no bummer. So in a very short time he landed in one debt to another it was bad to the point where Clara he’s girl had to lend him money which he didn’t take cause of he’s intrusive masculine ego it caused some fights for them but they moved on from it and they, were happy again .
+<p>Now this where things get weird …</p> you remember when I said obi lived and existed in the 90’s well in the 90’s they had this whole thing where a certain person will be marked out and exiled by the rest of their community to be honest from the stories I hear they make it sound like the whole country {NIGERIA} does not associate with these people when it comes to things like marriage, kingship and the rest, their reason being that this people are meant for sacrifices to the idols that existed then, It might shock you that till to day some women and men are still single or unmarried just because they are osu. And yes, Clara was an osu too that’s the only background check needed on her, our guy obi was a forward thinking man being that he has lived in England and he had seen the way white people lived he knew that whether Nigeria liked it or not the was what our future looked like so he promise her that her osuness didn’t matter and he was going to marry no matter because believed as a matter of fact he knew that in the nearest future Nigerians will be less ridged with culture and more open to western ways, was he right ? yeah, maybe!. But one thing he didn’t see coming was the way and even the fact that Clara eventually broke up with him, she based her reasons on the osu thing but I personally thought there was more to it, however she was kind enough to give him “a last wonderful night” as she bid him goodbye for good, not long after his mom followed suit but hers was more tragic cause she bid the whole wide world goodbye, till we meet again in heaven or wherever. Obi losing Clara and his mom were two events that happened he didn’t plan for but life threw it at him anyways.
+<p>And honestly that was just the tip of the iceberg, after losing two women he loved most in the world. It was like he lost himself to because he stared drinking, gambling, womanizing and so many other things that was generally and society-considered bad, before the change in character you remember I told you he was bad spender and he had money issues well it became worse. He had what was called at the time an “European post” it basically meant he was influential, like you already know people in our dysfunctional society pay influential people to influence things to favor them and that did not start today. I know you are thinking he took bribe because he sounds like a BAD man and I couldn’t agree more but he did not, in fact “NO BRIBE” was a policy obi would rather die than break, but that didn’t mean the people around him had any policy at all cause guess what they didn’t, he’s secretary guy who needs no background other that the fact that he was money-thirsty bastard, this fool collected bribe from people claiming to be obi and not just huge amount of money, for girls he would have sex with them and when they refuse to give him more he will rape them. 
+<p>To cut the long story very short, people started pressing charges on obi. And he was taking jail and then to court, based on the life he had been life for the past months nothing pointed to he’s innocence and he had no money to get a good lawyer to defend him. At the end he spent the better part of he’s years in jail for crimes he didn’t commit which is a fail in Nigeria’s law enforcement but that’s another story, now obi is old he still remembers when he was 26 and a new England-graduate he had so many quote on quote good  plans for life but none went as he hoped……. But he still believes it’s the beauty of life and I do too.
+<p>The point of the story is to let you, yes YOU! Know that making plan is great and making the right plans even better but one thing you should realize as the moral of the story is that life doesn’t always go as planned and that too is okay, you can do everything right and things will still go wrong, so take some time to relax and hope on GOD cause only him can actually make your dreams or plans as I like to call it come through. 
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
 
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor 
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid30" onclick="likeFunction(this, 'articleid30')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid30" onclick="dislikeFunction(this, 'articleid30')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
+
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
+
+    /* - - - CONFIGURATION VARIABLES - - - */
+
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
+
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
+
+        // configure your variables here
+
+    }
+
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
+
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
 </script>
-   </body>
-</html> 
 
 
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>THE UNCERTAINTY OF LIFE</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
-
-
- <!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
-
-<!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-    
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-    <p style="color:#000000">THE UNCERTAINTY OF LIFE</p>
-    <p style="color:#000000">By Genamie</p>
-    <p style="color:#000000">Short Story</p>
-
-<p style="color:#000000">This days I have been focusing all my THINKING energy on the future and what’s to come. And I can’t help but wonder what if things don’t go the way I and others have planned be it good or bad. It may surprise but some people make good plans for themselves and shit still go wrong for them, you don’t believe me? OK then, let me tell you a story;
-<p style="color:#000000">Obi Is a boy turned man who had the sheer opportunity to study in England, I know you might be thinking what’s so special about that I mean Nigerians study in England all the time no fuss needs to be made but let inform you if you were unaware that In the 90’s only like one in hundred Nigerian had that opportunity. Even though now it’s common to see parents send their children at obi’s own time it was hardly attainable that was why for him to travel his whole community had to come together to gather the money which he will eventually pay back after four years of him studying law  at least  so they thought but when he got there he changed the plans or maybe that was his plan all along and he didn’t mention but to the villagers that contributed and sent him to the big ,glamorous ABROAD it was a drastic change of PLANS. Not much is known about his stay in England only that he studied English, hooked up to girls of different races and he fell in love on boat while coming back to Nigeria.
-<p style="color:#000000">When he came back to his beloved country everything went particularly “as planned” he got a job and paid he extremely well, had an car, good roof over his head and a beautiful, educated girlfriend soon to be fiancée , in short he had everything that will make man absolutely comfortable but he was a bad spender and he had his scholarship bills to paid back, he had younger siblings, older siblings and even  parents to take care of especially he’s mom cause she was sick but she will eventually die which was rather sad… but life goes on, I’m no bummer. So in a very short time he landed in one debt to another it was bad to the point where Clara he’s girl had to lend him money which he didn’t take cause of he’s intrusive masculine ego it caused some fights for them but they moved on from it and they, were happy again .
-<p style="color:#000000">Now this where things get weird …</p> you remember when I said obi lived and existed in the 90’s well in the 90’s they had this whole thing where a certain person will be marked out and exiled by the rest of their community to be honest from the stories I hear they make it sound like the whole country {NIGERIA} does not associate with these people when it comes to things like marriage, kingship and the rest, their reason being that this people are meant for sacrifices to the idols that existed then, It might shock you that till to day some women and men are still single or unmarried just because they are osu. And yes, Clara was an osu too that’s the only background check needed on her, our guy obi was a forward thinking man being that he has lived in England and he had seen the way white people lived he knew that whether Nigeria liked it or not the was what our future looked like so he promise her that her osuness didn’t matter and he was going to marry no matter because believed as a matter of fact he knew that in the nearest future Nigerians will be less ridged with culture and more open to western ways, was he right ? yeah, maybe!. But one thing he didn’t see coming was the way and even the fact that Clara eventually broke up with him, she based her reasons on the osu thing but I personally thought there was more to it, however she was kind enough to give him “a last wonderful night” as she bid him goodbye for good, not long after his mom followed suit but hers was more tragic cause she bid the whole wide world goodbye, till we meet again in heaven or wherever. Obi losing Clara and his mom were two events that happened he didn’t plan for but life threw it at him anyways.
-<p style="color:#000000">And honestly that was just the tip of the iceberg, after losing two women he loved most in the world. It was like he lost himself to because he stared drinking, gambling, womanizing and so many other things that was generally and society-considered bad, before the change in character you remember I told you he was bad spender and he had money issues well it became worse. He had what was called at the time an “European post” it basically meant he was influential, like you already know people in our dysfunctional society pay influential people to influence things to favor them and that did not start today. I know you are thinking he took bribe because he sounds like a BAD man and I couldn’t agree more but he did not, in fact “NO BRIBE” was a policy obi would rather die than break, but that didn’t mean the people around him had any policy at all cause guess what they didn’t, he’s secretary guy who needs no background other that the fact that he was money-thirsty bastard, this fool collected bribe from people claiming to be obi and not just huge amount of money, for girls he would have sex with them and when they refuse to give him more he will rape them. 
-<p style="color:#000000">To cut the long story very short, people started pressing charges on obi. And he was taking jail and then to court, based on the life he had been life for the past months nothing pointed to he’s innocence and he had no money to get a good lawyer to defend him. At the end he spent the better part of he’s years in jail for crimes he didn’t commit which is a fail in Nigeria’s law enforcement but that’s another story, now obi is old he still remembers when he was 26 and a new England-graduate he had so many quote on quote good  plans for life but none went as he hoped……. But he still believes it’s the beauty of life and I do too.
-<p style="color:#000000">The point of the story is to let you, yes YOU! Know that making plan is great and making the right plans even better but one thing you should realize as the moral of the story is that life doesn’t always go as planned and that too is okay, you can do everything right and things will still go wrong, so take some time to relax and hope on GOD cause only him can actually make your dreams or plans as I like to call it come through. 
-
-<p style="color:#000000">Thank you for staying with me. Please like, comment and share.</p>
-<p style="color:#000000"><a href="https://instagram.com/genamie_">Follow me On Instagram</a></p>
-   </div>
-  </div>
- </div>
-</div>
-
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-  
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html&media=&description=The%20uncertainty%20of%20Life,%20catch%20the%20full%20story%20here%20on%209jahotblog%20%F0%9F%98%8C%F0%9F%8E%89%F0%9F%94%A5%F0%9F%94%A5"><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html&text=The%20uncertainty%20of%20Life,%20catch%20the%20full%20story%20here%20on%209jahotblog%20%F0%9F%98%8C%F0%9F%8E%89%F0%9F%94%A5%F0%9F%94%A5"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*_The%20uncertainty%20Of%20life%2C%20catch%20the%20full%20story%20on%209jahotblog%F0%9F%94%A5%F0%9F%94%A5_*%0Ahttps%3A%2F%2F9jahotblog.github.io%2Fentertainment%2Fthe-uncertainty-of-life.html"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html%0AThe%20uncertainty%20of%20Life,%20catch%20the%20full%20story%20here%20on%209jahotblog%20%F0%9F%98%8C%F0%9F%8E%89%F0%9F%94%A5%F0%9F%94%A5"><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2Fentertainment%2Fthe-uncertainty-of-life.html&text=The%20Uncertainty%20of%20Life2%20Catch%20the%20full%20story%20on%209jahotblog"><i class="fa fa-telegram w3-hover-opacity"></i></a>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
         </div>
-      </div>
-      <hr>
-     
-<div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>Read Also (Click Image)</h4>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-    <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/entertainment/we-are-all-clueless.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">WE ARE ALL CLUELESS!</span><br>
-        <span>Did you know that, no one really knows what they really want , like no one has really figured out the difference between what they think will make them happy and what really makes them happy. We just.........</span>
-      </li>  
-   <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/why-I-hate-the-word-dreams.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">WHY I HATE THE WORD "DREAMS" </span><br>
-        <span>95% of the time I hate to associate who I plan to be or what I plan to do in the future with the word DREAMS because of how unsure it can actually be, like I dream to become the...............</span>
-      </li>  
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">The Indecisiveness of a Teenager</span><br>
-        <span>(MY STORY) I’m my age and I’m about to enter the university and 3 months ago I had no Idea what I wanted to study and I basically had so many things I was passionate about that I had no passion at all....</span>
-      </li>   
-      <li class="w3-padding-16">
-      <a href="https://9jahotblog.github.io/entertainment/will.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Will Smith" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">Will Smith gets Banned 10 for years </span><br>
-        <span> American Actor Will Smith gets banned from the Oscars for 10 years for hitting Chris Rock......</span>
-      </li>
-    </ul>
-  </div>
-  <hr> 
 
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
-
-
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -223,15 +297,5 @@ body {font-family: "Open Sans"}
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
+    
