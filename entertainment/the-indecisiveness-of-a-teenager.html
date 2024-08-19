@@ -1,220 +1,295 @@
-
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
-<meta name="google-site-verification" content="d9RZ6AiQSIxGQws-tSJZvHLiG76SVSvq_4O5zJ4wD-A" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-</style>
+    <title> The Indecisiveness Of A Teenager - Genamie's Thoughts</p>
+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+    </style>
 </head>
-<body>
+<body class="is-preload landing">
+    <div id="page-wrapper">
 
-<div id="mySidenav" class="sidenav">
-<img src="https://i.postimg.cc/pVkb5qW0/IMG-20230104-WA0081.jpg" width="250" height="250">
-       <p style="color:#0000FF">WELCOME TO 9JAHOTBLOG</a>
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="https://9jahotblog.github.io">Home</a>
-  <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-  <a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Articles</a>
-  <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html">News</a>
-  <a href="https://9jahotblog.github.io/documentary/how-to-be-healthier.html">Discussions</a>
-  <a href="https://9jahotblog.github.io/Education/citizenship-topic.html">Education</a>
-  <a href="https://9jahotblog.github.io/documentary/bonobos.html">Documentary</a>
-  <a href="https://9jahotblog.github.io/search-page.html">Search for articles</a>
-  <a href="https://9jahotblog.github.io/storybook.html">Online Ebooks</a>
-  <a href="https://9jahotblog.github.io/Dashboards/philip-smith-profile-9jahotblog-storybooks.html">Poetry & Short stories</a>
-  <a href="https://9jahotblog.github.io/aboutus.html">About Us</a>
-  <a href="https://9jahotblog.github.io/contact-us.html">Contact Us</a>
-  <a href="https://9jahotblog.github.io/pp.html">Privacy Policy</a> 
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>The Indecisiveness Of A Teenager - Genamie</h1>
+                    <p></p>
+                </header>
+
+             <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3><a href="https://www.instagram.com/genamie_?igsh=dHdyYmJudGtnYmR5">Genamie Rotimi</h3></a>
+        <h5>INDECISIVENESS. ..<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
+    </div>
+    
+ <div class="w3-justify">
+    
+<p>(MY STORY) I’m my age and I’m about to enter the university and 3 months ago I had no Idea what I wanted to study and I basically had so many things I was passionate about that I had no passion at all.</p> I can’t place the reasons why I couldn’t decide but I will give you a few guesses i.e I was scared that whatever I chose from my various passions ,I will eventually fail and be a shame to the family or maybe I was scared that my parents won’t accept the idea or maybe I was just scared of the whole idea  of growing up and having to make all this decisions that I and no one but God can actually predict if its right for the long run, maybe I was scared that whatever I choose to study I won’t be passion enough to complete or even make a life out of  or maybe I was just scared that it’s a life decision and I might just ruin my whole life  by making the wrong decision, I will rather not make one at all.
+<p>But all this literally change when I started looking inwardly at myself and what really makes my heart tick,what could I spend the rest of my life doing whether I get paid or not, what could make me wake up in the morning and give me a smile and genuine happiness knowing I doing what I actually care about, what problem do I want to be a solution to for the rest of my life, what will not get boring finding out more about for the rest of my life. And if there’s anything I know is that whatever you want to channel your time and energy to, it should be something you are passionate about. Tyler perry once said that the key to success is to be the solution to a problem that you relate to, something that you understand, something you have experienced or something that some special or people you care about have experienced . Trust me he didn’t say all that, my own quote started from the second comma but I really understand it on a very deep level, if you consider all this before you choose what you want to do, in case you want to give up at some point when you remember why you started you the first place it might just keep you going.
+<p>I’m sure at this juncture you’re like girl go straight to the point, but if you are not then maybe you are enjoying it. Anyways I have watched so many people in my family pass through emotional, physical and other types of traumas and do absolutely nothing about. Especially my very own mother the person I literally care about the most in this world, and it just made me realize how much my  country or at least my family is just backwards when it comes to this mental health and all its awareness. So this is how in decided <i>PSCHOLOGY</i> is the perfect course for me. If I study this course I will able to study mental and emotional illness and disorders, their causes and ways to prevent them and I will be able to use whatever platform I have from my supposed music career to push various movements that will create more awareness not just for the higher society but for the smaller circles like <i>THE FAMILY.</i> This is because I believe If more people look into studying and researching on this <em>MEID</em> especially from lesser countries  an impact will be made and I want that impact to start with me .
+<p>All this blah, blah I’m going on and on about is just for the ideal world where you make life decision and your parents just go with the flow but for the real where I unfortunately exist it’s not the same your parents probably started drawing the map of your life the day you were literally born and they have decided where they want to  be at what age and at what time,</p> or maybe your parent have made certain mistakes in life they don’t want you to make ….that my friend comes from  place of love…. love that’s some times more suffocating that it’s actually affectionate especially to the supposed receiver who is me. I get it and I almost completely appreciate it but it feels like no one is giving me a chance to actually air my views it feels like I’m living someone else’s life you know, and believe me if I as the only one worrying about what I would be in future and my parents didn’t care I would be very sad but now I’m just lost, confused and I still don’t want to make the wrong choice.
+<p>I could rebel and say <em>NO</em> I want to study psychology and I don’t care about your opinions and thoughts even though you are the one paying my school fees, I could do that and even if it doesn’t  end the way it does I those Netflix movies I watch, or maybe hopefully it does and they let me study what I want, how do I would I know it’s the right choice not just for the moment but forever and what if I go ahead and I fail , how will I be able to look at “ my mother’s didn’t I tell you  eyes” or “my dad’s you should have listened to us eyes”. It will be the most demoralizing experience of my life.  
+<p>Moments like this are moments I need to activate the holy spirit but it’s hard for me to recognize his voice. You are probably saying pray girl pray and yes I have prayed like a lot but my holy spirit and guardian angel speaks or show me directions in mysterious ways that it’s it takes time to distinguish between the negative and positive voice speaking to me. And those of you that are less religious are probably like girl follow your heart and you might have been right with that if my heart was not a cardiac plane, with some parts going <i>NORTH</i> which is just do what feels right for the moment and think about the future when it comes, while some parts are going SOUTH which is follow your parents commands , they are older and more experienced and they probably know much better, and some parts are just going <i>WEST</i> which is do none choose a completely different course and deal with the consequences  what are the odds of it being good, then the rest of my heart are just going <i>EAST</i> which all this indecisiveness is because you are too young , just go back to SS3 again you might get some clarity then.  
+<p>Ok fine, I agree with east I am in fact too young to know what’s right for me maybe not at this point but probably for the long run. But I don’t think I’m too young to know what is not right for me, these are my thoughts but it doesn’t  matter because nobody but this laptop and hopefully you will hear or even get to read it….when those that are really meant to hear it are probably planning  the old people’s home I will live in cause this girl ain’t dying early. I really want to do the whole medicine thing and wait for it to fail and give my mom my own “I told you look” but  it’s waste of my own very time and with the way things are going I don’t have much of that , like yesterday my mother was dropping me off at boarding school and the only thing I was thinking about was life with our her and my family but now look at me thinking and making all these weird career decisions and maybe tomorrow I will be deciding names for my children or worse I will be deciding for them…. No just shove that thought, I will just guide so they won’t lose their brains just as I’m losing but choosing not an option. Or maybe it will be, when I do what I think is right and it doesn’t turn out right and I become one of those parents that have made mistakes and don’t want their children to make the same, then they decide for their children based on their own mistakes without letting them actually live their own live…. Nope kelahani that will not happen let’s just move on. <blockquote>(P.S I was talking to myself from the last full stops before the end of the paragraph)</blockquote>
+<p>Now looking at it from another completely different angle studying the wrong course or one you are not passion about is not the end of the world because 85% of graduates aren’t actually working in their various fields of study, some the reason is circumstance others just by choice. Look at my mom for instance , from what I know she study mass communication and she has never officially worked at a media house, radio station or anything related to her mass communication but she is the literal best at public speaking I guess that’s one thing she got from the whole four years of studying mass communication. FYI she  teaches civic education and is the unofficial guidance counsellor of a secondary school which is a great job but was it her first or preferred choice hell no but life threw it at her and I tell you she’s enjoying it, she didn’t even know she had a passion for teaching and kids until she started the job I guess we learnt something from that. My dad on the other hand is a pharmacist he studied pharmacology and that’s what he’s been doing his whole life, no lesson to learn from that.
+<p>Hmm it’s the first day of 2022 and I’m still indecisive, probably if you had asked maybe two years before now I would told you by 2022 I should have my life and choices figured out but 2022 is here I don’t. It’s all good cause no one said you have to ever have everything figured out cause the truth is you can’t unless you’re God but you’re not so you can’t , every time you think you have figured out one aspect of your life another comes crashing down and that I tell is what living is all about. You might do what feels right now but later on find yourself asking questions like what if I  did what was safe and easy , and you might do what’s safe, easy and fast and end up with the question of what if I took the step to do the other. You can’t always get it right in fact you won’t always get it right, you might but often you won’t and that something to be happy about because when you get it wrong you will then have a clearer view of what’s right and when you decide to try again, you try as an experienced dog and nothing less.
+<p>In my head while writing the paragraph before this one about getting right and wrong … I’m speaking to you, you that knows what is right and wrong for you ... you that know what is your easy, safe and fast choice and what is the right one for you. But for me I don’t even know what those words mean, so I’m saying those to people like me that have no idea....it’s cool , some of us might figure it out eventually but for some it might take longer and other it might take shorter and some might never actually figured it out .. they might be indecisive till the very last day but that also cool, cause I know God and he won’t let his people do anything he didn’t plan for them, so whatever I finally study I will accept it as Gods plan and agenda for me because he shows when all hopes are lost and in my case all hopes really are lost. And whatever I finally practice I know it’s God’s plan and agenda for me and he will make a way for to be able to impact lives with whatever platform I have and that is what I believe and you should too.    
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
 
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor 
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
 
- 
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; </span>
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid29" onclick="likeFunction(this, 'articleid29')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid29" onclick="dislikeFunction(this, 'articleid29')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html" style="color: white; text-decoration: none;">NEXT ARTICLE »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+                 
+          
+
+<!-- Comment Section -->
+<div id="graphcomment"></div>
+<script type="text/javascript">
+
+    /* - - - CONFIGURATION VARIABLES - - - */
+
+    var __semio__params = {
+        graphcommentId: "9jahotblog", // make sure the id is yours
+
+        behaviour: {
+            // HIGHLY RECOMMENDED
+            //  uid: "...", // unique identifier for the comments thread on your page (ex: your page id)
+        },
+
+        // configure your variables here
+
+    }
+
+    function __semio__onload() {
+        __semio__gc_graphlogin(__semio__params)
+    }
+
+    (function() {
+        var gc = document.createElement('script'); gc.type = 'text/javascript'; gc.async = true;
+        gc.onload = __semio__onload; gc.defer = true; gc.src = 'https://integration.graphcomment.com/gc_graphlogin.js?' + Date.now();
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(gc);
+    })();
+
+</script>
+
 
 <script>
-function openNav() {
-  document.getElementById("mySidenav").style.width = "250px";
-}
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
 
-function closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-}
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
 </script>
-   </body>
-</html> 
 
 
-  
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>THE INDECISIVENESS OF A TEENAGER</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
-<style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Karma", sans-serif}
-.w3-bar-block .w3-bar-item {padding:20px}
-</style>
-</head>
-<body>
-
-
- <!-- Header -->
-  <header class="w3-container w3-center w3-padding-48 w3-white">
-    <h1 class="w3-xxxlarge"><b>9jahotblog</b></h1>
-    <h6>Welcome to the<span class="w3-tag">hottest blog 9ja🇳🇬</span></h6>
-  </header>
-
-
-<!-- Grid -->
-  <div class="w3-row w3-padding w3-border">
-
-<!-- Blog entry -->
-      <div class="w3-container w3-white w3-margin w3-padding-large">
-        <div class="w3-center">
-    
-    <p style="color:#000000">THE INDECISIVENESS OF A TEENAGER</p>
-    <p style="color:#000000"><a href="https://Instagram.com/genamie_">By Genamie</p></a>
-
-<p style="color:#000000">(MY STORY) I’m my age and I’m about to enter the university and 3 months ago I had no Idea what I wanted to study and I basically had so many things I was passionate about that I had no passion at all.</p> I can’t place the reasons why I couldn’t decide but I will give you a few guesses i.e I was scared that whatever I chose from my various passions ,I will eventually fail and be a shame to the family or maybe I was scared that my parents won’t accept the idea or maybe I was just scared of the whole idea  of growing up and having to make all this decisions that I and no one but God can actually predict if its right for the long run, maybe I was scared that whatever I choose to study I won’t be passion enough to complete or even make a life out of  or maybe I was just scared that it’s a life decision and I might just ruin my whole life  by making the wrong decision, I will rather not make one at all.
-<p style="color:#000000">But all this literally change when I started looking inwardly at myself and what really makes my heart tick,what could I spend the rest of my life doing whether I get paid or not, what could make me wake up in the morning and give me a smile and genuine happiness knowing I doing what I actually care about, what problem do I want to be a solution to for the rest of my life, what will not get boring finding out more about for the rest of my life. And if there’s anything I know is that whatever you want to channel your time and energy to, it should be something you are passionate about. Tyler perry once said that the key to success is to be the solution to a problem that you relate to, something that you understand, something you have experienced or something that some special or people you care about have experienced . Trust me he didn’t say all that, my own quote started from the second comma but I really understand it on a very deep level, if you consider all this before you choose what you want to do, in case you want to give up at some point when you remember why you started you the first place it might just keep you going.
-<p style="color:#000000">I’m sure at this juncture you’re like girl go straight to the point, but if you are not then maybe you are enjoying it. Anyways I have watched so many people in my family pass through emotional, physical and other types of traumas and do absolutely nothing about. Especially my very own mother the person I literally care about the most in this world, and it just made me realize how much my  country or at least my family is just backwards when it comes to this mental health and all its awareness. So this is how in decided PSCHOLOGY is the perfect course for me. If I study this course I will able to study mental and emotional illness and disorders, their causes and ways to prevent them and I will be able to use whatever platform I have from my supposed music career to push various movements that will create more awareness not just for the higher society but for the smaller circles like THE FAMILY. This is because I believe If more people look into studying and researching on this MEID especially from lesser countries  an impact will be made and I want that impact to start with me .
-<p style="color:#000000">All this blah, blah I’m going on and on about is just for the ideal world where you make life decision and your parents just go with the flow but for the real where I unfortunately exist it’s not the same your parents probably started drawing the map of your life the day you were literally born and they have decided where they want to  be at what age and at what time,</p> or maybe your parent have made certain mistakes in life they don’t want you to make ….that my friend comes from  place of love…. love that’s some times more suffocating that it’s actually affectionate especially to the supposed receiver who is me. I get it and I almost completely appreciate it but it feels like no one is giving me a chance to actually air my views it feels like I’m living someone else’s life you know, and believe me if I as the only one worrying about what I would be in future and my parents didn’t care I would be very sad but now I’m just lost, confused and I still don’t want to make the wrong choice.
-<p style="color:#000000">I could rebel and say NO I want to study psychology and I don’t care about your opinions and thoughts even though you are the one paying my school fees, I could do that and even if it doesn’t  end the way it does I those Netflix movies I watch, or maybe hopefully it does and they let me study what I want, how do I would I know it’s the right choice not just for the moment but forever and what if I go ahead and I fail , how will I be able to look at “ my mother’s didn’t I tell you  eyes” or “my dad’s you should have listened to us eyes”. It will be the most demoralizing experience of my life.  
-<p style="color:#000000">Moments like this are moments I need to activate the holy spirit but it’s hard for me to recognize his voice. You are probably saying pray girl pray and yes I have prayed like a lot but my holy spirit and guardian angel speaks or show me directions in mysterious ways that it’s it takes time to distinguish between the negative and positive voice speaking to me. And those of you that are less religious are probably like girl follow your heart and you might have been right with that if my heart was not a cardiac plane, with some parts going NORTH which is just do what feels right for the moment and think about the future when it comes, while some parts are going SOUTH which is follow your parents commands , they are older and more experienced and they probably know much better, and some parts are just going WEST which is do none choose a completely different course and deal with the consequences  what are the odds of it being good, then the rest of my heart are just going EAST which all this indecisiveness is because you are too young , just go back to SS3 again you might get some clarity then.  
-<p style="color:#000000">Ok fine, I agree with east I am in fact too young to know what’s right for me maybe not at this point but probably for the long run. But I don’t think I’m too young to know what is not right for me, these are my thoughts but it doesn’t  matter because nobody but this laptop and hopefully you will hear or even get to read it….when those that are really meant to hear it are probably planning  the old people’s home I will live in cause this girl ain’t dying early. I really want to do the whole medicine thing and wait for it to fail and give my mom my own “I told you look” but  it’s waste of my own very time and with the way things are going I don’t have much of that , like yesterday my mother was dropping me off at boarding school and the only thing I was thinking about was life with our her and my family but now look at me thinking and making all these weird career decisions and maybe tomorrow I will be deciding names for my children or worse I will be deciding for them…. No just shove that thought, I will just guide so they won’t lose their brains just as I’m losing but choosing not an option. Or maybe it will be, when I do what I think is right and it doesn’t turn out right and I become one of those parents that have made mistakes and don’t want their children to make the same, then they decide for their children based on their own mistakes without letting them actually live their own live…. Nope kelahani that will not happen let’s just move on. <p style="color:#000000">(P.S I was talking to myself from the last full stops before the end of the paragraph)</p>
-<p style="color:#000000">Now looking at it from another completely different angle studying the wrong course or one you are not passion about is not the end of the world because 85% of graduates aren’t actually working in their various fields of study, some the reason is circumstance others just by choice. Look at my mom for instance , from what I know she study mass communication and she has never officially worked at a media house, radio station or anything related to her mass communication but she is the literal best at public speaking I guess that’s one thing she got from the whole four years of studying mass communication. FYI she  teaches civic education and is the unofficial guidance counsellor of a secondary school which is a great job but was it her first or preferred choice hell no but life threw it at her and I tell you she’s enjoying it, she didn’t even know she had a passion for teaching and kids until she started the job I guess we learnt something from that. My dad on the other hand is a pharmacist he studied pharmacology and that’s what he’s been doing his whole life, no lesson to learn from that.
-<p style="color:#000000">Hmm it’s the first day of 2022 and I’m still indecisive, probably if you had asked maybe two years before now I would told you by 2022 I should have my life and choices figured out but 2022 is here I don’t. It’s all good cause no one said you have to ever have everything figured out cause the truth is you can’t unless you’re God but you’re not so you can’t , every time you think you have figured out one aspect of your life another comes crashing down and that I tell is what living is all about. You might do what feels right now but later on find yourself asking questions like what if I  did what was safe and easy , and you might do what’s safe, easy and fast and end up with the question of what if I took the step to do the other. You can’t always get it right in fact you won’t always get it right, you might but often you won’t and that something to be happy about because when you get it wrong you will then have a clearer view of what’s right and when you decide to try again, you try as an experienced dog and nothing less.
-<p style="color:#000000">In my head while writing the paragraph before this one about getting right and wrong … I’m speaking to you, you that knows what is right and wrong for you ... you that know what is your easy, safe and fast choice and what is the right one for you. But for me I don’t even know what those words mean, so I’m saying those to people like me that have no idea....it’s cool , some of us might figure it out eventually but for some it might take longer and other it might take shorter and some might never actually figured it out .. they might be indecisive till the very last day but that also cool, cause I know God and he won’t let his people do anything he didn’t plan for them, so whatever I finally study I will accept it as Gods plan and agenda for me because he shows when all hopes are lost and in my case all hopes really are lost. And whatever I finally practice I know it’s God’s plan and agenda for me and he will make a way for to be able to impact lives with whatever platform I have and that is what I believe and you should too.    
-
-
-
-Thank you for staying with me. 
-
-
-</div>
-
-<a href="https://chat.whatsapp.com/CY1ekNLBsue1K7yDNv0RWb"> CLICK HERE TO JOIN OUR WHATSAPP GROUP</a>
-
-</div>
-
-
-
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>9JAHOTBLOG</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>                     
-<style>
-h1,h2,h3,h4,h5,h6 {font-family: "Oswald"}
-body {font-family: "Open Sans"}
-</style>
-</head>
-<body class="w3-light-grey">
-
-  
-<div class="w3-white w3-margin">
-        <div class="w3-container w3-padding w3-black">
-          <h4>Share This Post</h4>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="w3-container w3-xlarge w3-padding">
-          <a href="https://www.facebook.com/sharer/sharer.php?u=https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html"><i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-          <a href="https://www.instagram.com/the_real_philip617"><i class="fa fa-instagram w3-hover-opacity"></i></a>
-          <a href="https://msng.link/o/?kolade_ogun2019=sc"><i class="fa fa-snapchat w3-hover-opacity"></i></a>
-          <a href="https://pinterest.com/pin/create/button/?url=https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html&media=&description=The%20INDECISIVENESS%20of%20a%20teenager,%20story%20on%209jahotblog%20by%20Genamie*><i class="fa fa-pinterest-p w3-hover-opacity"></i></a>
-          <a href="https://twitter.com/intent/tweet?url=https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html&text=The%20INDECISIVENESS%20of%20a%20teenager,%20story%20on%209jahotblog%20by%20Genamie"><i class="fa fa-twitter w3-hover-opacity"></i></a>
-          <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html"<i class="fa fa-linkedin w3-hover-opacity"></i></a>
-          <a href="https://api.whatsapp.com/send?text=*_Check%20out%20the%20story%20of%20the%20indecisiveness%20of%20a%20teenager%20on%209jahotblog%20by%20Genamie_*%20%F0%9F%A5%B0%F0%9F%8E%89%0Ahttps%3A%2F%2F9jahotblog.github.io%2Fentertainment%2Fthe-indecisiveness-of-a-teenager.html"><i class="fa fa-whatsapp w3-hover-opacity"></i></a>
-          <a href="mailto:info@example.com?&subject=&cc=&bcc=&body=https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html%0AThe%20INDECISIVENESS%20of%20a%20teenager,%20story%20on%209jahotblog%20by%20Genamie"><i class="fa fa-envelope" w3-hover-opacity"></i></a>
-          <a href="https://xn--r1a.link/share/url?url=https%3A%2F%2F9jahotblog.github.io%2Fentertainment%2Fthe-indecisiveness-of-a-teenager.html&text=Check%20out%20the%20story%20of%20the%20INDECISIVENESS%20of%20a%20teenager%20by%20Genamie%20on%209jahotblog"><i class="fa fa-telegram w3-hover-opacity"></i></a>
-        </div>
-      </div>
-      <hr>
-    
 
-  <div class="w3-card w3-margin">
-    <div class="w3-container w3-padding">
-      <h4>Read Also (Click Image)</h4>
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+
+
+                           <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
     </div>
-    <ul class="w3-ul w3-hoverable w3-white">
-    <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/entertainment/we-are-all-clueless.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">WE ARE ALL CLUELESS!</span><br>
-        <span>Did you know that, no one really knows what they really want , like no one has really figured out the difference between what they think will make them happy and what really makes them happy. We just.........</span>
-      </li>  
-    <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/Education/why-I-hate-the-word-dreams.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="9jahotblog" class="w3-left w3-margin-right" style="width:100px"></a>
-        <span class="w3-large">WHY I HATE THE WORD "DREAMS" </span><br>
-        <span>95% of the time I hate to associate who I plan to be or what I plan to do in the future with the word DREAMS because of how unsure it can actually be, like I dream to become the...............</span>
-      </li>  
-      <li class="w3-padding-16">
-        <a href="https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Image" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">THE UNCERTAINTY OF LIFE2</span><br>
-        <span>This days I have been focusing all my THINKING energy on the future and what’s to come.
-And I can’t help but wonder what if things don’t go the way I and others have planned be it good or bad......</span>
-      </li>   
-      <li class="w3-padding-16">
-      <a href="https://9jahotblog.github.io/entertainment/will.html"><img src="https://i.postimg.cc/nMb0WWtr/9jahotblog.jpg" alt="Will Smith" class="w3-left w3-margin-right" style="width:100px"></a>
-   <span class="w3-large">Will Smith gets Banned 10 for years </span><br>
-        <span> American Actor Will Smith gets banned from the Oscars for 10 years for hitting Chris Rock......</span>
-      </li>
-    </ul>
-  </div>
-  <hr> 
 
+ 
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+</body>
+</html>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
@@ -225,15 +300,5 @@ And I can’t help but wonder what if things don’t go the way I and others hav
 
   gtag('config', 'G-38V179JCWD');
 </script>
-
-
-
-<!-- Footer -->
-<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/Articles/random-news-stories.html">Previous »</button></a>
-  <button class="w3-button w3-black w3-padding-large w3-margin-bottom"><a href="https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html">Next »</button></a>
-  <p>Powered by <a href="https://Instagram.com/the_real_philip617" target="_blank">Philip Smith</a></p>
-</footer>
-</body>
-</html>
-</div>
+    
+    
