@@ -18,52 +18,61 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
+            display: none;
         }
-        .comment-section {
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
+        .w3-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .like-button {
+            cursor: pointer;
+        }
+        .like-count {
+            margin-left: 5px;
+        }
+        .comments-section {
+            margin-top: 30px;
         }
         .comment {
             margin-bottom: 15px;
-            padding-bottom: 10px;
             border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
         }
-        .comment-user {
-            font-weight: bold;
-            color: #007bff;
-        }
-        .comment-text {
-            margin: 5px 0;
-        }
-        .comment-form textarea {
+        .comment input {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
+            margin-bottom: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
-            resize: vertical;
         }
-        .comment-form button {
-            margin-top: 10px;
-            padding: 8px 15px;
-            background-color: #28a745;
+        .comment button {
+            background-color: #007bff;
             color: white;
-            border: none;
+            padding: 8px 15px;
+            font-size: 14px;
             border-radius: 5px;
+            border: none;
             cursor: pointer;
+        }
+        .comment button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
+
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
-            <!-- Navigation Menu Here -->
+            <nav id="nav">
+                <ul>
+                    <!-- Add navigation links here -->
+                </ul>
+            </nav>
         </header>
 
-        <!-- Main Content -->
+        <!-- Main -->
         <div id="main" class="wrapper style1">
             <div class="container">
                 <header class="major">
@@ -75,26 +84,45 @@
                 <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
                     <div class="w3-center">
                         <h3>Jailer's Pen</h3>
-                        <h5>Title of article...<span class="w3-opacity"></span> || 28, Aug 2024.</h5>
+                        <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
                     </div>
+
                     <div class="w3-justify">
                         <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
                         <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
                     </div>
 
                     <p style="display: flex; align-items: center; margin: 0;">
-                      Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+                        Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
                     </p>
-                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">Editor</p>
-                    
-                    <!-- Comment Section -->
-                    <div class="comment-section">
-                        <h4>Comments</h4>
-                        <div id="comments"></div>
+                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+                        Editor 
+                    </p>
 
-                        <div class="comment-form">
-                            <textarea id="comment-input" rows="4" placeholder="Write a comment..."></textarea>
-                            <button id="post-comment">Post Comment</button>
+                    <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+                        <div style="display: inline-block; vertical-align: top;">
+                            <button class="w3-button w3-round like-button" data-article-id="articleid31" onclick="likeFunction(this, 'articleid31')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+                                <i class="fa fa-thumbs-up"></i> Like
+                            </button>
+                            <button class="w3-button w3-round dislike-button" data-article-id="articleid31" onclick="dislikeFunction(this, 'articleid31')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+                                <i class="fa fa-thumbs-down"></i> Dislike
+                            </button>
+                        </div>
+                        <div style="float: right;">
+                            <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+                                <a href="https://9jahotblog.github.io/Stories/jailer-yawa.html" style="color: white; text-decoration: none;">Read Short Stories »</a>
+                            </button>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <h3>Comments</h3>
+                        <div id="comments"></div>
+                        <div class="comment">
+                            <input type="text" id="newComment" placeholder="Write a comment...">
+                            <button onclick="postComment()">Post</button>
                         </div>
                     </div>
                 </div>
@@ -106,36 +134,80 @@
             You're logged in as <span id="username"></span>
         </div>
 
-        <!-- Footer -->
+           <!-- Footer -->
         <footer id="footer">
-            <!-- Footer Content Here -->
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
         </footer>
     </div>
 
-    <!-- Firebase SDKs -->
+ 
+    <!-- Scripts -->
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
-        // Firebase Configuration
-        const firebaseConfig = {
-                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-                authDomain: "jahotblog-login.firebaseapp.com",
-                projectId: "jahotblog-login",
-                storageBucket: "jahotblog-login.appspot.com",
-                messagingSenderId: "661526730601",
-                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-            };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
-        // Listen for authentication state changes
+    // Function to post a comment
+    function postComment() {
+        const commentText = document.getElementById('newComment').value;
+        const commentRef = ref(database, 'comments/');
+
+        push(commentRef, {
+            username: auth.currentUser ? auth.currentUser.displayName : 'Anonymous',
+            comment: commentText,
+            timestamp: Date.now()
+        });
+
+        document.getElementById('newComment').value = ''; // Clear input
+    }
+
+    // Function to display comments
+    function displayComments() {
+        const commentRef = ref(database, 'comments/');
+        onValue(commentRef, (snapshot) => {
+            const commentsDiv = document.getElementById('comments');
+            commentsDiv.innerHTML = ''; // Clear current comments
+
+            snapshot.forEach((childSnapshot) => {
+                const commentData = childSnapshot.val();
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                commentElement.innerHTML = `<strong>${commentData.username}</strong>: ${commentData.comment}`;
+                commentsDiv.appendChild(commentElement);
+            });
+        });
+    }
+
+    // Display comments when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        displayComments();
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('username').textContent = user.displayName || 'User';
@@ -144,43 +216,7 @@
                 document.getElementById('login-notification').style.display = 'none';
             }
         });
-
-        // Load comments from Firebase
-        const commentsRef = ref(database, 'comments');
-        onValue(commentsRef, (snapshot) => {
-            const commentsContainer = document.getElementById('comments');
-            commentsContainer.innerHTML = '';
-            snapshot.forEach((childSnapshot) => {
-                const comment = childSnapshot.val();
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <p class="comment-user">${comment.username}</p>
-                    <p class="comment-text">${comment.text}</p>
-                `;
-                commentsContainer.appendChild(commentElement);
-            });
-        });
-
-        // Post a new comment
-        document.getElementById('post-comment').addEventListener('click', () => {
-            const commentText = document.getElementById('comment-input').value.trim();
-            if (commentText) {
-                const user = auth.currentUser;
-                if (user) {
-                    const newCommentRef = push(commentsRef);
-                    set(newCommentRef, {
-                        username: user.displayName || 'Anonymous',
-                        text: commentText,
-                        timestamp: Date.now()
-                    }).then(() => {
-                        document.getElementById('comment-input').value = '';
-                    });
-                } else {
-                    alert('Please log in to post a comment.');
-                }
-            }
-        });
+    });
     </script>
 </body>
 </html>
