@@ -103,11 +103,7 @@
                     <p style="margin: 0; font-weight: 500; color: #1DA1F2;">Editor</p>
                 </div>
 
-<!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-                
+
                 <!-- Comment Section -->
                 <div id="comment-section">
                     <h3>Comments</h3>
@@ -157,15 +153,6 @@
             databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
         };
 
-             // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
-            
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
