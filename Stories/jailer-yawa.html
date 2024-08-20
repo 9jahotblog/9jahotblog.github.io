@@ -18,44 +18,45 @@
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
+            display: none; /* Hide by default */
         }
-        .w3-container img {
-            max-width: 100%;
-            height: auto;
-        }
-        .like-button {
-            cursor: pointer;
-        }
-        .like-count {
-            margin-left: 5px;
-        }
-        .comments-section {
-            margin-top: 30px;
-        }
-        .comment {
-            margin-bottom: 15px;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        .comment input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 5px;
+
+        #comment-section {
+            margin-top: 20px;
+            padding: 10px;
             border: 1px solid #ddd;
+            border-radius: 10px;
         }
-        .comment button {
+
+        #comments-list {
+            margin-bottom: 15px;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #add-comment textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+        }
+
+        #submit-comment {
+            padding: 10px 15px;
             background-color: #007bff;
             color: white;
-            padding: 8px 15px;
-            font-size: 14px;
-            border-radius: 5px;
             border: none;
             cursor: pointer;
-        }
-        .comment button:hover {
-            background-color: #0056b3;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -67,7 +68,15 @@
             <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
             <nav id="nav">
                 <ul>
-                    <!-- Add navigation links here -->
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
                 </ul>
             </nav>
         </header>
@@ -86,55 +95,32 @@
                         <h3>Jailer's Pen</h3>
                         <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
                     </div>
-
                     <div class="w3-justify">
                         <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
                         <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
                     </div>
+                    <p style="display: flex; align-items: center; margin: 0;">Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" /></p>
+                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">Editor</p>
+                </div>
 
-                    <p style="display: flex; align-items: center; margin: 0;">
-                        Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
-                    </p>
-                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">
-                        Editor 
-                    </p>
-
-                    <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
-                        <div style="display: inline-block; vertical-align: top;">
-                            <button class="w3-button w3-round like-button" data-article-id="articleid31" onclick="likeFunction(this, 'articleid31')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
-                                <i class="fa fa-thumbs-up"></i> Like
-                            </button>
-                            <button class="w3-button w3-round dislike-button" data-article-id="articleid31" onclick="dislikeFunction(this, 'articleid31')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
-                                <i class="fa fa-thumbs-down"></i> Dislike
-                            </button>
-                        </div>
-                        <div style="float: right;">
-                            <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
-                                <a href="https://9jahotblog.github.io/Stories/jailer-yawa.html" style="color: white; text-decoration: none;">Read Short Stories »</a>
-                            </button>
-                        </div>
-                        <div style="clear: both;"></div>
-                    </div>
-
-                    <!-- Comments Section -->
-                    <div class="comments-section">
-                        <h3>Comments</h3>
-                        <div id="comments"></div>
-                        <div class="comment">
-                            <input type="text" id="newComment" placeholder="Write a comment...">
-                            <button onclick="postComment()">Post</button>
-                        </div>
+<!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+                
+                <!-- Comment Section -->
+                <div id="comment-section">
+                    <h3>Comments</h3>
+                    <div id="comments-list"></div>
+                    <div id="add-comment">
+                        <textarea id="comment-input" placeholder="Add your comment..."></textarea>
+                        <button id="submit-comment">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-
-           <!-- Footer -->
+        <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
                 <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -144,8 +130,7 @@
         </footer>
     </div>
 
- 
-    <!-- Scripts -->
+       <!-- Scripts -->
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
@@ -154,60 +139,25 @@
     <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+
+
+    <!-- Firebase Setup -->
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-        authDomain: "jahotblog-login.firebaseapp.com",
-        projectId: "jahotblog-login",
-        storageBucket: "jahotblog-login.appspot.com",
-        messagingSenderId: "661526730601",
-        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
-        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+            databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    // Function to post a comment
-    function postComment() {
-        const commentText = document.getElementById('newComment').value;
-        const commentRef = ref(database, 'comments/');
-
-        push(commentRef, {
-            username: auth.currentUser ? auth.currentUser.displayName : 'Anonymous',
-            comment: commentText,
-            timestamp: Date.now()
-        });
-
-        document.getElementById('newComment').value = ''; // Clear input
-    }
-
-    // Function to display comments
-    function displayComments() {
-        const commentRef = ref(database, 'comments/');
-        onValue(commentRef, (snapshot) => {
-            const commentsDiv = document.getElementById('comments');
-            commentsDiv.innerHTML = ''; // Clear current comments
-
-            snapshot.forEach((childSnapshot) => {
-                const commentData = childSnapshot.val();
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-                commentElement.innerHTML = `<strong>${commentData.username}</strong>: ${commentData.comment}`;
-                commentsDiv.appendChild(commentElement);
-            });
-        });
-    }
-
-    // Display comments when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        displayComments();
-
+             // Check if user is signed in and display their info
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('username').textContent = user.displayName || 'User';
@@ -215,8 +165,72 @@
             } else {
                 document.getElementById('login-notification').style.display = 'none';
             }
+            
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const commentsRef = collection(db, "comments");
+
+        // Load and display comments
+        async function loadComments() {
+            const q = query(commentsRef, orderBy("timestamp", "desc"));
+            const querySnapshot = await getDocs(q);
+            const commentsList = document.getElementById('comments-list');
+            commentsList.innerHTML = ""; // Clear old comments
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                commentElement.innerHTML = `<div class="comment-author">${data.author}</div><div>${data.text}</div>`;
+                commentsList.appendChild(commentElement);
+            });
+        }
+
+        // Submit a new comment
+        async function submitComment() {
+            const commentInput = document.getElementById('comment-input');
+            const commentText = commentInput.value.trim();
+
+            if (commentText === "") {
+                alert("Comment cannot be empty");
+                return;
+            }
+
+            const user = auth.currentUser;
+
+            if (!user) {
+                alert("You must be logged in to comment.");
+                return;
+            }
+
+            try {
+                await addDoc(commentsRef, {
+                    author: user.displayName || 'Anonymous',
+                    text: commentText,
+                    timestamp: new Date()
+                });
+
+                commentInput.value = ""; // Clear the input
+                loadComments(); // Refresh comments
+            } catch (error) {
+                console.error("Error adding comment: ", error);
+            }
+        }
+
+        // Listen for submit button
+        document.getElementById('submit-comment').addEventListener('click', submitComment);
+
+        // Load comments on page load
+        document.addEventListener('DOMContentLoaded', loadComments);
+
+        // Check if user is signed in
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User is logged in:", user.displayName);
+            } else {
+                console.log("No user is logged in.");
+            }
         });
-    });
     </script>
 </body>
 </html>
