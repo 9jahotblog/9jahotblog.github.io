@@ -1,1 +1,186 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>Insert Title Here</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <style>
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
+        .comment-section {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .comment {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .comment-user {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .comment-text {
+            margin: 5px 0;
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            resize: vertical;
+        }
+        .comment-form button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <!-- Navigation Menu Here -->
+        </header>
 
+        <!-- Main Content -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Bla bla bla</h1>
+                    <p>bla bla bla</p>
+                </header>
+
+                <!-- Blog entry -->
+                <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+                    <div class="w3-center">
+                        <h3>Jailer's Pen</h3>
+                        <h5>Title of article...<span class="w3-opacity"></span> || 28, Aug 2024.</h5>
+                    </div>
+                    <div class="w3-justify">
+                        <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+                        <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
+                    </div>
+
+                    <p style="display: flex; align-items: center; margin: 0;">
+                      Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+                    </p>
+                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">Editor</p>
+                    
+                    <!-- Comment Section -->
+                    <div class="comment-section">
+                        <h4>Comments</h4>
+                        <div id="comments"></div>
+
+                        <div class="comment-form">
+                            <textarea id="comment-input" rows="4" placeholder="Write a comment..."></textarea>
+                            <button id="post-comment">Post Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <!-- Footer Content Here -->
+        </footer>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+                apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+                authDomain: "jahotblog-login.firebaseapp.com",
+                projectId: "jahotblog-login",
+                storageBucket: "jahotblog-login.appspot.com",
+                messagingSenderId: "661526730601",
+                appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+            };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        // Listen for authentication state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+
+        // Load comments from Firebase
+        const commentsRef = ref(database, 'comments');
+        onValue(commentsRef, (snapshot) => {
+            const commentsContainer = document.getElementById('comments');
+            commentsContainer.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const comment = childSnapshot.val();
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <p class="comment-user">${comment.username}</p>
+                    <p class="comment-text">${comment.text}</p>
+                `;
+                commentsContainer.appendChild(commentElement);
+            });
+        });
+
+        // Post a new comment
+        document.getElementById('post-comment').addEventListener('click', () => {
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (commentText) {
+                const user = auth.currentUser;
+                if (user) {
+                    const newCommentRef = push(commentsRef);
+                    set(newCommentRef, {
+                        username: user.displayName || 'Anonymous',
+                        text: commentText,
+                        timestamp: Date.now()
+                    }).then(() => {
+                        document.getElementById('comment-input').value = '';
+                    });
+                } else {
+                    alert('Please log in to post a comment.');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
