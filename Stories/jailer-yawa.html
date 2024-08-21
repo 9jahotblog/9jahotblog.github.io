@@ -1,141 +1,155 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Comments Section</title>
+    <title>Insert Title Here</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        .comment-section {
-            margin-top: 50px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
-        }
-        .comment-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .comment-button {
-            background-color: #28a745;
-            color: white;
-            padding: 8px 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        .comment {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-        .comment img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
-        .comment-user {
-            font-weight: bold;
-        }
-        .comment-text {
-            margin: 5px 0;
-        }
+        /* Styles here... */
     </style>
 </head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <div class="w3-container w3-white w3-margin w3-padding-large">
+                    <header class="major">
+                        <h3>Jailer's Pen</h3>
+                        <p>Title of article...</p>
+                    </header>
 
-<body>
-    <div class="comment-section">
-        <h3>Comments</h3>
-        <div id="comment-list"></div>
-        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..." disabled></textarea>
-        <button id="comment-button" class="comment-button" disabled>Post Comment</button>
+                    <div class="comment-section">
+                        <h3>Comments</h3>
+                        <div id="comment-list"></div>
+                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+                        <button id="comment-button" class="comment-button">Post Comment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+
     <script type="module">
-        // Import Firebase SDKs
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+        import { Datastore } from 'https://cdn.skypack.dev/@google-cloud/datastore';
 
-        // Firebase configuration from your new project
-        const firebaseConfig = {
-            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
-            authDomain: "game-earning-website.firebaseapp.com",
-            projectId: "game-earning-website",
-            storageBucket: "game-earning-website.appspot.com",
-            messagingSenderId: "581912396287",
-            appId: "1:581912396287:web:234fa03483d71115fc67ca",
-            measurementId: "G-HD7CZZMHT7"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        // Handle user authentication
-        let currentUser = null;
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('comment-input').disabled = false;
-                document.getElementById('comment-button').disabled = false;
-                console.log("User is signed in: ", user.displayName);
-            } else {
-                currentUser = null;
-                document.getElementById('comment-input').disabled = true;
-                document.getElementById('comment-button').disabled = true;
-                console.log("No user is signed in.");
-                // Optionally, prompt the user to sign in
-                signInWithGoogle();
-            }
+        const datastore = new Datastore({
+            projectId: 'jahotblog-login',
         });
 
-        // Function to sign in with Google
-        function signInWithGoogle() {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    currentUser = result.user;
-                    console.log("Signed in as: ", currentUser.displayName);
-                })
-                .catch((error) => {
-                    console.error("Error signing in: ", error);
-                });
+        let currentUser = null;
+
+        // Assuming user authentication is done elsewhere and you have the user object
+        function initUser() {
+            // Placeholder function for setting up user authentication
+            currentUser = { 
+                displayName: "User Name", 
+                photoURL: "path/to/photo.jpg" 
+            };
+            document.getElementById('comment-input').disabled = false;
+            document.getElementById('comment-button').disabled = false;
         }
 
-        // Post a comment
-        document.getElementById('comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value;
-            if (commentText && currentUser) {
-                await addDoc(collection(db, 'comments'), {
-                    text: commentText,
-                    userName: currentUser.displayName,
-                    userProfilePic: currentUser.photoURL,
-                    timestamp: new Date()
-                });
-                document.getElementById('comment-input').value = '';
-            }
-        });
+        async function fetchComments() {
+            const query = datastore.createQuery('Comment').order('timestamp', { descending: false });
+            const [comments] = await datastore.runQuery(query);
+            renderComments(comments);
+        }
 
-        // Load comments
-        const commentList = document.getElementById('comment-list');
-        const q = query(collection(db, 'comments'));
-        onSnapshot(q, (snapshot) => {
+        function renderComments(comments) {
+            const commentList = document.getElementById('comment-list');
             commentList.innerHTML = '';
-            snapshot.forEach((doc) => {
-                const comment = doc.data();
+
+            comments.forEach(comment => {
+                const repliesHtml = comment.replies ? comment.replies.map(reply => `
+                    <div class="comment reply-section">
+                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${reply.userName}</span>
+                            <p class="comment-text">${reply.text}</p>
+                        </div>
+                    </div>
+                `).join('') : '';
+
                 commentList.innerHTML += `
                     <div class="comment">
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${comment.userName}</span>
                             <p class="comment-text">${comment.text}</p>
+                            <button class="reply-button" data-id="${comment[datastore.KEY].id}">Reply</button>
+                            ${repliesHtml}
                         </div>
                     </div>
                 `;
             });
-        });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const replyText = prompt('Enter your reply:');
+                    if (replyText && currentUser) {
+                        const commentId = button.getAttribute('data-id');
+                        await addReply(commentId, replyText);
+                    }
+                });
+            });
+        }
+
+        async function postComment() {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                const key = datastore.key('Comment');
+                const comment = {
+                    key,
+                    data: {
+                        text: commentText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date(),
+                        replies: []
+                    }
+                };
+                await datastore.save(comment);
+                document.getElementById('comment-input').value = '';
+                fetchComments();
+            }
+        }
+
+        async function addReply(commentId, replyText) {
+            const commentKey = datastore.key(['Comment', parseInt(commentId)]);
+            const [comment] = await datastore.get(commentKey);
+
+            comment.replies = comment.replies || [];
+            comment.replies.push({
+                text: replyText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                timestamp: new Date()
+            });
+
+            await datastore.save({
+                key: commentKey,
+                data: comment
+            });
+            fetchComments();
+        }
+
+        document.getElementById('comment-button').addEventListener('click', postComment);
+
+        // Initialize the user and fetch comments on page load
+        initUser();
+        fetchComments();
     </script>
 </body>
 </html>
