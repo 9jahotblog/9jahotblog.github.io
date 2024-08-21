@@ -35,6 +35,16 @@
             color: #007bff;
             cursor: pointer;
         }
+        .comment-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .comment-header {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +76,6 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-        const messaging = firebase.messaging();
 
         const loginBtn = document.getElementById('login');
         const logoutBtn = document.getElementById('logout');
@@ -120,6 +129,7 @@
                     text: commentText,
                     user: user.displayName,
                     userId: user.uid,
+                    userPhoto: user.photoURL,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 }).then(() => {
                     commentInput.value = '';
@@ -128,36 +138,26 @@
             }
         });
 
-        // Load Comments
+        // Load Comments from Firestore
         function loadComments() {
             db.collection('comments')
                 .orderBy('timestamp', 'desc')
-                .get()
-                .then(snapshot => {
+                .onSnapshot(snapshot => {
                     commentsList.innerHTML = '';
                     snapshot.forEach(doc => {
                         const comment = doc.data();
                         commentsList.innerHTML += `
                             <div class="comment">
-                                <strong>${comment.user}</strong>
+                                <div class="comment-header">
+                                    <img src="${comment.userPhoto}" class="comment-avatar">
+                                    <strong>${comment.user}</strong>
+                                </div>
                                 <p>${comment.text}</p>
-                                <span class="reply-button">Reply</span>
                             </div>
                         `;
                     });
                 });
         }
-
-        // Web Notifications
-        messaging.requestPermission()
-            .then(() => messaging.getToken())
-            .then(token => {
-                console.log("FCM Token: ", token);
-                // Store FCM token in your database if needed
-            })
-            .catch(error => {
-                console.error("Error with notifications: ", error);
-            });
     </script>
 </body>
 </html>
