@@ -41,7 +41,7 @@
     <div class="container">
         <h2>Comment Section</h2>
         <div id="auth-section">
-            <button id="login">Login with Google</button>
+            <button id="login" style="display: none;">Login with Google</button>
             <button id="logout" style="display: none;">Logout</button>
         </div>
 
@@ -68,21 +68,12 @@
         const db = firebase.firestore();
         const messaging = firebase.messaging();
 
-        // Authentication Section
         const loginBtn = document.getElementById('login');
         const logoutBtn = document.getElementById('logout');
         const commentSection = document.getElementById('comment-section');
 
-        loginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider);
-        });
-
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut();
-        });
-
-        auth.onAuthStateChanged(user => {
+        // Handle login and logout visibility
+        function handleAuthUI(user) {
             if (user) {
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
@@ -93,6 +84,26 @@
                 logoutBtn.style.display = 'none';
                 commentSection.style.display = 'none';
             }
+        }
+
+        // Automatically check user authentication state on page load
+        auth.onAuthStateChanged(user => {
+            handleAuthUI(user);
+        });
+
+        // Login with Google
+        loginBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).then(result => {
+                handleAuthUI(result.user);
+            });
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut().then(() => {
+                handleAuthUI(null);
+            });
         });
 
         // Post Comment
@@ -102,11 +113,13 @@
 
         submitComment.addEventListener('click', () => {
             const commentText = commentInput.value;
-            if (commentText.trim()) {
+            const user = auth.currentUser;
+
+            if (user && commentText.trim()) {
                 db.collection('comments').add({
                     text: commentText,
-                    user: auth.currentUser.displayName,
-                    userId: auth.currentUser.uid,
+                    user: user.displayName,
+                    userId: user.uid,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 }).then(() => {
                     commentInput.value = '';
