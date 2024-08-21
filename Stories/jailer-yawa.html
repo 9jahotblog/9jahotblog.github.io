@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title> Insert Title Here </p></title>
+    <title>Insert Title Here</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
@@ -20,20 +20,17 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none;
         }
-
         .comment-section {
             margin-top: 50px;
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
-
         .comment-input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-
         .comment-button {
             background-color: #28a745;
             color: white;
@@ -42,42 +39,49 @@
             border: none;
             border-radius: 5px;
         }
-
         .comment {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
-
         .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
         }
-
         .comment-user {
             font-weight: bold;
         }
-
         .comment-text {
             margin: 5px 0;
+        }
+        .reply-button {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .reply-section {
+            margin-left: 50px;
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
         }
     </style>
 </head>
 
 <body class="is-preload landing">
     <div id="page-wrapper">
-        <!-- Main Content -->
         <div id="main" class="wrapper style1">
             <div class="container">
-                <!-- Blog Entry -->
                 <div class="w3-container w3-white w3-margin w3-padding-large">
                     <header class="major">
                         <h3>Jailer's Pen</h3>
                         <p>Title of article...</p>
                     </header>
 
-                    <!-- Comment Section -->
                     <div class="comment-section">
                         <h3>Comments</h3>
                         <div id="comment-list"></div>
@@ -89,7 +93,6 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
@@ -98,11 +101,10 @@
     <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
- 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
@@ -118,7 +120,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Check user authentication and enable comment input
         let currentUser = null;
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -132,7 +133,6 @@
             }
         });
 
-        // Post a comment
         document.getElementById('comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
             if (commentText && currentUser) {
@@ -140,28 +140,59 @@
                     text: commentText,
                     userName: currentUser.displayName,
                     userProfilePic: currentUser.photoURL,
-                    timestamp: new Date()
+                    timestamp: new Date(),
+                    replies: []
                 });
                 document.getElementById('comment-input').value = '';
             }
         });
 
-        // Load comments
         const commentList = document.getElementById('comment-list');
         const q = query(collection(db, 'comments'));
         onSnapshot(q, (snapshot) => {
             commentList.innerHTML = '';
             snapshot.forEach((doc) => {
                 const comment = doc.data();
+                const commentId = doc.id;
+                const repliesHtml = comment.replies.map(reply => `
+                    <div class="comment reply-section">
+                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${reply.userName}</span>
+                            <p class="comment-text">${reply.text}</p>
+                        </div>
+                    </div>
+                `).join('');
+
                 commentList.innerHTML += `
                     <div class="comment">
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${comment.userName}</span>
                             <p class="comment-text">${comment.text}</p>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                            ${repliesHtml}
                         </div>
                     </div>
                 `;
+            });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const replyText = prompt('Enter your reply:');
+                    if (replyText && currentUser) {
+                        const commentId = button.getAttribute('data-id');
+                        const commentRef = doc(db, 'comments', commentId);
+                        await updateDoc(commentRef, {
+                            replies: arrayUnion({
+                                text: replyText,
+                                userName: currentUser.displayName,
+                                userProfilePic: currentUser.photoURL,
+                                timestamp: new Date()
+                            })
+                        });
+                    }
+                });
             });
         });
     </script>
