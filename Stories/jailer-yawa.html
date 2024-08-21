@@ -1,223 +1,150 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Insert Title Here</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Section with Firebase</title>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js"></script>
     <style>
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-
-        #comment-section {
-            margin-top: 20px;
-            padding: 10px;
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
             border: 1px solid #ddd;
-            border-radius: 10px;
+            border-radius: 5px;
         }
-
-        #comments-list {
-            margin-bottom: 15px;
+        .comment-box {
+            margin-bottom: 20px;
         }
-
+        .comments {
+            margin-top: 20px;
+        }
         .comment {
-            margin-bottom: 10px;
             padding: 10px;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-bottom: 1px solid #eee;
         }
-
-        .comment-author {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        #add-comment textarea {
-            width: 100%;
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        #submit-comment {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
+        .reply-button {
+            color: #007bff;
             cursor: pointer;
-            border-radius: 5px;
         }
     </style>
 </head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
-
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
-                    <li>
-                        <ul>
-                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
-                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
-                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Main -->
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <header class="major">
-                    <h1>Bla bla bla</h1>
-                    <p>bla bla bla</p>
-                </header>
-
-                <!-- Blog entry -->
-                <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
-                    <div class="w3-center">
-                        <h3>Jailer's Pen</h3>
-                        <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
-                    </div>
-                    <div class="w3-justify">
-                        <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
-                        <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
-                    </div>
-                    <p style="display: flex; align-items: center; margin: 0;">Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" /></p>
-                    <p style="margin: 0; font-weight: 500; color: #1DA1F2;">Editor</p>
-                </div>
-
-
-                <!-- Comment Section -->
-                <div id="comment-section">
-                    <h3>Comments</h3>
-                    <div id="comments-list"></div>
-                    <div id="add-comment">
-                        <textarea id="comment-input" placeholder="Add your comment..."></textarea>
-                        <button id="submit-comment">Submit</button>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <h2>Comment Section</h2>
+        <div id="auth-section">
+            <button id="login">Login with Google</button>
+            <button id="logout" style="display: none;">Logout</button>
         </div>
 
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-        </footer>
+        <div id="comment-section" style="display: none;">
+            <textarea id="comment-input" class="comment-box" placeholder="Add a comment"></textarea>
+            <button id="submit-comment">Post Comment</button>
+            <div id="comments-list" class="comments"></div>
+        </div>
     </div>
 
-       <!-- Scripts -->
-    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
-
-
-    <!-- Firebase Setup -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
+    <script>
+        // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
             authDomain: "jahotblog-login.firebaseapp.com",
             projectId: "jahotblog-login",
             storageBucket: "jahotblog-login.appspot.com",
             messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
-            databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const commentsRef = collection(db, "comments");
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const messaging = firebase.messaging();
 
-        // Load and display comments
-        async function loadComments() {
-            const q = query(commentsRef, orderBy("timestamp", "desc"));
-            const querySnapshot = await getDocs(q);
-            const commentsList = document.getElementById('comments-list');
-            commentsList.innerHTML = ""; // Clear old comments
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-                commentElement.innerHTML = `<div class="comment-author">${data.author}</div><div>${data.text}</div>`;
-                commentsList.appendChild(commentElement);
-            });
-        }
+        // Authentication Section
+        const loginBtn = document.getElementById('login');
+        const logoutBtn = document.getElementById('logout');
+        const commentSection = document.getElementById('comment-section');
 
-        // Submit a new comment
-        async function submitComment() {
-            const commentInput = document.getElementById('comment-input');
-            const commentText = commentInput.value.trim();
+        loginBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider);
+        });
 
-            if (commentText === "") {
-                alert("Comment cannot be empty");
-                return;
-            }
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut();
+        });
 
-            const user = auth.currentUser;
-
-            if (!user) {
-                alert("You must be logged in to comment.");
-                return;
-            }
-
-            try {
-                await addDoc(commentsRef, {
-                    author: user.displayName || 'Anonymous',
-                    text: commentText,
-                    timestamp: new Date()
-                });
-
-                commentInput.value = ""; // Clear the input
-                loadComments(); // Refresh comments
-            } catch (error) {
-                console.error("Error adding comment: ", error);
-            }
-        }
-
-        // Listen for submit button
-        document.getElementById('submit-comment').addEventListener('click', submitComment);
-
-        // Load comments on page load
-        document.addEventListener('DOMContentLoaded', loadComments);
-
-        // Check if user is signed in
-        onAuthStateChanged(auth, (user) => {
+        auth.onAuthStateChanged(user => {
             if (user) {
-                console.log("User is logged in:", user.displayName);
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                commentSection.style.display = 'block';
+                loadComments();
             } else {
-                console.log("No user is logged in.");
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                commentSection.style.display = 'none';
             }
         });
+
+        // Post Comment
+        const commentInput = document.getElementById('comment-input');
+        const submitComment = document.getElementById('submit-comment');
+        const commentsList = document.getElementById('comments-list');
+
+        submitComment.addEventListener('click', () => {
+            const commentText = commentInput.value;
+            if (commentText.trim()) {
+                db.collection('comments').add({
+                    text: commentText,
+                    user: auth.currentUser.displayName,
+                    userId: auth.currentUser.uid,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                }).then(() => {
+                    commentInput.value = '';
+                    loadComments();
+                });
+            }
+        });
+
+        // Load Comments
+        function loadComments() {
+            db.collection('comments')
+                .orderBy('timestamp', 'desc')
+                .get()
+                .then(snapshot => {
+                    commentsList.innerHTML = '';
+                    snapshot.forEach(doc => {
+                        const comment = doc.data();
+                        commentsList.innerHTML += `
+                            <div class="comment">
+                                <strong>${comment.user}</strong>
+                                <p>${comment.text}</p>
+                                <span class="reply-button">Reply</span>
+                            </div>
+                        `;
+                    });
+                });
+        }
+
+        // Web Notifications
+        messaging.requestPermission()
+            .then(() => messaging.getToken())
+            .then(token => {
+                console.log("FCM Token: ", token);
+                // Store FCM token in your database if needed
+            })
+            .catch(error => {
+                console.error("Error with notifications: ", error);
+            });
     </script>
 </body>
 </html>
