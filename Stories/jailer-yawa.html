@@ -1,155 +1,105 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Insert Title Here</title>
+    <title>Comment Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
-    <style>
-        /* Styles here... */
-    </style>
 </head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <div class="w3-container w3-white w3-margin w3-padding-large">
-                    <header class="major">
-                        <h3>Jailer's Pen</h3>
-                        <p>Title of article...</p>
-                    </header>
-
-                    <div class="comment-section">
-                        <h3>Comments</h3>
-                        <div id="comment-list"></div>
-                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
-                        <button id="comment-button" class="comment-button">Post Comment</button>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <div class="comment-section">
+            <h3>Comments</h3>
+            <div id="comment-list"></div>
+            <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+            <button id="comment-button" class="comment-button">Post Comment</button>
         </div>
     </div>
 
+
+    <!-- Scripts -->
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
-
     <script type="module">
-        import { Datastore } from 'https://cdn.skypack.dev/@google-cloud/datastore';
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-        const datastore = new Datastore({
-            projectId: 'jahotblog-login',
-        });
+        const firebaseConfig = {
+            apiKey: "Your-API-Key",
+            authDomain: "Your-Auth-Domain",
+            projectId: "Your-Project-ID",
+            storageBucket: "Your-Storage-Bucket",
+            messagingSenderId: "Your-Sender-ID",
+            appId: "Your-App-ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         let currentUser = null;
 
-        // Assuming user authentication is done elsewhere and you have the user object
-        function initUser() {
-            // Placeholder function for setting up user authentication
-            currentUser = { 
-                displayName: "User Name", 
-                photoURL: "path/to/photo.jpg" 
-            };
-            document.getElementById('comment-input').disabled = false;
-            document.getElementById('comment-button').disabled = false;
-        }
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('comment-input').disabled = false;
+                document.getElementById('comment-button').disabled = false;
+            } else {
+                currentUser = null;
+                document.getElementById('comment-input').disabled = true;
+                document.getElementById('comment-button').disabled = true;
+            }
+        });
 
-        async function fetchComments() {
-            const query = datastore.createQuery('Comment').order('timestamp', { descending: false });
-            const [comments] = await datastore.runQuery(query);
-            renderComments(comments);
-        }
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                try {
+                    await addDoc(collection(db, 'comments'), {
+                        text: commentText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date()
+                    });
+                    document.getElementById('comment-input').value = '';
+                    loadComments();
+                } catch (error) {
+                    console.error("Error adding comment: ", error);
+                }
+            }
+        });
 
-        function renderComments(comments) {
+        async function loadComments() {
+            const commentsRef = collection(db, 'comments');
+            const q = query(commentsRef);
+            const querySnapshot = await getDocs(q);
             const commentList = document.getElementById('comment-list');
             commentList.innerHTML = '';
 
-            comments.forEach(comment => {
-                const repliesHtml = comment.replies ? comment.replies.map(reply => `
-                    <div class="comment reply-section">
-                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${reply.userName}</span>
-                            <p class="comment-text">${reply.text}</p>
-                        </div>
-                    </div>
-                `).join('') : '';
-
+            querySnapshot.forEach((doc) => {
+                const comment = doc.data();
                 commentList.innerHTML += `
                     <div class="comment">
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${comment.userName}</span>
                             <p class="comment-text">${comment.text}</p>
-                            <button class="reply-button" data-id="${comment[datastore.KEY].id}">Reply</button>
-                            ${repliesHtml}
                         </div>
                     </div>
                 `;
             });
-
-            document.querySelectorAll('.reply-button').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const replyText = prompt('Enter your reply:');
-                    if (replyText && currentUser) {
-                        const commentId = button.getAttribute('data-id');
-                        await addReply(commentId, replyText);
-                    }
-                });
-            });
         }
 
-        async function postComment() {
-            const commentText = document.getElementById('comment-input').value;
-            if (commentText && currentUser) {
-                const key = datastore.key('Comment');
-                const comment = {
-                    key,
-                    data: {
-                        text: commentText,
-                        userName: currentUser.displayName,
-                        userProfilePic: currentUser.photoURL,
-                        timestamp: new Date(),
-                        replies: []
-                    }
-                };
-                await datastore.save(comment);
-                document.getElementById('comment-input').value = '';
-                fetchComments();
-            }
-        }
-
-        async function addReply(commentId, replyText) {
-            const commentKey = datastore.key(['Comment', parseInt(commentId)]);
-            const [comment] = await datastore.get(commentKey);
-
-            comment.replies = comment.replies || [];
-            comment.replies.push({
-                text: replyText,
-                userName: currentUser.displayName,
-                userProfilePic: currentUser.photoURL,
-                timestamp: new Date()
-            });
-
-            await datastore.save({
-                key: commentKey,
-                data: comment
-            });
-            fetchComments();
-        }
-
-        document.getElementById('comment-button').addEventListener('click', postComment);
-
-        // Initialize the user and fetch comments on page load
-        initUser();
-        fetchComments();
+        loadComments();
     </script>
 </body>
 </html>
