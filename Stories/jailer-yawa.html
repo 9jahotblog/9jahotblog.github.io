@@ -126,24 +126,31 @@
                 currentUser = user;
                 document.getElementById('comment-input').disabled = false;
                 document.getElementById('comment-button').disabled = false;
+                console.log("User is signed in: ", user.displayName);
             } else {
                 currentUser = null;
                 document.getElementById('comment-input').disabled = true;
                 document.getElementById('comment-button').disabled = true;
+                console.log("No user is signed in.");
             }
         });
 
         document.getElementById('comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
             if (commentText && currentUser) {
-                await addDoc(collection(db, 'comments'), {
-                    text: commentText,
-                    userName: currentUser.displayName,
-                    userProfilePic: currentUser.photoURL,
-                    timestamp: new Date(),
-                    replies: []
-                });
-                document.getElementById('comment-input').value = '';
+                try {
+                    await addDoc(collection(db, 'comments'), {
+                        text: commentText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date(),
+                        replies: []
+                    });
+                    document.getElementById('comment-input').value = '';
+                    console.log("Comment added successfully.");
+                } catch (error) {
+                    console.error("Error adding comment: ", error);
+                }
             }
         });
 
@@ -151,6 +158,10 @@
         const q = query(collection(db, 'comments'));
         onSnapshot(q, (snapshot) => {
             commentList.innerHTML = '';
+            if (snapshot.empty) {
+                console.log("No comments found.");
+                return;
+            }
             snapshot.forEach((doc) => {
                 const comment = doc.data();
                 const commentId = doc.id;
@@ -183,17 +194,24 @@
                     if (replyText && currentUser) {
                         const commentId = button.getAttribute('data-id');
                         const commentRef = doc(db, 'comments', commentId);
-                        await updateDoc(commentRef, {
-                            replies: arrayUnion({
-                                text: replyText,
-                                userName: currentUser.displayName,
-                                userProfilePic: currentUser.photoURL,
-                                timestamp: new Date()
-                            })
-                        });
+                        try {
+                            await updateDoc(commentRef, {
+                                replies: arrayUnion({
+                                    text: replyText,
+                                    userName: currentUser.displayName,
+                                    userProfilePic: currentUser.photoURL,
+                                    timestamp: new Date()
+                                })
+                            });
+                            console.log("Reply added successfully.");
+                        } catch (error) {
+                            console.error("Error adding reply: ", error);
+                        }
                     }
                 });
             });
+        }, (error) => {
+            console.error("Error fetching comments: ", error);
         });
     </script>
 </body>
