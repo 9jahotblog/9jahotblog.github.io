@@ -1,163 +1,162 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comment Section with Firebase</title>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js"></script>
+    <title> Insert Title Here </p></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none;
         }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
+
+        .comment-section {
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .comment-box {
-            margin-bottom: 20px;
+
+        .comment-button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
         }
-        .comments {
-            margin-top: 20px;
-        }
+
         .comment {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
         }
-        .reply-button {
-            color: #007bff;
-            cursor: pointer;
-        }
-        .comment-avatar {
+
+        .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
         }
-        .comment-header {
-            display: flex;
-            align-items: center;
+
+        .comment-user {
+            font-weight: bold;
+        }
+
+        .comment-text {
+            margin: 5px 0;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h2>Comment Section</h2>
-        <div id="auth-section">
-            <button id="login" style="display: none;">Login with Google</button>
-            <button id="logout" style="display: none;">Logout</button>
-        </div>
 
-        <div id="comment-section" style="display: none;">
-            <textarea id="comment-input" class="comment-box" placeholder="Add a comment"></textarea>
-            <button id="submit-comment">Post Comment</button>
-            <div id="comments-list" class="comments"></div>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <!-- Main Content -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <!-- Blog Entry -->
+                <div class="w3-container w3-white w3-margin w3-padding-large">
+                    <header class="major">
+                        <h3>Jailer's Pen</h3>
+                        <p>Title of article...</p>
+                    </header>
+
+                    <!-- Comment Section -->
+                    <div class="comment-section">
+                        <h3>Comments</h3>
+                        <div id="comment-list"></div>
+                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+                        <button id="comment-button" class="comment-button">Post Comment</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        // Initialize Firebase
+    <!-- Scripts -->
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
             authDomain: "jahotblog-login.firebaseapp.com",
             projectId: "jahotblog-login",
             storageBucket: "jahotblog-login.appspot.com",
             messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+            databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        const loginBtn = document.getElementById('login');
-        const logoutBtn = document.getElementById('logout');
-        const commentSection = document.getElementById('comment-section');
-
-        // Handle login and logout visibility
-        function handleAuthUI(user) {
+        // Check user authentication and enable comment input
+        let currentUser = null;
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'block';
-                commentSection.style.display = 'block';
-                loadComments();
+                currentUser = user;
+                document.getElementById('comment-input').disabled = false;
+                document.getElementById('comment-button').disabled = false;
             } else {
-                loginBtn.style.display = 'block';
-                logoutBtn.style.display = 'none';
-                commentSection.style.display = 'none';
+                currentUser = null;
+                document.getElementById('comment-input').disabled = true;
+                document.getElementById('comment-button').disabled = true;
             }
-        }
-
-        // Automatically check user authentication state on page load
-        auth.onAuthStateChanged(user => {
-            handleAuthUI(user);
         });
 
-        // Login with Google
-        loginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then(result => {
-                handleAuthUI(result.user);
-            });
-        });
-
-        // Logout
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut().then(() => {
-                handleAuthUI(null);
-            });
-        });
-
-        // Post Comment
-        const commentInput = document.getElementById('comment-input');
-        const submitComment = document.getElementById('submit-comment');
-        const commentsList = document.getElementById('comments-list');
-
-        submitComment.addEventListener('click', () => {
-            const commentText = commentInput.value;
-            const user = auth.currentUser;
-
-            if (user && commentText.trim()) {
-                db.collection('comments').add({
+        // Post a comment
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                await addDoc(collection(db, 'comments'), {
                     text: commentText,
-                    user: user.displayName,
-                    userId: user.uid,
-                    userPhoto: user.photoURL,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                }).then(() => {
-                    commentInput.value = '';
-                    loadComments();
+                    userName: currentUser.displayName,
+                    userProfilePic: currentUser.photoURL,
+                    timestamp: new Date()
                 });
+                document.getElementById('comment-input').value = '';
             }
         });
 
-        // Load Comments from Firestore
-        function loadComments() {
-            db.collection('comments')
-                .orderBy('timestamp', 'desc')
-                .onSnapshot(snapshot => {
-                    commentsList.innerHTML = '';
-                    snapshot.forEach(doc => {
-                        const comment = doc.data();
-                        commentsList.innerHTML += `
-                            <div class="comment">
-                                <div class="comment-header">
-                                    <img src="${comment.userPhoto}" class="comment-avatar">
-                                    <strong>${comment.user}</strong>
-                                </div>
-                                <p>${comment.text}</p>
-                            </div>
-                        `;
-                    });
-                });
-        }
+        // Load comments
+        const commentList = document.getElementById('comment-list');
+        const q = query(collection(db, 'comments'));
+        onSnapshot(q, (snapshot) => {
+            commentList.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const comment = doc.data();
+                commentList.innerHTML += `
+                    <div class="comment">
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName}</span>
+                            <p class="comment-text">${comment.text}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        });
     </script>
 </body>
 </html>
