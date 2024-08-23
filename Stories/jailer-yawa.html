@@ -71,9 +71,7 @@
         }
     </style>
 </head>
-<body>
-<script id="dsq-count-scr" src="//9jahotblog-storybooks.disqus.com/count.js" async></script>
-</body>
+
 <body class="is-preload landing">
     <div id="page-wrapper">
         <div id="main" class="wrapper style1">
@@ -84,16 +82,9 @@
                         <p>Title of article...</p>
                     </header>
 
-                    <div class="comment-section">
-                        <h3>Comments</h3>
-                        <div id="comment-list"></div>
-                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
-                        <button id="comment-button" class="comment-button">Post Comment</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <body>
+<script id="dsq-count-scr" src="//9jahotblog-storybooks.disqus.com/count.js" async></script>
+            </body>
 
     <div id="disqus_thread"></div>
 <script>
@@ -122,117 +113,6 @@
     <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-        const firebaseConfig = {
-    apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
-    authDomain: "game-earning-website.firebaseapp.com",
-    projectId: "game-earning-website",
-    storageBucket: "game-earning-website.appspot.com",
-    messagingSenderId: "581912396287",
-    appId: "1:581912396287:web:234fa03483d71115fc67ca",
-    measurementId: "G-HD7CZZMHT7"
-  };
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        let currentUser = null;
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.getElementById('comment-input').disabled = false;
-                document.getElementById('comment-button').disabled = false;
-                console.log("User is signed in: ", user.displayName);
-            } else {
-                currentUser = null;
-                document.getElementById('comment-input').disabled = true;
-                document.getElementById('comment-button').disabled = true;
-                console.log("No user is signed in.");
-            }
-        });
-
-        document.getElementById('comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value;
-            if (commentText && currentUser) {
-                try {
-                    await addDoc(collection(db, 'comments'), {
-                        text: commentText,
-                        userName: currentUser.displayName,
-                        userProfilePic: currentUser.photoURL,
-                        timestamp: new Date(),
-                        replies: []
-                    });
-                    document.getElementById('comment-input').value = '';
-                    console.log("Comment added successfully.");
-                } catch (error) {
-                    console.error("Error adding comment: ", error);
-                }
-            }
-        });
-
-        const commentList = document.getElementById('comment-list');
-        const q = query(collection(db, 'comments'));
-        onSnapshot(q, (snapshot) => {
-            commentList.innerHTML = '';
-            if (snapshot.empty) {
-                console.log("No comments found.");
-                return;
-            }
-            snapshot.forEach((doc) => {
-                const comment = doc.data();
-                const commentId = doc.id;
-                const repliesHtml = comment.replies.map(reply => `
-                    <div class="comment reply-section">
-                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${reply.userName}</span>
-                            <p class="comment-text">${reply.text}</p>
-                        </div>
-                    </div>
-                `).join('');
-
-                commentList.innerHTML += `
-                    <div class="comment">
-                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${comment.userName}</span>
-                            <p class="comment-text">${comment.text}</p>
-                            <button class="reply-button" data-id="${commentId}">Reply</button>
-                            ${repliesHtml}
-                        </div>
-                    </div>
-                `;
-            });
-
-            document.querySelectorAll('.reply-button').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const replyText = prompt('Enter your reply:');
-                    if (replyText && currentUser) {
-                        const commentId = button.getAttribute('data-id');
-                        const commentRef = doc(db, 'comments', commentId);
-                        try {
-                            await updateDoc(commentRef, {
-                                replies: arrayUnion({
-                                    text: replyText,
-                                    userName: currentUser.displayName,
-                                    userProfilePic: currentUser.photoURL,
-                                    timestamp: new Date()
-                                })
-                            });
-                            console.log("Reply added successfully.");
-                        } catch (error) {
-                            console.error("Error adding reply: ", error);
-                        }
-                    }
-                });
-            });
-        }, (error) => {
-            console.error("Error fetching comments: ", error);
-        });
-    </script>
+    
 </body>
 </html>
