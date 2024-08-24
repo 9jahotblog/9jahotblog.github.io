@@ -5,96 +5,147 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <style>
-        .comment-section {
-            margin-top: 50px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
+
+        .comment-section {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .login-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
         .comment-input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
         }
+
         .comment-button {
             background-color: #28a745;
             color: white;
-            padding: 8px 15px;
+            padding: 10px;
             margin-top: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            display: none;
         }
+
         .comment {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
+
         .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
+            vertical-align: middle;
         }
+
         .comment-user {
             font-weight: bold;
         }
+
         .comment-text {
             margin: 5px 0;
         }
-        #login-section, #guest-section {
-            display: none;
+
+        .reply-button {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .reply-section {
+            margin-left: 50px;
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px solid #ddd;
         }
     </style>
 </head>
 
 <body>
-    <div id="auth-options">
-        <h3>Login to Comment</h3>
-        <button id="phone-login">Login with Phone</button>
-        <button id="email-login">Login with Email</button>
-        <button id="guest-mode">Continue as Guest</button>
-    </div>
-
-    <!-- Phone Number Login -->
-    <div id="login-section">
-        <h3>Enter Phone Number</h3>
-        <input type="text" id="phone-number" placeholder="Enter your phone number">
-        <button id="send-code">Send Verification Code</button>
-        <div id="recaptcha-container"></div>
-        <h3>Enter Code</h3>
-        <input type="text" id="verification-code" placeholder="Enter the verification code">
-        <button id="verify-code">Verify and Login</button>
-    </div>
-
-    <!-- Email Login -->
-    <div id="email-section">
-        <h3>Login with Email</h3>
-        <input type="text" id="email-input" placeholder="Enter your email">
-        <input type="password" id="password-input" placeholder="Enter your password">
-        <button id="email-login-button">Login</button>
-    </div>
-
-    <!-- Guest Mode -->
-    <div id="guest-section">
-        <h3>Guest Mode</h3>
-        <input type="text" id="guest-username" placeholder="Enter your username">
-        <input type="file" id="guest-image">
-        <button id="guest-submit">Submit</button>
-    </div>
-
-    <!-- Comment Section -->
-    <div class="comment-section" style="display:none;">
+    <div class="comment-section">
         <h3>Comments</h3>
         <div id="comment-list"></div>
-        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..." disabled></textarea>
-        <button id="comment-button" class="comment-button" disabled>Post Comment</button>
-        <button id="logout-button">Logout</button>
+
+        <!-- Login Buttons -->
+        <div id="login-buttons" class="login-buttons">
+            <button id="google-login">Login with Google</button>
+            <button id="email-login">Login with Email</button>
+            <button id="phone-login">Login with Phone</button>
+            <button id="guest-mode">Continue as Guest</button>
+        </div>
+
+        <!-- Email Login Section -->
+        <div id="email-section" style="display: none;">
+            <input type="text" id="email-input" placeholder="Enter your email">
+            <input type="password" id="password-input" placeholder="Enter your password">
+            <button id="email-login-button">Login</button>
+        </div>
+
+        <!-- Phone Login Section -->
+        <div id="phone-section" style="display: none;">
+            <input type="text" id="phone-number" placeholder="Enter your phone number">
+            <button id="send-code">Send Verification Code</button>
+            <div id="recaptcha-container"></div>
+            <input type="text" id="verification-code" placeholder="Enter the verification code" style="display:none;">
+            <button id="verify-code" style="display:none;">Verify and Login</button>
+        </div>
+
+        <!-- Comment Input Section -->
+        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+        <button id="comment-button" class="comment-button">Post Comment</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, signInWithPhoneNumber, signInWithEmailAndPassword, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signInAnonymously, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -114,34 +165,55 @@
 
         let currentUser = null;
 
-        // UI Handling
-        document.getElementById('phone-login').addEventListener('click', () => {
-            document.getElementById('auth-options').style.display = 'none';
-            document.getElementById('login-section').style.display = 'block';
+        // Handle Login Options
+        document.getElementById('google-login').addEventListener('click', () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Google login failed: ", error);
+                });
         });
 
         document.getElementById('email-login').addEventListener('click', () => {
-            document.getElementById('auth-options').style.display = 'none';
+            document.getElementById('login-buttons').style.display = 'none';
             document.getElementById('email-section').style.display = 'block';
         });
 
-        document.getElementById('guest-mode').addEventListener('click', () => {
-            document.getElementById('auth-options').style.display = 'none';
-            document.getElementById('guest-section').style.display = 'block';
+        document.getElementById('email-login-button').addEventListener('click', () => {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Email login failed: ", error);
+                });
         });
 
-        // Phone Number Login
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+        document.getElementById('phone-login').addEventListener('click', () => {
+            document.getElementById('login-buttons').style.display = 'none';
+            document.getElementById('phone-section').style.display = 'block';
+            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+        });
+
         document.getElementById('send-code').addEventListener('click', () => {
             const phoneNumber = document.getElementById('phone-number').value;
             const appVerifier = window.recaptchaVerifier;
             signInWithPhoneNumber(auth, phoneNumber, appVerifier)
                 .then((confirmationResult) => {
                     window.confirmationResult = confirmationResult;
-                    console.log("Code sent");
+                    document.getElementById('verification-code').style.display = 'block';
+                    document.getElementById('verify-code').style.display = 'block';
+                    console.log("Verification code sent.");
                 })
                 .catch((error) => {
-                    console.error("Error during phone login: ", error);
+                    console.error("Phone login failed: ", error);
                 });
         });
 
@@ -153,63 +225,58 @@
                     setupUI(currentUser);
                 })
                 .catch((error) => {
-                    console.error("Error verifying code: ", error);
+                    console.error("Verification failed: ", error);
                 });
         });
 
-        // Email Login
-        document.getElementById('email-login-button').addEventListener('click', () => {
-            const email = document.getElementById('email-input').value;
-            const password = document.getElementById('password-input').value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then((result) => {
-                    currentUser = result.user;
+        document.getElementById('guest-mode').addEventListener('click', async () => {
+            const guestUsername = prompt("Enter your username:");
+            const guestImageFile = await selectImage();
+            if (guestUsername && guestImageFile) {
+                try {
+                    const storageRef = ref(storage, `guestImages/${guestImageFile.name}`);
+                    await uploadBytes(storageRef, guestImageFile);
+                    const guestImageURL = await getDownloadURL(storageRef);
+
+                    currentUser = {
+                        displayName: guestUsername,
+                        photoURL: guestImageURL,
+                        isGuest: true,
+                    };
                     setupUI(currentUser);
-                })
-                .catch((error) => {
-                    console.error("Error during email login: ", error);
-                });
-        });
-
-        // Guest Mode
-        document.getElementById('guest-submit').addEventListener('click', async () => {
-            const username = document.getElementById('guest-username').value;
-            const imageFile = document.getElementById('guest-image').files[0];
-
-            if (username && imageFile) {
-                const storageRef = ref(storage, `guestImages/${imageFile.name}`);
-                await uploadBytes(storageRef, imageFile);
-                const imageUrl = await getDownloadURL(storageRef);
-
-                currentUser = {
-                    displayName: username,
-                    photoURL: imageUrl,
-                    isGuest: true
-                };
-                setupUI(currentUser);
+                } catch (error) {
+                    console.error("Guest setup failed: ", error);
+                }
             } else {
                 alert("Please provide a username and upload an image.");
             }
         });
 
-        // Setup UI after login or guest mode
+        function selectImage() {
+            return new Promise((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = () => {
+                    resolve(input.files[0]);
+                };
+                input.click();
+            });
+        }
+
         function setupUI(user) {
-            const commentSection = document.querySelector('.comment-section');
-            const loginSection = document.getElementById('login-section');
-            const guestSection = document.getElementById('guest-section');
-            const emailSection = document.getElementById('email-section');
-
-            loginSection.style.display = 'none';
-            guestSection.style.display = 'none';
-            emailSection.style.display = 'none';
-
             if (user) {
-                commentSection.style.display = 'block';
-                document.getElementById('comment-input').disabled = false;
-                document.getElementById('comment-button').disabled = false;
+                document.getElementById('login-buttons').style.display = 'none';
+                document.getElementById('email-section').style.display = 'none';
+                document.getElementById('phone-section').style.display = 'none';
+                document.getElementById('guest-section').style.display = 'none';
+                document.getElementById('comment-input').style.display = 'block';
+                document.getElementById('comment-button').style.display = 'block';
                 loadComments();
             } else {
-                commentSection.style.display = 'none';
+                document.getElementById('login-buttons').style.display = 'block';
+                document.getElementById('comment-input').style.display = 'none';
+                document.getElementById('comment-button').style.display = 'none';
             }
         }
 
@@ -235,7 +302,7 @@
             }
         });
 
-        // Load comments
+        // Load comments and listen for real-time updates
         function loadComments() {
             const commentList = document.getElementById('comment-list');
             const q = query(collection(db, 'comments'));
@@ -243,31 +310,53 @@
                 commentList.innerHTML = '';
                 snapshot.forEach((doc) => {
                     const comment = doc.data();
-                    commentList.innerHTML += `
-                        <div class="comment">
-                            <img src="${comment.userProfilePic}" alt="User Profile Pic" />
-                            <div>
-                                <span class="comment-user">${comment.userName}</span>
-                                <p class="comment-text">${comment.text}</p>
-                            </div>
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName}</span>
+                            <p class="comment-text">${comment.text}</p>
+                            <button class="reply-button" data-id="${doc.id}">Reply</button>
                         </div>
                     `;
+                    commentList.appendChild(commentElement);
+                });
+
+                // Attach reply handlers
+                document.querySelectorAll('.reply-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const commentId = button.getAttribute('data-id');
+                        handleReply(commentId);
+                    });
                 });
             });
         }
 
-        // Logout
-        document.getElementById('logout-button').addEventListener('click', () => {
-            auth.signOut().then(() => {
-                currentUser = null;
-                setupUI(null);
-                console.log("User signed out.");
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
-        });
+        // Handle replying to comments
+        async function handleReply(commentId) {
+            const replyText = prompt("Enter your reply:");
+            if (replyText && currentUser) {
+                const commentRef = doc(db, 'comments', commentId);
+                try {
+                    await updateDoc(commentRef, {
+                        replies: arrayUnion({
+                            text: replyText,
+                            userName: currentUser.displayName,
+                            userProfilePic: currentUser.photoURL,
+                            timestamp: new Date(),
+                        })
+                    });
+                    console.log("Reply added successfully.");
+                } catch (error) {
+                    console.error("Error adding reply: ", error);
+                }
+            } else {
+                console.warn("Cannot post reply: User is not authenticated or reply is empty.");
+            }
+        }
 
-        // Initialize UI based on auth state
+        // Auto login check
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
