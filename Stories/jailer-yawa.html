@@ -5,10 +5,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        /* Basic styling to integrate with your existing site */
         .comment-section {
-            margin-top: 20px;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
         }
         .comment-input, .reply-input, .auth-input {
             width: 100%;
@@ -18,7 +21,7 @@
             margin-bottom: 10px;
         }
         .comment-button, .reply-button, .auth-button {
-            background-color: #ff9800;
+            background-color: #28a745;
             color: white;
             padding: 8px 15px;
             border: none;
@@ -46,13 +49,15 @@
             font-size: 12px;
             color: #888;
         }
+        .reply-section {
+            margin-left: 50px;
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
+            display: none;
+        }
         .like-button, .helpful-button, .not-helpful-button {
             cursor: pointer;
             margin-right: 10px;
-            font-size: 18px;
-        }
-        .like-button:hover, .helpful-button:hover, .not-helpful-button:hover {
-            color: #ff9800;
         }
         .badge {
             display: inline-block;
@@ -65,43 +70,41 @@
         .admin-badge {
             background-color: #007bff;
         }
-        .country-flag {
-            width: 20px;
-            height: 15px;
-            margin-left: 5px;
-        }
-        #auth-container {
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body class="is-preload landing">
     <div id="page-wrapper">
         <div id="main" class="wrapper style1">
             <div class="container">
-                <div id="auth-container">
-                    <h4>Sign Up or Log In to Comment</h4>
-                    <input type="email" id="auth-email" placeholder="Email" class="auth-input" />
-                    <input type="password" id="auth-password" placeholder="Password" class="auth-input" />
-                    <input type="text" id="auth-username" placeholder="Username (for Sign Up)" class="auth-input" />
-                    <input type="text" id="auth-pic-url" placeholder="Profile Picture URL" class="auth-input" />
-                    <input type="text" id="auth-country" placeholder="Country (ISO code, e.g., 'ng' for Nigeria)" class="auth-input" />
-                    <button id="signup-button" class="auth-button">Sign Up</button>
-                    <button id="login-button" class="auth-button">Log In</button>
-                </div>
+                <div class="w3-container w3-white w3-margin w3-padding-large">
+                    <header class="major">
+                        <h3>Jailer's Pen</h3>
+                        <p>Title of article...</p>
+                    </header>
 
-                <div class="comment-section" style="display:none;">
-                    <h3>Comments</h3>
-                    <div id="comment-list"></div>
-                    <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
-                    <button id="comment-button" class="comment-button">Post Comment</button>
+                    <div id="auth-container">
+                        <h4>Sign Up or Log In to Comment</h4>
+                        <input type="email" id="auth-email" placeholder="Email" class="auth-input" />
+                        <input type="password" id="auth-password" placeholder="Password" class="auth-input" />
+                        <input type="text" id="auth-username" placeholder="Username (for Sign Up)" class="auth-input" />
+                        <input type="file" id="auth-pic-upload" accept="image/*" class="auth-input" />
+                        <button id="signup-button" class="auth-button">Sign Up</button>
+                        <button id="login-button" class="auth-button">Log In</button>
+                    </div>
+
+                    <div class="comment-section" style="display:none;">
+                        <h3>Comments</h3>
+                        <div id="comment-list"></div>
+                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+                        <button id="comment-button" class="comment-button">Post Comment</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
@@ -111,7 +114,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
         // Firebase configuration
         const firebaseConfig = {
@@ -126,9 +130,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         let currentUser = null;
 
+        // Handle user authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
@@ -142,13 +148,11 @@
         function displayUserDetails(user) {
             document.querySelector('.comment-section').style.display = 'block';
             document.getElementById('auth-container').style.display = 'none';
-
             document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', `
                 <div id="user-info">
                     <img src="${user.photoURL}" alt="Profile Pic" />
                     <span>${user.displayName}</span>
-                    ${user.uid === 'admin_user_id' ? '<span class="badge admin-badge">Admin</span>' : '<span class="badge">9jahotblogger</span>'}
-                    <img src="https://www.countryflags.io/${user.country}/flat/32.png" alt="${user.country}" class="country-flag">
+                    <span class="badge">New Commenter</span> <!-- Default Badge -->
                 </div>
             `);
         }
@@ -158,24 +162,20 @@
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-password').value;
             const username = document.getElementById('auth-username').value;
-            const country = document.getElementById('auth-country').value.trim().toLowerCase(); // Ensure country code is lower case
-            const picUrl = document.getElementById('auth-pic-url').value;
+            const picFile = document.getElementById('auth-pic-upload').files[0];
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 currentUser = userCredential.user;
 
-                await updateProfile(currentUser, { displayName: username, photoURL: picUrl });
+                let photoURL = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+                if (picFile) {
+                    const storageRef = ref(storage, `profile_pictures/${picFile.name}`);
+                    await uploadBytes(storageRef, picFile);
+                    photoURL = await getDownloadURL(storageRef);
+                }
 
-                await addDoc(collection(db, 'users'), {
-                    uid: currentUser.uid,
-                    username: username,
-                    email: email,
-                    country: country,
-                    joined: new Date(),
-                    photoURL: picUrl
-                });
-
+                await updateProfile(currentUser, { displayName: username, photoURL: photoURL });
                 displayUserDetails(currentUser);
             } catch (error) {
                 alert(error.message);
@@ -203,11 +203,9 @@
                 return;
             }
 
-            const articleId = 'articleId1'; // Unique identifier for the article/page
+            const articleId = 'articleId1'; // Unique identifier for the article/page, replace with dynamic ID
 
-            const userDoc = await getDocs(query(collection(db, 'users'), where("uid", "==", currentUser.uid)));
-            const userData = userDoc.docs[0].data();
-
+            // Prepare comment data
             const commentData = {
                 text: commentText,
                 userName: currentUser.displayName,
@@ -219,8 +217,7 @@
                 likes: [],
                 helpful: [],
                 notHelpful: [],
-                userLevel: '9jahotblogger', // Default level
-                country: userData.country
+                userLevel: 'New Commenter' // Default level, can be updated later
             };
 
             try {
@@ -228,14 +225,42 @@
                 document.getElementById('comment-input').value = ''; // Clear input after posting
                 console.log("Comment posted successfully.");
 
+                // Update user level after posting
+                await updateUserLevel(currentUser.uid);
+
             } catch (error) {
                 console.error("Error posting comment: ", error);
             }
         });
 
+        // Function to update user levels based on the number of comments
+        async function updateUserLevel(userId) {
+            const userCommentsQuery = query(collection(db, 'comments'), where("userId", "==", userId));
+            const userCommentsSnapshot = await getDocs(userCommentsQuery);
+            const commentCount = userCommentsSnapshot.size;
+
+            let newUserLevel;
+            if (commentCount >= 50) {
+                newUserLevel = "Platinum Commenter";
+            } else if (commentCount >= 20) {
+                newUserLevel = "Gold Commenter";
+            } else if (commentCount >= 10) {
+                newUserLevel = "Silver Commenter";
+            } else {
+                newUserLevel = "New Commenter";
+            }
+
+            // Update user level in all their comments
+            userCommentsSnapshot.forEach(async (doc) => {
+                await updateDoc(doc.ref, { userLevel: newUserLevel });
+            });
+
+            console.log(`User ${userId} is now a ${newUserLevel}`);
+        }
+
         // Real-time listener for comments
         const commentList = document.getElementById('comment-list');
-        const articleId = 'articleId1'; // Unique identifier for the article/page
+        const articleId = 'articleId1'; // This should be dynamically set based on the page
         const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
 
         onSnapshot(q, (snapshot) => {
@@ -266,15 +291,14 @@
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${comment.userName} 
-                                <span class="badge">${comment.userLevel}</span>
-                                ${comment.userId === 'admin_user_id' ? '<span class="badge admin-badge">Admin</span>' : ''}
+                                ${comment.userLevel ? `<span class="badge">${comment.userLevel}</span>` : ''}
+                                ${comment.userId === 'admin_user_id' ? '<span class="badge admin-badge">Admin Certified</span>' : ''}
                             </span>
-                            <img src="https://www.countryflags.io/${comment.country}/flat/32.png" alt="${comment.country}" class="country-flag">
                             <p class="comment-text">${comment.text}</p>
                             <span class="comment-date">${commentDate}</span>
-                            <button class="like-button" data-id="${commentId}">👍 (${comment.likes.length})</button>
-                            <button class="helpful-button" data-id="${commentId}">👏 (${comment.helpful.length})</button>
-                            <button class="not-helpful-button" data-id="${commentId}">🖕 (${comment.notHelpful.length})</button>
+                            <button class="like-button" data-id="${commentId}">Like (${comment.likes.length})</button>
+                            <button class="helpful-button" data-id="${commentId}">Helpful (${comment.helpful.length})</button>
+                            <button class="not-helpful-button" data-id="${commentId}">Not Helpful (${comment.notHelpful.length})</button>
                             <button class="reply-button" data-id="${commentId}">Reply</button>
                             <div class="reply-box" id="reply-box-${commentId}" style="display:none;">
                                 <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
@@ -288,6 +312,7 @@
                 commentList.insertAdjacentHTML('beforeend', commentHtml);
             });
 
+            // Add event listeners for like, helpful, not helpful, and reply buttons
             addCommentListeners();
         });
 
@@ -362,8 +387,7 @@
                         text: replyText,
                         userName: currentUser.displayName,
                         userProfilePic: currentUser.photoURL,
-                        timestamp: new Date(),
-                        country: (await getDocs(query(collection(db, 'users'), where("uid", "==", currentUser.uid)))).docs[0].data().country
+                        timestamp: new Date()
                     };
 
                     try {
