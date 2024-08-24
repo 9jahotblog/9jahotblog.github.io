@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en">
+
 <head>
     <title>Comment Section</title>
     <meta charset="utf-8" />
@@ -13,14 +14,18 @@
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
-        .comment-input, .reply-input {
+
+        .comment-input,
+        .reply-input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             margin-bottom: 10px;
         }
-        .comment-button, .reply-button {
+
+        .comment-button,
+        .reply-button {
             background-color: #28a745;
             color: white;
             padding: 8px 15px;
@@ -28,36 +33,46 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         .comment {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
+
         .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
         }
+
         .comment-user {
             font-weight: bold;
         }
+
         .comment-text {
             margin: 5px 0;
         }
+
         .comment-metadata {
             font-size: 12px;
             color: #888;
         }
+
         .reply-section {
             margin-left: 50px;
             border-left: 1px solid #ddd;
             padding-left: 20px;
             display: none;
         }
-        .like-button, .helpful-button, .not-helpful-button {
+
+        .like-button,
+        .helpful-button,
+        .not-helpful-button {
             cursor: pointer;
             margin-right: 10px;
         }
+
         .badge {
             display: inline-block;
             padding: 5px;
@@ -66,11 +81,13 @@
             margin-left: 10px;
             font-size: 12px;
         }
+
         .admin-badge {
             background-color: #007bff;
         }
     </style>
 </head>
+
 <body class="is-preload landing">
     <div id="page-wrapper">
         <div id="main" class="wrapper style1">
@@ -99,24 +116,22 @@
     <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion, getDocs } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
-
         // Your Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA",
-    authDomain: "game-earning-website.firebaseapp.com",
-    projectId: "game-earning-website",
-    storageBucket: "game-earning-website.appspot.com",
-    messagingSenderId: "581912396287",
-    appId: "1:581912396287:web:234fa03483d71115fc67ca"
-};
-        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA",
+            authDomain: "game-earning-website.firebaseapp.com",
+            projectId: "game-earning-website",
+            storageBucket: "game-earning-website.appspot.com",
+            messagingSenderId: "581912396287",
+            appId: "1:581912396287:web:234fa03483d71115fc67ca"
+        };
+
         // Firebase initialization
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -183,7 +198,7 @@ const firebaseConfig = {
             document.getElementById('comment-button').style.display = 'block';
 
             // Add event listener for posting comments
-           document.getElementById('comment-button').addEventListener('click', postComment);
+            document.getElementById('comment-button').addEventListener('click', postComment);
         }
 
         async function postComment() {
@@ -193,10 +208,8 @@ const firebaseConfig = {
                 return;
             }
 
-            // Unique identifier for the article/page
             const articleId = 'articleId1'; // This should be dynamically set based on the page
 
-            // Prepare comment data
             const commentData = {
                 text: commentText,
                 userName: currentUser.displayName,
@@ -208,25 +221,43 @@ const firebaseConfig = {
                 likes: 0,
                 helpful: 0,
                 notHelpful: 0,
-                userLevel: determineUserLevel(currentUser.uid) // Function to determine user level
+                userLevel: 'New Commenter' // Default level
             };
-
             try {
-                await addDoc(collection(db, 'comments'), commentData);
+                const commentRef = await addDoc(collection(db, 'comments'), commentData);
                 document.getElementById('comment-input').value = ''; // Clear input after posting
                 console.log("Comment posted successfully.");
+
+                // Update user level after posting
+                await updateUserLevel(currentUser.uid);
             } catch (error) {
                 console.error("Error posting comment: ", error);
             }
         }
 
-        function determineUserLevel(userId) {
-            // Example function to determine user level based on number of comments
-            // You would query Firestore to count the user's comments
-            let userLevel = 'New Commenter'; // Default level
-            // Example: if the user has more than 5 comments, return a different level
-            // You would implement your logic here
-            return userLevel;
+        // Function to determine user level based on their comment count
+        async function updateUserLevel(userId) {
+            const userCommentsQuery = query(collection(db, 'comments'), where("userId", "==", userId));
+            const userCommentsSnapshot = await getDocs(userCommentsQuery);
+            const commentCount = userCommentsSnapshot.size;
+
+            let newUserLevel;
+            if (commentCount >= 50) {
+                newUserLevel = "Platinum Commenter";
+            } else if (commentCount >= 20) {
+                newUserLevel = "Gold Commenter";
+            } else if (commentCount >= 10) {
+                newUserLevel = "Silver Commenter";
+            } else {
+                newUserLevel = "New Commenter";
+            }
+
+            // Update user level in all their comments
+            userCommentsSnapshot.forEach(async (doc) => {
+                await updateDoc(doc.ref, { userLevel: newUserLevel });
+            });
+
+            console.log(`User ${userId} is now a ${newUserLevel}`);
         }
 
         // Real-time listener for comments
@@ -372,70 +403,6 @@ const firebaseConfig = {
                 });
             });
         }
-
-        // Example of how you can track and update user levels
-        async function updateUserLevel(userId) {
-            const userCommentsQuery = query(collection(db, 'comments'), where("userId", "==", userId));
-            const userCommentsSnapshot = await getDocs(userCommentsQuery);
-            const commentCount = userCommentsSnapshot.size;
-
-            let newUserLevel;
-            if (commentCount >= 50) {
-                newUserLevel = "Platinum Commenter";
-            } else if (commentCount >= 20) {
-                newUserLevel = "Gold Commenter";
-            } else if (commentCount >= 10) {
-                newUserLevel = "Silver Commenter";
-            } else {
-                newUserLevel = "New Commenter";
-            }
-
-            // Update user level in all their comments
-            userCommentsSnapshot.forEach(async (doc) => {
-                await updateDoc(doc.ref, { userLevel: newUserLevel });
-            });
-
-            console.log(`User ${userId} is now a ${newUserLevel}`);
-        }
-
-        // Update user level for the current user after posting a comment
-        async function postComment() {
-            const commentText = document.getElementById('comment-input').value.trim();
-            if (!commentText || !currentUser) {
-                alert('Please write a comment and ensure you are logged in.');
-                return;
-            }
-
-            const articleId = 'articleId1'; // This should be dynamically set based on the page
-
-            const commentData = {
-                text: commentText,
-                userName: currentUser.displayName,
-                userProfilePic: currentUser.photoURL,
-                userId: currentUser.uid,
-                timestamp: new Date(),
-                articleId: articleId,
-                replies: [],
-                likes: 0,
-                helpful: 0,
-                notHelpful: 0,
-                userLevel: 'New Commenter' // Default level
-            };
-
-            try {
-                const commentRef = await addDoc(collection(db, 'comments'), commentData);
-                document.getElementById('comment-input').value = ''; // Clear input after posting
-                console.log("Comment posted successfully.");
-
-                // Update user level after posting
-                await updateUserLevel(currentUser.uid);
-
-            } catch (error) {
-                console.error("Error posting comment: ", error);
-            }
-        }
     </script>
 </body>
 </html>
-
-                        
