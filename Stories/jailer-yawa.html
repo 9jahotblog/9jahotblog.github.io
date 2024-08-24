@@ -4,11 +4,8 @@
     <title>Comment Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        /* Add your CSS styling here for comments, badges, and user interactions */
         .comment-section {
             margin-top: 50px;
             border-top: 1px solid #ddd;
@@ -58,13 +55,13 @@
         <button id="comment-button" class="comment-button">Post Comment</button>
     </div>
 
-    <!-- Firebase -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"></script>
     <script>
         // Firebase configuration
-        const firebaseConfig = {
+        const commentsFirebaseConfig = {
             apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
             authDomain: "game-earning-website.firebaseapp.com",
             projectId: "game-earning-website",
@@ -78,119 +75,132 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
-    </script>
 
-    <script>
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+        // Comment functionality
+        let currentUser = null;
 
-    let currentUser = null;
+        // Function to handle user authentication
+        function authenticateUser() {
+            // Prompt user for email and password
+            const email = prompt("Enter your email:");
+            const password = prompt("Enter your password:");
 
-    // Handle authentication state changes
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            currentUser = user;
-            document.getElementById('comment-input').disabled = false;
-            document.getElementById('comment-button').disabled = false;
-            loadComments();
-        } else {
-            currentUser = null;
-            document.getElementById('comment-input').disabled = true;
-            document.getElementById('comment-button').disabled = true;
-        }
-    });
-
-    // Function to load comments for the current page
-    function loadComments() {
-        const articleId = "articleId1";  // Use a unique ID for each page/article
-        db.collection('comments').where('articleId', '==', articleId).onSnapshot(snapshot => {
-            const commentList = document.getElementById('comment-list');
-            commentList.innerHTML = '';  // Clear the list first
-            snapshot.forEach(doc => {
-                const comment = doc.data();
-                commentList.innerHTML += renderComment(doc.id, comment);
-            });
-            setupCommentInteractivity();
-        });
-    }
-
-    // Function to render a comment
-    function renderComment(id, comment) {
-        let badge = getBadge(comment.userCommentsCount);
-        let verified = comment.email === "Koladhino@gmail.com" ? `<span class="badge">Admin Certified</span>` : '';
-        return `
-            <div class="comment" id="${id}">
-                <img src="${comment.userProfilePic || 'default-pic-url'}" alt="User Profile Pic" />
-                <div>
-                    <span class="comment-user">${comment.userName}${badge}${verified}</span>
-                    <p class="comment-text">${comment.text}</p>
-                    <button class="like-button" data-id="${id}">Like (${comment.likes || 0})</button>
-                    <button class="reply-button" data-id="${id}">Reply</button>
-                </div>
-            </div>
-        `;
-    }
-
-    // Function to get user badge based on comments count
-    function getBadge(commentsCount) {
-        if (commentsCount >= 10) return `<span class="badge">Platinum Commenter</span>`;
-        if (commentsCount >= 5) return `<span class="badge">Expert</span>`;
-        if (commentsCount >= 1) return `<span class="badge">New Commenter</span>`;
-        return `<span class="badge">Beginner</span>`;
-    }
-
-    // Post comment button click
-    document.getElementById('comment-button').addEventListener('click', async () => {
-        const commentText = document.getElementById('comment-input').value;
-        if (commentText && currentUser) {
-            try {
-                await db.collection('comments').add({
-                    articleId: "articleId1",  // Use unique ID per page
-                    text: commentText,
-                    userName: currentUser.displayName,
-                    userProfilePic: currentUser.photoURL,
-                    email: currentUser.email,
-                    timestamp: new Date(),
-                    likes: 0,
-                    replies: [],
-                    userCommentsCount: 0 // Placeholder for now, update after adding
-                });
-                document.getElementById('comment-input').value = '';
-                console.log("Comment added successfully.");
-            } catch (error) {
-                console.error("Error adding comment: ", error);
-            }
-        }
-    });
-
-    // Setup interactivity for comments (like and reply buttons)
-    function setupCommentInteractivity() {
-        document.querySelectorAll('.like-button').forEach(button => {
-            button.addEventListener('click', async () => {
-                const commentId = button.getAttribute('data-id');
-                const commentRef = db.collection('comments').doc(commentId);
-                try {
-                    await db.runTransaction(async (transaction) => {
-                        const commentDoc = await transaction.get(commentRef);
-                        if (!commentDoc.exists) {
-                            throw "Document does not exist!";
-                        }
-                        const newLikes = (commentDoc.data().likes || 0) + 1;
-                        transaction.update(commentRef, { likes: newLikes });
+            // Sign in or create a new user
+            auth.signInWithEmailAndPassword(email, password).then((userCredential) => {
+                currentUser = userCredential.user;
+                loadComments();
+                enableCommenting();
+                console.log("User signed in: ", currentUser.displayName);
+            }).catch((error) => {
+                if (error.code === 'auth/user-not-found') {
+                    auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
+                        currentUser = userCredential.user;
+                        loadComments();
+                        enableCommenting();
+                        console.log("User account created and signed in.");
+                    }).catch((error) => {
+                        console.error("Error creating user: ", error.message);
                     });
-                    console.log("Like added successfully.");
-                } catch (error) {
-                    console.error("Error adding like: ", error);
+                } else {
+                    console.error("Error signing in: ", error.message);
                 }
             });
+        }
+
+        // Function to enable commenting if user is authenticated
+        function enableCommenting() {
+            document.getElementById('comment-input').disabled = false;
+            document.getElementById('comment-button').disabled = false;
+        }
+
+        // Function to load comments for a specific article
+        function loadComments() {
+            const articleId = "articleId1"; // This should be dynamically set for each page
+            db.collection('comments').where('articleId', '==', articleId).onSnapshot((snapshot) => {
+                const commentList = document.getElementById('comment-list');
+                commentList.innerHTML = '';  // Clear existing comments
+                snapshot.forEach((doc) => {
+                    const comment = doc.data();
+                    commentList.innerHTML += renderComment(doc.id, comment);
+                });
+                setupCommentInteractivity();
+            });
+        }
+
+        // Function to render a comment
+        function renderComment(id, comment) {
+            return `
+                <div class="comment" id="${id}">
+                    <img src="${comment.userProfilePic || 'default-pic-url'}" alt="User Profile Pic" />
+                    <div>
+                        <span class="comment-user">${comment.userName}</span>
+                        <span class="badge">${getBadge(comment.userCommentsCount)}</span>
+                        <p class="comment-text">${comment.text}</p>
+                        <button class="like-button" data-id="${id}">Like (${comment.likes || 0})</button>
+                        <button class="reply-button" data-id="${id}">Reply</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to determine user badge based on comments count
+        function getBadge(commentsCount) {
+            if (commentsCount >= 10) return 'Platinum Commenter';
+            if (commentsCount >= 5) return 'Expert';
+            if (commentsCount >= 1) return 'New Commenter';
+            return 'Beginner';
+        }
+
+        // Post a new comment
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                try {
+                    const newComment = {
+                        articleId: "articleId1",  // This should be dynamically set for each page
+                        text: commentText,
+                        userName: currentUser.displayName || currentUser.email,
+                        userProfilePic: currentUser.photoURL || '',
+                        email: currentUser.email,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        likes: 0,
+                        replies: [],
+                        userCommentsCount: 0 // Placeholder, update this after posting
+                    };
+                    await db.collection('comments').add(newComment);
+                    document.getElementById('comment-input').value = '';
+                    updateUserCommentData(currentUser.uid);
+                    console.log("Comment added successfully.");
+                } catch (error) {
+                    console.error("Error adding comment: ", error);
+                }
+            }
         });
 
-        document.querySelectorAll('.reply-button').forEach(button => {
-            button.addEventListener('click', async () => {
-                const replyText = prompt('Enter your reply:');
-                if (replyText && currentUser) {
+        // Update user's comment data after posting
+        async function updateUserCommentData(userId) {
+            const userRef = db.collection('users').doc(userId);
+            try {
+                await db.runTransaction(async (transaction) => {
+                    const userDoc = await transaction.get(userRef);
+                    if (!userDoc.exists) {
+                        transaction.set(userRef, {
+                            userCommentsCount: 1
+                        });
+                    } else {
+                        const newCommentsCount = userDoc.data().userCommentsCount + 1;
+                        transaction.update(userRef, { userCommentsCount: newCommentsCount });
+                    }
+                });
+            } catch (error) {
+                console.error("Error updating user data: ", error);
+            }
+        }
+
+        // Setup interactivity for like and reply buttons
+        function setupCommentInteractivity() {
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', async () => {
                     const commentId = button.getAttribute('data-id');
                     const commentRef = db.collection('comments').doc(commentId);
                     try {
@@ -199,68 +209,92 @@
                             if (!commentDoc.exists) {
                                 throw "Document does not exist!";
                             }
-                            transaction.update(commentRef, {
-                                replies: firebase.firestore.FieldValue.arrayUnion({
-                                    text: replyText,
-                                    userName: currentUser.displayName,
-                                    userProfilePic: currentUser.photoURL,
-                                    timestamp: new Date()
+                            const newLikes = (commentDoc.data().likes || 0) + 1;
+                            transaction.update(commentRef, { likes: newLikes });
+                        });
+                        console.log("Like added successfully.");
+                    } catch (error) {
+                        console.error("Error adding like: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const replyText = prompt('Enter your reply:');
+                    if (replyText && currentUser) {
+                        const commentId = button.getAttribute('data-id');
+                        const commentRef = db.collection('comments').doc(commentId);
+                        try {
+                            await db.runTransaction(async (transaction) => {
+                                const commentDoc = await transaction.get(commentRef);
+                                if (!commentDoc.exists) {
+                                    throw "Document does not exist!";
+                                }
+                                // Add the reply to the existing replies array
+                                transaction.update(commentRef, {
+                                    replies: firebase.firestore.FieldValue.arrayUnion({
+                                        text: replyText,
+                                        userName: currentUser.displayName || currentUser.email,
+                                        userProfilePic: currentUser.photoURL || 'default-pic-url',
+                                        timestamp: new Date()
                                     })
+                                });
                             });
                             console.log("Reply added successfully.");
-                        });
-                    } catch (error) {
-                        console.error("Error adding reply: ", error);
+                        } catch (error) {
+                            console.error("Error adding reply: ", error);
+                        }
                     }
-                }
+                });
             });
-        });
-    }
+        }
 
-    // Function to create or update user data when they post a comment
-    async function updateUserCommentData(userId) {
-        const userRef = db.collection('users').doc(userId);
-        try {
-            await db.runTransaction(async (transaction) => {
-                const userDoc = await transaction.get(userRef);
-                if (!userDoc.exists) {
-                    transaction.set(userRef, {
-                        userCommentsCount: 1
-                    });
+        // Function to handle user authentication when the page loads
+        window.onload = function() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    currentUser = user;
+                    enableCommenting();
+                    loadComments();
+                    console.log("User is signed in: ", user.displayName);
                 } else {
-                    const newCommentsCount = userDoc.data().userCommentsCount + 1;
-                    transaction.update(userRef, { userCommentsCount: newCommentsCount });
+                    currentUser = null;
+                    authenticateUser();
                 }
             });
-        } catch (error) {
-            console.error("Error updating user data: ", error);
-        }
-    }
+        };
 
-    // Handle user login/signup
-    function handleAuth() {
-        // Show login/signup form
-        // On successful login, call loadComments() again
-        const email = prompt("Enter your email:");
-        const password = prompt("Enter your password:");
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                console.log("User signed in");
-                loadComments();
-            })
-            .catch((error) => {
-                console.error("Error signing in: ", error);
+        // Function to handle user badges and other profile details
+        async function setupUserProfile(user) {
+            const userRef = db.collection('users').doc(user.uid);
+            const userProfile = await userRef.get();
+
+            if (!userProfile.exists) {
+                // If user profile does not exist, create it
+                await userRef.set({
+                    displayName: user.displayName || user.email,
+                    photoURL: user.photoURL || 'default-pic-url',
+                    userCommentsCount: 0,
+                    country: 'Unknown',  // Example, you might want to gather this info from the user
+                    dateJoined: new Date()
+                });
+            } else {
+                // User profile exists, load data if necessary
+                const userData = userProfile.data();
+                console.log("User Profile:", userData);
+            }
+        }
+
+        // Sign out the current user
+        function signOut() {
+            auth.signOut().then(() => {
+                console.log("User signed out.");
+                location.reload();  // Reload the page to reset UI and data
+            }).catch((error) => {
+                console.error("Error signing out: ", error);
             });
-    }
-
-    // Initialize the comment section on page load
-    window.onload = function() {
-        if (!currentUser) {
-            handleAuth();
-        } else {
-            loadComments();
         }
-    };
-</script>
+    </script>
 </body>
 </html>
