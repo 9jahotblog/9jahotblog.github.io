@@ -1,25 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Insert Title Here</title>
+    <title>Comments Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
         .comment-section {
             margin-top: 50px;
             border-top: 1px solid #ddd;
@@ -55,70 +40,102 @@
         .comment-text {
             margin: 5px 0;
         }
-        .reply-button {
-            background-color: #007bff;
-            color: white;
-            padding: 5px 10px;
-            margin-top: 5px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-        }
-        .reply-section {
-            margin-left: 50px;
-            border-left: 1px solid #ddd;
-            padding-left: 20px;
-        }
     </style>
 </head>
 
-<body class="is-preload landing">
-    <div id="page-wrapper">
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                <div class="w3-container w3-white w3-margin w3-padding-large">
-                    <header class="major">
-                        <h3>Jailer's Pen</h3>
-                        <p>Title of article...</p>
-                    </header>
+<body>
+    <div class="comment-section">
+        <h3>Comments</h3>
+        <div id="comment-list"></div>
+        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..." disabled></textarea>
+        <button id="comment-button" class="comment-button" disabled>Post Comment</button>
+    </div>
 
-                    <!-- begin wwww.htmlcommentbox.com -->
- <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Form</a> is loading comments...</div>
- <link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
- <script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} (function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%241MPyEiYzIvYz849k%2Fag3C1"+"&opts=16798&num=10&ts=1724418741562");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
-<!-- end www.htmlcommentbox.com -->
+    <script type="module">
+        // Import Firebase SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-            <body>
-<script id="dsq-count-scr" src="//9jahotblog-storybooks.disqus.com/count.js" async></script>
-            </body>
+        // Old project config (for Authentication)
+        const oldFirebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+        };
 
-    <div id="disqus_thread"></div>
-<script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    
-    var disqus_config = function () {
-    this.page.url = 'https://9jahotblog.github.io/Stories/jailer-yawa.html';  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = 'test1'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    
-    (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://9jahotblog-storybooks.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-</script>
-    
-    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
-    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
-    
+        // New project config (for Firestore)
+        const newFirebaseConfig = {
+            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
+            authDomain: "game-earning-website.firebaseapp.com",
+            projectId: "game-earning-website",
+            storageBucket: "game-earning-website.appspot.com",
+            messagingSenderId: "581912396287",
+            appId: "1:581912396287:web:234fa03483d71115fc67ca",
+            measurementId: "G-HD7CZZMHT7"
+        };
+
+        // Initialize both Firebase apps
+        const oldApp = initializeApp(oldFirebaseConfig, "authApp");
+        const newApp = initializeApp(newFirebaseConfig, "dbApp");
+
+        // Authentication using the old project
+        const auth = getAuth(oldApp);
+        
+        // Firestore using the new project
+        const db = getFirestore(newApp);
+
+        // Handle user authentication
+        let currentUser = null;
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('comment-input').disabled = false;
+                document.getElementById('comment-button').disabled = false;
+                console.log("User is signed in: ", user.displayName);
+            } else {
+                currentUser = null;
+                document.getElementById('comment-input').disabled = true;
+                document.getElementById('comment-button').disabled = true;
+                console.log("No user is signed in.");
+            }
+        });
+
+        // Post a comment
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                await addDoc(collection(db, 'comments'), {
+                    text: commentText,
+                    userName: currentUser.displayName,
+                    userProfilePic: currentUser.photoURL,
+                    timestamp: new Date()
+                });
+                document.getElementById('comment-input').value = '';
+            }
+        });
+
+        // Load comments
+        const commentList = document.getElementById('comment-list');
+        const q = query(collection(db, 'comments'));
+        onSnapshot(q, (snapshot) => {
+            commentList.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const comment = doc.data();
+                commentList.innerHTML += `
+                    <div class="comment">
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName}</span>
+                            <p class="comment-text">${comment.text}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
 </body>
 </html>
