@@ -13,17 +13,17 @@
             border-top: 1px solid #ddd;
             padding-top: 20px;
         }
-        .comment-input {
+        .comment-input, .reply-input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            margin-bottom: 10px;
         }
-        .comment-button, .guest-comment-button {
+        .comment-button, .reply-button {
             background-color: #28a745;
             color: white;
             padding: 8px 15px;
-            margin-top: 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -44,30 +44,33 @@
         .comment-text {
             margin: 5px 0;
         }
-        .reply-button {
-            background-color: #007bff;
-            color: white;
-            padding: 5px 10px;
-            margin-top: 5px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+        .comment-metadata {
+            font-size: 12px;
+            color: #888;
         }
         .reply-section {
             margin-left: 50px;
             border-left: 1px solid #ddd;
             padding-left: 20px;
-        }
-        .guest-comment-input {
-            margin-top: 10px;
-        }
-        .reply-box {
             display: none;
-            margin-top: 10px;
+        }
+        .like-button, .helpful-button, .not-helpful-button {
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px;
+            background-color: #ffc107;
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        .admin-badge {
+            background-color: #007bff;
         }
     </style>
 </head>
-
 <body class="is-preload landing">
     <div id="page-wrapper">
         <div id="main" class="wrapper style1">
@@ -81,19 +84,8 @@
                     <div class="comment-section">
                         <h3>Comments</h3>
                         <div id="comment-list"></div>
-                        
-                        <!-- Authenticated User Comment Section -->
                         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
                         <button id="comment-button" class="comment-button">Post Comment</button>
-
-                        <!-- Guest Comment Section -->
-                        <div class="guest-comment-input">
-                            <h4>Guest Comment</h4>
-                            <input type="text" id="guest-username" placeholder="Enter your name" class="comment-input" />
-                            <input type="email" id="guest-email" placeholder="Enter your email" class="comment-input" />
-                            <input type="file" id="guest-pic-upload" accept="image/*" class="comment-input" />
-                            <button id="guest-comment-button" class="guest-comment-button">Post as Guest</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -110,134 +102,150 @@
     <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
-        // Initialize Firebase for authentication (Old project)
-        const firebaseConfigOld = {
-            apiKey: "AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-        const appOld = initializeApp(firebaseConfigOld, "oldApp");
-        const auth = getAuth(appOld);
 
-        // Initialize Firebase for comments (New project)
-        const firebaseConfigNew = {
-            apiKey: "AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA",
-            authDomain: "game-earning-website.firebaseapp.com",
-            projectId: "game-earning-website",
-            storageBucket: "game-earning-website.appspot.com",
-            messagingSenderId: "581912396287",
-            appId: "1:581912396287:web:234fa03483d71115fc67ca"
-        };
-        const appNew = initializeApp(firebaseConfigNew, "newApp");
-        const db = getFirestore(appNew);
-        const storage = getStorage(appNew);
+        // Your Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA",
+    authDomain: "game-earning-website.firebaseapp.com",
+    projectId: "game-earning-website",
+    storageBucket: "game-earning-website.appspot.com",
+    messagingSenderId: "581912396287",
+    appId: "1:581912396287:web:234fa03483d71115fc67ca"
+};
+        
+        // Firebase initialization
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
         let currentUser = null;
+
+        // Check user authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                document.getElementById('comment-input').disabled = false;
-                document.getElementById('comment-button').disabled = false;
-                console.log("User is signed in: ", user.displayName);
+                displayUserDetails(user);
             } else {
-                currentUser = null;
-                console.log("No user is signed in.");
+                showLoginSignupForm();
             }
         });
 
-        // Function to upload profile picture and get URL
-        async function uploadProfilePicture(file) {
-            const storageRef = ref(storage, `profile_pictures/${file.name}`);
-            await uploadBytes(storageRef, file);
-            return getDownloadURL(storageRef);
+        function showLoginSignupForm() {
+            const loginSignupHTML = `
+                <div id="auth-container">
+                    <h4>Sign up or Log in to comment</h4>
+                    <input type="email" id="auth-email" placeholder="Email" class="comment-input" />
+                    <input type="password" id="auth-password" placeholder="Password" class="comment-input" />
+                    <button id="signup-button" class="comment-button">Sign Up</button>
+                    <button id="login-button" class="comment-button">Log In</button>
+                </div>
+            `;
+            document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', loginSignupHTML);
+
+            document.getElementById('signup-button').addEventListener('click', async () => {
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                try {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
+
+            document.getElementById('login-button').addEventListener('click', async () => {
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } catch (error) {
+                    alert(error.message);
+                }
+            });
         }
 
-        // Function to post a comment
-        async function postComment(commentText, userName, userProfilePic) {
-            try {
-                await addDoc(collection(db, 'comments'), {
-                    text: commentText,
-                    userName: userName,
-                    userProfilePic: userProfilePic,
-                    timestamp: new Date(),
-                    replies: []
-                });
-                document.getElementById('comment-input').value = '';
-                console.log("Comment added successfully.");
-            } catch (error) {
-                console.error("Error adding comment: ", error);
-            }
+        function displayUserDetails(user) {
+            const userInfoHTML = `
+                <div id="user-info">
+                    <img src="${user.photoURL}" alt="Profile Pic" />
+                    <span>${user.displayName}</span>
+                    <span class="badge">Platinum Commenter</span> <!-- Example Badge -->
+                </div>
+            `;
+            document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', userInfoHTML);
+
+            // Display the comment input form
+            document.getElementById('comment-input').style.display = 'block';
+            document.getElementById('comment-button').style.display = 'block';
+
+            // Add event listener for posting comments
+           document.getElementById('comment-button').addEventListener('click', postComment);
         }
 
-        // Handle comment submission for authenticated users
-        document.getElementById('comment-button').addEventListener('click', () => {
-            const commentText = document.getElementById('comment-input').value;
-            if (commentText && currentUser) {
-                postComment(commentText, currentUser.displayName, currentUser.photoURL);
-            }
-        });
-
-        // Handle guest comment submission
-        document.getElementById('guest-comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value;
-            const guestUsername = document.getElementById('guest-username').value.trim();
-            const guestEmail = document.getElementById('guest-email').value.trim();
-            const guestPicFile = document.getElementById('guest-pic-upload').files[0];
-
-            if (!commentText || !guestUsername || !guestEmail) {
-                alert('Please fill in all required fields.');
+        async function postComment() {
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (!commentText || !currentUser) {
+                alert('Please write a comment and ensure you are logged in.');
                 return;
             }
 
-            // Upload profile picture if provided
-            let guestPicUrl = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
-            if (guestPicFile) {
-                try {
-                    guestPicUrl = await uploadProfilePicture(guestPicFile);
-                } catch (error) {
-                    console.error("Error uploading profile picture: ", error);
-                }
-            }
+            // Unique identifier for the article/page
+            const articleId = 'articleId1'; // This should be dynamically set based on the page
+
+            // Prepare comment data
+            const commentData = {
+                text: commentText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                userId: currentUser.uid,
+                timestamp: new Date(),
+                articleId: articleId,
+                replies: [],
+                likes: 0,
+                helpful: 0,
+                notHelpful: 0,
+                userLevel: determineUserLevel(currentUser.uid) // Function to determine user level
+            };
 
             try {
-                await addDoc(collection(db, 'comments'), {
-                    text: commentText,
-                    userName: guestUsername,
-                    userProfilePic: guestPicUrl,
-                    email: guestEmail, // Store guest email for future verifications
-                    timestamp: new Date(),
-                    replies: []
-                });
-                document.getElementById('comment-input').value = '';
-                document.getElementById('guest-username').value = '';
-                document.getElementById('guest-email').value = '';
-                document.getElementById('guest-pic-upload').value = '';
-                console.log("Guest comment added successfully. Email verification pending.");
+                await addDoc(collection(db, 'comments'), commentData);
+                document.getElementById('comment-input').value = ''; // Clear input after posting
+                console.log("Comment posted successfully.");
             } catch (error) {
-                console.error("Error adding guest comment: ", error);
+                console.error("Error posting comment: ", error);
             }
-        });
+        }
+
+        function determineUserLevel(userId) {
+            // Example function to determine user level based on number of comments
+            // You would query Firestore to count the user's comments
+            let userLevel = 'New Commenter'; // Default level
+            // Example: if the user has more than 5 comments, return a different level
+            // You would implement your logic here
+            return userLevel;
+        }
 
         // Real-time listener for comments
         const commentList = document.getElementById('comment-list');
-        const q = query(collection(db, 'comments'));
+        const articleId = 'articleId1'; // This should be dynamically set based on the page
+        const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
+
         onSnapshot(q, (snapshot) => {
             commentList.innerHTML = '';
             if (snapshot.empty) {
                 console.log("No comments found.");
                 return;
             }
+
             snapshot.forEach((doc) => {
                 const comment = doc.data();
                 const commentId = doc.id;
                 const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
+
                 const repliesHtml = comment.replies.map(reply => `
                     <div class="comment reply-section">
                         <img src="${reply.userProfilePic}" alt="User Profile Pic" />
@@ -249,38 +257,48 @@
                     </div>
                 `).join('');
 
-                commentList.innerHTML += `
+                const commentHtml = `
                     <div class="comment">
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
-                            <span class="comment-user">${comment.userName}</span>
+                            <span class="comment-user">${comment.userName} 
+                                ${comment.userLevel ? `<span class="badge">${comment.userLevel}</span>` : ''}
+                                ${comment.userId === 'admin_user_id' ? '<span class="badge admin-badge">Admin Certified</span>' : ''}
+                            </span>
                             <p class="comment-text">${comment.text}</p>
                             <span class="comment-date">${commentDate}</span>
+                            <button class="like-button" data-id="${commentId}">Like (${comment.likes})</button>
+                            <button class="helpful-button" data-id="${commentId}">Helpful (${comment.helpful})</button>
+                            <button class="not-helpful-button" data-id="${commentId}">Not Helpful (${comment.notHelpful})</button>
                             <button class="reply-button" data-id="${commentId}">Reply</button>
                             <div class="reply-box" id="reply-box-${commentId}">
-                                <textarea class="comment-input" placeholder="Write your reply here..."></textarea>
+                                <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
                                 <button class="submit-reply-button comment-button">Submit Reply</button>
                             </div>
                             ${repliesHtml}
                         </div>
                     </div>
                 `;
+
+                commentList.insertAdjacentHTML('beforeend', commentHtml);
             });
 
-            // Add event listeners for reply buttons
+            // Add event listeners for reply, like, helpful, and not helpful buttons
+            addCommentListeners();
+        });
+
+        function addCommentListeners() {
             document.querySelectorAll('.reply-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const replyBox = document.getElementById(`reply-box-${button.getAttribute('data-id')}`);
+                button.addEventListener('click', (event) => {
+                    const replyBox = document.getElementById(`reply-box-${event.target.dataset.id}`);
                     replyBox.style.display = 'block';
                 });
             });
 
-            // Handle reply submission
             document.querySelectorAll('.submit-reply-button').forEach(button => {
                 button.addEventListener('click', async (event) => {
                     const commentId = event.target.closest('.reply-box').id.replace('reply-box-', '');
-                    const replyBox = document.getElementById(`reply-box-${commentId}`);
-                    const replyText = replyBox.querySelector('textarea').value;
+                    const replyText = event.target.previousElementSibling.value.trim();
 
                     if (!replyText) {
                         alert('Reply cannot be empty.');
@@ -288,28 +306,136 @@
                     }
 
                     const commentRef = doc(db, 'comments', commentId);
-                    const userName = currentUser ? currentUser.displayName : prompt("Enter your name:");
-                    const userProfilePic = currentUser ? currentUser.photoURL : prompt("Enter picture URL (optional):") || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+                    const replyData = {
+                        text: replyText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date()
+                    };
 
                     try {
                         await updateDoc(commentRef, {
-                            replies: arrayUnion({
-                                text: replyText,
-                                userName: userName,
-                                userProfilePic: userProfilePic,
-                                timestamp: new Date()
-                            })
+                            replies: arrayUnion(replyData)
                         });
                         console.log("Reply added successfully.");
-                        replyBox.style.display = 'none'; // Hide reply box after submitting
                     } catch (error) {
                         console.error("Error adding reply: ", error);
                     }
                 });
             });
-        }, (error) => {
-            console.error("Error fetching comments: ", error);
-        });
+
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            likes: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Comment liked successfully.");
+                    } catch (error) {
+                        console.error("Error liking comment: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            helpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.not-helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            notHelpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as not helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as not helpful: ", error);
+                    }
+                });
+            });
+        }
+
+        // Example of how you can track and update user levels
+        async function updateUserLevel(userId) {
+            const userCommentsQuery = query(collection(db, 'comments'), where("userId", "==", userId));
+            const userCommentsSnapshot = await getDocs(userCommentsQuery);
+            const commentCount = userCommentsSnapshot.size;
+
+            let newUserLevel;
+            if (commentCount >= 50) {
+                newUserLevel = "Platinum Commenter";
+            } else if (commentCount >= 20) {
+                newUserLevel = "Gold Commenter";
+            } else if (commentCount >= 10) {
+                newUserLevel = "Silver Commenter";
+            } else {
+                newUserLevel = "New Commenter";
+            }
+
+            // Update user level in all their comments
+            userCommentsSnapshot.forEach(async (doc) => {
+                await updateDoc(doc.ref, { userLevel: newUserLevel });
+            });
+
+            console.log(`User ${userId} is now a ${newUserLevel}`);
+        }
+
+        // Update user level for the current user after posting a comment
+        async function postComment() {
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (!commentText || !currentUser) {
+                alert('Please write a comment and ensure you are logged in.');
+                return;
+            }
+
+            const articleId = 'articleId1'; // This should be dynamically set based on the page
+
+            const commentData = {
+                text: commentText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                userId: currentUser.uid,
+                timestamp: new Date(),
+                articleId: articleId,
+                replies: [],
+                likes: 0,
+                helpful: 0,
+                notHelpful: 0,
+                userLevel: 'New Commenter' // Default level
+            };
+
+            try {
+                const commentRef = await addDoc(collection(db, 'comments'), commentData);
+                document.getElementById('comment-input').value = ''; // Clear input after posting
+                console.log("Comment posted successfully.");
+
+                // Update user level after posting
+                await updateUserLevel(currentUser.uid);
+
+            } catch (error) {
+                console.error("Error posting comment: ", error);
+            }
+        }
     </script>
 </body>
 </html>
+
+                        
