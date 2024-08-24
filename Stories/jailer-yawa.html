@@ -76,18 +76,33 @@
     </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+        // Initialize the old Firebase project for authentication
+        const oldFirebaseConfig = {
+            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            authDomain: "jahotblog-login.firebaseapp.com",
+            projectId: "jahotblog-login",
+            storageBucket: "jahotblog-login.appspot.com",
+            messagingSenderId: "661526730601",
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
         };
 
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        // Initialize the new Firebase project for storing comments
+        const newFirebaseConfig = {
+            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
+            authDomain: "game-earning-website.firebaseapp.com",
+            projectId: "game-earning-website",
+            storageBucket: "game-earning-website.appspot.com",
+            messagingSenderId: "581912396287",
+            appId: "1:581912396287:web:234fa03483d71115fc67ca",
+            measurementId: "G-HD7CZZMHT7"
+        };
+
+        // Initialize Firebase instances
+        const oldApp = firebase.initializeApp(oldFirebaseConfig, "authApp");
+        const newApp = firebase.initializeApp(newFirebaseConfig, "commentsApp");
+
+        const auth = oldApp.auth(); // Use old project for authentication
+        const db = newApp.firestore(); // Use new project for Firestore to store comments
 
         const loginBtn = document.getElementById('login');
         const logoutBtn = document.getElementById('logout');
@@ -99,13 +114,18 @@
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
                 commentSection.style.display = 'block';
-                loadComments(); 
+                loadComments(); // Load comments when logged in
             } else {
                 loginBtn.style.display = 'block';
                 logoutBtn.style.display = 'none';
                 commentSection.style.display = 'none';
             }
         }
+
+        // Automatically check user authentication state on page load
+        auth.onAuthStateChanged(user => {
+            handleAuthUI(user);
+        });
 
         // Redirect non-logged users to login page
         loginBtn.addEventListener('click', () => {
@@ -117,10 +137,6 @@
             auth.signOut().then(() => {
                 handleAuthUI(null);
             });
-        });
-
-        auth.onAuthStateChanged(user => {
-            handleAuthUI(user);
         });
 
         // Post Comment
