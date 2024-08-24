@@ -41,15 +41,48 @@
         .comment-text {
             margin: 5px 0;
         }
+        #login-section, #guest-section {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <div id="login-section">
+    <div id="auth-options">
         <h3>Login to Comment</h3>
-        <button id="login-button">Login with Google</button>
+        <button id="phone-login">Login with Phone</button>
+        <button id="email-login">Login with Email</button>
+        <button id="guest-mode">Continue as Guest</button>
     </div>
 
+    <!-- Phone Number Login -->
+    <div id="login-section">
+        <h3>Enter Phone Number</h3>
+        <input type="text" id="phone-number" placeholder="Enter your phone number">
+        <button id="send-code">Send Verification Code</button>
+        <div id="recaptcha-container"></div>
+        <h3>Enter Code</h3>
+        <input type="text" id="verification-code" placeholder="Enter the verification code">
+        <button id="verify-code">Verify and Login</button>
+    </div>
+
+    <!-- Email Login -->
+    <div id="email-section">
+        <h3>Login with Email</h3>
+        <input type="text" id="email-input" placeholder="Enter your email">
+        <input type="password" id="password-input" placeholder="Enter your password">
+        <button id="email-login-button">Login</button>
+    </div>
+
+    <!-- Guest Mode -->
+    <div id="guest-section">
+        <h3>Guest Mode</h3>
+        <input type="text" id="guest-username" placeholder="Enter your username">
+        <input type="file" id="guest-image">
+        <button id="guest-submit">Submit</button>
+    </div>
+
+    <!-- Comment Section -->
     <div class="comment-section" style="display:none;">
         <h3>Comments</h3>
         <div id="comment-list"></div>
@@ -60,10 +93,10 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getAuth, signInWithPhoneNumber, signInWithEmailAndPassword, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 
-        // New Firebase Project Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
             authDomain: "game-earning-website.firebaseapp.com",
@@ -74,74 +107,131 @@
             measurementId: "G-HD7CZZMHT7"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         let currentUser = null;
 
-        // Handle login
-        document.getElementById('login-button').addEventListener('click', () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
+        // UI Handling
+        document.getElementById('phone-login').addEventListener('click', () => {
+            document.getElementById('auth-options').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+        });
+
+        document.getElementById('email-login').addEventListener('click', () => {
+            document.getElementById('auth-options').style.display = 'none';
+            document.getElementById('email-section').style.display = 'block';
+        });
+
+        document.getElementById('guest-mode').addEventListener('click', () => {
+            document.getElementById('auth-options').style.display = 'none';
+            document.getElementById('guest-section').style.display = 'block';
+        });
+
+        // Phone Number Login
+        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+        document.getElementById('send-code').addEventListener('click', () => {
+            const phoneNumber = document.getElementById('phone-number').value;
+            const appVerifier = window.recaptchaVerifier;
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    console.log("Code sent");
+                })
+                .catch((error) => {
+                    console.error("Error during phone login: ", error);
+                });
+        });
+
+        document.getElementById('verify-code').addEventListener('click', () => {
+            const code = document.getElementById('verification-code').value;
+            window.confirmationResult.confirm(code)
                 .then((result) => {
                     currentUser = result.user;
                     setupUI(currentUser);
                 })
                 .catch((error) => {
-                    console.error("Login failed: ", error);
+                    console.error("Error verifying code: ", error);
                 });
         });
 
-        // Handle logout
-        document.getElementById('logout-button').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                currentUser = null;
-                setupUI(null);
-            }).catch((error) => {
-                console.error("Logout failed: ", error);
-            });
+        // Email Login
+        document.getElementById('email-login-button').addEventListener('click', () => {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Error during email login: ", error);
+                });
         });
 
-        // Update UI after login/logout
+        // Guest Mode
+        document.getElementById('guest-submit').addEventListener('click', async () => {
+            const username = document.getElementById('guest-username').value;
+            const imageFile = document.getElementById('guest-image').files[0];
+
+            if (username && imageFile) {
+                const storageRef = ref(storage, `guestImages/${imageFile.name}`);
+                await uploadBytes(storageRef, imageFile);
+                const imageUrl = await getDownloadURL(storageRef);
+
+                currentUser = {
+                    displayName: username,
+                    photoURL: imageUrl,
+                    isGuest: true
+                };
+                setupUI(currentUser);
+            } else {
+                alert("Please provide a username and upload an image.");
+            }
+        });
+
+        // Setup UI after login or guest mode
         function setupUI(user) {
-            const loginSection = document.getElementById('login-section');
             const commentSection = document.querySelector('.comment-section');
+            const loginSection = document.getElementById('login-section');
+            const guestSection = document.getElementById('guest-section');
+            const emailSection = document.getElementById('email-section');
+
+            loginSection.style.display = 'none';
+            guestSection.style.display = 'none';
+            emailSection.style.display = 'none';
 
             if (user) {
-                loginSection.style.display = 'none';
                 commentSection.style.display = 'block';
                 document.getElementById('comment-input').disabled = false;
                 document.getElementById('comment-button').disabled = false;
                 loadComments();
             } else {
-                loginSection.style.display = 'block';
                 commentSection.style.display = 'none';
             }
         }
-
-        // Auto login check
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                setupUI(user);
-            } else {
-                setupUI(null);
-            }
-        });
 
         // Post a comment
         document.getElementById('comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
             if (commentText && currentUser) {
-                await addDoc(collection(db, 'comments'), {
-                    text: commentText,
-                    userName: currentUser.displayName,
-                    userProfilePic: currentUser.photoURL,
-                    timestamp: new Date()
-                });
-                document.getElementById('comment-input').value = '';
+                try {
+                    await addDoc(collection(db, 'comments'), {
+                        text: commentText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date(),
+                        isGuest: currentUser.isGuest || false
+                    });
+                    document.getElementById('comment-input').value = '';
+                    console.log("Comment added successfully.");
+                } catch (error) {
+                    console.error("Error adding comment: ", error);
+                }
+            } else {
+                console.warn("Cannot post comment: User is not authenticated or comment is empty.");
             }
         });
 
@@ -165,6 +255,27 @@
                 });
             });
         }
+
+        // Logout
+        document.getElementById('logout-button').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                currentUser = null;
+                setupUI(null);
+                console.log("User signed out.");
+            }).catch((error) => {
+                console.error("Error signing out: ", error);
+            });
+        });
+
+        // Initialize UI based on auth state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                setupUI(user);
+            } else {
+                setupUI(null);
+            }
+        });
     </script>
 </body>
 </html>
