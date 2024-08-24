@@ -92,6 +92,37 @@
         .reply-button:hover {
             background-color: #218838;
         }
+
+        .guest-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .guest-button:hover {
+            background-color: #5a6268;
+        }
+
+        #user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        #user-info span {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -99,10 +130,19 @@
     <div id="comment-section">
         <h2>Comments</h2>
 
+        <!-- User Info and Options -->
+        <div id="user-info" style="display: none;">
+            <img id="user-pic" src="" alt="Profile Picture">
+            <span id="user-name"></span>
+        </div>
+
         <!-- Comment Input Area -->
         <div id="comment-box">
             <textarea id="comment-input" placeholder="Write a comment..."></textarea>
-            <button id="comment-button">Post Comment</button>
+            <div>
+                <button id="comment-button">Post Comment</button>
+                <button id="guest-comment-button" class="guest-button">Comment as Guest</button>
+            </div>
         </div>
 
         <!-- Display Comments -->
@@ -139,37 +179,69 @@
         const auth = oldFirebaseApp.auth();
         const db = newFirebaseApp.firestore();
 
-        // Check if user is logged in and retrieve username
+        // Variables to track current user or guest mode
         let currentUser = null;
+        let isGuest = false;
+
+        // Check if user is logged in and retrieve username & profile picture
         auth.onAuthStateChanged((user) => {
             if (user) {
                 currentUser = user;
-                console.log("User logged in: ", user.displayName || user.email);
+                isGuest = false;
+                document.getElementById("user-info").style.display = "flex";
+                document.getElementById("user-name").innerText = user.displayName || user.email;
+                document.getElementById("user-pic").src = user.photoURL || "https://via.placeholder.com/40";
             } else {
                 currentUser = null;
+                document.getElementById("user-info").style.display = "none";
             }
         });
 
-        // Post comment
+        // Post comment (User or Guest)
         document.getElementById("comment-button").addEventListener("click", function () {
-            if (currentUser) {
-                const commentText = document.getElementById("comment-input").value;
-                if (commentText) {
-                    db.collection("comments").add({
-                        userId: currentUser.uid,
-                        username: currentUser.displayName || currentUser.email,
-                        comment: commentText,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                    }).then(() => {
-                        document.getElementById("comment-input").value = "";
-                        loadComments();
-                    });
-                }
+            postComment();
+        });
+
+        // Guest Commenting
+        document.getElementById("guest-comment-button").addEventListener("click", function () {
+            isGuest = true;
+            postComment();
+        });
+
+        // Function to post comments
+        function postComment() {
+            const commentText = document.getElementById("comment-input").value;
+
+            if (!commentText) {
+                alert("Please enter a comment.");
+                return;
+            }
+
+            if (isGuest) {
+                db.collection("comments").add({
+                    username: "Guest",
+                    comment: commentText,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    document.getElementById("comment-input").value = "";
+                    loadComments();
+                });
+            } else if (currentUser) {
+                db.collection("comments").add({
+                    userId: currentUser.uid,
+                    username: currentUser.displayName || currentUser.email,
+                    profilePic: currentUser.photoURL || "https://via.placeholder.com/40",
+                    comment: commentText,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    document.getElementById("comment-input").value = "";
+                    loadComments();
+                });
             } else {
                 alert("Please log in or create an account before commenting.");
                 window.location.href = "https://9jahotblog.github.io/Login-page.html";
             }
-        });
+        }
 
         // Load comments
         function loadComments() {
@@ -183,6 +255,7 @@
                     commentDiv.innerHTML = `
                         <strong>${commentData.username}</strong>:
                         <p>${commentData.comment}</p>
+                        <img src="${commentData.profilePic || 'https://via.placeholder.com/40'}" alt="Profile Picture" style="width: 40px; height: 40px; border-radius: 50%; margin-top: 5px;">
                         <button class="reply-button" data-id="${doc.id}">Reply</button>
                         <div class="reply-box" id="reply-box-${doc.id}"></div>
                     `;
@@ -198,10 +271,24 @@
 
                         document.querySelector(`.reply-button-post[data-id="${doc.id}"]`).addEventListener("click", function () {
                             const replyText = replyBox.querySelector(".reply-input").value;
-                            if (currentUser && replyText) {
+                            if (!replyText) {
+                                alert("Please enter a reply.");
+                                return;
+                            }
+                            if (currentUser) {
                                 db.collection("comments").doc(doc.id).collection("replies").add({
                                     userId: currentUser.uid,
                                     username: currentUser.displayName || currentUser.email,
+                                    profilePic: currentUser.photoURL || "https://via.placeholder.com/40",
+                                    reply: replyText,
+                                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                                }).then(() => {
+                                    replyBox.innerHTML = "";
+                                    loadComments();
+                                });
+                            } else if (isGuest) {
+                                db.collection("comments").doc(doc.id).collection("replies").add({
+                                    username: "Guest",
                                     reply: replyText,
                                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                                 }).then(() => {
