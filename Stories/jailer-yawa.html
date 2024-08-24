@@ -1,25 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Insert Title Here</title>
+    <title>Comment Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
         .comment-section {
             margin-top: 50px;
             border-top: 1px solid #ddd;
@@ -31,7 +19,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .comment-button {
+        .comment-button, .guest-comment-button {
             background-color: #28a745;
             color: white;
             padding: 8px 15px;
@@ -73,6 +61,10 @@
         .guest-comment-input {
             margin-top: 10px;
         }
+        .reply-box {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -89,14 +81,18 @@
                     <div class="comment-section">
                         <h3>Comments</h3>
                         <div id="comment-list"></div>
+                        
+                        <!-- Authenticated User Comment Section -->
                         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
                         <button id="comment-button" class="comment-button">Post Comment</button>
 
+                        <!-- Guest Comment Section -->
                         <div class="guest-comment-input">
                             <h4>Guest Comment</h4>
                             <input type="text" id="guest-username" placeholder="Enter your name" class="comment-input" />
-                            <input type="text" id="guest-pic" placeholder="Enter picture URL (optional)" class="comment-input" />
-                            <button id="guest-comment-button" class="comment-button">Post as Guest</button>
+                            <input type="email" id="guest-email" placeholder="Enter your email" class="comment-input" />
+                            <input type="file" id="guest-pic-upload" accept="image/*" class="comment-input" />
+                            <button id="guest-comment-button" class="guest-comment-button">Post as Guest</button>
                         </div>
                     </div>
                 </div>
@@ -116,32 +112,32 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
         // Initialize Firebase for authentication (Old project)
         const firebaseConfigOld = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+            apiKey: "YOUR_OLD_FIREBASE_API_KEY",
             authDomain: "jahotblog-login.firebaseapp.com",
             projectId: "jahotblog-login",
             storageBucket: "jahotblog-login.appspot.com",
             messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
-            databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
         };
         const appOld = initializeApp(firebaseConfigOld, "oldApp");
         const auth = getAuth(appOld);
 
         // Initialize Firebase for comments (New project)
         const firebaseConfigNew = {
-            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
+            apiKey: "YOUR_NEW_FIREBASE_API_KEY",
             authDomain: "game-earning-website.firebaseapp.com",
             projectId: "game-earning-website",
             storageBucket: "game-earning-website.appspot.com",
             messagingSenderId: "581912396287",
-            appId: "1:581912396287:web:234fa03483d71115fc67ca",
-            measurementId: "G-HD7CZZMHT7"
+            appId: "1:581912396287:web:234fa03483d71115fc67ca"
         };
         const appNew = initializeApp(firebaseConfigNew, "newApp");
         const db = getFirestore(appNew);
+        const storage = getStorage(appNew);
 
         let currentUser = null;
         onAuthStateChanged(auth, (user) => {
@@ -155,6 +151,13 @@
                 console.log("No user is signed in.");
             }
         });
+
+        // Function to upload profile picture and get URL
+        async function uploadProfilePicture(file) {
+            const storageRef = ref(storage, `profile_pictures/${file.name}`);
+            await uploadBytes(storageRef, file);
+            return getDownloadURL(storageRef);
+        }
 
         // Function to post a comment
         async function postComment(commentText, userName, userProfilePic) {
@@ -182,13 +185,43 @@
         });
 
         // Handle guest comment submission
-        document.getElementById('guest-comment-button').addEventListener('click', () => {
+        document.getElementById('guest-comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
-            const guestUsername = document.getElementById('guest-username').value || 'Guest';
-            const guestPic = document.getElementById('guest-pic').value || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+            const guestUsername = document.getElementById('guest-username').value.trim();
+            const guestEmail = document.getElementById('guest-email').value.trim();
+            const guestPicFile = document.getElementById('guest-pic-upload').files[0];
 
-            if (commentText) {
-                postComment(commentText, guestUsername, guestPic);
+            if (!commentText || !guestUsername || !guestEmail) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Upload profile picture if provided
+            let guestPicUrl = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+            if (guestPicFile) {
+                try {
+                    guestPicUrl = await uploadProfilePicture(guestPicFile);
+                } catch (error) {
+                    console.error("Error uploading profile picture: ", error);
+                }
+            }
+
+            try {
+                await addDoc(collection(db, 'comments'), {
+                    text: commentText,
+                    userName: guestUsername,
+                    userProfilePic: guestPicUrl,
+                    email: guestEmail, // Store guest email for future verifications
+                    timestamp: new Date(),
+                    replies: []
+                });
+                document.getElementById('comment-input').value = '';
+                document.getElementById('guest-username').value = '';
+                document.getElementById('guest-email').value = '';
+                document.getElementById('guest-pic-upload').value = '';
+                console.log("Guest comment added successfully. Email verification pending.");
+            } catch (error) {
+                console.error("Error adding guest comment: ", error);
             }
         });
 
@@ -204,12 +237,14 @@
             snapshot.forEach((doc) => {
                 const comment = doc.data();
                 const commentId = doc.id;
+                const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
                 const repliesHtml = comment.replies.map(reply => `
                     <div class="comment reply-section">
                         <img src="${reply.userProfilePic}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${reply.userName}</span>
                             <p class="comment-text">${reply.text}</p>
+                            <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
                         </div>
                     </div>
                 `).join('');
@@ -220,7 +255,12 @@
                         <div>
                             <span class="comment-user">${comment.userName}</span>
                             <p class="comment-text">${comment.text}</p>
+                            <span class="comment-date">${commentDate}</span>
                             <button class="reply-button" data-id="${commentId}">Reply</button>
+                            <div class="reply-box" id="reply-box-${commentId}">
+                                <textarea class="comment-input" placeholder="Write your reply here..."></textarea>
+                                <button class="submit-reply-button comment-button">Submit Reply</button>
+                            </div>
                             ${repliesHtml}
                         </div>
                     </div>
@@ -229,27 +269,41 @@
 
             // Add event listeners for reply buttons
             document.querySelectorAll('.reply-button').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const replyText = prompt('Enter your reply:');
-                    if (replyText) {
-                        const commentId = button.getAttribute('data-id');
-                        const commentRef = doc(db, 'comments', commentId);
-                        const userName = currentUser ? currentUser.displayName : prompt("Enter your name:");
-                        const userProfilePic = currentUser ? currentUser.photoURL : prompt("Enter picture URL (optional):") || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+                button.addEventListener('click', () => {
+                    const replyBox = document.getElementById(`reply-box-${button.getAttribute('data-id')}`);
+                    replyBox.style.display = 'block';
+                });
+            });
 
-                        try {
-                            await updateDoc(commentRef, {
-                                replies: arrayUnion({
-                                    text: replyText,
-                                    userName: userName,
-                                    userProfilePic: userProfilePic,
-                                    timestamp: new Date()
-                                })
-                            });
-                            console.log("Reply added successfully.");
-                        } catch (error) {
-                            console.error("Error adding reply: ", error);
-                        }
+            // Handle reply submission
+            document.querySelectorAll('.submit-reply-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.closest('.reply-box').id.replace('reply-box-', '');
+                    const replyBox = document.getElementById(`reply-box-${commentId}`);
+                    const replyText = replyBox.querySelector('textarea').value;
+
+                    if (!replyText) {
+                        alert('Reply cannot be empty.');
+                        return;
+                    }
+
+                    const commentRef = doc(db, 'comments', commentId);
+                    const userName = currentUser ? currentUser.displayName : prompt("Enter your name:");
+                    const userProfilePic = currentUser ? currentUser.photoURL : prompt("Enter picture URL (optional):") || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+
+                    try {
+                        await updateDoc(commentRef, {
+                            replies: arrayUnion({
+                                text: replyText,
+                                userName: userName,
+                                userProfilePic: userProfilePic,
+                                timestamp: new Date()
+                            })
+                        });
+                        console.log("Reply added successfully.");
+                        replyBox.style.display = 'none'; // Hide reply box after submitting
+                    } catch (error) {
+                        console.error("Error adding reply: ", error);
                     }
                 });
             });
