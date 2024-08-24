@@ -45,31 +45,26 @@
 </head>
 
 <body>
-    <div class="comment-section">
+    <div id="login-section">
+        <h3>Login to Comment</h3>
+        <button id="login-button">Login with Google</button>
+    </div>
+
+    <div class="comment-section" style="display:none;">
         <h3>Comments</h3>
         <div id="comment-list"></div>
         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..." disabled></textarea>
         <button id="comment-button" class="comment-button" disabled>Post Comment</button>
+        <button id="logout-button">Logout</button>
     </div>
 
     <script type="module">
-        // Import Firebase SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, query, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 
-        // Old project config (for Authentication)
-        const oldFirebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
-        };
-
-        // New project config (for Firestore)
-        const newFirebaseConfig = {
+        // New Firebase Project Configuration
+        const firebaseConfig = {
             apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
             authDomain: "game-earning-website.firebaseapp.com",
             projectId: "game-earning-website",
@@ -79,29 +74,60 @@
             measurementId: "G-HD7CZZMHT7"
         };
 
-        // Initialize both Firebase apps
-        const oldApp = initializeApp(oldFirebaseConfig, "authApp");
-        const newApp = initializeApp(newFirebaseConfig, "dbApp");
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        // Authentication using the old project
-        const auth = getAuth(oldApp);
-        
-        // Firestore using the new project
-        const db = getFirestore(newApp);
-
-        // Handle user authentication
         let currentUser = null;
+
+        // Handle login
+        document.getElementById('login-button').addEventListener('click', () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Login failed: ", error);
+                });
+        });
+
+        // Handle logout
+        document.getElementById('logout-button').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                currentUser = null;
+                setupUI(null);
+            }).catch((error) => {
+                console.error("Logout failed: ", error);
+            });
+        });
+
+        // Update UI after login/logout
+        function setupUI(user) {
+            const loginSection = document.getElementById('login-section');
+            const commentSection = document.querySelector('.comment-section');
+
+            if (user) {
+                loginSection.style.display = 'none';
+                commentSection.style.display = 'block';
+                document.getElementById('comment-input').disabled = false;
+                document.getElementById('comment-button').disabled = false;
+                loadComments();
+            } else {
+                loginSection.style.display = 'block';
+                commentSection.style.display = 'none';
+            }
+        }
+
+        // Auto login check
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                document.getElementById('comment-input').disabled = false;
-                document.getElementById('comment-button').disabled = false;
-                console.log("User is signed in: ", user.displayName);
+                setupUI(user);
             } else {
-                currentUser = null;
-                document.getElementById('comment-input').disabled = true;
-                document.getElementById('comment-button').disabled = true;
-                console.log("No user is signed in.");
+                setupUI(null);
             }
         });
 
@@ -109,47 +135,36 @@
         document.getElementById('comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
             if (commentText && currentUser) {
-                try {
-                    await addDoc(collection(db, 'comments'), {
-                        text: commentText,
-                        userName: currentUser.displayName,
-                        userProfilePic: currentUser.photoURL,
-                        timestamp: new Date()
-                    });
-                    document.getElementById('comment-input').value = '';
-                    console.log("Comment added successfully.");
-                } catch (error) {
-                    console.error("Error adding comment: ", error);
-                }
-            } else {
-                console.warn("Cannot post comment: User is not authenticated or comment is empty.");
+                await addDoc(collection(db, 'comments'), {
+                    text: commentText,
+                    userName: currentUser.displayName,
+                    userProfilePic: currentUser.photoURL,
+                    timestamp: new Date()
+                });
+                document.getElementById('comment-input').value = '';
             }
         });
 
         // Load comments
-        const commentList = document.getElementById('comment-list');
-        const q = query(collection(db, 'comments'));
-        onSnapshot(q, (snapshot) => {
-            commentList.innerHTML = '';
-            if (snapshot.empty) {
-                console.log("No comments found.");
-                return;
-            }
-            snapshot.forEach((doc) => {
-                const comment = doc.data();
-                commentList.innerHTML += `
-                    <div class="comment">
-                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${comment.userName}</span>
-                            <p class="comment-text">${comment.text}</p>
+        function loadComments() {
+            const commentList = document.getElementById('comment-list');
+            const q = query(collection(db, 'comments'));
+            onSnapshot(q, (snapshot) => {
+                commentList.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const comment = doc.data();
+                    commentList.innerHTML += `
+                        <div class="comment">
+                            <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                            <div>
+                                <span class="comment-user">${comment.userName}</span>
+                                <p class="comment-text">${comment.text}</p>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                });
             });
-        }, (error) => {
-            console.error("Error fetching comments: ", error);
-        });
+        }
     </script>
 </body>
 </html>
