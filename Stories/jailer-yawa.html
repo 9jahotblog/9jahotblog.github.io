@@ -1,161 +1,130 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Comments Section</title>
+    <title>Comment Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <noscript><link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/noscript.css" /></noscript>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-        }
-
         .comment-section {
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
         }
-
-        .login-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .login-buttons button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 48%;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .comment-input {
+        .comment-input, .reply-input, .auth-input {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            margin-top: 10px;
-            font-size: 14px;
-            display: none;
+            margin-bottom: 10px;
         }
-
-        .comment-button {
+        .comment-button, .reply-button, .auth-button {
             background-color: #28a745;
             color: white;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 8px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            display: none;
+            margin-right: 10px;
         }
-
         .comment {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
-
         .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
-            vertical-align: middle;
         }
-
         .comment-user {
             font-weight: bold;
         }
-
         .comment-text {
             margin: 5px 0;
         }
-
-        .reply-button {
-            background-color: #007bff;
-            color: white;
-            padding: 5px 10px;
-            margin-top: 5px;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
+        .comment-metadata {
             font-size: 12px;
+            color: #888;
         }
-
         .reply-section {
             margin-left: 50px;
-            margin-top: 10px;
+            border-left: 1px solid #ddd;
             padding-left: 20px;
-            border-left: 2px solid #ddd;
+            display: none;
+        }
+        .like-button, .helpful-button, .not-helpful-button {
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px;
+            background-color: #ffc107;
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 12px;
+        }
+        .admin-badge {
+            background-color: #007bff;
         }
     </style>
 </head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <div class="w3-container w3-white w3-margin w3-padding-large">
+                    <header class="major">
+                        <h3>Jailer's Pen</h3>
+                        <p>Title of article...</p>
+                    </header>
 
-<body>
-    <div class="comment-section">
-        <h3>Comments</h3>
-        <div id="comment-list"></div>
+                    <div id="auth-container">
+                        <h4>Sign Up or Log In to Comment</h4>
+                        <input type="email" id="auth-email" placeholder="Email" class="auth-input" />
+                        <input type="password" id="auth-password" placeholder="Password" class="auth-input" />
+                        <input type="text" id="auth-username" placeholder="Username (for Sign Up)" class="auth-input" />
+                        <input type="file" id="auth-pic-upload" accept="image/*" class="auth-input" />
+                        <button id="signup-button" class="auth-button">Sign Up</button>
+                        <button id="login-button" class="auth-button">Log In</button>
+                    </div>
 
-        <!-- Login Buttons -->
-        <div id="login-buttons" class="login-buttons">
-            <button id="google-login">Login with Google</button>
-            <button id="email-login">Login with Email</button>
-            <button id="phone-login">Login with Phone</button>
-            <button id="guest-mode">Continue as Guest</button>
+                    <div class="comment-section" style="display:none;">
+                        <h3>Comments</h3>
+                        <div id="comment-list"></div>
+                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+                        <button id="comment-button" class="comment-button">Post Comment</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Email Login Section -->
-        <div id="email-section" style="display: none;">
-            <input type="text" id="email-input" placeholder="Enter your email">
-            <input type="password" id="password-input" placeholder="Enter your password">
-            <button id="email-login-button">Login</button>
-        </div>
-
-        <!-- Phone Login Section -->
-        <div id="phone-section" style="display: none;">
-            <input type="text" id="phone-number" placeholder="Enter your phone number">
-            <button id="send-code">Send Verification Code</button>
-            <div id="recaptcha-container"></div>
-            <input type="text" id="verification-code" placeholder="Enter the verification code" style="display:none;">
-            <button id="verify-code" style="display:none;">Verify and Login</button>
-        </div>
-
-        <!-- Comment Input Section -->
-        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
-        <button id="comment-button" class="comment-button">Post Comment</button>
     </div>
 
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signInAnonymously, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
+            apiKey: "YOUR_NEW_FIREBASE_API_KEY",
             authDomain: "game-earning-website.firebaseapp.com",
             projectId: "game-earning-website",
             storageBucket: "game-earning-website.appspot.com",
             messagingSenderId: "581912396287",
-            appId: "1:581912396287:web:234fa03483d71115fc67ca",
-            measurementId: "G-HD7CZZMHT7"
+            appId: "1:581912396287:web:234fa03483d71115fc67ca"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -165,206 +134,276 @@
 
         let currentUser = null;
 
-        // Handle Login Options
-        document.getElementById('google-login').addEventListener('click', () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    currentUser = result.user;
-                    setupUI(currentUser);
-                })
-                .catch((error) => {
-                    console.error("Google login failed: ", error);
-                });
-        });
-
-        document.getElementById('email-login').addEventListener('click', () => {
-            document.getElementById('login-buttons').style.display = 'none';
-            document.getElementById('email-section').style.display = 'block';
-        });
-
-        document.getElementById('email-login-button').addEventListener('click', () => {
-            const email = document.getElementById('email-input').value;
-            const password = document.getElementById('password-input').value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then((result) => {
-                    currentUser = result.user;
-                    setupUI(currentUser);
-                })
-                .catch((error) => {
-                    console.error("Email login failed: ", error);
-                });
-        });
-
-        document.getElementById('phone-login').addEventListener('click', () => {
-            document.getElementById('login-buttons').style.display = 'none';
-            document.getElementById('phone-section').style.display = 'block';
-            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
-        });
-
-        document.getElementById('send-code').addEventListener('click', () => {
-            const phoneNumber = document.getElementById('phone-number').value;
-            const appVerifier = window.recaptchaVerifier;
-            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    document.getElementById('verification-code').style.display = 'block';
-                    document.getElementById('verify-code').style.display = 'block';
-                    console.log("Verification code sent.");
-                })
-                .catch((error) => {
-                    console.error("Phone login failed: ", error);
-                });
-        });
-
-        document.getElementById('verify-code').addEventListener('click', () => {
-            const code = document.getElementById('verification-code').value;
-            window.confirmationResult.confirm(code)
-                .then((result) => {
-                    currentUser = result.user;
-                    setupUI(currentUser);
-                })
-                .catch((error) => {
-                    console.error("Verification failed: ", error);
-                });
-        });
-
-        document.getElementById('guest-mode').addEventListener('click', async () => {
-            const guestUsername = prompt("Enter your username:");
-            const guestImageFile = await selectImage();
-            if (guestUsername && guestImageFile) {
-                try {
-                    const storageRef = ref(storage, `guestImages/${guestImageFile.name}`);
-                    await uploadBytes(storageRef, guestImageFile);
-                    const guestImageURL = await getDownloadURL(storageRef);
-
-                    currentUser = {
-                        displayName: guestUsername,
-                        photoURL: guestImageURL,
-                        isGuest: true,
-                    };
-                    setupUI(currentUser);
-                } catch (error) {
-                    console.error("Guest setup failed: ", error);
-                }
-            } else {
-                alert("Please provide a username and upload an image.");
-            }
-        });
-
-        function selectImage() {
-            return new Promise((resolve) => {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = 'image/*';
-                input.onchange = () => {
-                    resolve(input.files[0]);
-                };
-                input.click();
-            });
-        }
-
-        function setupUI(user) {
-            if (user) {
-                document.getElementById('login-buttons').style.display = 'none';
-                document.getElementById('email-section').style.display = 'none';
-                document.getElementById('phone-section').style.display = 'none';
-                document.getElementById('guest-section').style.display = 'none';
-                document.getElementById('comment-input').style.display = 'block';
-                document.getElementById('comment-button').style.display = 'block';
-                loadComments();
-            } else {
-                document.getElementById('login-buttons').style.display = 'block';
-                document.getElementById('comment-input').style.display = 'none';
-                document.getElementById('comment-button').style.display = 'none';
-            }
-        }
-
-        // Post a comment
-        document.getElementById('comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value;
-            if (commentText && currentUser) {
-                try {
-                    await addDoc(collection(db, 'comments'), {
-                        text: commentText,
-                        userName: currentUser.displayName,
-                        userProfilePic: currentUser.photoURL,
-                        timestamp: new Date(),
-                        isGuest: currentUser.isGuest || false
-                    });
-                    document.getElementById('comment-input').value = '';
-                    console.log("Comment added successfully.");
-                } catch (error) {
-                    console.error("Error adding comment: ", error);
-                }
-            } else {
-                console.warn("Cannot post comment: User is not authenticated or comment is empty.");
-            }
-        });
-
-        // Load comments and listen for real-time updates
-        function loadComments() {
-            const commentList = document.getElementById('comment-list');
-            const q = query(collection(db, 'comments'));
-            onSnapshot(q, (snapshot) => {
-                commentList.innerHTML = '';
-                snapshot.forEach((doc) => {
-                    const comment = doc.data();
-                    const commentElement = document.createElement('div');
-                    commentElement.classList.add('comment');
-                    commentElement.innerHTML = `
-                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${comment.userName}</span>
-                            <p class="comment-text">${comment.text}</p>
-                            <button class="reply-button" data-id="${doc.id}">Reply</button>
-                        </div>
-                    `;
-                    commentList.appendChild(commentElement);
-                });
-
-                // Attach reply handlers
-                document.querySelectorAll('.reply-button').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const commentId = button.getAttribute('data-id');
-                        handleReply(commentId);
-                    });
-                });
-            });
-        }
-
-        // Handle replying to comments
-        async function handleReply(commentId) {
-            const replyText = prompt("Enter your reply:");
-            if (replyText && currentUser) {
-                const commentRef = doc(db, 'comments', commentId);
-                try {
-                    await updateDoc(commentRef, {
-                        replies: arrayUnion({
-                            text: replyText,
-                            userName: currentUser.displayName,
-                            userProfilePic: currentUser.photoURL,
-                            timestamp: new Date(),
-                        })
-                    });
-                    console.log("Reply added successfully.");
-                } catch (error) {
-                    console.error("Error adding reply: ", error);
-                }
-            } else {
-                console.warn("Cannot post reply: User is not authenticated or reply is empty.");
-            }
-        }
-
-        // Auto login check
+        // Handle user authentication state
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                setupUI(user);
+                displayUserDetails(user);
             } else {
-                setupUI(null);
+                document.querySelector('.comment-section').style.display = 'none';
+                document.getElementById('auth-container').style.display = 'block';
             }
         });
+
+        function displayUserDetails(user) {
+            document.querySelector('.comment-section').style.display = 'block';
+            document.getElementById('auth-container').style.display = 'none';
+            document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', `
+                <div id="user-info">
+                    <img src="${user.photoURL}" alt="Profile Pic" />
+                    <span>${user.displayName}</span>
+                    <span class="badge">New Commenter</span> <!-- Default Badge -->
+                </div>
+            `);
+        }
+
+        // Handle Sign Up
+        document.getElementById('signup-button').addEventListener('click', async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const username = document.getElementById('auth-username').value;
+            const picFile = document.getElementById('auth-pic-upload').files[0];
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                currentUser = userCredential.user;
+
+                let photoURL = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+                if (picFile) {
+                    const storageRef = ref(storage, `profile_pictures/${picFile.name}`);
+                    await uploadBytes(storageRef, picFile);
+                    photoURL = await getDownloadURL(storageRef);
+                }
+
+                await updateProfile(currentUser, { displayName: username, photoURL: photoURL });
+                displayUserDetails(currentUser);
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Handle Log In
+        document.getElementById('login-button').addEventListener('click', async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                displayUserDetails(auth.currentUser);
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Handle Posting Comments
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (!commentText || !currentUser) {
+                alert('Please write a comment and ensure you are logged in.');
+                return;
+            }
+
+            const articleId = 'articleId1'; // Unique identifier for the article/page, replace with dynamic ID
+
+            // Prepare comment data
+            const commentData = {
+                text: commentText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                userId: currentUser.uid,
+                timestamp: new Date(),
+                articleId: articleId,
+                replies: [],
+                likes: [],
+                helpful: [],
+                notHelpful: [],
+                userLevel: 'New Commenter' // Default level, can be updated later
+            };
+
+            try {
+                await addDoc(collection(db, 'comments'), commentData);
+                document.getElementById('comment-input').value = ''; // Clear input after posting
+                console.log("Comment posted successfully.");
+
+                // Update user level after posting
+                await updateUserLevel(currentUser.uid);
+
+            } catch (error) {
+                console.error("Error posting comment: ", error);
+            }
+        });
+
+        // Function to update user levels based on the number of comments
+        async function updateUserLevel(userId) {
+            const userCommentsQuery = query(collection(db, 'comments'), where("userId", "==", userId));
+            const userCommentsSnapshot = await getDocs(userCommentsQuery);
+            const commentCount = userCommentsSnapshot.size;
+
+            let newUserLevel;
+            if (commentCount >= 50) {
+                newUserLevel = "Platinum Commenter";
+            } else if (commentCount >= 20) {
+                newUserLevel = "Gold Commenter";
+            } else if (commentCount >= 10) {
+                newUserLevel = "Silver Commenter";
+            } else {
+                newUserLevel = "New Commenter";
+            }
+
+            // Update user level in all their comments
+            userCommentsSnapshot.forEach(async (doc) => {
+                await updateDoc(doc.ref, { userLevel: newUserLevel });
+            });
+
+            console.log(`User ${userId} is now a ${newUserLevel}`);
+        }
+
+        // Real-time listener for comments
+        const commentList = document.getElementById('comment-list');
+        const articleId = 'articleId1'; // This should be dynamically set based on the page
+        const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
+
+        onSnapshot(q, (snapshot) => {
+            commentList.innerHTML = '';
+            if (snapshot.empty) {
+                console.log("No comments found.");
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const comment = doc.data();
+                const commentId = doc.id;
+                const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
+
+                const repliesHtml = comment.replies.map(reply => `
+                    <div class="comment reply-section">
+                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${reply.userName}</span>
+                            <p class="comment-text">${reply.text}</p>
+                            <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                const commentHtml = `
+                    <div class="comment">
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName} 
+                                ${comment.userLevel ? `<span class="badge">${comment.userLevel}</span>` : ''}
+                                ${comment.userId === 'admin_user_id' ? '<span class="badge admin-badge">Admin Certified</span>' : ''}
+                            </span>
+                            <p class="comment-text">${comment.text}</p>
+                            <span class="comment-date">${commentDate}</span>
+                            <button class="like-button" data-id="${commentId}">Like (${comment.likes.length})</button>
+                            <button class="helpful-button" data-id="${commentId}">Helpful (${comment.helpful.length})</button>
+                            <button class="not-helpful-button" data-id="${commentId}">Not Helpful (${comment.notHelpful.length})</button>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                            <div class="reply-box" id="reply-box-${commentId}" style="display:none;">
+                                <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
+                                <button class="submit-reply-button comment-button">Submit Reply</button>
+                            </div>
+                            ${repliesHtml}
+                        </div>
+                    </div>
+                `;
+
+                commentList.insertAdjacentHTML('beforeend', commentHtml);
+            });
+
+            // Add event listeners for like, helpful, not helpful, and reply buttons
+            addCommentListeners();
+        });
+
+        function addCommentListeners() {
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            likes: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Comment liked successfully.");
+                    } catch (error) {
+                        console.error("Error liking comment: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            helpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.not-helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            notHelpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as not helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as not helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const replyBox = document.getElementById(`reply-box-${event.target.dataset.id}`);
+                    replyBox.style.display = 'block';
+                });
+            });
+
+            document.querySelectorAll('.submit-reply-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.closest('.reply-box').id.replace('reply-box-', '');
+                    const replyText = event.target.previousElementSibling.value.trim();
+
+                    if (!replyText) {
+                        alert('Reply cannot be empty.');
+                        return;
+                    }
+
+                    const commentRef = doc(db, 'comments', commentId);
+                    const replyData = {
+                        text: replyText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date()
+                    };
+
+                    try {
+                        await updateDoc(commentRef, {
+                            replies: arrayUnion(replyData)
+                        });
+                        console.log("Reply added successfully.");
+                        event.target.previousElementSibling.value = ''; // Clear reply input
+                        const replyBox = document.getElementById(`reply-box-${commentId}`);
+                        replyBox.style.display = 'none'; // Hide reply box after submitting
+                    } catch (error) {
+                        console.error("Error adding reply: ", error);
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
