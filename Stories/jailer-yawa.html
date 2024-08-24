@@ -1,42 +1,94 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-    <title>Comment Section</title>
+    <title>Comments Section</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .comment-section {
-            margin-top: 50px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
-        .comment-input, .comment-button {
+
+        .comment-section {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .login-buttons button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .comment-input {
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
         }
+
+        .comment-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
         .comment {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
         }
+
         .comment img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
+            vertical-align: middle;
         }
+
         .comment-user {
             font-weight: bold;
         }
-        .badge {
-            margin-left: 5px;
-            font-size: 0.8em;
-            color: #888;
+
+        .comment-text {
+            margin: 5px 0;
         }
-        .like-button, .reply-button {
+
+        .reply-button {
             background-color: #007bff;
             color: white;
             padding: 5px 10px;
@@ -44,24 +96,59 @@
             border: none;
             border-radius: 3px;
             cursor: pointer;
+            font-size: 12px;
+        }
+
+        .reply-section {
+            margin-left: 50px;
+            margin-top: 10px;
+            padding-left: 20px;
+            border-left: 2px solid #ddd;
         }
     </style>
 </head>
+
 <body>
     <div class="comment-section">
         <h3>Comments</h3>
         <div id="comment-list"></div>
+
+        <!-- Login Buttons -->
+        <div id="login-buttons" class="login-buttons">
+            <button id="google-login">Login with Google</button>
+            <button id="email-login">Login with Email</button>
+            <button id="phone-login">Login with Phone</button>
+            <button id="guest-mode">Continue as Guest</button>
+        </div>
+
+        <!-- Email Login Section -->
+        <div id="email-section" style="display: none;">
+            <input type="text" id="email-input" placeholder="Enter your email">
+            <input type="password" id="password-input" placeholder="Enter your password">
+            <button id="email-login-button">Login</button>
+        </div>
+
+        <!-- Phone Login Section -->
+        <div id="phone-section" style="display: none;">
+            <input type="text" id="phone-number" placeholder="Enter your phone number">
+            <button id="send-code">Send Verification Code</button>
+            <div id="recaptcha-container"></div>
+            <input type="text" id="verification-code" placeholder="Enter the verification code" style="display:none;">
+            <button id="verify-code" style="display:none;">Verify and Login</button>
+        </div>
+
+        <!-- Comment Input Section -->
         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
         <button id="comment-button" class="comment-button">Post Comment</button>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js"></script>
-    <script>
-        // Firebase configuration
-        const commentsFirebaseConfig = {
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, signInAnonymously, RecaptchaVerifier, signInWithPhoneNumber } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, updateDoc, doc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
+
+        const firebaseConfig = {
             apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
             authDomain: "game-earning-website.firebaseapp.com",
             projectId: "game-earning-website",
@@ -71,230 +158,213 @@
             measurementId: "G-HD7CZZMHT7"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // Comment functionality
         let currentUser = null;
 
-        // Function to handle user authentication
-        function authenticateUser() {
-            // Prompt user for email and password
-            const email = prompt("Enter your email:");
-            const password = prompt("Enter your password:");
-
-            // Sign in or create a new user
-            auth.signInWithEmailAndPassword(email, password).then((userCredential) => {
-                currentUser = userCredential.user;
-                loadComments();
-                enableCommenting();
-                console.log("User signed in: ", currentUser.displayName);
-            }).catch((error) => {
-                if (error.code === 'auth/user-not-found') {
-                    auth.createUserWithEmailAndPassword(email, password).then((userCredential) => {
-                        currentUser = userCredential.user;
-                        loadComments();
-                        enableCommenting();
-                        console.log("User account created and signed in.");
-                    }).catch((error) => {
-                        console.error("Error creating user: ", error.message);
-                    });
-                } else {
-                    console.error("Error signing in: ", error.message);
-                }
-            });
-        }
-
-        // Function to enable commenting if user is authenticated
-        function enableCommenting() {
-            document.getElementById('comment-input').disabled = false;
-            document.getElementById('comment-button').disabled = false;
-        }
-
-        // Function to load comments for a specific article
-        function loadComments() {
-            const articleId = "articleId1"; // This should be dynamically set for each page
-            db.collection('comments').where('articleId', '==', articleId).onSnapshot((snapshot) => {
-                const commentList = document.getElementById('comment-list');
-                commentList.innerHTML = '';  // Clear existing comments
-                snapshot.forEach((doc) => {
-                    const comment = doc.data();
-                    commentList.innerHTML += renderComment(doc.id, comment);
+        // Handle Login Options
+        document.getElementById('google-login').addEventListener('click', () => {
+            const provider = new GoogleAuthProvider();
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Google login failed: ", error);
                 });
-                setupCommentInteractivity();
+        });
+
+        document.getElementById('email-login').addEventListener('click', () => {
+            document.getElementById('login-buttons').style.display = 'none';
+            document.getElementById('email-section').style.display = 'block';
+        });
+
+        document.getElementById('email-login-button').addEventListener('click', () => {
+            const email = document.getElementById('email-input').value;
+            const password = document.getElementById('password-input').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Email login failed: ", error);
+                });
+        });
+
+        document.getElementById('phone-login').addEventListener('click', () => {
+            document.getElementById('login-buttons').style.display = 'none';
+            document.getElementById('phone-section').style.display = 'block';
+            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {}, auth);
+        });
+
+        document.getElementById('send-code').addEventListener('click', () => {
+            const phoneNumber = document.getElementById('phone-number').value;
+            const appVerifier = window.recaptchaVerifier;
+            signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+                .then((confirmationResult) => {
+                    window.confirmationResult = confirmationResult;
+                    document.getElementById('verification-code').style.display = 'block';
+                    document.getElementById('verify-code').style.display = 'block';
+                    console.log("Verification code sent.");
+                })
+                .catch((error) => {
+                    console.error("Phone login failed: ", error);
+                });
+        });
+
+        document.getElementById('verify-code').addEventListener('click', () => {
+            const code = document.getElementById('verification-code').value;
+            window.confirmationResult.confirm(code)
+                .then((result) => {
+                    currentUser = result.user;
+                    setupUI(currentUser);
+                })
+                .catch((error) => {
+                    console.error("Verification failed: ", error);
+                });
+        });
+
+        document.getElementById('guest-mode').addEventListener('click', async () => {
+            const guestUsername = prompt("Enter your username:");
+            const guestImageFile = await selectImage();
+            if (guestUsername && guestImageFile) {
+                try {
+                    const storageRef = ref(storage, `guestImages/${guestImageFile.name}`);
+                    await uploadBytes(storageRef, guestImageFile);
+                    const guestImageURL = await getDownloadURL(storageRef);
+
+                    currentUser = {
+                        displayName: guestUsername,
+                        photoURL: guestImageURL,
+                        isGuest: true,
+                    };
+                    setupUI(currentUser);
+                } catch (error) {
+                    console.error("Guest setup failed: ", error);
+                }
+            } else {
+                alert("Please provide a username and upload an image.");
+            }
+        });
+
+        function selectImage() {
+            return new Promise((resolve) => {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = () => {
+                    resolve(input.files[0]);
+                };
+                input.click();
             });
         }
 
-        // Function to render a comment
-        function renderComment(id, comment) {
-            return `
-                <div class="comment" id="${id}">
-                    <img src="${comment.userProfilePic || 'default-pic-url'}" alt="User Profile Pic" />
-                    <div>
-                        <span class="comment-user">${comment.userName}</span>
-                        <span class="badge">${getBadge(comment.userCommentsCount)}</span>
-                        <p class="comment-text">${comment.text}</p>
-                        <button class="like-button" data-id="${id}">Like (${comment.likes || 0})</button>
-                        <button class="reply-button" data-id="${id}">Reply</button>
-                    </div>
-                </div>
-            `;
+        function setupUI(user) {
+            if (user) {
+                document.getElementById('login-buttons').style.display = 'none';
+                document.getElementById('email-section').style.display = 'none';
+                document.getElementById('phone-section').style.display = 'none';
+                document.getElementById('guest-section').style.display = 'none';
+                document.getElementById('comment-input').style.display = 'block';
+                document.getElementById('comment-button').style.display = 'block';
+                loadComments();
+            } else {
+                document.getElementById('login-buttons').style.display = 'block';
+                document.getElementById('comment-input').style.display = 'none';
+                document.getElementById('comment-button').style.display = 'none';
+            }
         }
 
-        // Function to determine user badge based on comments count
-        function getBadge(commentsCount) {
-            if (commentsCount >= 10) return 'Platinum Commenter';
-            if (commentsCount >= 5) return 'Expert';
-            if (commentsCount >= 1) return 'New Commenter';
-            return 'Beginner';
-        }
-
-        // Post a new comment
+        // Post a comment
         document.getElementById('comment-button').addEventListener('click', async () => {
             const commentText = document.getElementById('comment-input').value;
             if (commentText && currentUser) {
                 try {
-                    const newComment = {
-                        articleId: "articleId1",  // This should be dynamically set for each page
+                    await addDoc(collection(db, 'comments'), {
                         text: commentText,
-                        userName: currentUser.displayName || currentUser.email,
-                        userProfilePic: currentUser.photoURL || '',
-                        email: currentUser.email,
-                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                        likes: 0,
-                        replies: [],
-                        userCommentsCount: 0 // Placeholder, update this after posting
-                    };
-                    await db.collection('comments').add(newComment);
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date(),
+                        isGuest: currentUser.isGuest || false
+                    });
                     document.getElementById('comment-input').value = '';
-                    updateUserCommentData(currentUser.uid);
                     console.log("Comment added successfully.");
                 } catch (error) {
                     console.error("Error adding comment: ", error);
                 }
+            } else {
+                console.warn("Cannot post comment: User is not authenticated or comment is empty.");
             }
         });
 
-        // Update user's comment data after posting
-        async function updateUserCommentData(userId) {
-            const userRef = db.collection('users').doc(userId);
-            try {
-                await db.runTransaction(async (transaction) => {
-                    const userDoc = await transaction.get(userRef);
-                    if (!userDoc.exists) {
-                        transaction.set(userRef, {
-                            userCommentsCount: 1
-                        });
-                    } else {
-                        const newCommentsCount = userDoc.data().userCommentsCount + 1;
-                        transaction.update(userRef, { userCommentsCount: newCommentsCount });
-                    }
+        // Load comments and listen for real-time updates
+        function loadComments() {
+            const commentList = document.getElementById('comment-list');
+            const q = query(collection(db, 'comments'));
+            onSnapshot(q, (snapshot) => {
+                commentList.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const comment = doc.data();
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+                    commentElement.innerHTML = `
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName}</span>
+                            <p class="comment-text">${comment.text}</p>
+                            <button class="reply-button" data-id="${doc.id}">Reply</button>
+                        </div>
+                    `;
+                    commentList.appendChild(commentElement);
                 });
-            } catch (error) {
-                console.error("Error updating user data: ", error);
-            }
-        }
 
-        // Setup interactivity for like and reply buttons
-        function setupCommentInteractivity() {
-            document.querySelectorAll('.like-button').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const commentId = button.getAttribute('data-id');
-                    const commentRef = db.collection('comments').doc(commentId);
-                    try {
-                        await db.runTransaction(async (transaction) => {
-                            const commentDoc = await transaction.get(commentRef);
-                            if (!commentDoc.exists) {
-                                throw "Document does not exist!";
-                            }
-                            const newLikes = (commentDoc.data().likes || 0) + 1;
-                            transaction.update(commentRef, { likes: newLikes });
-                        });
-                        console.log("Like added successfully.");
-                    } catch (error) {
-                        console.error("Error adding like: ", error);
-                    }
-                });
-            });
-
-            document.querySelectorAll('.reply-button').forEach(button => {
-                button.addEventListener('click', async () => {
-                    const replyText = prompt('Enter your reply:');
-                    if (replyText && currentUser) {
+                // Attach reply handlers
+                document.querySelectorAll('.reply-button').forEach(button => {
+                    button.addEventListener('click', () => {
                         const commentId = button.getAttribute('data-id');
-                        const commentRef = db.collection('comments').doc(commentId);
-                        try {
-                            await db.runTransaction(async (transaction) => {
-                                const commentDoc = await transaction.get(commentRef);
-                                if (!commentDoc.exists) {
-                                    throw "Document does not exist!";
-                                }
-                                // Add the reply to the existing replies array
-                                transaction.update(commentRef, {
-                                    replies: firebase.firestore.FieldValue.arrayUnion({
-                                        text: replyText,
-                                        userName: currentUser.displayName || currentUser.email,
-                                        userProfilePic: currentUser.photoURL || 'default-pic-url',
-                                        timestamp: new Date()
-                                    })
-                                });
-                            });
-                            console.log("Reply added successfully.");
-                        } catch (error) {
-                            console.error("Error adding reply: ", error);
-                        }
-                    }
+                        handleReply(commentId);
+                    });
                 });
             });
         }
 
-        // Function to handle user authentication when the page loads
-        window.onload = function() {
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    currentUser = user;
-                    enableCommenting();
-                    loadComments();
-                    console.log("User is signed in: ", user.displayName);
-                } else {
-                    currentUser = null;
-                    authenticateUser();
+        // Handle replying to comments
+        async function handleReply(commentId) {
+            const replyText = prompt("Enter your reply:");
+            if (replyText && currentUser) {
+                const commentRef = doc(db, 'comments', commentId);
+                try {
+                    await updateDoc(commentRef, {
+                        replies: arrayUnion({
+                            text: replyText,
+                            userName: currentUser.displayName,
+                            userProfilePic: currentUser.photoURL,
+                            timestamp: new Date(),
+                        })
+                    });
+                    console.log("Reply added successfully.");
+                } catch (error) {
+                    console.error("Error adding reply: ", error);
                 }
-            });
-        };
-
-        // Function to handle user badges and other profile details
-        async function setupUserProfile(user) {
-            const userRef = db.collection('users').doc(user.uid);
-            const userProfile = await userRef.get();
-
-            if (!userProfile.exists) {
-                // If user profile does not exist, create it
-                await userRef.set({
-                    displayName: user.displayName || user.email,
-                    photoURL: user.photoURL || 'default-pic-url',
-                    userCommentsCount: 0,
-                    country: 'Unknown',  // Example, you might want to gather this info from the user
-                    dateJoined: new Date()
-                });
             } else {
-                // User profile exists, load data if necessary
-                const userData = userProfile.data();
-                console.log("User Profile:", userData);
+                console.warn("Cannot post reply: User is not authenticated or reply is empty.");
             }
         }
 
-        // Sign out the current user
-        function signOut() {
-            auth.signOut().then(() => {
-                console.log("User signed out.");
-                location.reload();  // Reload the page to reset UI and data
-            }).catch((error) => {
-                console.error("Error signing out: ", error);
-            });
-        }
+        // Auto login check
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                setupUI(user);
+            } else {
+                setupUI(null);
+            }
+        });
     </script>
 </body>
 </html>
