@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comment Section with Firebase</title>
+    <title>Comment Section</title>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            background-color: #f4f4f9;
         }
         .container {
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         .comment-box {
+            width: 100%;
+            padding: 10px;
             margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
         .comments {
             margin-top: 20px;
@@ -29,6 +33,7 @@
         .comment {
             padding: 10px;
             border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
         }
         .comment-avatar {
             border-radius: 50%;
@@ -40,11 +45,21 @@
             display: flex;
             align-items: center;
         }
+        .reply-button {
+            color: #007bff;
+            cursor: pointer;
+        }
+        .anonymous-option {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Comment Section</h2>
+
         <div id="auth-section">
             <button id="login" style="display: none;">Login with Google</button>
             <button id="logout" style="display: none;">Logout</button>
@@ -52,39 +67,27 @@
 
         <div id="comment-section" style="display: none;">
             <textarea id="comment-input" class="comment-box" placeholder="Add a comment"></textarea>
+            <div class="anonymous-option">
+                <input type="checkbox" id="anonymous-comment"> Comment as Anonymous
+            </div>
             <button id="submit-comment">Post Comment</button>
             <div id="comments-list" class="comments"></div>
         </div>
     </div>
 
     <script>
-        // Initialize the old Firebase project for authentication
-        const oldFirebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8c16c"
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
-        // Initialize the new Firebase project for storing comments
-        const newFirebaseConfig = {
-            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
-            authDomain: "game-earning-website.firebaseapp.com",
-            projectId: "game-earning-website",
-            storageBucket: "game-earning-website.appspot.com",
-            messagingSenderId: "581912396287",
-            appId: "1:581912396287:web:234fa03483d71115fc67ca",
-            measurementId: "G-HD7CZZMHT7"
-        };
-
-        // Initialize Firebase instances
-        const oldApp = firebase.initializeApp(oldFirebaseConfig, "authApp");
-        const newApp = firebase.initializeApp(newFirebaseConfig, "commentsApp");
-
-        const auth = oldApp.auth(); // Use old project for authentication
-        const db = newApp.firestore(); // Use new project for Firestore to store comments
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
         const loginBtn = document.getElementById('login');
         const logoutBtn = document.getElementById('logout');
@@ -96,7 +99,7 @@
                 loginBtn.style.display = 'none';
                 logoutBtn.style.display = 'block';
                 commentSection.style.display = 'block';
-                loadComments(); // Load comments when logged in
+                loadComments(); 
             } else {
                 loginBtn.style.display = 'block';
                 logoutBtn.style.display = 'none';
@@ -104,17 +107,9 @@
             }
         }
 
-        // Automatically check user authentication state on page load
-        auth.onAuthStateChanged(user => {
-            handleAuthUI(user);
-        });
-
-        // Login with Google
+        // Redirect non-logged users to login page
         loginBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider).then(result => {
-                handleAuthUI(result.user);
-            });
+            window.location.href = "https://9jahotblog.github.io/login-page.html";
         });
 
         // Logout
@@ -124,31 +119,43 @@
             });
         });
 
+        auth.onAuthStateChanged(user => {
+            handleAuthUI(user);
+        });
+
         // Post Comment
         const commentInput = document.getElementById('comment-input');
         const submitComment = document.getElementById('submit-comment');
         const commentsList = document.getElementById('comments-list');
+        const anonymousComment = document.getElementById('anonymous-comment');
 
         submitComment.addEventListener('click', () => {
             const commentText = commentInput.value;
             const user = auth.currentUser;
+            const isAnonymous = anonymousComment.checked;
 
-            if (user && commentText.trim()) {
-                // Store the comment in the new project's Firestore
-                db.collection('comments').add({
+            if (commentText.trim()) {
+                const commentData = {
                     text: commentText,
-                    user: user.displayName,
-                    userId: user.uid,
-                    userPhoto: user.photoURL,
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                }).then(() => {
+                };
+
+                if (isAnonymous || !user) {
+                    commentData.user = 'Anonymous';
+                    commentData.userPhoto = 'https://via.placeholder.com/40';
+                } else {
+                    commentData.user = user.displayName;
+                    commentData.userPhoto = user.photoURL;
+                }
+
+                db.collection('comments').add(commentData).then(() => {
                     commentInput.value = '';
                     loadComments();
                 });
             }
         });
 
-        // Load Comments from the new project's Firestore
+        // Load Comments from Firestore
         function loadComments() {
             db.collection('comments')
                 .orderBy('timestamp', 'desc')
@@ -163,6 +170,7 @@
                                     <strong>${comment.user}</strong>
                                 </div>
                                 <p>${comment.text}</p>
+                                <div class="reply-button">Reply</div>
                             </div>
                         `;
                     });
