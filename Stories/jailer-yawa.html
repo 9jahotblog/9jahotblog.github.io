@@ -38,6 +38,7 @@
             margin-top: 10px;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
         }
         .comment {
             border-bottom: 1px solid #ddd;
@@ -95,6 +96,7 @@
                             <h4>Guest Comment</h4>
                             <input type="text" id="guest-username" placeholder="Enter your name" class="comment-input" />
                             <input type="text" id="guest-pic" placeholder="Enter picture URL (optional)" class="comment-input" />
+                            <button id="guest-comment-button" class="comment-button">Post as Guest</button>
                         </div>
                     </div>
                 </div>
@@ -150,37 +152,47 @@
                 console.log("User is signed in: ", user.displayName);
             } else {
                 currentUser = null;
-                document.getElementById('comment-input').disabled = true;
-                document.getElementById('comment-button').disabled = true;
                 console.log("No user is signed in.");
             }
         });
 
-        document.getElementById('comment-button').addEventListener('click', async () => {
+        // Function to post a comment
+        async function postComment(commentText, userName, userProfilePic) {
+            try {
+                await addDoc(collection(db, 'comments'), {
+                    text: commentText,
+                    userName: userName,
+                    userProfilePic: userProfilePic,
+                    timestamp: new Date(),
+                    replies: []
+                });
+                document.getElementById('comment-input').value = '';
+                console.log("Comment added successfully.");
+            } catch (error) {
+                console.error("Error adding comment: ", error);
+            }
+        }
+
+        // Handle comment submission for authenticated users
+        document.getElementById('comment-button').addEventListener('click', () => {
+            const commentText = document.getElementById('comment-input').value;
+            if (commentText && currentUser) {
+                postComment(commentText, currentUser.displayName, currentUser.photoURL);
+            }
+        });
+
+        // Handle guest comment submission
+        document.getElementById('guest-comment-button').addEventListener('click', () => {
             const commentText = document.getElementById('comment-input').value;
             const guestUsername = document.getElementById('guest-username').value || 'Guest';
             const guestPic = document.getElementById('guest-pic').value || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
 
-            const userName = currentUser ? currentUser.displayName : guestUsername;
-            const userProfilePic = currentUser ? currentUser.photoURL : guestPic;
-
             if (commentText) {
-                try {
-                    await addDoc(collection(db, 'comments'), {
-                        text: commentText,
-                        userName: userName,
-                        userProfilePic: userProfilePic,
-                        timestamp: new Date(),
-                        replies: []
-                    });
-                    document.getElementById('comment-input').value = '';
-                    console.log("Comment added successfully.");
-                } catch (error) {
-                    console.error("Error adding comment: ", error);
-                }
+                postComment(commentText, guestUsername, guestPic);
             }
         });
 
+        // Real-time listener for comments
         const commentList = document.getElementById('comment-list');
         const q = query(collection(db, 'comments'));
         onSnapshot(q, (snapshot) => {
@@ -206,7 +218,7 @@
                     <div class="comment">
                         <img src="${comment.userProfilePic}" alt="User Profile Pic" />
                         <div>
-                       <span class="comment-user">${comment.userName}</span>
+                            <span class="comment-user">${comment.userName}</span>
                             <p class="comment-text">${comment.text}</p>
                             <button class="reply-button" data-id="${commentId}">Reply</button>
                             ${repliesHtml}
@@ -215,36 +227,22 @@
                 `;
             });
 
+            // Add event listeners for reply buttons
             document.querySelectorAll('.reply-button').forEach(button => {
                 button.addEventListener('click', async () => {
                     const replyText = prompt('Enter your reply:');
-                    if (replyText && currentUser) {
+                    if (replyText) {
                         const commentId = button.getAttribute('data-id');
                         const commentRef = doc(db, 'comments', commentId);
+                        const userName = currentUser ? currentUser.displayName : prompt("Enter your name:");
+                        const userProfilePic = currentUser ? currentUser.photoURL : prompt("Enter picture URL (optional):") || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+
                         try {
                             await updateDoc(commentRef, {
                                 replies: arrayUnion({
                                     text: replyText,
-                                    userName: currentUser.displayName,
-                                    userProfilePic: currentUser.photoURL,
-                                    timestamp: new Date()
-                                })
-                            });
-                            console.log("Reply added successfully.");
-                        } catch (error) {
-                            console.error("Error adding reply: ", error);
-                        }
-                    } else if (replyText) {
-                        const commentId = button.getAttribute('data-id');
-                        const commentRef = doc(db, 'comments', commentId);
-                        const guestUsername = prompt("Enter your name:");
-                        const guestPic = prompt("Enter picture URL (optional):") || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
-                        try {
-                            await updateDoc(commentRef, {
-                                replies: arrayUnion({
-                                    text: replyText,
-                                    userName: guestUsername,
-                                    userProfilePic: guestPic,
+                                    userName: userName,
+                                    userProfilePic: userProfilePic,
                                     timestamp: new Date()
                                 })
                             });
