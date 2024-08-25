@@ -7,13 +7,11 @@
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Basic styling to integrate with your existing site */
+        /* Integrated styling */
         .comment-section {
             margin-top: 20px;
-            border-top: 2px solid #ff9800;
             padding-top: 20px;
-            background-color: #000000;
-            border-radius: 10px;
+            border-top: 1px solid #ddd;
         }
         .comment-input, .reply-input, .auth-input {
             width: 100%;
@@ -23,8 +21,8 @@
             margin-bottom: 10px;
         }
         .comment-button, .reply-button, .auth-button {
-            background-color: #ff9800;
-            color: black;
+            background-color: #28a745;
+            color: white;
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
@@ -55,15 +53,11 @@
             margin-left: 50px;
             border-left: 1px solid #ddd;
             padding-left: 20px;
-            display: none;
         }
         .like-button, .helpful-button, .not-helpful-button {
             cursor: pointer;
             margin-right: 10px;
             font-size: 18px;
-        }
-        .like-button:hover, .helpful-button:hover, .not-helpful-button:hover {
-            color: #ff9800;
         }
         .badge {
             display: inline-block;
@@ -82,10 +76,6 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 10px;
-        }
-        .badge-select {
-            margin-left: 10px;
-            padding: 5px;
         }
         .emoji-suggestions {
             font-size: 18px;
@@ -176,10 +166,9 @@
         function displayUserDetails(user) {
             document.querySelector('.comment-section').style.display = 'block';
             document.getElementById('auth-container').style.display = 'none';
-
             document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', `
                 <div id="user-info">
-                    <img src="${user.photoURL}" alt="Profile Pic" />
+                    <img src="${user.photoURL || ''}" alt="Profile Pic" />
                     <span>${user.displayName}</span>
                     ${user.uid === 'philip_smith_uid' ? '<span class="admin-badge">Verified ✔️</span>' : '<span class="badge">9jahotblogger</span>'}
                 </div>
@@ -197,7 +186,10 @@
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 currentUser = userCredential.user;
 
-                await updateProfile(currentUser, { displayName: username, photoURL: picUrl });
+                await updateProfile(currentUser, { 
+                    displayName: username, 
+                    photoURL: picUrl 
+                });
 
                 await addDoc(collection(db, 'users'), {
                     uid: currentUser.uid,
@@ -370,7 +362,7 @@
             document.querySelectorAll('.reply-button').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const replyBox = document.getElementById(`reply-box-${event.target.dataset.id}`);
-                    replyBox.style.display = 'block';
+                    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
                 });
             });
 
@@ -384,7 +376,6 @@
                         return;
                     }
 
-                    const commentRef = doc(db, 'comments', commentId);
                     const replyData = {
                         text: replyText,
                         userName: currentUser.displayName,
@@ -393,6 +384,7 @@
                     };
 
                     try {
+                        const commentRef = doc(db, 'comments', commentId);
                         await updateDoc(commentRef, {
                             replies: arrayUnion(replyData)
                         });
