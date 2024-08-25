@@ -41,15 +41,6 @@
         }
         .comment-user {
             font-weight: bold;
-            position: relative;
-            display: inline-block;
-        }
-        .comment-user::after {
-            content: '✔️'; /* Custom verified badge */
-            color: #1da1f2; /* Blue color similar to Instagram */
-            font-size: 16px;
-            vertical-align: middle;
-            margin-left: 5px;
         }
         .comment-text {
             margin: 5px 0;
@@ -68,6 +59,26 @@
             margin-right: 10px;
             font-size: 18px;
         }
+        .badge {
+            display: inline-block;
+            padding: 5px;
+            background-color: #28a745; /* Green color for 9jahotblogger badge */
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 12px;
+            color: white;
+        }
+        .admin-badge {
+            background-color: #007bff;
+            margin-left: 5px;
+            color: white;
+        }
+        .verified-badge {
+            color: #1da1f2;
+            margin-left: 5px;
+            font-size: 16px;
+            vertical-align: middle;
+        }
         .auth-input-container {
             display: flex;
             align-items: center;
@@ -78,9 +89,6 @@
             font-size: 18px;
             margin-top: 10px;
             cursor: pointer;
-        }
-        .emoji-suggestions span {
-            margin-right: 10px;
         }
         .delete-comment-button {
             color: red;
@@ -119,7 +127,7 @@
                         <div id="comment-list"></div>
                         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
                         <button id="comment-button" class="comment-button">Post Comment</button>
-                        <div class="emoji-suggestions">Suggestions: 🤣🤣🤣🤣🤣 👏👏👏👏👏 ❤️🫶🔥🎉🤗✨️</div>
+                        <div class="emoji-suggestions">Suggestions: 😭🤣❤️🫶🤦🔥🎉🤗✨️</div>
                     </div>
                 </div>
             </div>
@@ -157,13 +165,28 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                document.querySelector('.comment-section').style.display = 'block';
-                document.getElementById('auth-container').style.display = 'none';
+                displayUserDetails(user);
             } else {
                 document.querySelector('.comment-section').style.display = 'none';
                 document.getElementById('auth-container').style.display = 'block';
             }
         });
+
+        function displayUserDetails(user) {
+            document.querySelector('.comment-section').style.display = 'block';
+            document.getElementById('auth-container').style.display = 'none';
+
+            const displayName = user.displayName || "User";
+            const photoURL = user.photoURL || "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+
+            document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', `
+                <div id="user-info">
+                    <img src="${photoURL}" alt="Profile Pic" />
+                    <span>${displayName}</span>
+                    ${user.uid === 'philip_smith_uid' ? '<span class="admin-badge">Admin</span><span class="verified-badge">✔️</span>' : '<span class="badge">9jahotblogger</span><span class="verified-badge">✔️</span>'}
+                </div>
+            `);
+        }
 
         // Handle Sign Up
         document.getElementById('signup-button').addEventListener('click', async () => {
@@ -189,8 +212,7 @@
                     userLevel: '9jahotblogger'
                 });
 
-                document.querySelector('.comment-section').style.display = 'block';
-                document.getElementById('auth-container').style.display = 'none';
+                displayUserDetails(currentUser);
             } catch (error) {
                 alert(error.message);
             }
@@ -203,8 +225,7 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                document.querySelector('.comment-section').style.display = 'block';
-                document.getElementById('auth-container').style.display = 'none';
+                displayUserDetails(auth.currentUser);
             } catch (error) {
                 alert(error.message);
             }
@@ -212,61 +233,228 @@
 
         // Handle Posting Comments
         document.getElementById('comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value;
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (!commentText || !currentUser) {
+                alert('Please write a comment and ensure you are logged in.');
+                return;
+            }
 
-            if (currentUser && commentText.trim() !== '') {
-                try {
-                    await addDoc(collection(db, 'comments'), {
-                        userId: currentUser.uid,
-                        username: currentUser.displayName,
-                        userPhotoURL: currentUser.photoURL,
-                        text: commentText,
-                        timestamp: new Date()
-                    });
-                    document.getElementById('comment-input').value = '';
-                } catch (error) {
-                    alert(error.message);
-                }
-            } else {
-                alert('Please log in and enter a comment.');
+            const articleId = 'articleId1'; // Unique identifier for the article/page
+
+            const commentData = {
+                text: commentText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                userId: currentUser.uid,
+                timestamp: new Date(),
+                articleId: articleId,
+                replies: [],
+                likes: [],
+                helpful: [],
+                notHelpful: [],
+                userLevel: currentUser.uid === 'philip_smith_uid' ? 'Admin' : '9jahotblogger'
+            };
+
+            try {
+                await addDoc(collection(db, 'comments'), commentData);
+                document.getElementById('comment-input').value = ''; // Clear input after posting
+                console.log("Comment posted successfully.");
+            } catch (error) {
+                console.error("Error posting comment: ", error);
             }
         });
 
-        // Load Comments
-        const commentsList = document.getElementById('comment-list');
-        const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
+        // Real-time listener for comments
+        const commentList = document.getElementById('comment-list');
+        const articleId = 'articleId1'; // Unique identifier for the article/page
+        const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
+
         onSnapshot(q, (snapshot) => {
-            commentsList.innerHTML = '';
+            commentList.innerHTML = '';
+            if (snapshot.empty) {
+                console.log("No comments found.");
+                return;
+            }
+
             snapshot.forEach((doc) => {
-                const commentData = doc.data();
-                const commentDiv = document.createElement('div');
-                commentDiv.className = 'comment';
-                commentDiv.innerHTML = `
-                    <div class="comment-user">
-                        <img src="${commentData.userPhotoURL || 'default-pic.jpg'}" alt="${commentData.username}">
-                        ${commentData.username}
+                const comment = doc.data();
+                const commentId = doc.id;
+                const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
+
+                const repliesHtml = comment.replies.map(reply => `
+                    <div class="comment reply-section">
+                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${reply.userName}</span>
+                            <p class="comment-text">${reply.text}</p>
+                            <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                        </div>
                     </div>
-                    <div class="comment-text">${commentData.text}</div>
-                    <div class="comment-metadata">
-                        ${new Date(commentData.timestamp.seconds * 1000).toLocaleString()}
-                        <span class="delete-comment-button" data-id="${doc.id}">Delete</span>
+                `).join('');
+
+                const commentHtml = `
+                    <div class="comment">
+                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName} 
+                                <span class="badge">${comment.userLevel}</span>
+                                ${comment.userId === 'philip_smith_uid' ? '<span class="admin-badge">Admin</span><span class="verified-badge">✔️</span>' : '<span class="verified-badge">✔️</span>'}
+                            </span>
+                            <p class="comment-text">${comment.text}</p>
+                            <span class="comment-date">${commentDate}</span>
+                            <button class="like-button" data-id="${commentId}">👍 (${comment.likes.length})</button>
+                            <button class="helpful-button" data-id="${commentId}">👏 (${comment.helpful.length})</button>
+                            <button class="not-helpful-button" data-id="${commentId}">🖕 (${comment.notHelpful.length})</button>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                            ${comment.userId === 'philip_smith_uid' ? '<span class="delete-comment-button" data-id="'+commentId+'">Delete</span>' : ''}
+                            <div class="reply-box" id="reply-box-${commentId}" style="display:none;">
+                                <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
+                                <button class="submit-reply-button comment-button">Submit Reply</button>
+                            </div>
+                            ${repliesHtml}
+                        </div>
                     </div>
                 `;
-                commentsList.appendChild(commentDiv);
+
+                commentList.insertAdjacentHTML('beforeend', commentHtml);
+            });
+
+            addCommentListeners();
+        });
+
+        function addCommentListeners() {
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            likes: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Comment liked successfully.");
+                    } catch (error) {
+                        console.error("Error liking comment: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            helpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.not-helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            notHelpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as not helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as not helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const replyBox = document.getElementById(`reply-box-${event.target.dataset.id}`);
+                    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+                });
+            });
+
+            document.querySelectorAll('.submit-reply-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.closest('.reply-box').id.replace('reply-box-', '');
+                    const replyText = event.target.previousElementSibling.value.trim();
+
+                    if (!replyText) {
+                        alert('Reply cannot be empty.');
+                        return;
+                    }
+
+                    const replyData = {
+                        text: replyText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date()
+                    };
+
+                    try {
+                        const commentRef = doc(db, 'comments', commentId);
+                        await updateDoc(commentRef, {
+                            replies: arrayUnion(replyData)
+                        });
+                        console.log("Reply added successfully.");
+                        event.target.previousElementSibling.value = ''; // Clear reply input
+                        const replyBox = document.getElementById(`reply-box-${commentId}`);
+                        replyBox.style.display = 'none'; // Hide reply box after submitting
+                    } catch (error) {
+                        console.error("Error adding reply: ", error);
+                    }
+                });
+            });
+
+            // Admin delete functionality
+            document.querySelectorAll('.delete-comment-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+
+                    if (confirm("Are you sure you want to delete this comment?")) {
+                        try {
+                            await deleteDoc(doc(db, 'comments', commentId));
+                            console.log("Comment deleted successfully.");
+                        } catch (error) {
+                            console.error("Error deleting comment: ", error);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Emoji suggestions functionality
+        document.querySelectorAll('.emoji-suggestions').forEach(emoji => {
+            emoji.addEventListener('click', (event) => {
+                const emojiClicked = event.target.textContent.trim();
+                const commentInput = document.getElementById('comment-input');
+                commentInput.value += emojiClicked;
+                commentInput.focus(); // Refocus the input box
             });
         });
 
-        // Handle Delete Comment
-        commentsList.addEventListener('click', async (event) => {
-            if (event.target.classList.contains('delete-comment-button')) {
-                const commentId = event.target.getAttribute('data-id');
-                try {
-                    await deleteDoc(doc(db, 'comments', commentId));
-                } catch (error) {
-                    alert(error.message);
-                }
+        // Optional: Notification System for Replies (Basic implementation)
+        function notifyUser(userId, message) {
+            // Ideally, you would store notifications in Firestore under a 'notifications' collection
+            // Here is a basic example of how to push a notification
+            try {
+                addDoc(collection(db, 'notifications'), {
+                    userId: userId,
+                    message: message,
+                    timestamp: new Date()
+                });
+                console.log("Notification sent successfully.");
+            } catch (error) {
+                console.error("Error sending notification: ", error);
             }
-        });
+        }
     </script>
 </body>
 </html>
+
+
