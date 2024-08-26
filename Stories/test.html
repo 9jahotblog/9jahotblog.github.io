@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>9jahotblog Storybooks Comments</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Integrated styling */
+        .comment-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        .comment-input, .reply-input, .auth-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .comment-button, .reply-button, .auth-button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .comment {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .comment img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .comment-user {
+            font-weight: bold;
+        }
+        .comment-text {
+            margin: 5px 0;
+        }
+        .comment-metadata {
+            font-size: 12px;
+            color: #888;
+        }
+        .reply-section {
+            margin-left: 50px;
+            border-left: 1px solid #ddd;
+            padding-left: 20px;
+        }
+        .like-button, .helpful-button, .not-helpful-button {
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px;
+            background-color: #28a745; /* Green color for 9jahotblogger badge */
+            border-radius: 5px;
+            margin-left: 10px;
+            font-size: 12px;
+            color: white;
+        }
+        .admin-badge {
+            background-color: #007bff;
+            margin-left: 5px;
+            color: white;
+        }
+        .custom-verified-badge {
+         display: inline-block;
+         margin-left: 5px;
+         width: 18px;
+         height: 18px;
+         background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Custom blue badge icon URL */
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: center;
+         border-radius: 50%; /* This makes the badge circular */
+         vertical-align: middle;
+        }
+        .auth-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .emoji-suggestions {
+            font-size: 18px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .emoji-suggestions span {
+            margin-right: 10px;
+        }
+        .delete-comment-button {
+            color: red;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="is-preload landing">
+    <div id="page-wrapper">
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <div class="w3-container w3-white w3-margin w3-padding-large">
+                    <header class="major">
+                        <h3>Jailer's Pen</h3>
+                        <p>Title of article...</p>
+                    </header>
+
+                    <div id="auth-container">
+                        <h4>Sign Up or Log In to Comment</h4>
+                        <p>No profile picture url? Go to <a href="https://postimg.cc">Postimg.cc</a>
+                        Upload pic and get direct link url to paste here..</p>
+                        <div class="auth-input-container">
+                            <input type="email" id="auth-email" placeholder="Email" class="auth-input" />
+                            <input type="password" id="auth-password" placeholder="Password" class="auth-input" />
+                        </div>
+                        <div class="auth-input-container">
+                            <input type="text" id="auth-username" placeholder="Username (for Sign Up)" class="auth-input" />
+                            <input type="text" id="auth-pic-url" placeholder="Profile Picture URL" class="auth-input" />
+                        </div>
+                        <button id="signup-button" class="auth-button">Sign Up</button>
+                        <button id="login-button" class="auth-button">Log In</button>
+                    </div>
+
+                    <div class="comment-section" style="display:none;">
+                        <h3>Comments</h3>
+                        <div id="comment-list"></div>
+                        <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
+                        <button id="comment-button" class="comment-button">Post Comment</button>
+                        <div class="emoji-suggestions">
+                            <span>🤣🤣🤣🤣🤣</span>
+                            <span>👏👏👏👏👏</span>
+                            <span>🔥🔥🔥🔥🔥</span>
+                            <span>🥹🥹🥹🥹🥹</span>
+                            <!-- Add more emojis here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.dropotron.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/jquery.scrollex.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/browser.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/breakpoints.min.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/util.js"></script>
+    <script src="https://9jahotblog.github.io/assets/js/main.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, where, onSnapshot, updateDoc, doc, arrayUnion, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCMmqClV71_VFyvShm7fWypPfg1t7ecVxg",
+            authDomain: "game-earning-website.firebaseapp.com",
+            projectId: "game-earning-website",
+            storageBucket: "game-earning-website.appspot.com",
+            messagingSenderId: "581912396287",
+            appId: "1:581912396287:web:234fa03483d71115fc67ca"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                document.querySelector('.comment-section').style.display = 'block';
+                document.getElementById('auth-container').style.display = 'none';
+            } else {
+                document.querySelector('.comment-section').style.display = 'none';
+                document.getElementById('auth-container').style.display = 'block';
+            }
+        });
+
+        // Handle Sign Up
+        document.getElementById('signup-button').addEventListener('click', async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            const username = document.getElementById('auth-username').value;
+            const picUrl = document.getElementById('auth-pic-url').value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                currentUser = userCredential.user;
+
+                await updateProfile(currentUser, { 
+                    displayName: username, 
+                    photoURL: picUrl 
+                });
+
+                await addDoc(collection(db, 'users'), {
+                    uid: currentUser.uid,
+                    username: username,
+                    email: email,
+                    photoURL: picUrl,
+                    userLevel: '9jahotblogger'
+                });
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Handle Log In
+        document.getElementById('login-button').addEventListener('click', async () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.querySelector('.comment-section').style.display = 'block';
+                document.getElementById('auth-container').style.display = 'none';
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+
+        // Handle Posting Comments
+        document.getElementById('comment-button').addEventListener('click', async () => {
+            const commentText = document.getElementById('comment-input').value.trim();
+            if (!commentText || !currentUser) {
+                alert('Please write a comment and ensure you are logged in.');
+                return;
+            }
+
+            const articleId = 'articleId1'; // Unique identifier for the article/page
+
+            const commentData = {
+                text: commentText,
+                userName: currentUser.displayName,
+                userProfilePic: currentUser.photoURL,
+                userId: currentUser.uid,
+                timestamp: new Date(),
+                articleId: articleId,
+                replies: [],
+                likes: [],
+                helpful: [],
+                notHelpful: [],
+                userLevel: '9jahotblogger'
+            };
+
+            try {
+                await addDoc(collection(db, 'comments'), commentData);
+                document.getElementById('comment-input').value = ''; // Clear input after posting
+                console.log("Comment posted successfully.");
+            } catch (error) {
+                console.error("Error posting comment: ", error);
+            }
+        });
+
+        // Real-time listener for comments
+        const commentList = document.getElementById('comment-list');
+        const articleId = 'articleId1'; // Unique identifier for the article/page
+        const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
+
+        onSnapshot(q, (snapshot) => {
+            commentList.innerHTML = '';
+            if (snapshot.empty) {
+                console.log("No comments found.");
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const comment = doc.data();
+                const commentId = doc.id;
+                const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
+
+                const repliesHtml = comment.replies.map(reply => `
+                    <div class="comment reply-section">
+                        <img src="${reply.userProfilePic || ''}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${reply.userName}<span class="custom-verified-badge"></span>
+                            </span>
+                            <p class="comment-text">${reply.text}</p>
+                            <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                        </div>
+                    </div>
+                `).join('');
+
+                const commentHtml = `
+                    <div class="comment">
+                        <img src="${comment.userProfilePic || ''}" alt="User Profile Pic" />
+                        <div>
+                            <span class="comment-user">${comment.userName}<span class="custom-verified-badge"></span>
+                            </span>
+                            <p class="comment-text">${comment.text}</p>
+                            <span class="comment-date">${commentDate}</span>
+                            <button class="like-button" data-id="${commentId}">👍 (${comment.likes.length})</button>
+                            <button class="helpful-button" data-id="${commentId}">👏 (${comment.helpful.length})</button>
+                            <button class="not-helpful-button" data-id="${commentId}">🖕 (${comment.notHelpful.length})</button>
+                            <button class="reply-button" data-id="${commentId}">Reply</button>
+                            ${comment.userId === 'philip_smith_uid' ? '<span class="delete-comment-button" data-id="'+commentId+'">Delete</span>' : ''}
+                            <div class="reply-box" id="reply-box-${commentId}" style="display:none;">
+                                <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
+                                <button class="submit-reply-button comment-button">Submit Reply</button>
+                            </div>
+                            ${repliesHtml}
+                        </div>
+                    </div>
+                `;
+
+                commentList.insertAdjacentHTML('beforeend', commentHtml);
+            });
+
+            addCommentListeners();
+        });
+
+        function addCommentListeners() {
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            likes: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Comment liked successfully.");
+                    } catch (error) {
+                        console.error("Error liking comment: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            helpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.not-helpful-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+                    const commentRef = doc(db, 'comments', commentId);
+
+                    try {
+                        await updateDoc(commentRef, {
+                            notHelpful: arrayUnion(currentUser.uid)
+                        });
+                        console.log("Marked as not helpful successfully.");
+                    } catch (error) {
+                        console.error("Error marking comment as not helpful: ", error);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.reply-button').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const replyBox = document.getElementById(`reply-box-${event.target.dataset.id}`);
+                    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+                });
+            });
+
+            document.querySelectorAll('.submit-reply-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.closest('.reply-box').id.replace('reply-box-', '');
+                    const replyText = event.target.previousElementSibling.value.trim();
+
+                    if (!replyText) {
+                        alert('Reply cannot be empty.');
+                        return;
+                    }
+
+                    const replyData = {
+                        text: replyText,
+                        userName: currentUser.displayName,
+                        userProfilePic: currentUser.photoURL,
+                        timestamp: new Date()
+                    };
+
+                    try {
+                        const commentRef = doc(db, 'comments', commentId);
+                        await updateDoc(commentRef, {
+                            replies: arrayUnion(replyData)
+                        });
+                        console.log("Reply added successfully.");
+                        event.target.previousElementSibling.value = ''; // Clear reply input
+                        const replyBox = document.getElementById(`reply-box-${commentId}`);
+                        replyBox.style.display = 'none'; // Hide reply box after submitting
+                    } catch (error) {
+                        console.error("Error adding reply: ", error);
+                    }
+                });
+            });
+
+            // Admin delete functionality
+            document.querySelectorAll('.delete-comment-button').forEach(button => {
+                button.addEventListener('click', async (event) => {
+                    const commentId = event.target.dataset.id;
+
+                    if (confirm("Are you sure you want to delete this comment?")) {
+                        try {
+                            await deleteDoc(doc(db, 'comments', commentId));
+                            console.log("Comment deleted successfully.");
+                        } catch (error) {
+                            console.error("Error deleting comment: ", error);
+                        }
+                    }
+                });
+            });
+
+            // Emoji suggestions functionality
+            document.querySelectorAll('.emoji-suggestions span').forEach(emoji => {
+                emoji.addEventListener('click', (event) => {
+                    const emojiClicked = event.target.textContent.trim();
+                    const commentInput = document.getElementById('comment-input');
+                    commentInput.value += emojiClicked;
+                    commentInput.focus(); // Refocus the input box
+                });
+            });
+        }
+    </script>
+</body>
+</html>
