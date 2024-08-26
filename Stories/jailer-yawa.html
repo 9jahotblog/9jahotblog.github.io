@@ -343,15 +343,16 @@
         let currentUser = null;
 
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                currentUser = user;
-                document.querySelector('.comment-section').style.display = 'block';
-                document.getElementById('auth-container').style.display = 'none';
-            } else {
-                document.querySelector('.comment-section').style.display = 'none';
-                document.getElementById('auth-container').style.display = 'block';
-            }
-        });
+    if (user) {
+        currentUser = user;
+        document.getElementById('auth-container').style.display = 'none';
+        document.querySelector('.comment-section').style.display = 'block';
+    } else {
+        currentUser = null; // Ensure currentUser is null when logged out
+        document.getElementById('auth-container').style.display = 'block';
+        document.querySelector('.comment-section').style.display = 'block'; // Show comments section even if not logged in
+    }
+});
 
         // Handle Sign Up
         document.getElementById('signup-button').addEventListener('click', async () => {
@@ -397,12 +398,17 @@
 
         // Handle Posting Comments
         document.getElementById('comment-button').addEventListener('click', async () => {
-            const commentText = document.getElementById('comment-input').value.trim();
-            if (!commentText || !currentUser) {
-                alert('Please write a comment and ensure you are logged in.');
-                return;
-            }
+    if (!currentUser) {
+        alert('Please log in to post a comment.');
+        return;
+    }
 
+    const commentText = document.getElementById('comment-input').value.trim();
+    if (!commentText) {
+        alert('Please write a comment.');
+        return;
+    }
+            
             const articleId = 'articleId1'; // Unique identifier for the article/page
 
             const commentData = {
@@ -429,59 +435,37 @@
         });
 
         // Real-time listener for comments
-        const commentList = document.getElementById('comment-list');
-        const articleId = 'articleId1'; // Unique identifier for the article/page
-        const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
+const commentList = document.getElementById('comment-list');
+const articleId = 'articleId1'; // Unique identifier for the article/page
+const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
 
-        onSnapshot(q, (snapshot) => {
-            commentList.innerHTML = '';
-            if (snapshot.empty) {
-                console.log("No comments found.");
-                return;
-            }
+onSnapshot(q, (snapshot) => {
+    commentList.innerHTML = '';
+    if (snapshot.empty) {
+        console.log("No comments found.");
+        return;
+    }
 
-            snapshot.forEach((doc) => {
-                const comment = doc.data();
-                const commentId = doc.id;
-                const commentDate = new Date(comment.timestamp.seconds * 1000).toLocaleString();
-
-                const repliesHtml = comment.replies.map(reply => `
-                    <div class="comment reply-section">
-                        <img src="${reply.userProfilePic || ''}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${reply.userName}<span class="custom-verified-badge"></span>
-                            </span>
-                            <p class="comment-text">${reply.text}</p>
-                            <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
-                            <button class="reply-button" data-id="${commentId}">Reply</button>
-                        </div>
-                    </div>
-                `).join('');
-
-                const commentHtml = `
-                    <div class="comment">
-                        <img src="${comment.userProfilePic || ''}" alt="User Profile Pic" />
-                        <div>
-                            <span class="comment-user">${comment.userName}<span class="custom-verified-badge"></span>
-                            </span>
-                            <p class="comment-text">${comment.text}</p>
-                            <span class="comment-date">${commentDate}</span>
-                            <button class="like-button" data-id="${commentId}">👍 (${comment.likes.length})</button>
-                            <button class="helpful-button" data-id="${commentId}">👏 (${comment.helpful.length})</button>
-                            <button class="not-helpful-button" data-id="${commentId}">🖕 (${comment.notHelpful.length})</button>
-                            <button class="reply-button" data-id="${commentId}">Reply</button>
-                            ${comment.userId === 'philip_smith_uid' ? '<span class="delete-comment-button" data-id="'+commentId+'">Delete</span>' : ''}
-                            <div class="reply-box" id="reply-box-${commentId}" style="display:none;">
-                                <textarea class="reply-input" placeholder="Write your reply here..."></textarea>
-                                <button class="submit-reply-button comment-button">Submit Reply</button>
-                            </div>
-                            ${repliesHtml}
-                        </div>
-                    </div>
-                `;
-
-                commentList.insertAdjacentHTML('beforeend', commentHtml);
-            });
+    snapshot.forEach((doc) => {
+        const comment = doc.data();
+        const commentHtml = `
+            <div class="comment">
+                <img src="${comment.userProfilePic || ''}" alt="User Profile Pic" />
+                <div>
+                    <span class="comment-user">${comment.userName} 
+                        <span class="custom-verified-badge"></span>
+                    </span>
+                    <p class="comment-text">${comment.text}</p>
+                    <span class="comment-date">${new Date(comment.timestamp.seconds * 1000).toLocaleString()}</span>
+                    <button class="like-button" data-id="${doc.id}">👍 (${comment.likes.length})</button>
+                    <button class="helpful-button" data-id="${doc.id}">👏 (${comment.helpful.length})</button>
+                    <button class="not-helpful-button" data-id="${doc.id}">🖕 (${comment.notHelpful.length})</button>
+                    <button class="reply-button" data-id="${doc.id}">Reply</button>
+                </div>
+            </div>
+        `;
+        commentList.insertAdjacentHTML('beforeend', commentHtml);
+    });
 
             addCommentListeners();
         });
