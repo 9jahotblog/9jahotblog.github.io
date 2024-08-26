@@ -7,7 +7,18 @@
     <link rel="stylesheet" href="https://9jahotblog.github.io/assets/css/main.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Integrated styling */
+                .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Hide by default */
+        }
         .comment-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -273,7 +284,6 @@
             You're logged in as <span id="username"></span>
         </div>
 
-
                     <div id="auth-container">
                         <h4>Sign Up or Log In to Comment</h4>
                         <p>No profile picture url? Go to <a href="https://postimg.cc">Postimg.cc</a>
@@ -319,11 +329,7 @@
         </footer>
     </div>
 
-   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-
+   <script>
     const firebaseConfig = {
         apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
         authDomain: "jahotblog-login.firebaseapp.com",
