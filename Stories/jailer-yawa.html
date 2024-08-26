@@ -74,16 +74,16 @@
             color: white;
         }
         .custom-verified-badge {
-    display: inline-block;
-    margin-left: 5px;
-    width: 18px;
-    height: 18px;
-    background-image: url('https://i.postimg.cc/wMGQZmhq/images-1.png'); /* Custom blue badge icon URL */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 50%; /* This makes the badge circular */
-    vertical-align: middle;
+         display: inline-block;
+         margin-left: 5px;
+         width: 18px;
+         height: 18px;
+         background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Custom blue badge icon URL */
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: center;
+         border-radius: 50%; /* This makes the badge circular */
+         vertical-align: middle;
         }
         .auth-input-container {
             display: flex;
@@ -286,8 +286,7 @@
                     <div class="comment reply-section">
                         <img src="${reply.userProfilePic || ''}" alt="User Profile Pic" />
                         <div>
-                            <span class="comment-user">${reply.userName}
-                                <span class="custom-verified-badge"></span>
+                            <span class="comment-user">${reply.userName}<span class="custom-verified-badge"></span>
                             </span>
                             <p class="comment-text">${reply.text}</p>
                             <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
@@ -300,8 +299,7 @@
                     <div class="comment">
                         <img src="${comment.userProfilePic || ''}" alt="User Profile Pic" />
                         <div>
-                            <span class="comment-user">${comment.userName} 
-                                <span class="custom-verified-badge"></span>
+                            <span class="comment-user">${comment.userName}<span class="custom-verified-badge"></span>
                             </span>
                             <p class="comment-text">${comment.text}</p>
                             <span class="comment-date">${commentDate}</span>
