@@ -157,17 +157,46 @@
 <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
     <div class="w3-center">
         <h3>Jailer's Pen</h3></a>
-        <!-- Writer Profile Button -->
+        <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
+</div>
+
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor 
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
+
+<!-- Writer Profile Button -->
 <button id="profile-button" class="profile-button">Writer Profile</button>
 
 <!-- Profile Modal (Hidden by default) -->
 <div id="profile-modal" class="profile-modal">
     <div class="profile-content">
         <span id="close-modal" class="close-modal">&times;</span>
-        <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+        <img src="https://i.postimg.cc/XJfDsDRk/IMG-20240617-181105-198.jpg" alt="Profile Picture" class="profile-pic">
         <h2 class="profile-name">John Doe <span class="custom-verified-badge"></span></h2>
         <p class="profile-bio">John is an experienced writer who specializes in short stories, fiction, and creative writing. He has published multiple books and articles over the last 10 years.</p>
-        <button class="hire-button">Hire for Job</button>
+        
+        <!-- Post Analytics Section -->
+        <div class="post-analytics">
+            <p><strong>Comments:</strong> 123</p>
+            <p><strong>Reach:</strong> 4567</p>
+            <p><strong>Earnings:</strong> $789</p>
+        </div>
+
+        <!-- Hire Button with Link -->
+        <a href="https://www.example.com/hire-john-doe" class="hire-button">Hire for Job</a>
     </div>
 </div>
 
@@ -198,7 +227,7 @@
     }
 
     .profile-content {
-        background-color: white;
+        background-color: gold;
         padding: 20px;
         border-radius: 10px;
         text-align: center;
@@ -233,7 +262,7 @@
         margin-left: 5px;
         width: 18px;
         height: 18px;
-        background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Custom blue badge icon URL */
+        background-image: url('https://i.postimg.cc/BvXX4ThD/images.png'); /* Custom blue badge icon URL */
         background-size: cover;
         background-repeat: no-repeat;
         vertical-align: middle;
@@ -261,8 +290,19 @@
         margin: 15px 0;
     }
 
+    /* Post Analytics Styling */
+    .post-analytics {
+        margin-top: 15px;
+        text-align: left;
+        font-size: 14px;
+    }
+    .post-analytics p {
+        margin: 5px 0;
+    }
+
     /* Hire Button Styling */
     .hire-button {
+        display: inline-block;
         background-color: #007bff;
         color: white;
         padding: 10px 20px;
@@ -270,6 +310,8 @@
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
+        text-decoration: none; /* Removes underline from the link */
+        margin-top: 15px;
     }
 </style>
 
@@ -290,26 +332,7 @@
         }
     });
 </script>
-        <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
-    </div>
     
- <div class="w3-justify">
-    <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
-
-    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
-</div>
-
-<p style="display: flex; align-items: center; margin: 0;">
-  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
-</p>
-<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
-  Editor 
-</p>
-        
-        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
-    Thank you for your feedback!
-</div>
-
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <div style="display: inline-block; vertical-align: top;">
         <button class="w3-button w3-round like-button" data-article-id="articleid31" onclick="likeFunction(this, 'articleid31')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
