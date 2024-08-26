@@ -175,7 +175,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentUser = null;
+        let currentUser = User;
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
