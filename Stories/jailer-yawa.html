@@ -157,6 +157,139 @@
 <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
     <div class="w3-center">
         <h3>Jailer's Pen</h3></a>
+        <!-- Writer Profile Button -->
+<button id="profile-button" class="profile-button">Writer Profile</button>
+
+<!-- Profile Modal (Hidden by default) -->
+<div id="profile-modal" class="profile-modal">
+    <div class="profile-content">
+        <span id="close-modal" class="close-modal">&times;</span>
+        <img src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+        <h2 class="profile-name">John Doe <span class="custom-verified-badge"></span></h2>
+        <p class="profile-bio">John is an experienced writer who specializes in short stories, fiction, and creative writing. He has published multiple books and articles over the last 10 years.</p>
+        <button class="hire-button">Hire for Job</button>
+    </div>
+</div>
+
+<style>
+    /* Button Styling */
+    .profile-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    /* Modal Styling */
+    .profile-modal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 300px;
+        position: relative;
+        animation: slideIn 0.5s ease-in-out;
+    }
+
+    /* Slide-in Animation */
+    @keyframes slideIn {
+        from {
+            transform: translateY(-50%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* Profile Picture Styling */
+    .profile-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 15px;
+    }
+
+    /* Verified Badge Styling */
+    .custom-verified-badge {
+        display: inline-block;
+        margin-left: 5px;
+        width: 18px;
+        height: 18px;
+        background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Custom blue badge icon URL */
+        background-size: cover;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+    }
+
+    /* Close Button Styling */
+    .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    /* Profile Name Styling */
+    .profile-name {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    /* Profile Bio Styling */
+    .profile-bio {
+        font-size: 14px;
+        color: #666;
+        margin: 15px 0;
+    }
+
+    /* Hire Button Styling */
+    .hire-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+</style>
+
+<script>
+    // JavaScript to handle modal display
+    document.getElementById('profile-button').addEventListener('click', function() {
+        document.getElementById('profile-modal').style.display = 'flex';
+    });
+
+    document.getElementById('close-modal').addEventListener('click', function() {
+        document.getElementById('profile-modal').style.display = 'none';
+    });
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target == document.getElementById('profile-modal')) {
+            document.getElementById('profile-modal').style.display = 'none';
+        }
+    });
+</script>
         <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
     </div>
     
