@@ -107,8 +107,44 @@
         }
     </style>
 </head>
-<body class="is-preload landing">
+
+    <body class="is-preload landing">
     <div id="page-wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1 id="logo"><a href="https://9jahotblog.github.io">9JAHOTBLOG</a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="https://9jahotblog.github.io">Homepage</a></li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/submissions.html">Manuscript Submissions</a></li>
+                            <li><a href="https://9jahotblog.github.io/short-story-submissions.html">Short Story Submissions</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <ul>
+                            <li><a href="https://9jahotblog.github.io/books.html">Library/Books</a></li>
+                            <li><a href="https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html">Blog (Articles/news/stories..)</a></li>
+                            <li><a href="https://9jahotblog.github.io/book-checkout.html">Donate</a></li>
+                            <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg">WhatsApp Community</a></li>
+                            <li><a href="https://chat.whatsapp.com/JD8iFAZ67hTE8gYJKI5hfm">Join the Team (Volunteer)</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="https://9jahotblog.github.io/create-book-trailers-images-or-movies.html">Adapt Book to Movie</a></li>
+                    <li><a href="https://9jahotblog.github.io/creative-contests.html">Participate in Creative Contests</a></li>
+                    <li><a href="https://9jahotblog.github.io/nominate-your-book.html">Nominate your Book (Award)</a></li>
+                    <li><a href="https://9jahotblog.github.io/profile.html">Visit Your Profile</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Sign Up</a></li>
+                    <li><a href="https://9jahotblog.github.io/login-page.html">Login</a></li>
+                    <li><a href="https://9jahotblog.github.io/privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="https://9jahotblog.github.io/search-page.html">Search Page</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Main -->
         <div id="main" class="wrapper style1">
             <div class="container">
                 <div class="w3-container w3-white w3-margin w3-padding-large">
@@ -116,6 +152,127 @@
                         <h3>Jailer's Pen</h3>
                         <p>Title of article...</p>
                     </header>
+
+                         <!-- Blog entry -->
+<div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
+    <div class="w3-center">
+        <h3>Jailer's Pen</h3></a>
+        <h5>Title of article...<span class="w3-opacity"></span>|| 28, Aug 2024.</h5>
+    </div>
+    
+ <div class="w3-justify">
+    <img src="https://i.postimg.cc/wvSWCQGD/IMG-20230104-WA0167.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
+
+    <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
+</div>
+
+<p style="display: flex; align-items: center; margin: 0;">
+  Kolade Philip O.<img src="https://i.postimg.cc/YqZKVx4v/IMG-20240803-WA0027.jpg" alt="9jahotblog Verified Badge" style="width: 16px; height: 16px; margin-left: 5px; border-radius: 50%; pointer-events: none;" />
+</p>
+<p style="margin: 0; font-weight: 500; color: #1DA1F2;">
+  Editor 
+</p>
+        
+        <div id="notification" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 5px; z-index: 1000;">
+    Thank you for your feedback!
+</div>
+
+<div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
+    <div style="display: inline-block; vertical-align: top;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid31" onclick="likeFunction(this, 'articleid31')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+            <i class="fa fa-thumbs-up"></i> Like
+        </button>
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid31" onclick="dislikeFunction(this, 'articleid31')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+            <i class="fa fa-thumbs-down"></i> Dislike
+        </button>
+    </div>
+    <div style="float: right;">
+        <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
+            <a href="https://9jahotblog.github.io/Stories/jailer-yawa.html" style="color: white; text-decoration: none;">Read Short Stories »</a>
+        </button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+    </div>
+         </div> 
+            </div>
+                </div>
+
+
+<script>
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.style.display = 'block';
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    function saveUserChoice(articleId, choice) {
+        localStorage.setItem(`userChoice-${articleId}`, choice);
+    }
+
+    function getUserChoice(articleId) {
+        return localStorage.getItem(`userChoice-${articleId}`);
+    }
+
+    function likeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'liked') {
+            saveUserChoice(articleId, 'liked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Dislike';
+            showNotification('Thank you for liking this post! Please leave a comment');
+        }
+    }
+
+    function dislikeFunction(button, articleId) {
+        const userChoice = getUserChoice(articleId);
+
+        if (userChoice !== 'disliked') {
+            saveUserChoice(articleId, 'disliked');
+            button.disabled = true;
+            button.innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).disabled = true;
+            document.querySelector(`.like-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-up"></i> Like';
+            showNotification('Thank you for your feedback!');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            const articleId = button.getAttribute('data-article-id');
+            const userChoice = getUserChoice(articleId);
+
+            if (userChoice === 'liked') {
+                button.disabled = true;
+                button.innerHTML = '<i class="fa fa-thumbs-up"></i> Liked';
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+            } else if (userChoice === 'disliked') {
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).disabled = true;
+                document.querySelector(`.dislike-button[data-article-id="${articleId}"]`).innerHTML = '<i class="fa fa-thumbs-down"></i> Disliked';
+                button.disabled = true;
+            }
+        });
+    });
+</script>
+
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification -->
+        <div class="notification" id="login-notification">
+            You're logged in as <span id="username"></span>
+        </div>
+
 
                     <div id="auth-container">
                         <h4>Sign Up or Log In to Comment</h4>
@@ -150,6 +307,47 @@
             </div>
         </div>
     </div>
+
+
+          <!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
+    </div>
+
+   <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+        authDomain: "jahotblog-login.firebaseapp.com",
+        projectId: "jahotblog-login",
+        storageBucket: "jahotblog-login.appspot.com",
+        messagingSenderId: "661526730601",
+        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
+        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+        
+     // Check if user is signed in and display their info
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('username').textContent = user.displayName || 'User';
+                document.getElementById('login-notification').style.display = 'block';
+            } else {
+                document.getElementById('login-notification').style.display = 'none';
+            }
+        });
+</script>
+
 
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
