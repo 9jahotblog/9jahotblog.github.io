@@ -73,10 +73,14 @@
             margin-left: 5px;
             color: white;
         }
-        .verified-badge {
-            color: #1da1f2;
+        .custom-verified-badge {
+            display: inline-block;
             margin-left: 5px;
-            font-size: 16px;
+            width: 18px;
+            height: 18px;
+            background-image: url('https://your-custom-url/verified-icon.png'); /* Provide your custom blue badge icon URL */
+            background-size: contain;
+            background-repeat: no-repeat;
             vertical-align: middle;
         }
         .auth-input-container {
@@ -89,6 +93,9 @@
             font-size: 18px;
             margin-top: 10px;
             cursor: pointer;
+        }
+        .emoji-suggestions span {
+            margin-right: 10px;
         }
         .delete-comment-button {
             color: red;
@@ -127,7 +134,13 @@
                         <div id="comment-list"></div>
                         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
                         <button id="comment-button" class="comment-button">Post Comment</button>
-                        <div class="emoji-suggestions">Suggestions: 😭🤣❤️🫶🤦🔥🎉🤗✨️</div>
+                        <div class="emoji-suggestions">
+                            <span>🤣🤣🤣🤣🤣</span>
+                            <span>👏👏👏👏👏</span>
+                            <span>🔥🔥🔥🔥🔥</span>
+                            <span>🥹🥹🥹🥹🥹</span>
+                            <!-- Add more emojis here -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -165,28 +178,13 @@
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                displayUserDetails(user);
+                document.querySelector('.comment-section').style.display = 'block';
+                document.getElementById('auth-container').style.display = 'none';
             } else {
                 document.querySelector('.comment-section').style.display = 'none';
                 document.getElementById('auth-container').style.display = 'block';
             }
         });
-
-        function displayUserDetails(user) {
-            document.querySelector('.comment-section').style.display = 'block';
-            document.getElementById('auth-container').style.display = 'none';
-
-            const displayName = user.displayName || "User";
-            const photoURL = user.photoURL || "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
-
-            document.querySelector('.comment-section').insertAdjacentHTML('afterbegin', `
-                <div id="user-info">
-                    <img src="${photoURL}" alt="Profile Pic" />
-                    <span>${displayName}</span>
-                    ${user.uid === 'philip_smith_uid' ? '<span class="admin-badge">Admin</span><span class="verified-badge">✔️</span>' : '<span class="badge">9jahotblogger</span><span class="verified-badge">✔️</span>'}
-                </div>
-            `);
-        }
 
         // Handle Sign Up
         document.getElementById('signup-button').addEventListener('click', async () => {
@@ -211,12 +209,9 @@
                     photoURL: picUrl,
                     userLevel: '9jahotblogger'
                 });
-
-                displayUserDetails(currentUser);
-            } catch (error) {
-                alert(error.message);
-            }
-        });
+            } catch (error) {alert(error.message);
+                }
+            });
 
         // Handle Log In
         document.getElementById('login-button').addEventListener('click', async () => {
@@ -225,7 +220,8 @@
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                displayUserDetails(auth.currentUser);
+                document.querySelector('.comment-section').style.display = 'block';
+                document.getElementById('auth-container').style.display = 'none';
             } catch (error) {
                 alert(error.message);
             }
@@ -252,7 +248,7 @@
                 likes: [],
                 helpful: [],
                 notHelpful: [],
-                userLevel: currentUser.uid === 'philip_smith_uid' ? 'Admin' : '9jahotblogger'
+                userLevel: '9jahotblogger'
             };
 
             try {
@@ -283,9 +279,11 @@
 
                 const repliesHtml = comment.replies.map(reply => `
                     <div class="comment reply-section">
-                        <img src="${reply.userProfilePic}" alt="User Profile Pic" />
+                        <img src="${reply.userProfilePic || ''}" alt="User Profile Pic" />
                         <div>
-                            <span class="comment-user">${reply.userName}</span>
+                            <span class="comment-user">${reply.userName}
+                                <span class="custom-verified-badge"></span>
+                            </span>
                             <p class="comment-text">${reply.text}</p>
                             <span class="comment-date">${new Date(reply.timestamp.seconds * 1000).toLocaleString()}</span>
                             <button class="reply-button" data-id="${commentId}">Reply</button>
@@ -295,11 +293,10 @@
 
                 const commentHtml = `
                     <div class="comment">
-                        <img src="${comment.userProfilePic}" alt="User Profile Pic" />
+                        <img src="${comment.userProfilePic || ''}" alt="User Profile Pic" />
                         <div>
                             <span class="comment-user">${comment.userName} 
-                                <span class="badge">${comment.userLevel}</span>
-                                ${comment.userId === 'philip_smith_uid' ? '<span class="admin-badge">Admin</span><span class="verified-badge">✔️</span>' : '<span class="verified-badge">✔️</span>'}
+                                <span class="custom-verified-badge"></span>
                             </span>
                             <p class="comment-text">${comment.text}</p>
                             <span class="comment-date">${commentDate}</span>
@@ -366,6 +363,7 @@
                             notHelpful: arrayUnion(currentUser.uid)
                         });
                         console.log("Marked as not helpful successfully.");
+                    }
                     } catch (error) {
                         console.error("Error marking comment as not helpful: ", error);
                     }
@@ -426,35 +424,17 @@
                     }
                 });
             });
-        }
 
-        // Emoji suggestions functionality
-        document.querySelectorAll('.emoji-suggestions').forEach(emoji => {
-            emoji.addEventListener('click', (event) => {
-                const emojiClicked = event.target.textContent.trim();
-                const commentInput = document.getElementById('comment-input');
-                commentInput.value += emojiClicked;
-                commentInput.focus(); // Refocus the input box
-            });
-        });
-
-        // Optional: Notification System for Replies (Basic implementation)
-        function notifyUser(userId, message) {
-            // Ideally, you would store notifications in Firestore under a 'notifications' collection
-            // Here is a basic example of how to push a notification
-            try {
-                addDoc(collection(db, 'notifications'), {
-                    userId: userId,
-                    message: message,
-                    timestamp: new Date()
+            // Emoji suggestions functionality
+            document.querySelectorAll('.emoji-suggestions span').forEach(emoji => {
+                emoji.addEventListener('click', (event) => {
+                    const emojiClicked = event.target.textContent.trim();
+                    const commentInput = document.getElementById('comment-input');
+                    commentInput.value += emojiClicked;
+                    commentInput.focus(); // Refocus the input box
                 });
-                console.log("Notification sent successfully.");
-            } catch (error) {
-                console.error("Error sending notification: ", error);
-            }
+            });
         }
     </script>
 </body>
 </html>
-
-
