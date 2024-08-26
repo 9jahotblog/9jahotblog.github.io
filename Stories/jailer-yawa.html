@@ -279,11 +279,7 @@
             </div>
         </div>
 
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-
+                    <div class="w3-container w3-white w3-margin w3-padding-large" style="border: 1px solid #ddd; border-radius: 10px; padding: 20px;">
                     <div id="auth-container">
                         <h4>Sign Up or Log In to Comment</h4>
                         <p>No profile picture url? Go to <a href="https://postimg.cc">Postimg.cc</a>
@@ -318,32 +314,15 @@
         </div>
     </div>
 
-
-   <script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-        authDomain: "jahotblog-login.firebaseapp.com",
-        projectId: "jahotblog-login",
-        storageBucket: "jahotblog-login.appspot.com",
-        messagingSenderId: "661526730601",
-        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
-        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-        
-     // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
-        });
-</script>
-
+<!-- Footer -->
+        <footer id="footer">
+            <ul class="icons">
+                <li><a href="https://www.facebook.com/profile.php?id=100089471898590" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="https://chat.whatsapp.com/FqMgPdtGjPN14xIts4wXgg" class="icon brands alt fa-whatsapp"><span class="label">WhatsApp</span></a></li>
+                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+        </footer>
+    </div>
 
     <script src="https://9jahotblog.github.io/assets/js/jquery.min.js"></script>
     <script src="https://9jahotblog.github.io/assets/js/jquery.scrolly.min.js"></script>
