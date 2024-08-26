@@ -8,18 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
 
-           .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #111;
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Hide by default */
-        }
         .comment-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -315,11 +303,6 @@
         </div>
     </div>
 
-<!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-
         
 <!-- Footer -->
         <footer id="footer">
@@ -352,16 +335,6 @@
             messagingSenderId: "581912396287",
             appId: "1:581912396287:web:234fa03483d71115fc67ca"
         };
-
-        const firebaseConfig = {
-        apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-        authDomain: "jahotblog-login.firebaseapp.com",
-        projectId: "jahotblog-login",
-        storageBucket: "jahotblog-login.appspot.com",
-        messagingSenderId: "661526730601",
-        appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8",
-        databaseURL: "https://jahotblog-login-default-rtdb.firebaseio.com/"
-    };
         
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -405,16 +378,6 @@
                 });
             } catch (error) {
                 alert(error.message);
-            }
-        });
-        
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
             }
         });
         
