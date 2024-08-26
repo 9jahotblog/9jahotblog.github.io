@@ -117,8 +117,8 @@
 
                     <div id="auth-container">
                         <h4>Sign Up or Log In to Comment</h4>
-                        <p>No profile picture url? Go to <a href="https://postimg.cc">Postimg.cc</a></p>
-                        <p>Upload pic and get direct link url to paste here..</p>
+                        <p>No profile picture url? Go to <a href="https://postimg.cc">Postimg.cc</a>
+                        Upload pic and get direct link url to paste here..</p>
                         <div class="auth-input-container">
                             <input type="email" id="auth-email" placeholder="Email" class="auth-input" />
                             <input type="password" id="auth-password" placeholder="Password" class="auth-input" />
@@ -175,7 +175,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let currentUser = Commenter;
+        let currentUser = null;
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
