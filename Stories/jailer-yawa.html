@@ -78,7 +78,7 @@
             margin-left: 5px;
             width: 18px;
             height: 18px;
-            background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Provide your custom blue badge icon URL */
+            background-image: url('https://i.postimg.cc/K84ytrHj/file-hh-FD9j7lh7tw7-Hs6swjaj-PUa.jpg'); /* Custom blue badge icon URL */
             background-size: contain;
             background-repeat: no-repeat;
             vertical-align: middle;
@@ -209,9 +209,10 @@
                     photoURL: picUrl,
                     userLevel: '9jahotblogger'
                 });
-            } catch (error) {alert(error.message);
-                }
-            });
+            } catch (error) {
+                alert(error.message);
+            }
+        });
 
         // Handle Log In
         document.getElementById('login-button').addEventListener('click', async () => {
@@ -363,7 +364,6 @@
                             notHelpful: arrayUnion(currentUser.uid)
                         });
                         console.log("Marked as not helpful successfully.");
-                    }
                     } catch (error) {
                         console.error("Error marking comment as not helpful: ", error);
                     }
