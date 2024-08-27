@@ -339,11 +339,11 @@
         <p><strong>Verification Status:</strong> Verified⚡️</p>
         
         <!-- Post Analytics Section -->
-        <div class="post-analytics">
-            <p><strong>Post Comments:</strong> 1</p>
-            <p><strong>Post Reach:</strong> 567</p>
-            <p><strong>Post Earnings:</strong> undisclosed</p>
-        </div>
+<div class="post-analytics">
+    <p><strong>Post Comments:</strong> <span id="post-comments">1</span></p>
+    <p><strong>Post Reach:</strong> <span id="post-reach">567</span></p>
+    <p><strong>Post Earnings:</strong> ₦<span id="post-earnings">undisclosed</span></p>
+</div>
 
         <!-- Hire Button with Link -->
         <a href="https://wa.me/+2348123058964" class="hire-button">Hire for Job</a>
@@ -482,6 +482,114 @@
         }
     });
 </script>
+    <script>
+        // Assuming firebaseConfig is already initialized on your page
+
+// Initialize Firebase (if not already initialized)
+if (!firebase.apps.length) {
+    const app = initializeApp(firebaseConfig);
+}
+const db = getFirestore();
+
+// Function to update the post analytics dynamically
+async function updatePostAnalytics() {
+    const pageId = 'pageId1'; // Replace with the actual page ID
+    const pageRef = doc(db, 'pages', pageId);
+
+    try {
+        // Fetch the page data from Firestore
+        const pageDoc = await getDoc(pageRef);
+        if (pageDoc.exists()) {
+            const pageData = pageDoc.data();
+            const commentsCount = await getCommentsCount(pageId);
+            const earnings = calculateEarnings(pageData.visitCount, commentsCount, pageData.engagementTime);
+
+            // Update the HTML content with fetched data
+            document.getElementById('post-comments').textContent = commentsCount;
+            document.getElementById('post-reach').textContent = pageData.visitCount;
+            document.getElementById('post-earnings').textContent = earnings.toFixed(2);
+        } else {
+            console.log("No such page data!");
+        }
+    } catch (error) {
+        console.error("Error fetching post analytics: ", error);
+    }
+}
+
+// Function to calculate earnings
+function calculateEarnings(visitCount, commentsCount, engagementTime) {
+    const baseEarnings = 20; // ₦20 base
+    const earningsFromVisits = visitCount * 0.5; // ₦0.5 per visit
+    const earningsFromComments = commentsCount * 1; // ₦1 per comment
+    const earningsFromEngagement = engagementTime * 0.1; // ₦0.1 per second of engagement
+    return baseEarnings + earningsFromVisits + earningsFromComments + earningsFromEngagement;
+}
+
+// Function to get comments count from Firestore
+async function getCommentsCount(pageId) {
+    const commentsQuery = query(collection(db, 'comments'), where('articleId', '==', pageId));
+    const commentsSnapshot = await getDocs(commentsQuery);
+    return commentsSnapshot.size;
+}
+
+// Function to track engagement time
+let startTime;
+window.addEventListener('load', function() {
+    startTime = Date.now();
+});
+
+window.addEventListener('beforeunload', async function() {
+    const endTime = Date.now();
+    const engagementTime = (endTime - startTime) / 1000; // Engagement time in seconds
+    await updateEngagementTime('pageId1', engagementTime); // Replace with actual page ID
+});
+
+// Function to update engagement time in Firestore
+async function updateEngagementTime(pageId, engagementTime) {
+    const pageRef = doc(db, 'pages', pageId);
+    try {
+        await updateDoc(pageRef, {
+            engagementTime: increment(engagementTime)
+        });
+        console.log("Engagement time updated successfully.");
+    } catch (error) {
+        console.error("Error updating engagement time: ", error);
+    }
+}
+
+// Function to increment visit count in Firestore
+async function incrementVisitCount() {
+    const pageId = 'pageId1'; // Replace with the actual page ID
+    const pageRef = doc(db, 'pages', pageId);
+    try {
+        await updateDoc(pageRef, {
+            visitCount: increment(1)
+        });
+        console.log("Page visit count incremented.");
+    } catch (error) {
+        console.error("Error incrementing visit count: ", error);
+    }
+}
+
+// Event listeners for modal
+document.getElementById('profile-button').addEventListener('click', function() {
+    updatePostAnalytics(); // Update analytics when the modal opens
+    document.getElementById('profile-modal').style.display = 'flex';
+});
+
+document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('profile-modal').style.display = 'none';
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('profile-modal')) {
+        document.getElementById('profile-modal').style.display = 'none';
+    }
+});
+
+// Call this function when the page is loaded to increment visit count
+window.addEventListener('load', incrementVisitCount);
+    </script>
     
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <div style="display: inline-block; vertical-align: top;">
