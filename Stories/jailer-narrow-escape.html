@@ -493,7 +493,7 @@ const db = getFirestore();
 
 // Function to update the post analytics dynamically
 async function updatePostAnalytics() {
-    const pageId = 'pageId1'; // Replace with the actual page ID
+    const pageId = 'articleId1'; // Replace with the actual page ID
     const pageRef = doc(db, 'pages', pageId);
 
     try {
@@ -501,7 +501,7 @@ async function updatePostAnalytics() {
         const pageDoc = await getDoc(pageRef);
         if (pageDoc.exists()) {
             const pageData = pageDoc.data();
-            const commentsCount = await getCommentsCount(pageId);
+            const commentsCount = await getCommentsCount(articleId);
             const earnings = calculateEarnings(pageData.visitCount, commentsCount, pageData.engagementTime);
 
             // Update the HTML content with fetched data
@@ -519,15 +519,15 @@ async function updatePostAnalytics() {
 // Function to calculate earnings
 function calculateEarnings(visitCount, commentsCount, engagementTime) {
     const baseEarnings = 20; // ₦20 base
-    const earningsFromVisits = visitCount * 0.5; // ₦0.5 per visit
-    const earningsFromComments = commentsCount * 1; // ₦1 per comment
-    const earningsFromEngagement = engagementTime * 0.1; // ₦0.1 per second of engagement
+    const earningsFromVisits = visitCount * 2; // ₦2 per visit
+    const earningsFromComments = commentsCount * 10; // ₦10 per comment
+    const earningsFromEngagement = engagementTime * 1; // ₦1 per second of engagement
     return baseEarnings + earningsFromVisits + earningsFromComments + earningsFromEngagement;
 }
 
 // Function to get comments count from Firestore
 async function getCommentsCount(pageId) {
-    const commentsQuery = query(collection(db, 'comments'), where('articleId', '==', pageId));
+    const commentsQuery = query(collection(db, 'comments'), where('articleId', '==', articleId));
     const commentsSnapshot = await getDocs(commentsQuery);
     return commentsSnapshot.size;
 }
@@ -545,8 +545,8 @@ window.addEventListener('beforeunload', async function() {
 });
 
 // Function to update engagement time in Firestore
-async function updateEngagementTime(pageId, engagementTime) {
-    const pageRef = doc(db, 'pages', pageId);
+async function updateEngagementTime(articleId, engagementTime) {
+    const pageRef = doc(db, 'pages', articleId);
     try {
         await updateDoc(pageRef, {
             engagementTime: increment(engagementTime)
@@ -559,7 +559,7 @@ async function updateEngagementTime(pageId, engagementTime) {
 
 // Function to increment visit count in Firestore
 async function incrementVisitCount() {
-    const pageId = 'pageId1'; // Replace with the actual page ID
+    const pageId = 'articleId1'; // Replace with the actual page ID
     const pageRef = doc(db, 'pages', pageId);
     try {
         await updateDoc(pageRef, {
