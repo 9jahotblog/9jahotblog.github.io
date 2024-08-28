@@ -163,6 +163,8 @@
  <div class="w3-justify">
     <img src="https://i.postimg.cc/T3QxxCHY/IMG-20240826-WA0067.jpg" width="350" height="350" style="width:100%" class="w3-padding-16">
     <blockquote><i>Ai generated potrait.</i></blockquote>
+
+     
      
     <p><strong>DON'T FORGET TO LIKE, COMMENT & SHARE</strong></p>
 </div>
@@ -184,8 +186,8 @@
         <p class="profile-bio"><strong>Jailer is an experienced writer who specializes in horror, humor, and romance.</p></strong>
         <p><strong> Joined, Jan 2023.</strong></p>
         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> Ibadan, Nigeria</p>
-        <p><strong>Verification Status:</strong> Verifiedâš¡ï¸</p>
-        <p><i class="fa fa-dollar-sign fa-fw w3-margin-right w3-text-theme">Creator Status: MonetizingðŸ’«</i></p>
+        <p><strong>Verification Status:</strong> Verified⚡️</p>
+        <p><i class="fa fa-dollar-sign fa-fw w3-margin-right w3-text-theme">Creator Status: Monetizing💫</i></p>
         
         <!-- Post Analytics Section -->
         <div class="post-analytics">
@@ -313,6 +315,7 @@
         margin-top: 15px;
     }
 </style>
+
 <script>
     // JavaScript to handle modal display
     document.getElementById('profile-button').addEventListener('click', function() {
@@ -330,21 +333,19 @@
         }
     });
 </script>
-
-
     
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <div style="display: inline-block; vertical-align: top;">
-        <button class="w3-button w3-round like-button" data-article-id="articleid31" onclick="likeFunction(this, 'articleid31')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid32" onclick="likeFunction(this, 'articleid32')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
             <i class="fa fa-thumbs-up"></i> Like
         </button>
-        <button class="w3-button w3-round dislike-button" data-article-id="articleid31" onclick="dislikeFunction(this, 'articleid31')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid32" onclick="dislikeFunction(this, 'articleid32')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
             <i class="fa fa-thumbs-down"></i> Dislike
         </button>
     </div>
     <div style="float: right;">
         <button class="w3-button w3-round" style="background-color: #007bff; padding: 8px 15px; font-size: 14px;">
-            <a href="https://9jahotblog.github.io/Stories/jailer-yawa.html" style="color: white; text-decoration: none;">More From Jailer Â»</a>
+            <a href="https://9jahotblog.github.io/Stories/jailer-yawa.html" style="color: white; text-decoration: none;">More From Jailer »</a>
         </button>
     </div>
     <div style="clear: both;"></div>
@@ -447,10 +448,13 @@
                         <textarea id="comment-input" class="comment-input" placeholder="Write your comment here..."></textarea>
                         <button id="comment-button" class="comment-button">Post Comment</button>
                         <div class="emoji-suggestions">
-                            <span>ðŸ¤£ðŸ¤£ðŸ¤£ðŸ¤£ðŸ¤£</span>
-                            <span>ðŸ‘ðŸ‘ðŸ‘ðŸ‘ðŸ‘</span>
-                            <span>ðŸ”¥ðŸ”¥ðŸ”¥ðŸ”¥ðŸ”¥</span>
-                            <span>ðŸ¥¹ðŸ¥¹ðŸ¥¹ðŸ¥¹ðŸ¥¹</span>
+                            <span>🤣🤣🤣🤣🤣</span>
+                            <span>👏👏👏👏👏</span>
+                            <span>🔥🔥🔥🔥🔥</span>
+                            <span>🥹🥹🥹🥹🥹</span>
+                            <span>🙌🙌🙌🙌🙌</span>
+                            <span>🫡🫡🫡🫡🫡</span>
+       
                             <!-- Add more emojis here -->
                         </div>
                     </div>
@@ -565,7 +569,7 @@
         return;
     }
             
-            const articleId = 'articleId1'; // Unique identifier for the article/page
+            const articleId = 'articleId2'; // Unique identifier for the article/page
 
             const commentData = {
                 text: commentText,
@@ -592,7 +596,7 @@
 
         // Real-time listener for comments
 const commentList = document.getElementById('comment-list');
-const articleId = 'articleId1'; // Unique identifier for the article/page
+const articleId = 'articleId2'; // Unique identifier for the article/page
 const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
 
 onSnapshot(q, (snapshot) => {
@@ -613,9 +617,9 @@ onSnapshot(q, (snapshot) => {
                     </span>
                     <p class="comment-text">${comment.text}</p>
                     <span class="comment-date">${new Date(comment.timestamp.seconds * 1000).toLocaleString()}</span>
-                    <button class="like-button" data-id="${doc.id}">ðŸ‘ (${comment.likes.length})</button>
-                    <button class="helpful-button" data-id="${doc.id}">ðŸ‘ (${comment.helpful.length})</button>
-                    <button class="not-helpful-button" data-id="${doc.id}">ðŸ–• (${comment.notHelpful.length})</button>
+                    <button class="like-button" data-id="${doc.id}">👍 (${comment.likes.length})</button>
+                    <button class="helpful-button" data-id="${doc.id}">👏 (${comment.helpful.length})</button>
+                    <button class="not-helpful-button" data-id="${doc.id}">🖕 (${comment.notHelpful.length})</button>
                     <button class="reply-button" data-id="${doc.id}">Reply</button>
                 </div>
             </div>
