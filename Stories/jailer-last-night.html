@@ -362,10 +362,10 @@
     
 <div class="w3-container w3-padding-16 w3-border-top w3-margin-top">
     <div style="display: inline-block; vertical-align: top;">
-        <button class="w3-button w3-round like-button" data-article-id="articleid32" onclick="likeFunction(this, 'articleid32')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
+        <button class="w3-button w3-round like-button" data-article-id="articleid36" onclick="likeFunction(this, 'articleid36')" style="background-color: #28a745; color: white; padding: 8px 15px; font-size: 14px;">
             <i class="fa fa-thumbs-up"></i> Like
         </button>
-        <button class="w3-button w3-round dislike-button" data-article-id="articleid32" onclick="dislikeFunction(this, 'articleid32')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
+        <button class="w3-button w3-round dislike-button" data-article-id="articleid36" onclick="dislikeFunction(this, 'articleid36')" style="background-color: #dc3545; color: white; padding: 8px 15px; font-size: 14px; margin-top: 5px;">
             <i class="fa fa-thumbs-down"></i> Dislike
         </button>
     </div>
@@ -595,7 +595,7 @@
         return;
     }
             
-            const articleId = 'articleId2'; // Unique identifier for the article/page
+            const articleId = 'articleId6'; // Unique identifier for the article/page
 
             const commentData = {
                 text: commentText,
@@ -622,7 +622,7 @@
 
         // Real-time listener for comments
 const commentList = document.getElementById('comment-list');
-const articleId = 'articleId2'; // Unique identifier for the article/page
+const articleId = 'articleId6'; // Unique identifier for the article/page
 const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
 
 onSnapshot(q, (snapshot) => {
