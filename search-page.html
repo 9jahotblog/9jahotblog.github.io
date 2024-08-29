@@ -162,7 +162,7 @@
         <div class="search-results" id="searchResults">
             <ul id="resultList"></ul>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark Mode</button>
+        <button class="theme-toggle" onclick="toggleTheme()">Dark Mode</button>
     </div>
     <a href="#top" class="go-top" id="goTopBtn">
         <ion-icon name="chevron-up"></ion-icon>
@@ -170,55 +170,40 @@
 
     <script>
         const articles = [
-            { title: "Will Smith gets banned from the Oscars!", url: "https://9jahotblog.github.io/entertainment/will.html" },
             { title: "CHANGE & CORRECTION OF NAME IN NIGERIA BY MERE AFFIDAVIT IS NO LONGER VALID.", url: "https://9jahotblog.github.io/Articles/change-and-correction-of-names-by-mere-affidavit-is-no-longer-valid.html" },
             { title: "Citizenship Education Full Topic", url: "https://9jahotblog.github.io/Education/citizenship-topic.html" },
             { title: "Concept of Creativity (Rare personalities)", url: "https://9jahotblog.github.io/Articles/rare-personalities-creativity-concept.html" },
             { title: "GREEK GODS 12 OLYMPIC SUMMARY", url: "https://9jahotblog.github.io/Education/olympus-12-greek-gods.html" },
             { title: "Big 4 ways to financial Freedom", url: "https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom.html" },
             { title: "Big 4 roads to financial freedom 2", url: "https://9jahotblog.github.io/discussions/the-big4-road-financial-freedom-us-bank-stocks.html" },
-            { title: "NIGERIAN ARMY OFFICER HARASSES NATION YOUTH SERVICE CORP MEMBER.", url: "https://9jahotblog.github.io/Articles/nigerian-army-harrases-nysc-member.html" },
             { title: "Movie Production Project Roles & Functions", url: "https://9jahotblog.github.io/Education/functions-of-movie-production-project.html" },
-            { title: "17 Sustainable development goals & the 8 millennium goals.", url: "https://9jahotblog.github.io/Education/the-sustainable-development-goals.html" },
             { title: "Personality Traits", url: "https://9jahotblog.github.io/Education/personality-traits.html" },
             { title: "Word Classes", url: "https://9jahotblog.github.io/Education/word-classes.html" },
-            { title: "10 Random news stories", url: "https://9jahotblog.github.io/Articles/random-news-stories.html" },
             { title: "The indecisiveness of a teenager", url: "https://9jahotblog.github.io/entertainment/the-indecisiveness-of-a-teenager.html" },
             { title: "The uncertainty of Life", url: "https://9jahotblog.github.io/entertainment/the-uncertainty-of-life.html" },
-            { title: "Impact Making", url: "https://9jahotblog.github.io/entertainment/impact-making.html" },
             { title: "Affiliate Marketing", url: "https://9jahotblog.github.io/discussions/what-is-affiliate-marketing.html" },
             { title: "Hybrid Animals", url: "https://9jahotblog.github.io/documentary/animal-mixup.html" },
-            { title: "Policeman Killed by suspected cyclist", url: "https://9jahotblog.github.io/Articles/policeman-killed-by-suspected-cyclist.html" },
             { title: "What is Autism? All you need to know...", url: "https://9jahotblog.github.io/discussions/what-is-autism.html" },
             { title: "Why I hate the word Dreams", url: "https://9jahotblog.github.io/Education/why-I-hate-the-word-dreams.html" },
             { title: "We are all Clueless", url: "https://9jahotblog.github.io/entertainment/we-are-all-clueless.html" },
             { title: "Prices of Staple Increasing", url: "https://9jahotblog.github.io/Articles/prices-of-staples-increasement.html" },
             { title: "Use of Charcoal Becoming Imminent", url: "https://9jahotblog.github.io/Articles/charcoal-becoming-imminent.html" },
             { title: "CONCORD FULL TOPIC", url: "https://9jahotblog.github.io/Education/concord-topic-elements-&-types.html" },
-            { title: "Ronaldo Signs AL Nassr", url: "https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html" },
             { title: "Pupils receives shocking gift for being the best student....", url: "https://9jahotblog.github.io/News/pupils-receives-shocking-gift.html" },
             { title: "2023 Elections", url: "https://9jahotblog.github.io/Articles/2023-elections-voting-determines.html" },
-            { title: "7 High Income Skills to Learn 2023", url: "https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html" },
+            { title: "7 High Income Skills to Learn 2024", url: "https://9jahotblog.github.io/Articles/7-high-income-skills-to-learn.html" },
             { title: "7 Most Profitable Ways to Invest", url: "https://9jahotblog.github.io/Articles/7-most-profitable-ways-to-invest-in.html" },
             { title: "Ever heard of Bonobos? (Documentary)", url: "https://9jahotblog.github.io/documentary/bonobos.html" },
             { title: "How to be Healthier (Doc)", url: "https://9jahotblog.github.io/documentary/how-to-be-healthier.html" },
-            { title: "Online vendors and business owners talk about the effect of the economy and the festive season on their business", url: "https://9jahotblog.github.io/News/online-vendors-talk-about-economy-effect.html" },
             { title: "Economic Effects of COVID-19", url: "https://9jahotblog.github.io/News/economic-effects-of-covid19.html" },
-            { title: "Parents, Children Share their ordeal & experiences with each other.", url: "https://9jahotblog.github.io/News/children-shares-experiences-together.html" },
-            { title: "Awka United Suffers home defeat", url: "https://9jahotblog.github.io/News/awka-united-suffers-home-defeat.html" },
-            { title: "18 year old mixed martial artist dies (Victoria lee)", url: "https://9jahotblog.github.io/News/victoria-lee-passes-on.html" },
-            { title: "Al Nassr DROPS VINCENT ABOUBAKAR & picks Ronaldo", url: "https://9jahotblog.github.io/News/al-nassr-drops-vincent-picks-ronaldo.html" },
-            { title: "President Buhari Signs Mental Health Bill Into Law", url: "https://9jahotblog.github.io/News/buhari-signs-mental-health-bill.html" },
             { title: "How to Use Punctuations Well", url: "https://9jahotblog.github.io/Education/how-to-use-punctuations.html" },
             { title: "Lend VS Borrow Overview", url: "https://9jahotblog.github.io/Education/lend-vs-borrow.html" },
             { title: "Shooting Stars All you need to know", url: "https://9jahotblog.github.io/documentary/shooting-stars-all-you-need-to-know.html" },
-            { title: "The SAN people", url: "https://9jahotblog.github.io/documentary/the-san-people.html" },
             { title: "Hypertension (All you should know)", url: "https://9jahotblog.github.io/Articles/hypertension-what-you-should-know.html" },
             { title: "What Early Stage Start-ups should know", url: "https://9jahotblog.github.io/Articles/key-provisions-to-the-startup-act.html" },
             { title: "Top 7 Deadliest Diseases", url: "https://9jahotblog.github.io/Articles/top-7-deadliest-diseases.html" },
             { title: "Ten reasons why every business should have online presence", url: "https://9jahotblog.github.io/Articles/business-online-presence.html" },
-            { title: "Suspected Kidnapper Stoned to death", url: "https://9jahotblog.github.io/News/kidnapper-stoned-to-death.html" },
-            { title: "Coach ABUBAKAR HASSAN MAI ZUBARU SACKED BY EL KANEMI WARRIORS", url: "https://9jahotblog.github.io/News/coach-hassan-sacked.html" }
+            
         ];
 
         function filterResults() {
@@ -268,3 +253,14 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-38V179JCWD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-38V179JCWD');
+</script>
