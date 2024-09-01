@@ -2124,42 +2124,6 @@ document.getElementById("congratulatory-message").innerText = message;
             event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container').style.backgroundColor = themes[themeIndex];
         });
     });
-
-    // Authentication state observer
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const userId = user.uid;
-            document.getElementById("user-name").innerText = user.displayName;
-            document.getElementById("user-email").innerText = user.email;
-            document.getElementById("user-username").innerText = user.displayName;
-            document.getElementById("profile-photo").src = user.photoURL;
-
-            // Fetch user data from Firestore
-            const userRef = doc(db, "users", userId);
-            getDoc(userRef).then((doc) => {
-                if (doc.exists()) {
-                    const userData = doc.data();
-                    document.getElementById("user-username").innerText = userData.username;
-                    document.getElementById("user-email").innerText = userData.email;
-                    document.getElementById("user-level").innerText = "9jahotblogger";
-                } else {
-                    console.log("No such document!");
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-        } else {
-            window.location.href = "login-page.html";
-        }
-    });
-
-    document.getElementById("logout").addEventListener("click", () => {
-        signOut(auth).then(() => {
-            window.location.href = "login-page.html";
-        }).catch((error) => {
-            console.error("Error signing out:", error);
-        });
-    });
     
     // Handle edit profile
 document.getElementById("edit-profile").addEventListener("click", () => {
@@ -2191,36 +2155,7 @@ document.getElementById("edit-profile").addEventListener("click", () => {
                 }
             })
             .then(() => {
-                // Update the Firestore document if any updates were made
-                if (newUsername || newEmail || newPhotoURL) {
-                    const userRef = doc(db, "users", user.uid);
-                    const firestoreUpdates = {};
-
-                    if (newUsername) firestoreUpdates.username = newUsername;
-                    if (newEmail) firestoreUpdates.email = newEmail;
-                    if (newPhotoURL) firestoreUpdates.photoURL = newPhotoURL;
-
-                    return updateDoc(userRef, firestoreUpdates);
-                }
-            })
-            .then(() => {
-                // Update the UI
-                if (newUsername) document.getElementById("user-username").innerText = newUsername;
-                if (newEmail) document.getElementById("user-email").innerText = newEmail;
-                if (newPhotoURL) document.getElementById("profile-photo").src = newPhotoURL;
-
-                alert("Profile updated successfully! Please refresh the page to see the changes.");
-            })
-            .catch((error) => {
-                console.error("Error updating profile:", error);
-                alert("An error occurred while updating the profile. Please try again.");
-            });
-    } else {
-        alert("No user is currently signed in.");
-    }
-});
-            
-
+                
     async function callGoogleGeminiAI(userMessage) {
         const apiKey = 'AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Replace with your actual API Key
         const endpoint = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.0-pro:generateContent?key=AIzaSyCd_P4J5xgsXcyVaqUBtAHvhb1AWJUATvA'; // Hypothetical endpoint
