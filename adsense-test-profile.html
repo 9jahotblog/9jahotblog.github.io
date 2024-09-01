@@ -1821,23 +1821,7 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "#",
-        authDomain: "#",
-        projectId: "#",
-        storageBucket: "#",
-        messagingSenderId: "#",
-        appId: "#"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth();
-    const db = getFirestore(app);
+<script 
 
     let currentPage = 0;
     const bookContent = [
