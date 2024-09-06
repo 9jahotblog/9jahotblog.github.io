@@ -21,6 +21,112 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: none; /* Hide by default */
         }
+        /* General Reset */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: #333;
+            padding: 10px 0;
+            color: white;
+        }
+
+        #header #logo {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        #header #logo a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        #nav {
+            display: none;
+        }
+
+        #nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #nav ul li {
+            display: block;
+        }
+
+        #nav ul li a {
+            display: block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            background-color: #444;
+            margin-bottom: 1px;
+        }
+
+        #nav ul li a:hover {
+            background-color: #555;
+        }
+
+        /* Mobile-specific styles (max-width: 768px) */
+        @media screen and (max-width: 768px) {
+            #nav {
+                display: none;
+            }
+
+            #nav.active {
+                display: block;
+            }
+
+            /* Hamburger Menu Icon */
+            .mobile-menu-toggle {
+                display: block;
+                font-size: 24px;
+                cursor: pointer;
+                margin-right: 20px;
+                color: white;
+                float: right;
+                margin-top: -35px;
+            }
+        }
+
+        /* Desktop-specific styles (min-width: 768px) */
+        @media screen and (min-width: 768px) {
+            #nav {
+                display: block;
+            }
+
+            #nav ul {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+
+            #nav ul li {
+                display: inline-block;
+                margin-right: 20px;
+            }
+
+            #nav ul li a {
+                text-decoration: none;
+                color: white;
+                padding: 10px;
+                background-color: transparent;
+            }
+
+            #nav ul li a:hover {
+                background-color: #555;
+            }
+
+            /* Hide the mobile menu toggle on desktop */
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="is-preload landing">
@@ -29,6 +135,10 @@
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
+             <!-- Mobile Menu Toggle Icon -->
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
             <nav id="nav">
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -252,6 +362,9 @@
             } else {
                 document.getElementById('login-notification').style.display = 'none';
             }
+        });
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function () {
+            document.getElementById('nav').classList.toggle('active');
         });
     </script>
 </body>
