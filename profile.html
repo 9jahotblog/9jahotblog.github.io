@@ -150,6 +150,28 @@
     </div>
 </section>
 	
+
+<div id="smt-137991083" style="padding: 0px"></div>
+<script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
+<script>
+	function callBackForSmaato(status){
+		if(status == "SUCCESS"){
+			console.log("callBack is being called with status : " + status);
+		} else if (status == "ERROR"){
+			console.log("callBack is being called with status : " + status);
+		}
+	}; 
+	SomaJS.loadAd({
+          "adDivId": "smt-137991083",
+          "publisherId": 1100057727,
+          "adSpaceId": 137991083,
+          "format": "all",
+          "formatstrict": true,
+          "width": 300,
+          "height": 250,
+          "sync": false
+},callBackForSmaato);
+</script>
 		    
                 <!-- Library Section -->
                 <section id="library-section">
