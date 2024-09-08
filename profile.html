@@ -174,21 +174,13 @@
 },callBackForSmaato);
 </script>
 
-	 <!-- Updated Book Cover Maker Section -->
+	 
+
+        <!-- Updated Book Cover Maker Section -->
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
         <button class="theme-toggle">🌙</button>
-
-        <!-- Genre Templates -->
-        <label for="genre-template">Select Genre Template:</label>
-        <select id="genre-template">
-            <option value="romance">Romance</option>
-            <option value="sci-fi">Sci-Fi</option>
-            <option value="mystery">Mystery</option>
-            <option value="non-fiction">Non-Fiction</option>
-            <option value="fantasy">Fantasy</option>
-        </select>
 
         <!-- Book Title -->
         <label for="cover-title">Book Title:</label>
@@ -213,37 +205,64 @@
             <option value="Impact">Impact</option>
         </select>
 
-        <!-- Font Size Adjustments -->
+        <!-- Title and Author Font Size -->
         <label for="title-font-size">Title Font Size:</label>
         <input type="range" id="title-font-size" min="10" max="100" value="30">
 
         <label for="author-font-size">Author Font Size:</label>
         <input type="range" id="author-font-size" min="10" max="100" value="20">
 
-        <!-- Expanded Image Options -->
-        <label for="image-placement">Image Placement:</label>
-        <select id="image-placement">
-            <option value="center">Center</option>
-            <option value="tiled">Tiled</option>
-            <option value="stretch">Stretch</option>
-            <option value="scaled">Scaled</option>
+        <!-- Title and Author Colors -->
+        <label for="title-color">Title Color:</label>
+        <input type="color" id="title-color" value="#000000">
+
+        <label for="author-color">Author Color:</label>
+        <input type="color" id="author-color" value="#000000">
+
+        <!-- Cover Size -->
+        <label for="cover-size">Cover Size:</label>
+        <select id="cover-size">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="large">Large</option>
+            <option value="custom">Custom</option>
         </select>
 
+        <!-- Background Color -->
+        <label for="background-color">Background Color:</label>
+        <input type="color" id="background-color" value="#ffffff">
+
+        <!-- Text Alignment -->
+        <label for="text-alignment">Text Alignment:</label>
+        <select id="text-alignment">
+            <option value="left">Left</option>
+            <option value="center">Center</option>
+            <option value="right">Right</option>
+            <option value="justify">Justify</option>
+        </select>
+
+        <!-- Upload Image -->
         <label for="image-upload">Upload Cover Image:</label>
         <input type="file" id="image-upload" accept="image/*">
 
-        <!-- Checkbox for full cover -->
+        <!-- Image as Full Cover -->
         <label>
             <input type="checkbox" id="full-cover"> Use image as full cover
         </label>
 
-        <!-- Text Effects -->
-        <label for="text-effects">Text Effects:</label>
-        <select id="text-effects">
+        <!-- Border Styles -->
+        <label for="border-style">Border Style:</label>
+        <select id="border-style">
             <option value="none">None</option>
-            <option value="gradient">Gradient</option>
-            <option value="outline">Outline</option>
-            <option value="emboss">Emboss</option>
+            <option value="solid">Solid</option>
+            <option value="dashed">Dashed</option>
+            <option value="double">Double</option>
+            <option value="groove">Groove</option>
+            <option value="ridge">Ridge</option>
+            <option value="inset">Inset</option>
+            <option value="outset">Outset</option>
+            <option value="dotted">Dotted</option>
+            <option value="hidden">Hidden</option>
         </select>
 
         <!-- Cover Preview Section -->
@@ -256,12 +275,38 @@
 
         <!-- Save Template Button -->
         <button id="save-template">Save Template</button>
+
+	<!-- Download Button -->
+<button id="download-cover">Download</button>
+	    
     </div>
 </section>
+		    
+<!--script for download button-->
+<script>
+document.getElementById('download-cover').addEventListener('click', () => {
+    // Create a canvas to capture the cover preview
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const coverPreview = document.getElementById('cover-preview');
+    
+    // Set canvas dimensions to match cover preview
+    canvas.width = coverPreview.offsetWidth;
+    canvas.height = coverPreview.offsetHeight;
 
+    // Draw the cover preview onto the canvas
+    ctx.drawImage(coverPreview, 0, 0);
+
+    // Create a link element to download the image
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/png');
+    link.download = 'book-cover.png';
+    link.click();
+});
+</script>
+		    
 <!-- Scripts -->
 <script>
-    // Variables for cover preview and input fields
     const titleInput = document.getElementById('cover-title');
     const authorInput = document.getElementById('cover-author');
     const titlePreview = document.getElementById('preview-title');
@@ -269,66 +314,33 @@
     const fontSelect = document.getElementById('cover-font');
     const titleFontSize = document.getElementById('title-font-size');
     const authorFontSize = document.getElementById('author-font-size');
-    const textEffects = document.getElementById('text-effects');
+    const titleColor = document.getElementById('title-color');
+    const authorColor = document.getElementById('author-color');
+    const backgroundColor = document.getElementById('background-color');
     const coverPreview = document.getElementById('cover-preview');
-    const imagePlacement = document.getElementById('image-placement');
     const fullCoverCheckbox = document.getElementById('full-cover');
-
-    // Update text preview when typing in inputs
+    const imageUpload = document.getElementById('image-upload');
+    const borderStyle = document.getElementById('border-style');
+    
+    // Update the preview for book title and author text
     titleInput.addEventListener('input', () => titlePreview.textContent = titleInput.value);
     authorInput.addEventListener('input', () => authorPreview.textContent = authorInput.value);
-
-    // Update font when selected
+    
     fontSelect.addEventListener('change', () => {
         titlePreview.style.fontFamily = fontSelect.value;
         authorPreview.style.fontFamily = fontSelect.value;
     });
-
-    // Update font sizes
+    
     titleFontSize.addEventListener('input', () => titlePreview.style.fontSize = `${titleFontSize.value}px`);
     authorFontSize.addEventListener('input', () => authorPreview.style.fontSize = `${authorFontSize.value}px`);
-
-    // Update text effects
-    textEffects.addEventListener('change', () => {
-        if (textEffects.value === 'gradient') {
-            titlePreview.style.backgroundImage = 'linear-gradient(45deg, #ff6b6b, #f0e130)';
-            titlePreview.style.webkitBackgroundClip = 'text';
-            titlePreview.style.color = 'transparent';
-        } else if (textEffects.value === 'outline') {
-            titlePreview.style.textShadow = '2px 2px 4px #000';
-            authorPreview.style.textShadow = '2px 2px 4px #000';
-        } else if (textEffects.value === 'emboss') {
-            titlePreview.style.textShadow = '2px 2px 5px #ccc';
-            authorPreview.style.textShadow = '2px 2px 5px #ccc';
-        } else {
-            titlePreview.style.backgroundImage = '';
-            titlePreview.style.webkitBackgroundClip = '';
-            titlePreview.style.color = '';
-            titlePreview.style.textShadow = '';
-            authorPreview.style.textShadow = '';
-        }
-    });
-
-    // Image placement options
-    imagePlacement.addEventListener('change', () => {
-        if (imagePlacement.value === 'center') {
-            coverPreview.style.backgroundSize = 'auto';
-            coverPreview.style.backgroundRepeat = 'no-repeat';
-            coverPreview.style.backgroundPosition = 'center';
-        } else if (imagePlacement.value === 'tiled') {
-            coverPreview.style.backgroundSize = 'auto';
-            coverPreview.style.backgroundRepeat = 'repeat';
-        } else if (imagePlacement.value === 'stretch') {
-            coverPreview.style.backgroundSize = '100% 100%';
-            coverPreview.style.backgroundRepeat = 'no-repeat';
-        } else if (imagePlacement.value === 'scaled') {
-            coverPreview.style.backgroundSize = 'contain';
-            coverPreview.style.backgroundRepeat = 'no-repeat';
-        }
-    });
-
-    // Image upload logic
-    document.getElementById('image-upload').addEventListener('change', (e) => {
+    
+    titleColor.addEventListener('input', () => titlePreview.style.color = titleColor.value);
+    authorColor.addEventListener('input', () => authorPreview.style.color = authorColor.value);
+    
+    backgroundColor.addEventListener('input', () => coverPreview.style.backgroundColor = backgroundColor.value);
+    
+    // Image upload handling
+    imageUpload.addEventListener('change', (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
@@ -336,17 +348,20 @@
         };
         reader.readAsDataURL(file);
     });
-
-    // Full cover checkbox logic
+    
     fullCoverCheckbox.addEventListener('change', () => {
         if (fullCoverCheckbox.checked) {
-            coverPreview.style.backgroundSize = '100% 100%';
+            coverPreview.style.backgroundSize = 'cover';
         } else {
-            coverPreview.style.backgroundSize = 'auto';
+            coverPreview.style.backgroundSize = 'contain';
         }
     });
-</script>
 
+    borderStyle.addEventListener('change', () => {
+        coverPreview.style.borderStyle = borderStyle.value;
+        coverPreview.style.borderWidth = '5px';
+    });
+</script>
         
 		    
                 <!-- Library Section -->
