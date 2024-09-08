@@ -174,9 +174,7 @@
 },callBackForSmaato);
 </script>
 
-	 
-
-        <!-- Updated Book Cover Maker Section -->
+	 <!-- Updated Book Cover Maker Section -->
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
@@ -222,10 +220,24 @@
         <!-- Cover Size -->
         <label for="cover-size">Cover Size:</label>
         <select id="cover-size">
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
+            <option value="small">Small (300x450)</option>
+            <option value="medium">Medium (600x900)</option>
+            <option value="large">Large (1200x1800)</option>
             <option value="custom">Custom</option>
+        </select>
+
+        <!-- Image Size -->
+        <label for="image-size">Select Image Size:</label>
+        <select id="image-size">
+            <option value="300x450">300x450</option>
+            <option value="600x900">600x900</option>
+            <option value="1200x1800">1200x1800</option>
+            <option value="1400x2100">1400x2100</option>
+            <option value="1600x2400">1600x2400</option>
+            <option value="1800x2700">1800x2700</option>
+            <option value="2000x3000">2000x3000</option>
+            <option value="2400x3600">2400x3600</option>
+            <option value="3000x4500">3000x4500</option>
         </select>
 
         <!-- Background Color -->
@@ -265,6 +277,21 @@
             <option value="hidden">Hidden</option>
         </select>
 
+        <!-- Text Effects -->
+        <label for="text-effects">Text Effects:</label>
+        <select id="text-effects">
+            <option value="none">None</option>
+            <option value="shadow">Shadow</option>
+            <option value="outline">Outline</option>
+            <option value="glow">Glow</option>
+            <option value="emboss">Emboss</option>
+            <option value="engrave">Engrave</option>
+            <option value="upper">Uppercase</option>
+            <option value="lower">Lowercase</option>
+            <option value="italic">Italic</option>
+            <option value="bold">Bold</option>
+        </select>
+
         <!-- Cover Preview Section -->
         <div class="cover-preview" id="cover-preview">
             <div class="cover-text">
@@ -273,39 +300,12 @@
             </div>
         </div>
 
-        <!-- Save Template Button -->
-        <button id="save-template">Save Template</button>
-
-	<!-- Download Button -->
-<button id="download-cover">Download</button>
-	    
+        <!-- Download Button -->
+        <button id="download-cover">Download</button>
     </div>
 </section>
-		    
-<!--script for download button-->
-<script>
-document.getElementById('download-cover').addEventListener('click', () => {
-    // Create a canvas to capture the cover preview
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const coverPreview = document.getElementById('cover-preview');
-    
-    // Set canvas dimensions to match cover preview
-    canvas.width = coverPreview.offsetWidth;
-    canvas.height = coverPreview.offsetHeight;
 
-    // Draw the cover preview onto the canvas
-    ctx.drawImage(coverPreview, 0, 0);
-
-    // Create a link element to download the image
-    const link = document.createElement('a');
-    link.href = canvas.toDataURL('image/png');
-    link.download = 'book-cover.png';
-    link.click();
-});
-</script>
-		    
-<!-- Scripts -->
+<!-- Script Section -->
 <script>
     const titleInput = document.getElementById('cover-title');
     const authorInput = document.getElementById('cover-author');
@@ -321,7 +321,10 @@ document.getElementById('download-cover').addEventListener('click', () => {
     const fullCoverCheckbox = document.getElementById('full-cover');
     const imageUpload = document.getElementById('image-upload');
     const borderStyle = document.getElementById('border-style');
-    
+    const textAlignment = document.getElementById('text-alignment');
+    const imageSize = document.getElementById('image-size');
+    const textEffects = document.getElementById('text-effects');
+
     // Update the preview for book title and author text
     titleInput.addEventListener('input', () => titlePreview.textContent = titleInput.value);
     authorInput.addEventListener('input', () => authorPreview.textContent = authorInput.value);
@@ -339,6 +342,12 @@ document.getElementById('download-cover').addEventListener('click', () => {
     
     backgroundColor.addEventListener('input', () => coverPreview.style.backgroundColor = backgroundColor.value);
     
+    // Text Alignment
+    textAlignment.addEventListener('change', () => {
+        titlePreview.style.textAlign = textAlignment.value;
+        authorPreview.style.textAlign = textAlignment.value;
+    });
+
     // Image upload handling
     imageUpload.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -361,8 +370,92 @@ document.getElementById('download-cover').addEventListener('click', () => {
         coverPreview.style.borderStyle = borderStyle.value;
         coverPreview.style.borderWidth = '5px';
     });
-</script>
+
+    // Image Size handling
+    imageSize.addEventListener('change', () => {
+        const [width, height] = imageSize.value.split('x');
+        coverPreview.style.width = `${width}px`;
+        coverPreview.style.height = `${height}px`;
+    });
+
+// Text Effects handling
+    textEffects.addEventListener('change', () => {
+        const effect = textEffects.value;
+
+        // Reset effects
+        titlePreview.style.textShadow = 'none';
+        authorPreview.style.textShadow = 'none';
+        titlePreview.style.fontWeight = 'normal';
+        authorPreview.style.fontWeight = 'normal';
+        titlePreview.style.fontStyle = 'normal';
+        authorPreview.style.fontStyle = 'normal';
+        titlePreview.style.textTransform = 'none';
+        authorPreview.style.textTransform = 'none';
+
+        // Apply selected effect
+        switch (effect) {
+            case 'shadow':
+                titlePreview.style.textShadow = '2px 2px 5px rgba(0, 0, 0, 0.5)';
+                authorPreview.style.textShadow = '2px 2px 5px rgba(0, 0, 0, 0.5)';
+                break;
+            case 'outline':
+                titlePreview.style.textShadow = '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000';
+                authorPreview.style.textShadow = '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000';
+                break;
+            case 'glow':
+                titlePreview.style.textShadow = '0 0 10px #00ff00';
+                authorPreview.style.textShadow = '0 0 10px #00ff00';
+                break;
+            case 'emboss':
+                titlePreview.style.textShadow = '1px 1px 1px rgba(0, 0, 0, 0.5)';
+                authorPreview.style.textShadow = '1px 1px 1px rgba(0, 0, 0, 0.5)';
+                break;
+            case 'engrave':
+                titlePreview.style.textShadow = '-1px -1px 1px rgba(255, 255, 255, 0.5)';
+                authorPreview.style.textShadow = '-1px -1px 1px rgba(255, 255, 255, 0.5)';
+                break;
+            case 'upper':
+                titlePreview.style.textTransform = 'uppercase';
+                authorPreview.style.textTransform = 'uppercase';
+                break;
+            case 'lower':
+                titlePreview.style.textTransform = 'lowercase';
+                authorPreview.style.textTransform = 'lowercase';
+                break;
+            case 'italic':
+                titlePreview.style.fontStyle = 'italic';
+                authorPreview.style.fontStyle = 'italic';
+                break;
+            case 'bold':
+                titlePreview.style.fontWeight = 'bold';
+                authorPreview.style.fontWeight = 'bold';
+                break;
+        }
+    });
+
+    // Download cover functionality
+    document.getElementById('download-cover').addEventListener('click', () => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const coverPreview = document.getElementById('cover-preview');
         
+        // Set canvas dimensions based on the cover preview size
+        canvas.width = coverPreview.offsetWidth;
+        canvas.height = coverPreview.offsetHeight;
+
+        // Apply the styles and content of the cover preview onto the canvas
+        html2canvas(coverPreview).then(function(canvas) {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'book-cover.png';
+            link.click();
+        });
+    });
+</script>
+
+<!-- Include html2canvas library for capturing the cover preview -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+   
 		    
                 <!-- Library Section -->
                 <section id="library-section">
