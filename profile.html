@@ -16,7 +16,6 @@
         .profile-container,
         .writing-container,
         .book-reader-container,
-	.cover-maker-container,
         .library-container {
             text-align: center;
             background-color: #111111;
@@ -177,7 +176,7 @@
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
-	<button class="theme-toggle">💫</button>
+        <button class="theme-toggle">🌙</button>
 
         <div class="cover-maker-form">
             <label for="cover-title">Book Title:</label>
@@ -185,6 +184,22 @@
 
             <label for="cover-author">Author Name:</label>
             <input type="text" id="cover-author" placeholder="Enter author name">
+
+            <label for="cover-font">Select Font:</label>
+            <select id="cover-font">
+                <option value="Arial">Arial</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+            </select>
+
+            <label for="cover-size">Select Cover Size:</label>
+            <select id="cover-size">
+                <option value="400x600">400x600</option>
+                <option value="600x900">600x900</option>
+                <option value="800x1200">800x1200</option>
+            </select>
 
             <label for="cover-image">Upload Cover Image:</label>
             <input type="file" id="cover-image" accept="image/*">
@@ -201,36 +216,44 @@
         </div>
     </div>
 </section>
- <script>
-	 document.getElementById('generate-cover').addEventListener('click', function() {
-    const title = document.getElementById('cover-title').value;
-    const author = document.getElementById('cover-author').value;
-    const color = document.getElementById('cover-color').value;
-    const image = document.getElementById('cover-image').files[0];
 
-    const canvas = document.getElementById('cover-canvas');
-    const ctx = canvas.getContext('2d');
+<script>
+    document.getElementById('generate-cover').addEventListener('click', function() {
+        const title = document.getElementById('cover-title').value;
+        const author = document.getElementById('cover-author').value;
+        const font = document.getElementById('cover-font').value;
+        const size = document.getElementById('cover-size').value;
+        const [canvasWidth, canvasHeight] = size.split('x').map(Number);
+        const color = document.getElementById('cover-color').value;
+        const image = document.getElementById('cover-image').files[0];
 
-    // Set background color
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const canvas = document.getElementById('cover-canvas');
+        const ctx = canvas.getContext('2d');
 
-    // Draw image if uploaded
-    if (image) {
-        const img = new Image();
-        img.src = URL.createObjectURL(image);
-        img.onload = function() {
-            ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
-        };
-    }
+        // Set canvas size
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
 
-    // Add text (title and author)
-    ctx.fillStyle = '#ffffff';
-    ctx.font = '30px Arial';
-    ctx.fillText(title, 20, canvas.height - 150);
-    ctx.fillText(`by ${author}`, 20, canvas.height - 100);
-});
-		</script>
+        // Set background color
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw image if uploaded
+        if (image) {
+            const img = new Image();
+            img.src = URL.createObjectURL(image);
+            img.onload = function() {
+                ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
+            };
+        }
+
+        // Add text (title and author)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `30px ${font}`;
+        ctx.fillText(title, 20, canvas.height - 150);
+        ctx.fillText(`by ${author}`, 20, canvas.height - 100);
+    });
+</script>
 
 		    
                 <!-- Library Section -->
