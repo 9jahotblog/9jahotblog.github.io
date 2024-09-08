@@ -174,8 +174,8 @@
 },callBackForSmaato);
 </script>
 
-		    
-            <!-- Book Cover Maker Section -->
+
+	<!-- Book Cover Maker Section -->
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
@@ -196,26 +196,29 @@
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Courier New">Courier New</option>
                 <option value="Comic Sans MS">Comic Sans MS</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Tahoma">Tahoma</option>
-                <option value="Impact">Impact</option>
-                <option value="Palatino">Palatino</option>
-                <option value="Garamond">Garamond</option>
+                <!-- Add more fonts as needed -->
+            </select>
+
+            <label for="text-align">Select Text Alignment:</label>
+            <select id="text-align">
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
             </select>
 
             <label for="cover-size">Select Cover Size:</label>
             <select id="cover-size">
                 <option value="400x600">400x600</option>
-                <option value="500x700">500x700</option>
                 <option value="600x900">600x900</option>
                 <option value="800x1200">800x1200</option>
-                <option value="1000x1500">1000x1500</option>
-                <option value="450x700">450x700</option>
-                <option value="500x800">500x800</option>
-                <option value="700x1000">700x1000</option>
-                <option value="900x1400">900x1400</option>
-                <option value="750x1100">750x1100</option>
+                <!-- Add more sizes as needed -->
             </select>
+
+            <label for="cover-image">Upload Cover Image:</label>
+            <input type="file" id="cover-image" accept="image/*">
+
+            <label for="cover-color">Select Background Color:</label>
+            <input type="color" id="cover-color">
 
             <label for="cover-border">Select Border Style:</label>
             <select id="cover-border">
@@ -228,21 +231,11 @@
                 <option value="ridge">Ridge</option>
                 <option value="inset">Inset</option>
                 <option value="outset">Outset</option>
-                <option value="3d">3D Emboss</option>
-                <option value="shadow">Shadowed Border</option>
+                <!-- Add more border styles if needed -->
             </select>
 
-            <label for="cover-image">Upload Cover Image:</label>
-            <input type="file" id="cover-image" accept="image/*">
-
-            <label for="cover-color">Select Background Color:</label>
-            <input type="color" id="cover-color">
-
-            <label for="watermark">Add Watermark:</label>
-            <input type="checkbox" id="watermark" value="1"> Yes
-
-            <label for="cover-switch">Create Back Cover?</label>
-            <input type="checkbox" id="cover-switch" value="1"> Yes
+            <label for="back-cover-switch">Add Back Cover?</label>
+            <input type="checkbox" id="back-cover-switch">
 
             <button id="generate-cover">Generate Cover</button>
         </div>
@@ -251,70 +244,85 @@
             <h3>Preview Your Cover</h3>
             <canvas id="cover-canvas" width="400" height="600"></canvas>
         </div>
+        
+        <!-- Optional watermark -->
+        <label for="watermark">Include Watermark?</label>
+        <input type="checkbox" id="watermark">
     </div>
 </section>
-		    
-<script>    
-document.getElementById('generate-cover').addEventListener('click', function() {
-    const title = document.getElementById('cover-title').value;
-    const author = document.getElementById('cover-author').value;
-    const font = document.getElementById('cover-font').value;
-    const size = document.getElementById('cover-size').value;
-    const [canvasWidth, canvasHeight] = size.split('x').map(Number);
-    const borderStyle = document.getElementById('cover-border').value;
-    const color = document.getElementById('cover-color').value;
-    const image = document.getElementById('cover-image').files[0];
-    const watermarkChecked = document.getElementById('watermark').checked;
-    const isBackCover = document.getElementById('cover-switch').checked;
 
-    const canvas = document.getElementById('cover-canvas');
-    const ctx = canvas.getContext('2d');
+<!-- JavaScript for 3D Effect and Cover Generation -->
+<script>
+    document.getElementById('generate-cover').addEventListener('click', function() {
+        const title = document.getElementById('cover-title').value;
+        const author = document.getElementById('cover-author').value;
+        const font = document.getElementById('cover-font').value;
+        const size = document.getElementById('cover-size').value;
+        const textAlign = document.getElementById('text-align').value;
+        const [canvasWidth, canvasHeight] = size.split('x').map(Number);
+        const color = document.getElementById('cover-color').value;
+        const borderStyle = document.getElementById('cover-border').value;
+        const image = document.getElementById('cover-image').files[0];
+        const backCover = document.getElementById('back-cover-switch').checked;
+        const watermark = document.getElementById('watermark').checked;
 
-    // Set canvas size
-    canvas.width = canvasWidth;
-    canvas.height = canvasHeight;
+        const canvas = document.getElementById('cover-canvas');
+        const ctx = canvas.getContext('2d');
 
-    // Set background color
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Set canvas size
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
 
-    // Draw image if uploaded
-    if (image) {
-        const img = new Image();
-        img.src = URL.createObjectURL(image);
-        img.onload = function() {
-            ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
-        };
-    }
-
-    // Apply border style
-    canvas.style.border = `5px ${borderStyle} #000`;
-
-    // Add text (title and author)
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `30px ${font}`;
-    ctx.fillText(title, 20, canvas.height - 150);
-    ctx.fillText(`by ${author}`, 20, canvas.height - 100);
-
-    // Add watermark if selected
-    if (watermarkChecked) {
-        ctx.font = '12px Arial';
-        ctx.fillText('Generated by 9jahotblog Storybooks', canvas.width - 220, canvas.height - 10);
-    }
-
-    // Handle Back Cover creation
-    if (isBackCover) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Set background color
         ctx.fillStyle = color;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = '20px Arial';
-        ctx.fillText('About the Author:', 20, 50);
-        ctx.fillText('Write about the author here...', 20, 100);
+
+        // Draw image if uploaded
+        if (image) {
+            const img = new Image();
+            img.src = URL.createObjectURL(image);
+            img.onload = function() {
+                ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
+            };
+        }
+
+        // Add border style
+        canvas.style.border = `5px ${borderStyle} #000`;
+
+        // Add text (title and author)
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `30px ${font}`;
+        ctx.textAlign = textAlign;
+        ctx.fillText(title, canvas.width / 2, canvas.height - 150);
+        ctx.fillText(`by ${author}`, canvas.width / 2, canvas.height - 100);
+
+        // Add optional watermark
+        if (watermark) {
+            ctx.font = 'italic bold 10px Arial';
+            ctx.fillText('Generated by 9jahotblog Storybooks', canvas.width - 150, canvas.height - 10);
+        }
+
+        // If back cover is checked, display a simple back cover
+        if (backCover) {
+            alert('Back cover section coming soon!');
+        }
+    });
+</script>
+
+<style>
+    #cover-canvas {
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); /* Add 3D shadow effect */
+        border-radius: 10px; /* Rounded edges to simulate a book cover */
+        transition: transform 0.5s;
     }
-});
-	</script>
 
-
+    #cover-canvas:hover {
+        transform: scale(1.05) rotateY(10deg); /* Simulate a 3D flip effect on hover */
+    }
+</style>
+		    
+            
+             
 
 		    
                 <!-- Library Section -->
