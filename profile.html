@@ -363,6 +363,7 @@
             coverPreview.style.backgroundSize = 'cover';
         } else {
             coverPreview.style.backgroundSize = 'contain';
+            coverPreview.style.backgroundPosition = 'center';  // Image stays within the cover area
         }
     });
 
@@ -378,7 +379,7 @@
         coverPreview.style.height = `${height}px`;
     });
 
-// Text Effects handling
+    // Text Effects handling
     textEffects.addEventListener('change', () => {
         const effect = textEffects.value;
 
@@ -446,18 +447,15 @@
         // Apply the styles and content of the cover preview onto the canvas
         html2canvas(coverPreview).then(function(canvas) {
             const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'book-cover.png';
+            link.href = canvas.toDataURL('image/jpeg', 0.9);  // Set to JPG format and adjust quality
+            link.download = 'book-cover.jpg';  // Set the download filename
             link.click();
         });
     });
 </script>
 
-<!-- Include html2canvas library for capturing the cover preview -->
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
-   
-		    
-                <!-- Library Section -->
+
+		    <!-- Library Section -->
                 <section id="library-section">
                     <div class="library-container">
                         <h2>Featured Story of the Month</h2>
