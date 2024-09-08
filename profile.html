@@ -40,6 +40,7 @@
         .profile-container button,
         .writing-container button,
         .book-reader-container button,
+	.cover-maker-container button,
         .theme-toggle {
             margin-top: 10px;
             background-color: #444;
@@ -177,7 +178,7 @@
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
-        <button class="theme-toggle">🌙</button>
+        <button class="theme-toggle"> 💫</button>
         <div class="cover-maker-form">
             <label for="cover-title">Book Title:</label>
             <input type="text" id="cover-title" placeholder="Enter book title">
@@ -192,6 +193,12 @@
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Courier New">Courier New</option>
                 <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Lucida Sans">Lucida Sans</option>
+                <option value="Impact">Impact</option>
+                <!-- Add 10 more font types here -->
             </select>
 
             <label for="cover-size">Select Cover Size:</label>
@@ -199,15 +206,30 @@
                 <option value="400x600">400x600</option>
                 <option value="600x900">600x900</option>
                 <option value="800x1200">800x1200</option>
+                <option value="300x450">300x450</option>
+                <option value="500x750">500x750</option>
+                <option value="700x1050">700x1050</option>
+                <option value="900x1350">900x1350</option>
+                <option value="1000x1500">1000x1500</option>
+                <option value="1100x1650">1100x1650</option>
+                <option value="1200x1800">1200x1800</option>
+            </select>
+
+            <label for="cover-color">Select Background Color:</label>
+            <input type="color" id="cover-color">
+
+            <label for="text-position">Text Alignment:</label>
+            <select id="text-position">
+                <option value="left">Left</option>
+                <option value="center">Center</option>
+                <option value="right">Right</option>
             </select>
 
             <label for="cover-image">Upload Cover Image:</label>
             <input type="file" id="cover-image" accept="image/*">
 
-            <label for="cover-color">Select Background Color:</label>
-            <input type="color" id="cover-color">
-
             <button id="generate-cover">Generate Cover</button>
+            <button id="download-cover">Download Cover</button>
         </div>
 
         <div id="cover-preview">
@@ -223,6 +245,7 @@
         const author = document.getElementById('cover-author').value;
         const font = document.getElementById('cover-font').value;
         const size = document.getElementById('cover-size').value;
+        const textAlign = document.getElementById('text-position').value;
         const [canvasWidth, canvasHeight] = size.split('x').map(Number);
         const color = document.getElementById('cover-color').value;
         const image = document.getElementById('cover-image').files[0];
@@ -247,13 +270,33 @@
             };
         }
 
+        // Set text alignment
+        ctx.textAlign = textAlign;
+
         // Add text (title and author)
         ctx.fillStyle = '#ffffff';
         ctx.font = `30px ${font}`;
-        ctx.fillText(title, 20, canvas.height - 150);
-        ctx.fillText(`by ${author}`, 20, canvas.height - 100);
+        ctx.fillText(title, canvas.width / 2, canvas.height - 150);
+        ctx.fillText(`by ${author}`, canvas.width / 2, canvas.height - 100);
+
+        // Adding book-like effect (edges)
+        ctx.strokeStyle = "#000000";
+        ctx.lineWidth = 5;
+        ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+    });
+
+    // Download cover as an image
+    document.getElementById('download-cover').addEventListener('click', function() {
+        const canvas = document.getElementById('cover-canvas');
+        const link = document.createElement('a');
+        link.download = 'book-cover.png';
+        link.href = canvas.toDataURL();
+        link.click();
     });
 </script>
+
+
+
 
 		    
                 <!-- Library Section -->
