@@ -174,209 +174,177 @@
 },callBackForSmaato);
 </script>
 
-	 <!-- Book Cover Maker Section -->
+	              
+            <!-- Updated Book Cover Maker Section -->
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
         <button class="theme-toggle">🌙</button>
-        <div class="cover-maker-form">
-            <label for="cover-title">Book Title:</label>
-            <input type="text" id="cover-title" placeholder="Enter book title">
 
-            <label for="cover-author">Author Name:</label>
-            <input type="text" id="cover-author" placeholder="Enter author name">
+        <!-- Genre Templates -->
+        <label for="genre-template">Select Genre Template:</label>
+        <select id="genre-template">
+            <option value="romance">Romance</option>
+            <option value="sci-fi">Sci-Fi</option>
+            <option value="mystery">Mystery</option>
+            <option value="non-fiction">Non-Fiction</option>
+            <option value="fantasy">Fantasy</option>
+        </select>
 
-            <label for="cover-font">Select Font:</label>
-            <select id="cover-font">
-                <option value="Arial">Arial</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Courier New">Courier New</option>
-                <option value="Comic Sans MS">Comic Sans MS</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Tahoma">Tahoma</option>
-                <option value="Trebuchet MS">Trebuchet MS</option>
-                <option value="Lucida Sans">Lucida Sans</option>
-                <option value="Impact">Impact</option>
-            </select>
+        <!-- Book Title -->
+        <label for="cover-title">Book Title:</label>
+        <input type="text" id="cover-title" placeholder="Enter book title">
 
-            <!-- Font Size Adjustments -->
-            <label for="title-font-size">Title Font Size:</label>
-            <input type="range" id="title-font-size" min="10" max="100" value="30">
+        <!-- Author Name -->
+        <label for="cover-author">Author Name:</label>
+        <input type="text" id="cover-author" placeholder="Enter author name">
 
-            <label for="author-font-size">Author Font Size:</label>
-            <input type="range" id="author-font-size" min="10" max="50" value="20">
+        <!-- Font Selection -->
+        <label for="cover-font">Select Font:</label>
+        <select id="cover-font">
+            <option value="Arial">Arial</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Comic Sans MS">Comic Sans MS</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Tahoma">Tahoma</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
+            <option value="Lucida Sans">Lucida Sans</option>
+            <option value="Impact">Impact</option>
+        </select>
 
-            <!-- Text Color Pickers -->
-            <label for="title-color">Title Color:</label>
-            <input type="color" id="title-color" value="#ffffff">
+        <!-- Font Size Adjustments -->
+        <label for="title-font-size">Title Font Size:</label>
+        <input type="range" id="title-font-size" min="10" max="100" value="30">
 
-            <label for="author-color">Author Color:</label>
-            <input type="color" id="author-color" value="#ffffff">
+        <label for="author-font-size">Author Font Size:</label>
+        <input type="range" id="author-font-size" min="10" max="100" value="20">
 
-            <!-- Text Shadow & Outline -->
-            <label for="title-shadow">
-                <input type="checkbox" id="title-shadow">
-                Add Title Shadow
-            </label>
-            <label for="author-shadow">
-                <input type="checkbox" id="author-shadow">
-                Add Author Shadow
-            </label>
+        <!-- Expanded Image Options -->
+        <label for="image-placement">Image Placement:</label>
+        <select id="image-placement">
+            <option value="center">Center</option>
+            <option value="tiled">Tiled</option>
+            <option value="stretch">Stretch</option>
+            <option value="scaled">Scaled</option>
+        </select>
 
-            <label for="cover-size">Select Cover Size:</label>
-            <select id="cover-size">
-                <option value="400x600">400x600</option>
-                <option value="600x900">600x900</option>
-                <option value="800x1200">800x1200</option>
-            </select>
+        <label for="image-upload">Upload Cover Image:</label>
+        <input type="file" id="image-upload" accept="image/*">
 
-            <label for="cover-color">Select Background Color:</label>
-            <input type="color" id="cover-color">
+        <!-- Checkbox for full cover -->
+        <label>
+            <input type="checkbox" id="full-cover"> Use image as full cover
+        </label>
 
-            <label for="text-position">Text Alignment:</label>
-            <select id="text-position">
-                <option value="left">Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
-            </select>
+        <!-- Text Effects -->
+        <label for="text-effects">Text Effects:</label>
+        <select id="text-effects">
+            <option value="none">None</option>
+            <option value="gradient">Gradient</option>
+            <option value="outline">Outline</option>
+            <option value="emboss">Emboss</option>
+        </select>
 
-            <label for="cover-image">Upload Cover Image:</label>
-            <input type="file" id="cover-image" accept="image/*">
-
-            <label for="use-full-cover">
-                <input type="checkbox" id="use-full-cover">
-                Use Image as Full Cover
-            </label>
-
-            <label for="cover-border">Select Border Style:</label>
-            <select id="cover-border">
-                <option value="none">None</option>
-                <option value="solid">Solid</option>
-                <option value="dashed">Dashed</option>
-                <option value="dotted">Dotted</option>
-                <option value="double">Double</option>
-                <option value="3d">3D Book-like</option>
-            </select>
-
-            <button id="generate-cover">Generate Cover</button>
-            <button id="download-cover">Download Cover</button>
+        <!-- Cover Preview Section -->
+        <div class="cover-preview" id="cover-preview">
+            <div class="cover-text">
+                <h1 class="cover-title" id="preview-title">Book Title</h1>
+                <h2 class="cover-author" id="preview-author">Author Name</h2>
+            </div>
         </div>
 
-        <div id="cover-preview">
-            <h3>Preview Your Cover</h3>
-            <canvas id="cover-canvas" width="400" height="600"></canvas>
-        </div>
+        <!-- Save Template Button -->
+        <button id="save-template">Save Template</button>
     </div>
 </section>
 
+<!-- Scripts -->
 <script>
-    document.getElementById('generate-cover').addEventListener('click', function() {
-        const title = document.getElementById('cover-title').value;
-        const author = document.getElementById('cover-author').value;
-        const font = document.getElementById('cover-font').value;
-        const titleFontSize = document.getElementById('title-font-size').value;
-        const authorFontSize = document.getElementById('author-font-size').value;
-        const titleColor = document.getElementById('title-color').value;
-        const authorColor = document.getElementById('author-color').value;
-        const textAlign = document.getElementById('text-position').value;
-        const [canvasWidth, canvasHeight] = document.getElementById('cover-size').value.split('x').map(Number);
-        const color = document.getElementById('cover-color').value;
-        const image = document.getElementById('cover-image').files[0];
-        const useFullCover = document.getElementById('use-full-cover').checked;
-        const borderStyle = document.getElementById('cover-border').value;
-        const titleShadow = document.getElementById('title-shadow').checked;
-        const authorShadow = document.getElementById('author-shadow').checked;
+    // Variables for cover preview and input fields
+    const titleInput = document.getElementById('cover-title');
+    const authorInput = document.getElementById('cover-author');
+    const titlePreview = document.getElementById('preview-title');
+    const authorPreview = document.getElementById('preview-author');
+    const fontSelect = document.getElementById('cover-font');
+    const titleFontSize = document.getElementById('title-font-size');
+    const authorFontSize = document.getElementById('author-font-size');
+    const textEffects = document.getElementById('text-effects');
+    const coverPreview = document.getElementById('cover-preview');
+    const imagePlacement = document.getElementById('image-placement');
+    const fullCoverCheckbox = document.getElementById('full-cover');
 
-        const canvas = document.getElementById('cover-canvas');
-        const ctx = canvas.getContext('2d');
+    // Update text preview when typing in inputs
+    titleInput.addEventListener('input', () => titlePreview.textContent = titleInput.value);
+    authorInput.addEventListener('input', () => authorPreview.textContent = authorInput.value);
 
-        // Set canvas size
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+    // Update font when selected
+    fontSelect.addEventListener('change', () => {
+        titlePreview.style.fontFamily = fontSelect.value;
+        authorPreview.style.fontFamily = fontSelect.value;
+    });
 
-        // Set background color
-        ctx.fillStyle = color;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Update font sizes
+    titleFontSize.addEventListener('input', () => titlePreview.style.fontSize = `${titleFontSize.value}px`);
+    authorFontSize.addEventListener('input', () => authorPreview.style.fontSize = `${authorFontSize.value}px`);
 
-        // Draw image if uploaded
-        if (image) {
-            const img = new Image();
-            img.src = URL.createObjectURL(image);
-            img.onload = function() {
-                if (useFullCover) {
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                } else {
-                    ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
-                }
-                drawText(ctx, title, author, font, titleFontSize, authorFontSize, titleColor, authorColor, textAlign, titleShadow, authorShadow);
-                applyBorder(ctx, borderStyle, canvas);
-            };
+    // Update text effects
+    textEffects.addEventListener('change', () => {
+        if (textEffects.value === 'gradient') {
+            titlePreview.style.backgroundImage = 'linear-gradient(45deg, #ff6b6b, #f0e130)';
+            titlePreview.style.webkitBackgroundClip = 'text';
+            titlePreview.style.color = 'transparent';
+        } else if (textEffects.value === 'outline') {
+            titlePreview.style.textShadow = '2px 2px 4px #000';
+            authorPreview.style.textShadow = '2px 2px 4px #000';
+        } else if (textEffects.value === 'emboss') {
+            titlePreview.style.textShadow = '2px 2px 5px #ccc';
+            authorPreview.style.textShadow = '2px 2px 5px #ccc';
         } else {
-            drawText(ctx, title, author, font, titleFontSize, authorFontSize, titleColor, authorColor, textAlign, titleShadow, authorShadow);
-            applyBorder(ctx, borderStyle, canvas);
+            titlePreview.style.backgroundImage = '';
+            titlePreview.style.webkitBackgroundClip = '';
+            titlePreview.style.color = '';
+            titlePreview.style.textShadow = '';
+            authorPreview.style.textShadow = '';
         }
     });
 
-    function drawText(ctx, title, author, font, titleFontSize, authorFontSize, titleColor, authorColor, textAlign, titleShadow, authorShadow) {
-        ctx.textAlign = textAlign;
-
-        // Draw Title
-        ctx.fillStyle = titleColor;
-        ctx.font = `${titleFontSize}px ${font}`;
-        if (titleShadow) {
-            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
-            ctx.shadowBlur = 5;
+    // Image placement options
+    imagePlacement.addEventListener('change', () => {
+        if (imagePlacement.value === 'center') {
+            coverPreview.style.backgroundSize = 'auto';
+            coverPreview.style.backgroundRepeat = 'no-repeat';
+            coverPreview.style.backgroundPosition = 'center';
+        } else if (imagePlacement.value === 'tiled') {
+            coverPreview.style.backgroundSize = 'auto';
+            coverPreview.style.backgroundRepeat = 'repeat';
+        } else if (imagePlacement.value === 'stretch') {
+            coverPreview.style.backgroundSize = '100% 100%';
+            coverPreview.style.backgroundRepeat = 'no-repeat';
+        } else if (imagePlacement.value === 'scaled') {
+            coverPreview.style.backgroundSize = 'contain';
+            coverPreview.style.backgroundRepeat = 'no-repeat';
         }
-        ctx.fillText(title, ctx.canvas.width / 2, ctx.canvas.height - 150);
-        ctx.shadowColor = "transparent";  // Reset shadow
+    });
 
-        // Draw Author
-        ctx.fillStyle = authorColor;
-        ctx.font = `${authorFontSize}px ${font}`;
-        if (authorShadow) {
-            ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
-            ctx.shadowBlur = 5;
+    // Image upload logic
+    document.getElementById('image-upload').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            coverPreview.style.backgroundImage = `url(${reader.result})`;
+        };
+        reader.readAsDataURL(file);
+    });
+
+    // Full cover checkbox logic
+    fullCoverCheckbox.addEventListener('change', () => {
+        if (fullCoverCheckbox.checked) {
+            coverPreview.style.backgroundSize = '100% 100%';
+        } else {
+            coverPreview.style.backgroundSize = 'auto';
         }
-        ctx.fillText(`by ${author}`, ctx.canvas.width / 2, ctx.canvas.height - 100);
-        ctx.shadowColor = "transparent";  // Reset shadow
-    }
-
-    function applyBorder(ctx, borderStyle, canvas) {
-        ctx.strokeStyle = "#000000";
-        ctx.lineWidth = 5;
-        if (borderStyle !== 'none') {
-            if (borderStyle === '3d') {
-                ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-                ctx.beginPath();
-                ctx.moveTo(10, 10);
-                ctx.lineTo(canvas.width - 10, 10);
-                ctx.lineTo(canvas.width - 10, canvas.height - 10);
-                ctx.lineTo(10, canvas.height - 10);
-                ctx.lineTo(10, 10);
-                ctx.stroke();
-            } else {
-                const dashOptions = {
-                    solid: [],
-                    dashed: [10, 10],
-                    dotted: [5, 5]
-                };
-                ctx.setLineDash(dashOptions[borderStyle] || []);
-                ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
-            }
-        }
-    }
-
-    document.getElementById('download-cover').addEventListener('click', function() {
-        const canvas = document.getElementById('cover-canvas');
-        const link = document.createElement('a');
-        link.download = 'book-cover.png';
-        link.href = canvas.toDataURL();
-        link.click();
     });
 </script>
 
