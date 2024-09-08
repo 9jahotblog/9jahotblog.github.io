@@ -171,6 +171,65 @@
           "sync": false
 },callBackForSmaato);
 </script>
+
+                  <!-- Book Cover Maker Section -->
+<section id="cover-maker-section">
+    <div class="cover-maker-container">
+        <h2>Create Your Book Cover</h2>
+
+        <div class="cover-maker-form">
+            <label for="cover-title">Book Title:</label>
+            <input type="text" id="cover-title" placeholder="Enter book title">
+
+            <label for="cover-author">Author Name:</label>
+            <input type="text" id="cover-author" placeholder="Enter author name">
+
+            <label for="cover-image">Upload Cover Image:</label>
+            <input type="file" id="cover-image" accept="image/*">
+
+            <label for="cover-color">Select Background Color:</label>
+            <input type="color" id="cover-color">
+
+            <button id="generate-cover">Generate Cover</button>
+        </div>
+
+        <div id="cover-preview">
+            <h3>Preview Your Cover</h3>
+            <canvas id="cover-canvas" width="400" height="600"></canvas>
+        </div>
+    </div>
+</section>
+ <script>
+	 document.getElementById('generate-cover').addEventListener('click', function() {
+    const title = document.getElementById('cover-title').value;
+    const author = document.getElementById('cover-author').value;
+    const color = document.getElementById('cover-color').value;
+    const image = document.getElementById('cover-image').files[0];
+
+    const canvas = document.getElementById('cover-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set background color
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw image if uploaded
+    if (image) {
+        const img = new Image();
+        img.src = URL.createObjectURL(image);
+        img.onload = function() {
+            ctx.drawImage(img, 50, 50, canvas.width - 100, canvas.height / 2);
+        };
+    }
+
+    // Add text (title and author)
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '30px Arial';
+    ctx.fillText(title, 20, canvas.height - 150);
+    ctx.fillText(`by ${author}`, 20, canvas.height - 100);
+});
+		</script>
+
 		    
                 <!-- Library Section -->
                 <section id="library-section">
