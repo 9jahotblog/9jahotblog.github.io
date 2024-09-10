@@ -203,9 +203,15 @@
             <option value="1200x1800">Large (1200x1800)</option>
         </select>
 
-        <!-- Background Color -->
+        <!-- Background Color or Gradient -->
         <label for="background-color">Background Color:</label>
         <input type="color" id="background-color" value="#ffffff">
+        
+        <label for="gradient-color-1">Gradient Color 1:</label>
+        <input type="color" id="gradient-color-1" value="#ffffff">
+        
+        <label for="gradient-color-2">Gradient Color 2:</label>
+        <input type="color" id="gradient-color-2" value="#000000">
 
         <!-- Text Alignment -->
         <label for="text-alignment">Text Alignment:</label>
@@ -214,6 +220,14 @@
             <option value="center">Center</option>
             <option value="right">Right</option>
         </select>
+
+        <!-- Text Rotation -->
+        <label for="text-rotation">Text Rotation (Degrees):</label>
+        <input type="range" id="text-rotation" min="0" max="360" value="0">
+
+        <!-- Text Padding -->
+        <label for="text-padding">Text Padding:</label>
+        <input type="range" id="text-padding" min="0" max="50" value="10">
 
         <!-- Upload Image -->
         <label for="image-upload">Upload Cover Image:</label>
@@ -269,8 +283,9 @@
         <!-- Cover Preview Section -->
         <canvas id="cover-preview" style="border: 1px solid #ddd;"></canvas>
 
-        <!-- Download Button -->
-        <button id="download-cover">Download</button>
+        <!-- Download Buttons -->
+        <button id="download-cover-jpg">Download JPG</button>
+        <button id="download-cover-png">Download PNG</button>
     </div>
 </section>
 
@@ -285,8 +300,12 @@
     const titleColor = document.getElementById('title-color');
     const authorColor = document.getElementById('author-color');
     const backgroundColor = document.getElementById('background-color');
+    const gradientColor1 = document.getElementById('gradient-color-1');
+    const gradientColor2 = document.getElementById('gradient-color-2');
     const coverSize = document.getElementById('cover-size');
     const textAlignment = document.getElementById('text-alignment');
+    const textRotation = document.getElementById('text-rotation');
+    const textPadding = document.getElementById('text-padding');
     const imageUpload = document.getElementById('image-upload');
     const fullCoverCheckbox = document.getElementById('full-cover');
     const addShape = document.getElementById('add-shape');
@@ -294,7 +313,8 @@
     const borderStyle = document.getElementById('border-style');
     const textEffects = document.getElementById('text-effects');
     const coverPreview = document.getElementById('cover-preview');
-    const downloadButton = document.getElementById('download-cover');
+    const downloadJpgButton = document.getElementById('download-cover-jpg');
+    const downloadPngButton = document.getElementById('download-cover-png');
 
     let canvasContext = coverPreview.getContext('2d');
     let uploadedImage = null;
@@ -312,11 +332,14 @@
         // Clear the canvas
         canvasContext.clearRect(0, 0, coverPreview.width, coverPreview.height);
 
-        // Set background color
-        canvasContext.fillStyle = backgroundColor.value;
+        // Apply gradient or background color
+        const gradient = canvasContext.createLinearGradient(0, 0, coverPreview.width, coverPreview.height);
+        gradient.addColorStop(0, gradientColor1.value);
+        gradient.addColorStop(1, gradientColor2.value);
+        canvasContext.fillStyle = fullCoverCheckbox.checked ? gradient : backgroundColor.value;
         canvasContext.fillRect(0, 0, coverPreview.width, coverPreview.height);
 
-        // Draw image if uploaded
+        // Draw uploaded image
         if (uploadedImage) {
             const imgWidth = fullCoverCheckbox.checked ? coverPreview.width : uploadedImage.width;
             const imgHeight = fullCoverCheckbox.checked ? coverPreview.height : uploadedImage.height;
@@ -327,98 +350,84 @@
         canvasContext.font = `${titleFontSize.value}px ${fontSelect.value}`;
         canvasContext.fillStyle = titleColor.value;
         canvasContext.textAlign = textAlignment.value;
-        canvasContext.textBaseline = 'top';
 
-        // Apply text effects
-        if (textEffects.value === 'shadow') {
-            canvasContext.shadowColor = 'rgba(0, 0, 0, 0.5)';
-            canvasContext.shadowOffsetX = 2;
-            canvasContext.shadowOffsetY = 2;
-            canvasContext.shadowBlur = 5;
-        } else {
-            canvasContext.shadowColor = 'transparent';
-        }
+        // Apply text rotation and padding
+        const titleX = coverPreview.width / 2;
+        const titleY = coverPreview.height / 3;
+        canvasContext.save();
+        canvasContext.translate(titleX, titleY);
+        canvasContext.rotate((textRotation.value * Math.PI) / 180);
+        canvasContext.translate(-titleX, -titleY);
+        canvasContext.fillText(titleInput.value, titleX, titleY + parseInt(textPadding.value));
+        canvasContext.restore();
 
-        // Draw title text
-        canvasContext.fillText(titleInput.value, coverPreview.width / 2, 50);
-
-        // Draw author text
+        // Draw Author Name
         canvasContext.font = `${authorFontSize.value}px ${fontSelect.value}`;
         canvasContext.fillStyle = authorColor.value;
-        canvasContext.fillText(authorInput.value, coverPreview.width / 2, coverPreview.height - 100);
+        const authorY = titleY + 100; // Position author name below the title
+        canvasContext.fillText(authorInput.value, titleX, authorY);
 
-        // Reset shadow after drawing text
-        canvasContext.shadowColor = 'transparent';
-
-        // Apply border style if selected
-        switch (borderStyle.value) {
-            case 'solid':
-                canvasContext.strokeStyle = 'black';
-                canvasContext.lineWidth = 5;
-                canvasContext.strokeRect(0, 0, coverPreview.width, coverPreview.height);
-                break;
-            case 'dashed':
-                canvasContext.setLineDash([10, 5]);
-                canvasContext.strokeStyle = 'black';
-                canvasContext.lineWidth = 5;
-                canvasContext.strokeRect(0, 0, coverPreview.width, coverPreview.height);
-                canvasContext.setLineDash([]);
-                break;
-            case 'double':
-                canvasContext.strokeStyle = 'black';
-                canvasContext.lineWidth = 10;
-                canvasContext.strokeRect(10, 10, coverPreview.width - 20, coverPreview.height - 20);
-                break;
-            case 'groove':
-                canvasContext.strokeStyle = 'gray';
-                canvasContext.lineWidth = 10;
-                canvasContext.strokeRect(0, 0, coverPreview.width, coverPreview.height);
-                break;
-            case 'ridge':
-                canvasContext.strokeStyle = 'gray';
-                canvasContext.lineWidth = 10;
-                canvasContext.strokeRect(10, 10, coverPreview.width - 20, coverPreview.height - 20);
-                break;
-            case 'none':
-            default:
-                // No border
-                break;
+        // Apply border style
+        if (borderStyle.value !== "none") {
+            canvasContext.strokeStyle = titleColor.value;
+            canvasContext.lineWidth = 10;
+            canvasContext.setLineDash(
+                borderStyle.value === "dashed" ? [15, 10] : borderStyle.value === "dotted" ? [5, 5] : []
+            );
+            canvasContext.strokeRect(0, 0, coverPreview.width, coverPreview.height);
         }
 
-        // Draw shapes if selected
-        if (addShape.value === 'circle') {
+        // Apply text effects (e.g., shadow, outline)
+        if (textEffects.value === "shadow") {
+            canvasContext.shadowColor = "#000";
+            canvasContext.shadowBlur = 10;
+            canvasContext.shadowOffsetX = 5;
+            canvasContext.shadowOffsetY = 5;
+        } else if (textEffects.value === "outline") {
+            canvasContext.strokeStyle = titleColor.value;
+            canvasContext.lineWidth = 3;
+            canvasContext.strokeText(titleInput.value, titleX, titleY);
+        } else if (textEffects.value === "glow") {
+            canvasContext.shadowColor = "#fff";
+            canvasContext.shadowBlur = 15;
+        } else if (textEffects.value === "upper") {
+            titleInput.value = titleInput.value.toUpperCase();
+        } else if (textEffects.value === "lower") {
+            titleInput.value = titleInput.value.toLowerCase();
+        } else if (textEffects.value === "bold") {
+            canvasContext.font = `bold ${titleFontSize.value}px ${fontSelect.value}`;
+        } else if (textEffects.value === "italic") {
+            canvasContext.font = `italic ${titleFontSize.value}px ${fontSelect.value}`;
+        }
+
+        // Add Shape (Circle or Square)
+        if (addShape.value === "circle") {
             canvasContext.beginPath();
-            canvasContext.arc(coverPreview.width / 2, coverPreview.height / 2, 50, 0, Math.PI * 2);
-            canvasContext.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            canvasContext.fill();
-        } else if (addShape.value === 'square') {
-            canvasContext.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            canvasContext.fillRect(coverPreview.width / 2 - 50, coverPreview.height / 2 - 50, 100, 100);
+            canvasContext.arc(titleX, authorY + 100, 50, 0, Math.PI * 2);
+            canvasContext.stroke();
+        } else if (addShape.value === "square") {
+            canvasContext.strokeRect(titleX - 50, authorY + 50, 100, 100);
         }
 
-        // Add emojis if any
-        const emoji = addEmoji.value;
-        if (emoji) {
-            canvasContext.font = '100px sans-serif';
-            canvasContext.fillText(emoji, coverPreview.width - 150, coverPreview.height - 150);
+        // Add Emoji
+        if (addEmoji.value) {
+            canvasContext.font = "50px Arial";
+            canvasContext.fillText(addEmoji.value, titleX, authorY + 200);
         }
     }
 
     // Handle image upload
-    imageUpload.addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                uploadedImage = new Image();
-                uploadedImage.src = reader.result;
-                uploadedImage.onload = () => drawCover();
-            };
-            reader.readAsDataURL(file);
-        }
+    imageUpload.addEventListener('change', function (e) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            uploadedImage = new Image();
+            uploadedImage.onload = drawCover;
+            uploadedImage.src = event.target.result;
+        };
+        reader.readAsDataURL(e.target.files[0]);
     });
 
-    // Event listeners to update the canvas when options change
+    // Redraw cover on input changes
     titleInput.addEventListener('input', drawCover);
     authorInput.addEventListener('input', drawCover);
     fontSelect.addEventListener('change', drawCover);
@@ -427,24 +436,39 @@
     titleColor.addEventListener('input', drawCover);
     authorColor.addEventListener('input', drawCover);
     backgroundColor.addEventListener('input', drawCover);
+    gradientColor1.addEventListener('input', drawCover);
+    gradientColor2.addEventListener('input', drawCover);
+    coverSize.addEventListener('change', updateCanvasSize);
     textAlignment.addEventListener('change', drawCover);
+    textRotation.addEventListener('input', drawCover);
+    textPadding.addEventListener('input', drawCover);
     fullCoverCheckbox.addEventListener('change', drawCover);
     borderStyle.addEventListener('change', drawCover);
+    textEffects.addEventListener('change', drawCover);
     addShape.addEventListener('change', drawCover);
     addEmoji.addEventListener('input', drawCover);
-    coverSize.addEventListener('change', updateCanvasSize);
 
-    // Download the cover as a JPG file
-    downloadButton.addEventListener('click', () => {
+    // Download cover as JPG
+    downloadJpgButton.addEventListener('click', function () {
         const link = document.createElement('a');
-        link.href = coverPreview.toDataURL('image/jpeg', 0.9);
         link.download = 'book-cover.jpg';
+        link.href = coverPreview.toDataURL('image/jpeg');
         link.click();
     });
 
-    // Initial draw
+    // Download cover as PNG
+    downloadPngButton.addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.download = 'book-cover.png';
+        link.href = coverPreview.toDataURL('image/png');
+        link.click();
+    });
+
+    // Initialize canvas size
     updateCanvasSize();
 </script>
+         
+    
 
 		    <!-- Library Section -->
                 <section id="library-section">
