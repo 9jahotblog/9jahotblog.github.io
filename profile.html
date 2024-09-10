@@ -152,29 +152,8 @@
 </section>
 	
 
-<div id="smt-137991083" style="padding: 0px"></div>
-<script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
-<script>
-	function callBackForSmaato(status){
-		if(status == "SUCCESS"){
-			console.log("callBack is being called with status : " + status);
-		} else if (status == "ERROR"){
-			console.log("callBack is being called with status : " + status);
-		}
-	}; 
-	SomaJS.loadAd({
-          "adDivId": "smt-137991083",
-          "publisherId": 1100057727,
-          "adSpaceId": 137991083,
-          "format": "all",
-          "formatstrict": true,
-          "width": 300,
-          "height": 250,
-          "sync": false
-},callBackForSmaato);
-</script>
 
-	 <!-- Updated Book Cover Maker Section -->
+	<!-- Updated Book Cover Maker Section -->
 <section id="cover-maker-section">
     <div class="cover-maker-container">
         <h2>Create Your Book Cover</h2>
@@ -205,10 +184,10 @@
 
         <!-- Title and Author Font Size -->
         <label for="title-font-size">Title Font Size:</label>
-        <input type="range" id="title-font-size" min="10" max="100" value="30">
+        <input type="range" id="title-font-size" min="10" max="150" value="50">
 
         <label for="author-font-size">Author Font Size:</label>
-        <input type="range" id="author-font-size" min="10" max="100" value="20">
+        <input type="range" id="author-font-size" min="10" max="100" value="30">
 
         <!-- Title and Author Colors -->
         <label for="title-color">Title Color:</label>
@@ -258,7 +237,7 @@
         <input type="file" id="image-upload" accept="image/*">
 
         <!-- Image as Full Cover -->
-        <label>
+        <label style="font-weight: bold; color: #ff0000;">
             <input type="checkbox" id="full-cover"> Use image as full cover
         </label>
 
@@ -293,7 +272,7 @@
         </select>
 
         <!-- Cover Preview Section -->
-        <div class="cover-preview" id="cover-preview">
+        <div class="cover-preview" id="cover-preview" style="width: 600px; height: 900px;">
             <div class="cover-text">
                 <h1 class="cover-title" id="preview-title">Book Title</h1>
                 <h2 class="cover-author" id="preview-author">Author Name</h2>
@@ -341,7 +320,7 @@
     authorColor.addEventListener('input', () => authorPreview.style.color = authorColor.value);
     
     backgroundColor.addEventListener('input', () => coverPreview.style.backgroundColor = backgroundColor.value);
-    
+
     // Text Alignment
     textAlignment.addEventListener('change', () => {
         titlePreview.style.textAlign = textAlignment.value;
@@ -354,25 +333,33 @@
         const reader = new FileReader();
         reader.onload = () => {
             coverPreview.style.backgroundImage = `url(${reader.result})`;
+            if (fullCoverCheckbox.checked) {
+                coverPreview.style.backgroundSize = 'cover';  // Full cover image
+            } else {
+                coverPreview.style.backgroundSize = 'contain';  // Image inside cover
+                coverPreview.style.backgroundPosition = 'center';  // Center the image inside cover
+            }
         };
         reader.readAsDataURL(file);
     });
-    
+
+    // Full cover checkbox functionality
     fullCoverCheckbox.addEventListener('change', () => {
         if (fullCoverCheckbox.checked) {
-            coverPreview.style.backgroundSize = 'cover';
+            coverPreview.style.backgroundSize = 'cover';  // Full cover image
         } else {
-            coverPreview.style.backgroundSize = 'contain';
-            coverPreview.style.backgroundPosition = 'center';  // Image stays within the cover area
+            coverPreview.style.backgroundSize = 'contain';  // Contain the image
+            coverPreview.style.backgroundPosition = 'center';
         }
     });
 
+    // Border style handling
     borderStyle.addEventListener('change', () => {
         coverPreview.style.borderStyle = borderStyle.value;
         coverPreview.style.borderWidth = '5px';
     });
 
-    // Image Size handling
+    // Image size handling
     imageSize.addEventListener('change', () => {
         const [width, height] = imageSize.value.split('x');
         coverPreview.style.width = `${width}px`;
@@ -444,7 +431,7 @@
         canvas.width = coverPreview.offsetWidth;
         canvas.height = coverPreview.offsetHeight;
 
-        // Apply the styles and content of the cover preview onto the canvas
+        // Use html2canvas to render the cover preview and convert it into an image
         html2canvas(coverPreview).then(function(canvas) {
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/jpeg', 0.9);  // Set to JPG format and adjust quality
@@ -454,6 +441,9 @@
     });
 </script>
 
+<!-- Include html2canvas library -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+            
 
 		    <!-- Library Section -->
                 <section id="library-section">
