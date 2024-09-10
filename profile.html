@@ -575,7 +575,7 @@
     }
 </style>
 
-<!-- Full JavaScript functionality -->
+        <!-- Full JavaScript functionality -->
 <script>
     // Bold functionality - Using <b> instead of <h1> or <h2> for simplicity
     document.getElementById('bold-btn').addEventListener('click', function() {
@@ -639,9 +639,17 @@
     const writingBox = document.getElementById('writing-textbox');
     writingBox.addEventListener('input', function() {
         const text = writingBox.innerText || writingBox.textContent;
+        const wordCount = text.trim().split(/\s+/).length;
         const charCount = text.length;
+        document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
         document.getElementById('char-count').textContent = `Character count: ${charCount}`;
         
+        // Congratulatory message when reaching a milestone (e.g., 500 words)
+        const congratsMessage = document.getElementById('congratulatory-message');
+        if (wordCount >= 500) {
+            congratsMessage.textContent = "Congratulations! You've reached 500 words!";
+        } else {
+            congratsMessage.textContent = "";
         }
     });
 
