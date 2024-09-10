@@ -513,14 +513,15 @@
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
-                <button type="button" class="tool-btn" id="bold-btn" title="Bold"><b>B</b></button>
-                <button type="button" class="tool-btn" id="italic-btn" title="Italic"><i>I</i></button>
-                <button type="button" class="tool-btn" id="underline-btn" title="Underline"><u>U</u></button>
-                <button type="button" class="tool-btn" id="align-left-btn" title="Align Left">L</button>
-                <button type="button" class="tool-btn" id="align-center-btn" title="Center">C</button>
-                <button type="button" class="tool-btn" id="align-right-btn" title="Align Right">R</button>
-                <button type="button" class="tool-btn" id="bg-color-btn" title="Background Color">BG</button>
-                <select id="font-select" class="tool-btn">
+                <button type="button" class="tool-btn" id="bold-btn" title="Bold">Bold</button>
+                <button type="button" class="tool-btn" id="italic-btn" title="Italic">Italic</button>
+                <button type="button" class="tool-btn" id="underline-btn" title="Underline">Underline</button>
+                <button type="button" class="tool-btn" id="align-left-btn" title="Align Left">Align Left</button>
+                <button type="button" class="tool-btn" id="align-center-btn" title="Align Center">Align Center</button>
+                <button type="button" class="tool-btn" id="align-right-btn" title="Align Right">Align Right</button>
+                <button type="button" class="tool-btn" id="blockquote-btn" title="Blockquote">Blockquote</button>
+                <button type="button" class="tool-btn" id="bg-color-btn" title="Background Color">BG Color</button>
+                <select id="font-select" class="tool-btn" title="Select Font">
                     <option value="Arial">Arial</option>
                     <option value="Times New Roman">Times New Roman</option>
                     <option value="Courier New">Courier New</option>
@@ -537,6 +538,7 @@
             <p id="word-count">Word count: 0</p>
             <p id="char-count">Character count: 0</p>
 
+            <!-- Congratulatory Message -->
             <p id="congratulatory-message"></p>
 
             <!-- Publish and Download Buttons -->
@@ -546,51 +548,17 @@
     </div>
 </section>
 
-<!-- Styling for a better appearance -->
+<!-- Styling for buttons only -->
 <style>
-    .writing-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #000000;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .author-details {
-        margin-bottom: 15px;
-    }
-
-    #author-bio {
-        width: 100%;
-        height: 80px;
-        resize: none;
-    }
-
-    .toolbar {
-        margin-bottom: 10px;
-        display: flex;
-        gap: 10px;
-    }
-
     .tool-btn {
         padding: 5px 10px;
-        font-size: 16px;
+        font-size: 14px;
         cursor: pointer;
-        border-radius: 5px;
+        margin-right: 5px;
         background-color: #007bff;
         color: white;
         border: none;
-    }
-
-    #writing-textbox {
-        width: 100%;
-        height: 300px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        font-size: 16px;
-        background-color: black;
-        margin-bottom: 10px;
+        border-radius: 3px;
     }
 
     button#fullscreen-btn {
@@ -609,30 +577,42 @@
 
 <!-- Full JavaScript functionality -->
 <script>
+    // Bold functionality - Using <b> instead of <h1> or <h2> for simplicity
     document.getElementById('bold-btn').addEventListener('click', function() {
         document.execCommand('bold');
     });
 
+    // Italic functionality
     document.getElementById('italic-btn').addEventListener('click', function() {
         document.execCommand('italic');
     });
 
+    // Underline functionality
     document.getElementById('underline-btn').addEventListener('click', function() {
         document.execCommand('underline');
     });
 
+    // Align left functionality
     document.getElementById('align-left-btn').addEventListener('click', function() {
         document.execCommand('justifyLeft');
     });
 
+    // Align center functionality
     document.getElementById('align-center-btn').addEventListener('click', function() {
         document.execCommand('justifyCenter');
     });
 
+    // Align right functionality
     document.getElementById('align-right-btn').addEventListener('click', function() {
         document.execCommand('justifyRight');
     });
 
+    // Blockquote functionality
+    document.getElementById('blockquote-btn').addEventListener('click', function() {
+        document.execCommand('formatBlock', false, 'blockquote');
+    });
+
+    // Background color functionality
     document.getElementById('bg-color-btn').addEventListener('click', function() {
         const color = prompt('Enter a background color (e.g., yellow, #f00):');
         document.execCommand('backColor', false, color);
@@ -659,10 +639,10 @@
     const writingBox = document.getElementById('writing-textbox');
     writingBox.addEventListener('input', function() {
         const text = writingBox.innerText || writingBox.textContent;
-        const wordCount = text.trim().split(/\s+/).length;
         const charCount = text.length;
-        document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
         document.getElementById('char-count').textContent = `Character count: ${charCount}`;
+        
+        }
     });
 
     // Download story as text
