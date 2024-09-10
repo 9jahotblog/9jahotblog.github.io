@@ -493,8 +493,7 @@
     </div>
 </section>
 
-		    
-                <!-- Writing Prompt and Textbox Section -->
+	<!-- Writing Prompt and Textbox Section -->
 <section id="writing-section">
     <div class="writing-container">
         <button class="theme-toggle">🌙</button>
@@ -503,212 +502,162 @@
             <p>Before publishing your story, please ensure you've proofread and added all details.</p>
             <p id="writing-prompt">Click the button to get a new prompt!</p>
             <button type="button" id="new-prompt-btn">New Prompt</button>
-            <div class="text-editor">
-                <textarea id="writing-textbox" name="content" placeholder="Start writing here..."></textarea>
-                <div class="editor-controls">
-                    <!-- Text Formatting Options -->
-                    <button type="button" class="btn-format" data-format="bold"><b>B</b></button>
-                    <button type="button" class="btn-format" data-format="italic"><i>I</i></button>
-                    <button type="button" class="btn-format" data-format="underline"><u>U</u></button>
-                    <button type="button" class="btn-format" data-format="color">Color</button>
-                    <button type="button" class="btn-format" data-format="highlight">Highlight</button>
-                    <button type="button" class="btn-format" data-format="font-size">Font Size</button>
-                    <button type="button" class="btn-format" data-format="font-family">Font</button>
-                    <button type="button" class="btn-format" data-format="lists">Lists</button>
-                    <button type="button" class="btn-format" data-format="blockquote">Quote</button>
-                </div>
-            </div>
-            <div class="author-info">
+            
+            <!-- Author Details -->
+            <div class="author-details">
                 <label for="author-name">Author Name:</label>
-                <input type="text" id="author-name" name="author-name" placeholder="Your name...">
+                <input type="text" id="author-name" name="author-name" placeholder="Enter your name">
                 <label for="author-bio">Author Bio:</label>
-                <textarea id="author-bio" name="author-bio" placeholder="Short bio..."></textarea>
+                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio"></textarea>
             </div>
+
+            <!-- Text Formatting Toolbar -->
+            <div class="toolbar">
+                <button type="button" id="bold-btn"><b>B</b></button>
+                <button type="button" id="italic-btn"><i>I</i></button>
+                <button type="button" id="underline-btn"><u>U</u></button>
+                <button type="button" id="align-left-btn">Align Left</button>
+                <button type="button" id="align-center-btn">Center</button>
+                <button type="button" id="align-right-btn">Align Right</button>
+                <button type="button" id="bg-color-btn">Change Background</button>
+                <button type="button" id="fullscreen-btn">Full Screen</button>
+            </div>
+
+            <!-- Writing Textbox -->
+            <textarea id="writing-textbox" name="content" placeholder="Start writing here..."></textarea>
+            
+            <!-- Word and Character Count -->
+            <p id="word-count">Word count: 0</p>
+            <p id="char-count">Character count: 0</p>
+            
             <p id="congratulatory-message"></p>
+
+            <!-- Publish and Download Buttons -->
             <button type="submit" id="publish-story">Publish Story</button>
+            <button type="button" id="download-txt-btn">Download as Text</button>
         </form>
-        <button id="fullscreen-btn">Fullscreen</button>
     </div>
 </section>
 
+<script>
+// Full-screen toggle
+const fullScreenBtn = document.getElementById('fullscreen-btn');
+const writingSection = document.getElementById('writing-section');
+fullScreenBtn.addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+        writingSection.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+});
+
+// Word and Character Count
+const writingTextbox = document.getElementById('writing-textbox');
+const wordCount = document.getElementById('word-count');
+const charCount = document.getElementById('char-count');
+writingTextbox.addEventListener('input', () => {
+    const text = writingTextbox.value;
+    wordCount.textContent = `Word count: ${text.split(/\s+/).filter(word => word.length > 0).length}`;
+    charCount.textContent = `Character count: ${text.length}`;
+});
+
+// Text Formatting Functions
+document.getElementById('bold-btn').addEventListener('click', () => document.execCommand('bold'));
+document.getElementById('italic-btn').addEventListener('click', () => document.execCommand('italic'));
+document.getElementById('underline-btn').addEventListener('click', () => document.execCommand('underline'));
+document.getElementById('align-left-btn').addEventListener('click', () => document.execCommand('justifyLeft'));
+document.getElementById('align-center-btn').addEventListener('click', () => document.execCommand('justifyCenter'));
+document.getElementById('align-right-btn').addEventListener('click', () => document.execCommand('justifyRight'));
+
+// Background Color Change
+document.getElementById('bg-color-btn').addEventListener('click', () => {
+    writingTextbox.style.backgroundColor = prompt("Enter a background color (e.g., #f0f0f0 or lightblue):");
+});
+
+// Save to Local Storage
+writingTextbox.addEventListener('input', () => {
+    localStorage.setItem('draft', writingTextbox.value);
+});
+window.addEventListener('load', () => {
+    if (localStorage.getItem('draft')) {
+        writingTextbox.value = localStorage.getItem('draft');
+        wordCount.textContent = `Word count: ${writingTextbox.value.split(/\s+/).filter(word => word.length > 0).length}`;
+        charCount.textContent = `Character count: ${writingTextbox.value.length}`;
+    }
+});
+
+// Download as Text
+document.getElementById('download-txt-btn').addEventListener('click', () => {
+    const textContent = writingTextbox.value;
+    const blob = new Blob([textContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'story.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+</script>
+
 <style>
-/* Basic styling */
+/* General styling */
 .writing-container {
-    position: relative;
     padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 10px;
-    background: #000000;
+    background-color: #fafafa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
-    margin: 0 auto;
+    margin: 20px auto;
+    border-radius: 8px;
 }
 
-.text-editor {
-    position: relative;
+/* Author Details */
+.author-details {
+    margin-bottom: 20px;
 }
-
-textarea {
-    width: 100%;
-    height: 300px;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    line-height: 1.5;
-    background: #ffffff; /* Default background color */
-    font-family: 'Courier New', Courier, monospace; /* Default font family */
-}
-
-.editor-controls {
-    margin: 10px 0;
-}
-
-.btn-format {
-    border: none;
-    background: #e0e0e0;
-    padding: 10px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.btn-format[data-format="color"] {
-    background-color: #ffcc00; /* Color button styling */
-}
-
-.btn-format[data-format="highlight"] {
-    background-color: #ffff00; /* Highlight button styling */
-}
-
-.btn-format[data-format="font-size"] {
-    background-color: #cccccc; /* Font size button styling */
-}
-
-.btn-format[data-format="font-family"] {
-    background-color: #d3d3d3; /* Font family button styling */
-}
-
-.btn-format[data-format="lists"] {
-    background-color: #b0c4de; /* Lists button styling */
-}
-
-.btn-format[data-format="blockquote"] {
-    background-color: #f0f8ff; /* Blockquote button styling */
-}
-
-.author-info {
-    margin-top: 20px;
-}
-
-.author-info label {
+.author-details label {
     display: block;
-    margin: 5px 0;
+    margin-bottom: 5px;
+}
+.author-details input, .author-details textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
-.author-info input,
-.author-info textarea {
-    width: 100%;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px solid #ddd;
+/* Toolbar for formatting */
+.toolbar {
     margin-bottom: 10px;
 }
-
-#fullscreen-btn {
-    background-color: #0056b3;
-    color: white;
-    padding: 10px;
+.toolbar button {
+    padding: 8px;
+    margin-right: 5px;
     border: none;
-    border-radius: 5px;
+    background-color: #f0f0f0;
     cursor: pointer;
-    display: block;
-    margin-top: 10px;
-}
-
-#fullscreen-btn:hover {
-    background-color: #0056b3;
-}
-
-/* Additional styling for the theme toggle */
-.theme-toggle {
-    background: #333;
-    color: #fff;
-    border: none;
-    padding: 10px;
     border-radius: 5px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+}
+.toolbar button:hover {
+    background-color: #e0e0e0;
 }
 
-/* Responsive design for fullscreen button */
-@media (max-width: 600px) {
-    #fullscreen-btn {
-        width: 100%;
-        font-size: 14px;
-    }
+/* Writing Textbox */
+#writing-textbox {
+    width: 100%;
+    height: 300px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    background-color: #fff;
 }
 </style>
-<script>
-document.querySelectorAll('.btn-format').forEach(button => {
-    button.addEventListener('click', () => {
-        const format = button.getAttribute('data-format');
-        const textarea = document.getElementById('writing-textbox');
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        let text = textarea.value;
-
-        switch (format) {
-            case 'bold':
-                textarea.value = text.substring(0, start) + '**' + text.substring(start, end) + '**' + text.substring(end);
-                break;
-            case 'italic':
-                textarea.value = text.substring(0, start) + '*' + text.substring(start, end) + '*' + text.substring(end);
-                break;
-            case 'underline':
-                textarea.value = text.substring(0, start) + '__' + text.substring(start, end) + '__' + text.substring(end);
-                break;
-            case 'color':
-                // Add color formatting logic here
-                break;
-            case 'highlight':
-                // Add highlight formatting logic here
-                break;
-            case 'font-size':
-                // Add font size formatting logic here
-                break;
-            case 'font-family':
-                // Add font family formatting logic here
-                break;
-            case 'lists':
-                // Add list formatting logic here
-                break;
-            case 'blockquote':
-                textarea.value = text.substring(0, start) + '> ' + text.substring(start, end) + text.substring(end);
-                break;
-        }
-        textarea.focus();
-        textarea.setSelectionRange(start + 2, end + 2);
-    });
-});
-
-document.getElementById('fullscreen-btn').addEventListener('click', () => {
-    const container = document.querySelector('#writing-section');
-    if (container.requestFullscreen) {
-        container.requestFullscreen();
-    } else if (container.mozRequestFullScreen) { // Firefox
-        container.mozRequestFullScreen();
-    } else if (container.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        container.webkitRequestFullscreen();
-    } else if (container.msRequestFullscreen) { // IE/Edge
-        container.msRequestFullscreen();
-    }
-});
-</script>		    
 		    
-    
-                <!-- Text-to-Speech Section-->
+
+            <!-- Text-to-Speech Section-->
                   
             <section id="tts-section">
     <div class="profile-container">
