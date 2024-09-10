@@ -502,159 +502,179 @@
             <p>Before publishing your story, please ensure you've proofread and added all details.</p>
             <p id="writing-prompt">Click the button to get a new prompt!</p>
             <button type="button" id="new-prompt-btn">New Prompt</button>
-            
+
             <!-- Author Details -->
             <div class="author-details">
                 <label for="author-name">Author Name:</label>
-                <input type="text" id="author-name" name="author-name" placeholder="Enter your name">
+                <input type="text" id="author-name" name="author-name" placeholder="Enter your name" required>
                 <label for="author-bio">Author Bio:</label>
-                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio"></textarea>
+                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio" maxlength="150"></textarea>
             </div>
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
-                <button type="button" id="bold-btn"><b>B</b></button>
-                <button type="button" id="italic-btn"><i>I</i></button>
-                <button type="button" id="underline-btn"><u>U</u></button>
-                <button type="button" id="align-left-btn">Align Left</button>
-                <button type="button" id="align-center-btn">Center</button>
-                <button type="button" id="align-right-btn">Align Right</button>
-                <button type="button" id="bg-color-btn">Change Background</button>
-                <button type="button" id="fullscreen-btn">Full Screen</button>
+                <button type="button" class="tool-btn" id="bold-btn" title="Bold"><b>B</b></button>
+                <button type="button" class="tool-btn" id="italic-btn" title="Italic"><i>I</i></button>
+                <button type="button" class="tool-btn" id="underline-btn" title="Underline"><u>U</u></button>
+                <button type="button" class="tool-btn" id="align-left-btn" title="Align Left">L</button>
+                <button type="button" class="tool-btn" id="align-center-btn" title="Center">C</button>
+                <button type="button" class="tool-btn" id="align-right-btn" title="Align Right">R</button>
+                <button type="button" class="tool-btn" id="bg-color-btn" title="Background Color">BG</button>
+                <select id="font-select" class="tool-btn">
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+                <button type="button" class="tool-btn" id="fullscreen-btn">Full Screen</button>
             </div>
 
-            <!-- Writing Textbox -->
-            <textarea id="writing-textbox" name="content" placeholder="Start writing here..."></textarea>
-            
+            <!-- Writing Textbox (contenteditable div) -->
+            <div id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div>
+
             <!-- Word and Character Count -->
             <p id="word-count">Word count: 0</p>
             <p id="char-count">Character count: 0</p>
-            
+
             <p id="congratulatory-message"></p>
 
             <!-- Publish and Download Buttons -->
             <button type="submit" id="publish-story">Publish Story</button>
-            <button type="button" id="download-txt-btn">Download as Text</button>
+            <button type="button" id="download-story">Download as Text</button>
         </form>
     </div>
 </section>
 
-<script>
-// Full-screen toggle
-const fullScreenBtn = document.getElementById('fullscreen-btn');
-const writingSection = document.getElementById('writing-section');
-fullScreenBtn.addEventListener('click', () => {
-    if (!document.fullscreenElement) {
-        writingSection.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
-});
-
-// Word and Character Count
-const writingTextbox = document.getElementById('writing-textbox');
-const wordCount = document.getElementById('word-count');
-const charCount = document.getElementById('char-count');
-writingTextbox.addEventListener('input', () => {
-    const text = writingTextbox.value;
-    wordCount.textContent = `Word count: ${text.split(/\s+/).filter(word => word.length > 0).length}`;
-    charCount.textContent = `Character count: ${text.length}`;
-});
-
-// Text Formatting Functions
-document.getElementById('bold-btn').addEventListener('click', () => document.execCommand('bold'));
-document.getElementById('italic-btn').addEventListener('click', () => document.execCommand('italic'));
-document.getElementById('underline-btn').addEventListener('click', () => document.execCommand('underline'));
-document.getElementById('align-left-btn').addEventListener('click', () => document.execCommand('justifyLeft'));
-document.getElementById('align-center-btn').addEventListener('click', () => document.execCommand('justifyCenter'));
-document.getElementById('align-right-btn').addEventListener('click', () => document.execCommand('justifyRight'));
-
-// Background Color Change
-document.getElementById('bg-color-btn').addEventListener('click', () => {
-    writingTextbox.style.backgroundColor = prompt("Enter a background color (e.g., #f0f0f0 or lightblue):");
-});
-
-// Save to Local Storage
-writingTextbox.addEventListener('input', () => {
-    localStorage.setItem('draft', writingTextbox.value);
-});
-window.addEventListener('load', () => {
-    if (localStorage.getItem('draft')) {
-        writingTextbox.value = localStorage.getItem('draft');
-        wordCount.textContent = `Word count: ${writingTextbox.value.split(/\s+/).filter(word => word.length > 0).length}`;
-        charCount.textContent = `Character count: ${writingTextbox.value.length}`;
-    }
-});
-
-// Download as Text
-document.getElementById('download-txt-btn').addEventListener('click', () => {
-    const textContent = writingTextbox.value;
-    const blob = new Blob([textContent], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'story.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-});
-</script>
-
+<!-- Styling for a better appearance -->
 <style>
-/* General styling */
-.writing-container {
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #000000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 20px auto;
-    border-radius: 8px;
-}
+    .writing-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
 
-/* Author Details */
-.author-details {
-    margin-bottom: 20px;
-}
-.author-details label {
-    display: block;
-    margin-bottom: 5px;
-}
-.author-details input, .author-details textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
+    .author-details {
+        margin-bottom: 15px;
+    }
 
-/* Toolbar for formatting */
-.toolbar {
-    margin-bottom: 10px;
-}
-.toolbar button {
-    padding: 8px;
-    margin-right: 5px;
-    border: none;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    border-radius: 5px;
-}
-.toolbar button:hover {
-    background-color: #e0e0e0;
-}
+    #author-bio {
+        width: 100%;
+        height: 80px;
+        resize: none;
+    }
 
-/* Writing Textbox */
-#writing-textbox {
-    width: 100%;
-    height: 300px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
-    background-color: #000000;
-}
+    .toolbar {
+        margin-bottom: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .tool-btn {
+        padding: 5px 10px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+    }
+
+    #writing-textbox {
+        width: 100%;
+        height: 300px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 16px;
+        background-color: white;
+        margin-bottom: 10px;
+    }
+
+    button#fullscreen-btn {
+        background-color: #28a745;
+    }
+
+    button#publish-story, button#download-story {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 </style>
+
+<!-- Full JavaScript functionality -->
+<script>
+    document.getElementById('bold-btn').addEventListener('click', function() {
+        document.execCommand('bold');
+    });
+
+    document.getElementById('italic-btn').addEventListener('click', function() {
+        document.execCommand('italic');
+    });
+
+    document.getElementById('underline-btn').addEventListener('click', function() {
+        document.execCommand('underline');
+    });
+
+    document.getElementById('align-left-btn').addEventListener('click', function() {
+        document.execCommand('justifyLeft');
+    });
+
+    document.getElementById('align-center-btn').addEventListener('click', function() {
+        document.execCommand('justifyCenter');
+    });
+
+    document.getElementById('align-right-btn').addEventListener('click', function() {
+        document.execCommand('justifyRight');
+    });
+
+    document.getElementById('bg-color-btn').addEventListener('click', function() {
+        const color = prompt('Enter a background color (e.g., yellow, #f00):');
+        document.execCommand('backColor', false, color);
+    });
+
+    // Font selection
+    document.getElementById('font-select').addEventListener('change', function() {
+        const selectedFont = this.value;
+        document.execCommand('fontName', false, selectedFont);
+    });
+
+    // Full-screen functionality
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    fullscreenBtn.addEventListener('click', function() {
+        const writingBox = document.getElementById('writing-textbox');
+        if (!document.fullscreenElement) {
+            writingBox.requestFullscreen().catch(err => console.log(err));
+        } else {
+            document.exitFullscreen();
+        }
+    });
+
+    // Word and character count
+    const writingBox = document.getElementById('writing-textbox');
+    writingBox.addEventListener('input', function() {
+        const text = writingBox.innerText || writingBox.textContent;
+        const wordCount = text.trim().split(/\s+/).length;
+        const charCount = text.length;
+        document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
+        document.getElementById('char-count').textContent = `Character count: ${charCount}`;
+    });
+
+    // Download story as text
+    document.getElementById('download-story').addEventListener('click', function() {
+        const text = document.getElementById('writing-textbox').innerText || document.getElementById('writing-textbox').textContent;
+        const blob = new Blob([text], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'your-story.txt';
+        link.click();
+    });
+</script>
 		    
 
             <!-- Text-to-Speech Section-->
