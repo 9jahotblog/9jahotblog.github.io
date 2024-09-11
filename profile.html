@@ -513,15 +513,14 @@
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
-                <button type="button" class="tool-btn" id="bold-btn" title="Bold">Bold</button>
-                <button type="button" class="tool-btn" id="italic-btn" title="Italic">Italic</button>
-                <button type="button" class="tool-btn" id="underline-btn" title="Underline">Underline</button>
+                <button type="button" class="tool-btn" id="bold-btn" title="Bold Text">Bold</button>
+                <button type="button" class="tool-btn" id="italic-btn" title="Italic Text">Italic</button>
+                <button type="button" class="tool-btn" id="underline-btn" title="Underline Text">Underline</button>
                 <button type="button" class="tool-btn" id="align-left-btn" title="Align Left">Align Left</button>
                 <button type="button" class="tool-btn" id="align-center-btn" title="Align Center">Align Center</button>
                 <button type="button" class="tool-btn" id="align-right-btn" title="Align Right">Align Right</button>
                 <button type="button" class="tool-btn" id="blockquote-btn" title="Blockquote">Blockquote</button>
-                <button type="button" class="tool-btn" id="bg-color-btn" title="Background Color">BG Color</button>
-                <select id="font-select" class="tool-btn" title="Select Font">
+                <select id="font-select" class="tool-btn">
                     <option value="Arial">Arial</option>
                     <option value="Times New Roman">Times New Roman</option>
                     <option value="Courier New">Courier New</option>
@@ -534,11 +533,10 @@
             <!-- Writing Textbox (contenteditable div) -->
             <div id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div>
 
-            <!-- Word and Character Count -->
+            <!-- Word Count (Placeholder, script removed) -->
             <p id="word-count">Word count: 0</p>
-            <p id="char-count">Character count: 0</p>
 
-            <!-- Congratulatory Message -->
+            <!-- Congratulatory Message (Placeholder, script removed) -->
             <p id="congratulatory-message"></p>
 
             <!-- Publish and Download Buttons -->
@@ -548,74 +546,66 @@
     </div>
 </section>
 
-<!-- Styling for buttons only -->
+<!-- Styling for Buttons -->
 <style>
     .tool-btn {
         padding: 5px 10px;
         font-size: 14px;
         cursor: pointer;
-        margin-right: 5px;
-        background-color: #007bff;
-        color: white;
+        border-radius: 4px;
+        margin: 3px;
         border: none;
-        border-radius: 3px;
     }
 
-    button#fullscreen-btn {
-        background-color: #28a745;
-    }
+    #bold-btn { background-color: #ff6347; color: white; } /* Tomato */
+    #italic-btn { background-color: #20b2aa; color: white; } /* Light Sea Green */
+    #underline-btn { background-color: #6a5acd; color: white; } /* Slate Blue */
+    #align-left-btn { background-color: #48d1cc; color: white; } /* Medium Turquoise */
+    #align-center-btn { background-color: #daa520; color: white; } /* Goldenrod */
+    #align-right-btn { background-color: #dc143c; color: white; } /* Crimson */
+    #blockquote-btn { background-color: #4682b4; color: white; } /* Steel Blue */
+    #fullscreen-btn { background-color: #32cd32; color: white; } /* Lime Green */
+    #font-select { background-color: #ff7f50; color: white; padding: 5px; } /* Coral */
 
     button#publish-story, button#download-story {
         background-color: #007bff;
         color: white;
-        padding: 10px 15px;
+        padding: 8px 12px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin: 5px 0;
     }
 </style>
 
-        <!-- Full JavaScript functionality -->
+<!-- JavaScript Functionality -->
 <script>
-    // Bold functionality - Using <b> instead of <h1> or <h2> for simplicity
     document.getElementById('bold-btn').addEventListener('click', function() {
         document.execCommand('bold');
     });
 
-    // Italic functionality
     document.getElementById('italic-btn').addEventListener('click', function() {
         document.execCommand('italic');
     });
 
-    // Underline functionality
     document.getElementById('underline-btn').addEventListener('click', function() {
         document.execCommand('underline');
     });
 
-    // Align left functionality
     document.getElementById('align-left-btn').addEventListener('click', function() {
         document.execCommand('justifyLeft');
     });
 
-    // Align center functionality
     document.getElementById('align-center-btn').addEventListener('click', function() {
         document.execCommand('justifyCenter');
     });
 
-    // Align right functionality
     document.getElementById('align-right-btn').addEventListener('click', function() {
         document.execCommand('justifyRight');
     });
 
-    // Blockquote functionality
     document.getElementById('blockquote-btn').addEventListener('click', function() {
         document.execCommand('formatBlock', false, 'blockquote');
-    });
-
-    // Background color functionality
-    document.getElementById('bg-color-btn').addEventListener('click', function() {
-        const color = prompt('Enter a background color (e.g., yellow, #f00):');
-        document.execCommand('backColor', false, color);
     });
 
     // Font selection
@@ -632,24 +622,6 @@
             writingBox.requestFullscreen().catch(err => console.log(err));
         } else {
             document.exitFullscreen();
-        }
-    });
-
-    // Word and character count
-    const writingBox = document.getElementById('writing-textbox');
-    writingBox.addEventListener('input', function() {
-        const text = writingBox.innerText || writingBox.textContent;
-        const wordCount = text.trim().split(/\s+/).length;
-        const charCount = text.length;
-        document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
-        document.getElementById('char-count').textContent = `Character count: ${charCount}`;
-        
-        // Congratulatory message when reaching a milestone (e.g., 500 words)
-        const congratsMessage = document.getElementById('congratulatory-message');
-        if (wordCount >= 500) {
-            congratsMessage.textContent = "Congratulations! You've reached 500 words!";
-        } else {
-            congratsMessage.textContent = "";
         }
     });
 
