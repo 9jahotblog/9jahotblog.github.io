@@ -508,11 +508,11 @@
                 <label for="author-name">Author Name:</label>
                 <input type="text" id="author-name" name="author-name" placeholder="Enter your name" required>
                 <label for="author-bio">Author Bio:</label>
-                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio" maxlength="20"></textarea>
+                <input type="text" id="author-bio" name="author-bio" placeholder="Enter a brief bio" required">
             </div>
 
 		<!-- Writing Textbox (contenteditable div) -->
-            <textarea id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></textarea>
+            <div id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div>
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
@@ -2581,7 +2581,7 @@ document.getElementById("congratulatory-message").innerText = message;
     document.querySelectorAll('.theme-toggle').forEach((button) => {
         button.addEventListener("click", (event) => {
             themeIndex = (themeIndex + 1) % themes.length;
-            event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container').style.backgroundColor = themes[themeIndex];
+            event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').style.backgroundColor = themes[themeIndex];
         });
     });
 
