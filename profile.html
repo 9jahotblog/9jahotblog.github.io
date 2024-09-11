@@ -512,7 +512,7 @@
             </div>
 
 		<!-- Writing Textbox (contenteditable div) -->
-            <textrea id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div></textarea>
+            <textarea id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div></textarea>
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
@@ -2568,7 +2568,7 @@ document.getElementById("congratulatory-message").innerText = message;
     function applyTheme(themeIndex) {
         document.body.style.backgroundColor = themes[themeIndex];
         document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
-        document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container').forEach((element) => {
+        document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container,').forEach((element) => {
             element.style.backgroundColor = themes[themeIndex];
         });
     }
