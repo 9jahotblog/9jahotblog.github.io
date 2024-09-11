@@ -494,7 +494,7 @@
 </section>
 
 	<!-- Writing Prompt and Textbox Section -->
-<section id="writing-section">
+<section id="writing-textbox">
     <div class="writing-container">
         <button class="theme-toggle">🌙</button>
         <form action="https://formspree.io/f/mldrbpwo" method="POST">
@@ -508,8 +508,11 @@
                 <label for="author-name">Author Name:</label>
                 <input type="text" id="author-name" name="author-name" placeholder="Enter your name" required>
                 <label for="author-bio">Author Bio:</label>
-                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio" maxlength="150"></textarea>
+                <textarea id="author-bio" name="author-bio" placeholder="Enter a brief bio" maxlength="50"></textarea>
             </div>
+
+		<!-- Writing Textbox (contenteditable div) -->
+            <textrea id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div></textarea>
 
             <!-- Text Formatting Toolbar -->
             <div class="toolbar">
@@ -530,9 +533,7 @@
                 <button type="button" class="tool-btn" id="fullscreen-btn">Full Screen</button>
             </div>
 
-            <!-- Writing Textbox (contenteditable div) -->
-            <div id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div>
-
+            
             <!-- Word Count (Placeholder, script removed) -->
             <p id="word-count">Word count: 0</p>
 
