@@ -576,7 +576,7 @@
         border: 1px solid #ccc;
         height: 300px;
         padding: 10px;
-        background-color: #fff;
+        background-color: #000000;
     }
 </style>
 
@@ -612,7 +612,14 @@
         e.preventDefault();
         var content = quill.root.innerHTML; // Get the HTML content with formatting
         alert("Content ready to be submitted:\n" + content);
-        // Here you would submit the content via form or AJAX
+        document.getElementById("publish-story").addEventListener("click", (event) => {
+        event.preventDefault();
+        const text = document.getElementById("writing-textbox").value;
+        const words = text.trim().split(/\s+/);
+        const wordCount = words.length;
+
+        // Submit the form
+        event.target.closest("form").submit();
     });
 
     // Download story as text
@@ -2536,14 +2543,6 @@ if (words.length >= 2000) message = "Congratulations! You've reached 2000 words!
 document.getElementById("congratulatory-message").innerText = message;
     });
 
-    document.getElementById("publish-story").addEventListener("click", (event) => {
-        event.preventDefault();
-        const text = document.getElementById("writing-textbox").value;
-        const words = text.trim().split(/\s+/);
-        const wordCount = words.length;
-
-        // Submit the form
-        event.target.closest("form").submit();
 
         // Update progress in Firestore
         onAuthStateChanged(auth, (user) => {
