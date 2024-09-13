@@ -493,11 +493,11 @@
     </div>
 </section>
 
-	<!-- Writing Prompt and Textbox Section -->
+<!-- Writing Prompt and Textbox Section -->
 <section id="writing-textbox">
     <div class="writing-container">
         <button class="theme-toggle">🌙</button>
-        <form action="https://formspree.io/f/mldrbpwo" method="POST">
+        <form id="story-form" action="https://formspree.io/f/mldrbpwo" method="POST">
             <h2>Writing Prompt</h2>
             <p>Before publishing your story, please ensure you've proofread and added all details.</p>
             <p id="writing-prompt">Click the button to get a new prompt!</p>
@@ -537,6 +537,9 @@
             <!-- Publish and Download Buttons -->
             <button type="submit" id="publish-story">Publish Story</button>
             <button type="button" id="download-story">Download as Text</button>
+
+            <!-- Hidden input to store Quill content for form submission -->
+            <input type="hidden" name="story-content" id="story-content">
         </form>
     </div>
 </section>
@@ -587,7 +590,7 @@
         modules: {
             toolbar: '#toolbar'
         },
-        theme: 'gold'
+        theme: 'snow'  // Fixed theme to "snow"
     });
 
     // Update word count as user types
@@ -607,20 +610,29 @@
         }
     });
 
-    // Handle story submission
+    // New prompt button - Simulate new prompt generation
+    document.getElementById('new-prompt-btn').addEventListener('click', function() {
+        // Simulating a random prompt for now
+        const prompts = [
+            "Write about a mysterious door in your house that appears and disappears.",
+            "Describe a day in the life of an alien.",
+            "Imagine you have a time machine. What year would you go to?",
+            "Write about a character who can talk to animals."
+        ];
+        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
+        document.getElementById('writing-prompt').textContent = randomPrompt;
+    });
+
+    // Handle story submission with Formspree
     document.getElementById('publish-story').addEventListener('click', function(e) {
         e.preventDefault();
         var content = quill.root.innerHTML; // Get the HTML content with formatting
-        alert("Content ready to be submitted:\n" + content);
-        
-        // If you want to actually submit this content via a form, you'll need to add it to a hidden input and submit the form
-        var form = e.target.closest("form");
-        var hiddenInput = document.createElement("input");
-        hiddenInput.type = "hidden";
-        hiddenInput.name = "story-content"; // Name it appropriately for form submission
-        hiddenInput.value = content; // Set the value to the HTML content
-        form.appendChild(hiddenInput);
-        form.submit(); // Now submit the form
+
+        // Add content to hidden input for Formspree
+        document.getElementById('story-content').value = content;
+
+        // Submit the form (Formspree will handle this)
+        document.getElementById('story-form').submit();
     });
 
     // Download story as text
@@ -632,10 +644,9 @@
         link.download = 'your-story.txt'; // The file name
         link.click(); // Trigger the download
     });
-</script>
+</script>		    
 
-    
-		    
+	    
 
             <!-- Text-to-Speech Section-->
                   
