@@ -509,83 +509,30 @@
                 <input type="text" id="author-name" name="author-name" placeholder="Enter your name" required>
             </div>
 
-		
             <!-- Text Formatting Toolbar -->
-            <div class="toolbar">
-                <button type="button" class="tool-btn" id="bold-btn" title="Bold Text">Bold</button>
-                <button type="button" class="tool-btn" id="italic-btn" title="Italic Text">Italic</button>
-                <button type="button" class="tool-btn" id="underline-btn" title="Underline Text">Underline</button>
-                <button type="button" class="tool-btn" id="align-left-btn" title="Align Left">Align Left</button>
-                <button type="button" class="tool-btn" id="align-center-btn" title="Align Center">Align Center</button>
-                <button type="button" class="tool-btn" id="align-right-btn" title="Align Right">Align Right</button>
-                <button type="button" class="tool-btn" id="blockquote-btn" title="Blockquote">Blockquote</button>
-                <select id="font-select" class="tool-btn">
+            <div id="toolbar">
+                <button class="ql-bold">Bold</button>
+                <button class="ql-italic">Italic</button>
+                <button class="ql-underline">Underline</button>
+                <button class="ql-align" value="">Align Left</button>
+                <button class="ql-align" value="center">Align Center</button>
+                <button class="ql-align" value="right">Align Right</button>
+                <button class="ql-blockquote">Blockquote</button>
+                <select class="ql-font">
                     <option value="Arial">Arial</option>
                     <option value="Times New Roman">Times New Roman</option>
                     <option value="Courier New">Courier New</option>
                     <option value="Georgia">Georgia</option>
                     <option value="Verdana">Verdana</option>
                 </select>
-                <button type="button" class="tool-btn" id="fullscreen-btn">Full Screen</button>
+                <button type="button" id="fullscreen-btn">Full Screen</button>
             </div>
 
-               <!-- Include Quill's CSS and JavaScript -->
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+            <!-- Quill Editor -->
+            <div id="editor-container" style="height: 300px;"></div>
 
-<!-- Writing Textbox (Quill Editor) -->
-<div id="writing-textbox"></div>
-
-<!-- Toolbar for formatting options -->
-<div id="toolbar">
-    <button class="ql-bold">Bold</button>
-    <button class="ql-italic">Italic</button>
-    <button class="ql-underline">Underline</button>
-    <button class="ql-blockquote">Blockquote</button>
-</div>
-
-<!-- Publish Story button -->
-<button id="publish-story">Publish Story</button>
-
-<script>
-  // Initialize Quill editor with toolbar
-  var quill = new Quill('#writing-textbox', {
-    modules: {
-      toolbar: '#toolbar'
-    },
-    theme: 'snow'
-  });
-
-  // Event listener to extract content as plain text for word count
-  quill.on('text-change', function() {
-    var plainText = quill.getText(); // Extract plain text without formatting
-    var wordCount = plainText.trim().split(/\s+/).length;
-    document.getElementById('word-count').textContent = "Word count: " + wordCount;
-  });
-
-  // Event listener for publishing
-  document.getElementById('publish-story').addEventListener('click', function() {
-    var content = quill.root.innerHTML; // Get the HTML content with formatting
-    alert("Content ready to be submitted:\n" + content);
-    // Send 'content' in a form or via AJAX as needed
-  });
-</script>
-
-<!-- CSS for Quill Editor -->
-<style>
-  #writing-textbox {
-    height: 300px;
-  }
-
-  #toolbar button {
-    margin-right: 10px;
-  }
-</style>
-            <!-- Word Count (Placeholder, script removed) -->
+            <!-- Word Count -->
             <p id="word-count">Word count: 0</p>
-
-            <!-- Congratulatory Message (Placeholder, script removed) -->
-            <p id="congratulatory-message"></p>
 
             <!-- Publish and Download Buttons -->
             <button type="submit" id="publish-story">Publish Story</button>
@@ -594,7 +541,11 @@
     </div>
 </section>
 
-<!-- Styling for Buttons -->
+<!-- Include Quill's CSS and JavaScript -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!-- CSS for Buttons -->
 <style>
     .tool-btn {
         padding: 5px 10px;
@@ -605,15 +556,10 @@
         border: none;
     }
 
-    #bold-btn { background-color: #ff6347; color: white; } /* Tomato */
-    #italic-btn { background-color: #20b2aa; color: white; } /* Light Sea Green */
-    #underline-btn { background-color: #6a5acd; color: white; } /* Slate Blue */
-    #align-left-btn { background-color: #48d1cc; color: white; } /* Medium Turquoise */
-    #align-center-btn { background-color: #daa520; color: white; } /* Goldenrod */
-    #align-right-btn { background-color: #dc143c; color: white; } /* Crimson */
-    #blockquote-btn { background-color: #4682b4; color: white; } /* Steel Blue */
-    #fullscreen-btn { background-color: #32cd32; color: white; } /* Lime Green */
-    #font-select { background-color: #ff7f50; color: white; padding: 5px; } /* Coral */
+    #fullscreen-btn {
+        background-color: #32cd32; /* Lime Green */
+        color: white;
+    }
 
     button#publish-story, button#download-story {
         background-color: #007bff;
@@ -624,65 +570,63 @@
         cursor: pointer;
         margin: 5px 0;
     }
+
+    /* Ensure proper height for editor */
+    #editor-container {
+        border: 1px solid #ccc;
+        height: 300px;
+        padding: 10px;
+        background-color: #fff;
+    }
 </style>
 
-<!-- JavaScript Functionality -->
+<!-- JavaScript for Quill and Features -->
 <script>
-    document.getElementById('bold-btn').addEventListener('click', function() {
-        document.execCommand('bold');
+    // Initialize Quill editor with toolbar
+    var quill = new Quill('#editor-container', {
+        modules: {
+            toolbar: '#toolbar'
+        },
+        theme: 'snow'
     });
 
-    document.getElementById('italic-btn').addEventListener('click', function() {
-        document.execCommand('italic');
-    });
-
-    document.getElementById('underline-btn').addEventListener('click', function() {
-        document.execCommand('underline');
-    });
-
-    document.getElementById('align-left-btn').addEventListener('click', function() {
-        document.execCommand('justifyLeft');
-    });
-
-    document.getElementById('align-center-btn').addEventListener('click', function() {
-        document.execCommand('justifyCenter');
-    });
-
-    document.getElementById('align-right-btn').addEventListener('click', function() {
-        document.execCommand('justifyRight');
-    });
-
-    document.getElementById('blockquote-btn').addEventListener('click', function() {
-        document.execCommand('formatBlock', false, 'blockquote');
-    });
-
-    // Font selection
-    document.getElementById('font-select').addEventListener('change', function() {
-        const selectedFont = this.value;
-        document.execCommand('fontName', false, selectedFont);
+    // Update word count as user types
+    quill.on('text-change', function() {
+        var plainText = quill.getText().trim(); // Extract plain text without formatting
+        var wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
+        document.getElementById('word-count').textContent = "Word count: " + wordCount;
     });
 
     // Full-screen functionality
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    fullscreenBtn.addEventListener('click', function() {
-        const writingBox = document.getElementById('writing-textbox');
+    document.getElementById('fullscreen-btn').addEventListener('click', function() {
+        const editorContainer = document.getElementById('editor-container');
         if (!document.fullscreenElement) {
-            writingBox.requestFullscreen().catch(err => console.log(err));
+            editorContainer.requestFullscreen();
         } else {
             document.exitFullscreen();
         }
     });
 
+    // Handle story submission
+    document.getElementById('publish-story').addEventListener('click', function(e) {
+        e.preventDefault();
+        var content = quill.root.innerHTML; // Get the HTML content with formatting
+        alert("Content ready to be submitted:\n" + content);
+        // Here you would submit the content via form or AJAX
+    });
+
     // Download story as text
     document.getElementById('download-story').addEventListener('click', function() {
-        const text = document.getElementById('writing-textbox').innerText || document.getElementById('writing-textbox').textContent;
-        const blob = new Blob([text], { type: 'text/plain' });
-        const link = document.createElement('a');
+        var plainText = quill.getText();
+        var blob = new Blob([plainText], { type: 'text/plain' });
+        var link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = 'your-story.txt';
         link.click();
     });
 </script>
+
+    
 		    
 
             <!-- Text-to-Speech Section-->
