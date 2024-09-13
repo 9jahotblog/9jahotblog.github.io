@@ -610,18 +610,6 @@
         }
     });
 
-    // New prompt button - Simulate new prompt generation
-    document.getElementById('new-prompt-btn').addEventListener('click', function() {
-        // Simulating a random prompt for now
-        const prompts = [
-            "Write about a mysterious door in your house that appears and disappears.",
-            "Describe a day in the life of an alien.",
-            "Imagine you have a time machine. What year would you go to?",
-            "Write about a character who can talk to animals."
-        ];
-        const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)];
-        document.getElementById('writing-prompt').textContent = randomPrompt;
-    });
 
     // Handle story submission with Formspree
     document.getElementById('publish-story').addEventListener('click', function(e) {
