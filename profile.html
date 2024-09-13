@@ -505,8 +505,10 @@
 
             <!-- Author Details -->
             <div class="author-details">
-                <label for="author-name">Author Name & bio:</label>
+                <label for="author-name">Author Name:</label>
                 <input type="text" id="author-name" name="author-name" placeholder="Enter your name" required>
+		<label for="author-bio">Author Bio:</label>
+		<input type="text" id="author-bio" name="author-bio" placeholder="Enter short bio(third-person Pov)" required>
             </div>
 
             <!-- Text Formatting Toolbar -->
@@ -2504,7 +2506,7 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
         document.getElementById("writing-prompt").innerText = newPrompt;
     });
 
-    document.getElementById("writing-textbox").addEventListener("input", (event) => {
+    document.getElementById("editor-container").addEventListener("input", (event) => {
         const text = event.target.value;
         const words = text.trim().split(/\s+/);
         const lastWord = words[words.length - 1];
