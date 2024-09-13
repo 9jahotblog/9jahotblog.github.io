@@ -601,7 +601,7 @@
     document.getElementById('fullscreen-btn').addEventListener('click', function() {
         const editorContainer = document.getElementById('editor-container');
         if (!document.fullscreenElement) {
-            editorContainer.requestFullscreen();
+            editorContainer.requestFullscreen().catch(err => console.log(err));
         } else {
             document.exitFullscreen();
         }
@@ -612,24 +612,25 @@
         e.preventDefault();
         var content = quill.root.innerHTML; // Get the HTML content with formatting
         alert("Content ready to be submitted:\n" + content);
-        document.getElementById("publish-story").addEventListener("click", (event) => {
-        event.preventDefault();
-        const text = document.getElementById("writing-textbox").value;
-        const words = text.trim().split(/\s+/);
-        const wordCount = words.length;
-
-        // Submit the form
-        event.target.closest("form").submit();
+        
+        // If you want to actually submit this content via a form, you'll need to add it to a hidden input and submit the form
+        var form = e.target.closest("form");
+        var hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "story-content"; // Name it appropriately for form submission
+        hiddenInput.value = content; // Set the value to the HTML content
+        form.appendChild(hiddenInput);
+        form.submit(); // Now submit the form
     });
 
     // Download story as text
     document.getElementById('download-story').addEventListener('click', function() {
-        var plainText = quill.getText();
+        var plainText = quill.getText(); // Get plain text from Quill editor
         var blob = new Blob([plainText], { type: 'text/plain' });
         var link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'your-story.txt';
-        link.click();
+        link.download = 'your-story.txt'; // The file name
+        link.click(); // Trigger the download
     });
 </script>
 
