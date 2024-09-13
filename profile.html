@@ -529,9 +529,58 @@
                 <button type="button" class="tool-btn" id="fullscreen-btn">Full Screen</button>
             </div>
 
-               <!-- Writing Textbox (contenteditable div) -->
-            <div id="writing-textbox" contenteditable="true" placeholder="Start writing here..."></div>
-		
+               <!-- Include Quill's CSS and JavaScript -->
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<!-- Writing Textbox (Quill Editor) -->
+<div id="writing-textbox"></div>
+
+<!-- Toolbar for formatting options -->
+<div id="toolbar">
+    <button class="ql-bold">Bold</button>
+    <button class="ql-italic">Italic</button>
+    <button class="ql-underline">Underline</button>
+    <button class="ql-blockquote">Blockquote</button>
+</div>
+
+<!-- Publish Story button -->
+<button id="publish-story">Publish Story</button>
+
+<script>
+  // Initialize Quill editor with toolbar
+  var quill = new Quill('#writing-textbox', {
+    modules: {
+      toolbar: '#toolbar'
+    },
+    theme: 'snow'
+  });
+
+  // Event listener to extract content as plain text for word count
+  quill.on('text-change', function() {
+    var plainText = quill.getText(); // Extract plain text without formatting
+    var wordCount = plainText.trim().split(/\s+/).length;
+    document.getElementById('word-count').textContent = "Word count: " + wordCount;
+  });
+
+  // Event listener for publishing
+  document.getElementById('publish-story').addEventListener('click', function() {
+    var content = quill.root.innerHTML; // Get the HTML content with formatting
+    alert("Content ready to be submitted:\n" + content);
+    // Send 'content' in a form or via AJAX as needed
+  });
+</script>
+
+<!-- CSS for Quill Editor -->
+<style>
+  #writing-textbox {
+    height: 300px;
+  }
+
+  #toolbar button {
+    margin-right: 10px;
+  }
+</style>
             <!-- Word Count (Placeholder, script removed) -->
             <p id="word-count">Word count: 0</p>
 
