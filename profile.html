@@ -532,6 +532,14 @@
 
             <!-- Quill Editor -->
             <div id="editor-container" style="height: 300px;"></div>
+	    
+            <!-- Grammar & Style Check Section -->
+            <div id="grammar-check" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;">
+            <h3>Grammar & Style Suggestions</h3>
+            <ul id="suggestions-list">
+            <!-- Suggestions will be displayed here -->
+            </ul>
+          </div>
 
             <!-- Word Count -->
             <p id="word-count">Word count: 0</p>
@@ -679,6 +687,54 @@
         link.download = 'your-story.txt'; // The file name
         link.click(); // Trigger the download
     });
+
+	// Call grammar/style check
+        checkGrammarAndStyle();
+    });
+
+    // Grammar and Style Check Function
+    function checkGrammarAndStyle() {
+        var text = quill.getText(); // Get plain text from Quill editor
+        var suggestions = [];
+        
+        // Check for repeated words (consecutive)
+        var repeatedWords = /\b(\w+)\s+\1\b/gi;
+        var repeatedMatch = text.match(repeatedWords);
+        if (repeatedMatch) {
+            suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
+        }
+
+        // Check for long sentences (more than 20 words)
+        var sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
+        sentences.forEach(function(sentence) {
+            var wordCount = sentence.trim().split(/\s+/).length;
+            if (wordCount > 20) {
+                suggestions.push("Long sentence detected: \"" + sentence.trim().substring(0, 50) + "...\" (" + wordCount + " words)");
+            }
+        });
+
+        // Check for common fillers
+        var fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
+        var fillerMatch = text.match(fillers);
+        if (fillerMatch) {
+            suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
+        }
+
+        // Display suggestions
+        var suggestionsList = document.getElementById('suggestions-list');
+        suggestionsList.innerHTML = ''; // Clear previous suggestions
+        if (suggestions.length > 0) {
+            suggestions.forEach(function(suggestion) {
+                var listItem = document.createElement('li');
+                listItem.textContent = suggestion;
+                suggestionsList.appendChild(listItem);
+            });
+        } else {
+            var listItem = document.createElement('li');
+            listItem.textContent = "No suggestions! Your writing looks good.";
+            suggestionsList.appendChild(listItem);
+        }
+    }
 </script>	    
 
 	    
