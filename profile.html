@@ -608,6 +608,44 @@
         var plainText = quill.getText().trim(); // Extract plain text without formatting
         var wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
         document.getElementById('word-count').textContent = "Word count: " + wordCount;
+
+        // Display congratulatory message based on word count
+        let message = "";
+        if (wordCount >= 1) message = "You've started! Keep writing, you've got this!";
+        if (wordCount >= 10) message = "Great job! You're building momentum!";
+        if (wordCount >= 25) message = "Excellent! Your ideas are flowing!";
+        if (wordCount >= 50) message = "Impressive! You're on a roll!";
+        if (wordCount >= 75) message = "Fantastic! Your story is taking shape!";
+        if (wordCount >= 100) message = "Amazing! You're a true writer!";
+        if (wordCount >= 125) message = "Outstanding! Your creativity is shining!";
+        if (wordCount >= 150) message = "Wow! You're really cooking now!";
+        if (wordCount >= 200) message = "Incredible! Keep up the fantastic work!";
+        if (wordCount >= 250) message = "Unbelievable! You're a writing rockstar!";
+        if (wordCount >= 300) message = "Sensational! Your writing is captivating!";
+        if (wordCount >= 350) message = "Exceptional! You're making great progress!";
+        if (wordCount >= 400) message = "Magnificent! Your story is coming alive!";
+        if (wordCount >= 450) message = "Phenomenal! Keep pushing the boundaries!";
+        if (wordCount >= 500) message = "Congratulations! You've written a masterpiece!";
+        if (wordCount >= 550) message = "Bravo! Your dedication is paying off!";
+        if (wordCount >= 600) message = "Inspirational! Your writing is a true achievement!";
+        if (wordCount >= 650) message = "Stupendous! You're a writing sensation!";
+        if (wordCount >= 700) message = "Breathtaking! Your story is a work of art!";
+        if (wordCount >= 750) message = "Don't forget to proofread and edit – you're almost there!";
+        if (wordCount >= 800) message = "You're on fire! Keep the momentum going!";
+        if (wordCount >= 850) message = "Your writing is electrifying! Keep pushing the limits!";
+        if (wordCount >= 1000) message = "Wow, 1000 words! Take a break, then review for consistency and flow.";
+        if (wordCount >= 1050) message = "Remember to check for grammar, punctuation, and spelling errors.";
+        if (wordCount >= 1100) message = "Your story is really taking shape! Consider getting feedback from beta readers.";
+        if (wordCount >= 1150) message = "You're getting close! Make sure to edit and revise before calling it done.";
+        if (wordCount >= 1200) message = "Keep going! You're almost at the finish line!";
+        if (wordCount >= 1250) message = "Your dedication is paying off! Keep pushing forward!";
+        if (wordCount >= 1300) message = "You're a writing machine! Keep the words flowing!";
+        if (wordCount >= 1500) message = "Your story is a masterpiece! Take pride in your work!";
+        if (wordCount >= 1750) message = "You're a rockstar writer! Keep shining!";
+        if (wordCount >= 2000) message = "Congratulations! You've reached 2000 words! Take a moment to celebrate, then edit and polish.";
+
+        // Set the congratulatory message in the appropriate element
+        document.getElementById('congratulatory-message').innerText = message;
     });
 
     // Full-screen functionality
@@ -619,7 +657,6 @@
             document.exitFullscreen();
         }
     });
-
 
     // Handle story submission with Formspree
     document.getElementById('publish-story').addEventListener('click', function(e) {
@@ -642,7 +679,7 @@
         link.download = 'your-story.txt'; // The file name
         link.click(); // Trigger the download
     });
-</script>		    
+</script>	    
 
 	    
 
