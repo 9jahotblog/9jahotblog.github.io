@@ -2505,7 +2505,7 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
         document.getElementById("writing-prompt").innerText = newPrompt;
     });
 
-    document.getElementById("editor-container").addEventListener("input", (event) => {
+    document.getElementById("writing-container").addEventListener("input", (event) => {
         const text = event.target.value;
         const words = text.trim().split(/\s+/);
         const lastWord = words[words.length - 1];
