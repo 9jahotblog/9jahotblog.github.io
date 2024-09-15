@@ -550,6 +550,10 @@
             <!-- Publish and Download Buttons -->
             <button type="submit" id="publish-story">Publish Story</button>
             <button type="button" id="download-story">Download as Text</button>
+	    <div id="controls">
+            <button id="download-docx">Download as DOCX</button>
+            <button id="download-pdf">Download as PDF</button>
+	   </div>
 	    
 
 
@@ -562,6 +566,9 @@
 <!-- Include Quill's CSS and JavaScript -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.0.2/docx.min.js"></script>
 
 <!-- CSS for Buttons -->
 <style>
@@ -662,6 +669,32 @@
         if (wordCount >= 1) return "You've started! Keep writing, you've got this!";
         return ""; // No message for 0 words
     }
+
+	 // Download as DOCX
+    document.getElementById('download-docx').addEventListener('click', function() {
+        var plainText = quill.getText(); // Get plain text from Quill editor
+        var doc = new docx.Document({
+            sections: [{
+                properties: {},
+                children: [
+                    new docx.Paragraph(plainText)
+                ]
+            }]
+        });
+        docx.Packer.toBlob(doc).then(blob => {
+            saveAs(blob, "your-story.docx");
+        });
+    });
+
+    // Download as PDF
+    document.getElementById('download-pdf').addEventListener('click', function() {
+        var plainText = quill.getText(); // Get plain text from Quill editor
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text(plainText, 10, 10); // Add text to PDF with some padding
+        doc.save('your-story.pdf');
+    });
+
 
     // Full-screen functionality
     document.getElementById('fullscreen-btn').addEventListener('click', function() {
