@@ -775,93 +775,77 @@ function checkGrammarAndStyle() {
 }
 </script>
 	    
-
-<!-- Writing Projects Management Section -->
-<section id="projects-section">
-    <div class="projects-container">
+<!-- Project Management Section -->
+<section id="project-management-section">
+    <div class="project-management-container">
         <h2>Your Writing Projects</h2>
-
-        <!-- Project Creation Form -->
-        <div class="project-form">
+        <button id="add-project-btn">Add New Project</button>
+        
+        <!-- Project Form (initially hidden) -->
+        <div id="project-form" style="display: none;">
             <h3>Create New Project</h3>
             <input type="text" id="project-name" placeholder="Project Name" />
-            <textarea id="project-description" placeholder="Project Description" rows="4" cols="50"></textarea>
-            <button id="create-project">Create Project</button>
+            <textarea id="project-description" placeholder="Project Description"></textarea>
+            <input type="date" id="project-deadline" placeholder="Project Deadline" />
+            <button id="save-project-btn">Save Project</button>
+            <button id="cancel-project-btn">Cancel</button>
         </div>
 
         <!-- Project List -->
-        <div class="project-list">
-            <h3>Your Projects</h3>
-            <ul id="projects-list"></ul>
+        <ul id="project-list"></ul>
+        
+        <!-- Achievements -->
+        <div id="achievements">
+            <h3>Achievements</h3>
+            <ul id="achievements-list"></ul>
         </div>
     </div>
 </section>
-
+		    
 <style>
-/* Projects Section Styles */
-#projects-section {
-    background-color: #f9f9f9;
+/* Basic Styling for Project Management Section */
+#project-management-section {
     padding: 20px;
-    border-radius: 8px;
 }
 
-.projects-container {
-    max-width: 1200px;
+.project-management-container {
+    max-width: 800px;
     margin: 0 auto;
-    text-align: center;
 }
 
-.project-form {
+#project-form {
     margin-bottom: 20px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.project-form input, 
-.project-form textarea, 
-.project-form button {
+#project-form input, #project-form textarea {
     display: block;
     width: 100%;
-    margin: 10px 0;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 8px;
 }
 
-.project-form button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.project-form button:hover {
-    background-color: #218838;
-}
-
-.project-list {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.project-list ul {
+#project-list {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
-.project-item {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+#project-list li {
+    margin-bottom: 10px;
 }
 
-.project-item:last-child {
-    border-bottom: none;
+#achievements {
+    margin-top: 20px;
 }
+
+#achievements-list {
+    list-style: none;
+    padding: 0;
+}
+
+#achievements-list li {
+    margin-bottom: 10px;
+}
+
 </style>
 		
 		    
