@@ -935,14 +935,44 @@
 
     <script>
     const levels = {
-        "Ancient Mystery": [
-            { prompt: "Level 1: You find an old map. What do you do?", successKeywords: ['follow', 'map', 'explore', 'track', 'trace', 'discover'], failureMessage: "You missed the treasure!", successMessage: "You follow the map and find the hidden treasure! 💎" },
-            { prompt: "Level 2: The treasure is guarded by a riddle. Solve it to proceed.", successKeywords: ['solve', 'riddle', 'answer', 'decipher', 'unravel', 'interpret'], failureMessage: "You couldn't solve the riddle.", successMessage: "You solve the riddle and the treasure is yours! 🎉" },
-            { prompt: "Level 3: A trap is triggered! How do you escape?", successKeywords: ['escape', 'dodge', 'avoid', 'flee', 'evade', 'run'], failureMessage: "You got caught in the trap!", successMessage: "You successfully escape the trap! 🏃" },
-            { prompt: "Level 4: You encounter a guardian. Convince him to let you pass.", successKeywords: ['convince', 'talk', 'negotiate', 'persuade', 'reason', 'argue'], failureMessage: "The guardian doesn't let you pass.", successMessage: "You convince the guardian and he lets you pass! 🛡️" },
-            { prompt: "Level 5: The final treasure room is ahead. What's your plan?", successKeywords: ['plan', 'strategy', 'approach', 'tactic', 'scheme', 'method'], failureMessage: "Your plan fails.", successMessage: "Your plan works and you get the final treasure! 🏆" },
-            { prompt: "Level 6: A rival treasure hunter appears. What's your move?", successKeywords: ['confront', 'ally', 'outsmart', 'compete', 'challenge', 'defeat'], failureMessage: "The rival takes the treasure.", successMessage: "You outsmart the rival and secure the treasure! 🎖️" }
-        ],
+    "The Shadowed Relic": [
+        { 
+            prompt: "Level 1: You stumble upon an ancient journal whispering of a powerful relic. The path is dangerous. Do you take the risk?", 
+            successKeywords: ['venture', 'risk', 'dare', 'explore', 'pursue', 'follow'], 
+            failureMessage: "You hesitate, and the opportunity slips away.", 
+            successMessage: "You gather your courage and follow the journal's lead, entering the dark unknown. ⚔️"
+        },
+        { 
+            prompt: "Level 2: You arrive at the mouth of a cursed cave, the air thick with tension. The walls seem alive. What do you do?", 
+            successKeywords: ['enter', 'explore', 'move', 'step', 'continue', 'investigate'], 
+            failureMessage: "You turn back, overcome by fear. The relic is lost.", 
+            successMessage: "You steel yourself, pushing past the creeping dread, venturing deeper into the cave. 🕯️"
+        },
+        { 
+            prompt: "Level 3: Inside the cave, you find yourself surrounded by ghostly figures. Their eyes burn with malice. How do you escape?", 
+            successKeywords: ['run', 'escape', 'flee', 'distract', 'fight', 'survive'], 
+            failureMessage: "The shadows engulf you, draining your spirit.", 
+            successMessage: "You break free from the grip of the phantoms, barely escaping with your life. 🏃‍♂️"
+        },
+        { 
+            prompt: "Level 4: The relic is near, but a deadly trap guards it. Time is ticking. How will you outsmart it?", 
+            successKeywords: ['disarm', 'solve', 'outsmart', 'avoid', 'trick', 'disable'], 
+            failureMessage: "The trap triggers, sealing your fate beneath the rubble.", 
+            successMessage: "You skillfully disarm the trap, narrowly avoiding disaster. ⏳"
+        },
+        { 
+            prompt: "Level 5: The relic lies in sight, but a shadowy figure emerges, claiming it as theirs. What's your next move?", 
+            successKeywords: ['confront', 'fight', 'negotiate', 'outwit', 'challenge', 'defeat'], 
+            failureMessage: "The figure overpowers you and vanishes with the relic.", 
+            successMessage: "You defeat the figure in a fierce duel, the relic is yours at last! ⚔️"
+        },
+        { 
+            prompt: "Level 6: As you claim the relic, the ground begins to shake, and the cave collapses. There's only one way out. Will you make it?", 
+            successKeywords: ['run', 'escape', 'flee', 'dash', 'survive', 'evade'], 
+            failureMessage: "The cave collapses, burying you with the relic lost forever.", 
+            successMessage: "You sprint through the crumbling cave, barely escaping the collapsing ruins. The relic is yours! 🏆"
+        }
+    ],
         "Modern Detective": [
             { prompt: "Level 1: A mysterious letter arrives at your office. What do you do?", successKeywords: ['open', 'read', 'analyze', 'examine', 'inspect', 'investigate'], failureMessage: "The letter self-destructs.", successMessage: "You analyze the letter and find a clue! 🔍" },
             { prompt: "Level 2: You need to tail a suspect. How do you proceed?", successKeywords: ['follow', 'discreet', 'observe', 'shadow', 'track', 'monitor'], failureMessage: "You lose the suspect.", successMessage: "You follow the suspect and gather evidence! 📸" },
