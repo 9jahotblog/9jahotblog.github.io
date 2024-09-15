@@ -611,29 +611,28 @@
     color: white; /* Black text for contrast */
 }
 </style>
-
-<!-- JavaScript for Quill and Features -->
+		    
 <script>
     // Initialize Quill editor with toolbar
-    var quill = new Quill('#editor-container', {
-        modules: {
-            toolbar: '#toolbar'
-        },
-        theme: 'snow'  // Fixed theme to "snow"
-    });
+var quill = new Quill('#editor-container', {
+    modules: {
+        toolbar: '#toolbar'
+    },
+    theme: 'snow'  // Fixed theme to "snow"
+});
 
-    // Update word count as user types
-    quill.on('text-change', function() {
-        var plainText = quill.getText().trim(); // Extract plain text without formatting
-        var wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
-        document.getElementById('word-count').textContent = "Word count: " + wordCount;
+// Update word count as user types
+quill.on('text-change', function() {
+    var plainText = quill.getText().trim(); // Extract plain text without formatting
+    var wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
+    document.getElementById('word-count').textContent = "Word count: " + wordCount;
 
-        // Display congratulatory message based on word count
-        let message = getMessageForWordCount(wordCount);
-        document.getElementById('congratulatory-message').innerText = message;
-    });
+    // Display congratulatory message based on word count
+    let message = getMessageForWordCount(wordCount);
+    document.getElementById('congratulatory-message').innerText = message;
+});
 
-    // Function to get congratulatory message based on word count
+// Function to get congratulatory message based on word count
     function getMessageForWordCount(wordCount) {
         if (wordCount >= 2000) return "Congratulations! You've reached 2000 words! Take a moment to celebrate, then edit and polish.";
         if (wordCount >= 1750) return "You're a rockstar writer! Keep shining!";
@@ -670,115 +669,113 @@
         return ""; // No message for 0 words
     }
 
-	 // Download as DOCX
-    document.getElementById('download-docx').addEventListener('click', function() {
-        var plainText = quill.getText(); // Get plain text from Quill editor
-        var doc = new docx.Document({
-            sections: [{
-                properties: {},
-                children: [
-                    new docx.Paragraph(plainText)
-                ]
-            }]
-        });
-        docx.Packer.toBlob(doc).then(blob => {
-            saveAs(blob, "your-story.docx");
-        });
+// Download as DOCX
+document.getElementById('download-docx').addEventListener('click', function() {
+    var plainText = quill.getText(); // Get plain text from Quill editor
+    var doc = new docx.Document({
+        sections: [{
+            properties: {},
+            children: [
+                new docx.Paragraph({
+                    children: [new docx.TextRun(plainText)]
+                })
+            ]
+        }]
     });
-
-    // Download as PDF
-    document.getElementById('download-pdf').addEventListener('click', function() {
-        var plainText = quill.getText(); // Get plain text from Quill editor
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-        doc.text(plainText, 10, 10); // Add text to PDF with some padding
-        doc.save('your-story.pdf');
+    docx.Packer.toBlob(doc).then(blob => {
+        saveAs(blob, "your-story.docx");
     });
+});
 
+// Download as PDF
+document.getElementById('download-pdf').addEventListener('click', function() {
+    var plainText = quill.getText(); // Get plain text from Quill editor
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.text(plainText, 10, 10); // Add text to PDF with some padding
+    doc.save('your-story.pdf');
+});
 
-    // Full-screen functionality
-    document.getElementById('fullscreen-btn').addEventListener('click', function() {
-        const editorContainer = document.getElementById('editor-container');
-        if (!document.fullscreenElement) {
-            editorContainer.requestFullscreen().catch(err => console.log(err));
-        } else {
-            document.exitFullscreen();
-        }
-    });
-
-    // Handle story submission with Formspree
-    document.getElementById('publish-story').addEventListener('click', function(e) {
-        e.preventDefault();
-        var content = quill.root.innerHTML; // Get the HTML content with formatting
-
-        // Add content to hidden input for Formspree
-        document.getElementById('story-content').value = content;
-
-        // Submit the form (Formspree will handle this)
-        document.getElementById('story-form').submit();
-    });
-
-    // Download story as text
-    document.getElementById('download-story').addEventListener('click', function() {
-        var plainText = quill.getText(); // Get plain text from Quill editor
-        var blob = new Blob([plainText], { type: 'text/plain' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'your-story.txt'; // The file name
-        link.click(); // Trigger the download
-    });
-
-    // Grammar and Style Check Function
-    document.getElementById('check-style-btn').addEventListener('click', function() {
-        checkGrammarAndStyle();
-    });
-
-    function checkGrammarAndStyle() {
-        var text = quill.getText(); // Get plain text from Quill editor
-        var suggestions = [];
-
-        // Check for repeated words (consecutive)
-        var repeatedWords = /\b(\w+)\s+\1\b/gi;
-        var repeatedMatch = text.match(repeatedWords);
-        if (repeatedMatch) {
-            suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
-        }
-
-        // Check for long sentences (more than 20 words)
-        var sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
-        sentences.forEach(function(sentence) {
-            var wordCount = sentence.trim().split(/\s+/).length;
-            if (wordCount > 20) {
-                suggestions.push("Long sentence detected: \"" + sentence.trim().substring(0, 50) + "...\" (" + wordCount + " words)");
-            }
-        });
-
-        // Check for common fillers
-        var fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
-        var fillerMatch = text.match(fillers);
-        if (fillerMatch) {
-            suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
-        }
-
-        // Display suggestions
-        var suggestionsList = document.getElementById('suggestions-list');
-        suggestionsList.innerHTML = ''; // Clear previous suggestions
-        if (suggestions.length > 0) {
-            suggestions.forEach(function(suggestion) {
-                var listItem = document.createElement('li');
-                listItem.textContent = suggestion;
-                suggestionsList.appendChild(listItem);
-            });
-        } else {
-            var listItem = document.createElement('li');
-            listItem.textContent = "No suggestions! Your writing looks good.";
-            suggestionsList.appendChild(listItem);
-        }
+// Full-screen functionality
+document.getElementById('fullscreen-btn').addEventListener('click', function() {
+    const editorContainer = document.getElementById('editor-container');
+    if (!document.fullscreenElement) {
+        editorContainer.requestFullscreen().catch(err => console.log(err));
+    } else {
+        document.exitFullscreen();
     }
+});
+
+// Handle story submission with Formspree
+document.getElementById('publish-story').addEventListener('click', function(e) {
+    e.preventDefault();
+    var content = quill.root.innerHTML; // Get the HTML content with formatting
+
+    // Add content to hidden input for Formspree
+    document.getElementById('story-content').value = content;
+
+    // Submit the form (Formspree will handle this)
+    document.getElementById('story-form').submit();
+});
+
+// Download story as text
+document.getElementById('download-story').addEventListener('click', function() {
+    var plainText = quill.getText(); // Get plain text from Quill editor
+    var blob = new Blob([plainText], { type: 'text/plain' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'your-story.txt'; // The file name
+    link.click(); // Trigger the download
+});
+
+// Grammar and Style Check Function
+document.getElementById('check-style-btn').addEventListener('click', function() {
+    checkGrammarAndStyle();
+});
+
+function checkGrammarAndStyle() {
+    var text = quill.getText(); // Get plain text from Quill editor
+    var suggestions = [];
+
+    // Check for repeated words (consecutive)
+    var repeatedWords = /\b(\w+)\s+\1\b/gi;
+    var repeatedMatch = text.match(repeatedWords);
+    if (repeatedMatch) {
+        suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
+    }
+
+    // Check for long sentences (more than 20 words)
+    var sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
+    sentences.forEach(function(sentence) {
+        var wordCount = sentence.trim().split(/\s+/).length;
+        if (wordCount > 20) {
+            suggestions.push("Long sentence detected: \"" + sentence.trim().substring(0, 50) + "...\" (" + wordCount + " words)");
+        }
+    });
+
+    // Check for common fillers
+    var fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
+    var fillerMatch = text.match(fillers);
+    if (fillerMatch) {
+        suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
+    }
+
+    // Display suggestions
+    var suggestionsList = document.getElementById('suggestions-list');
+    suggestionsList.innerHTML = ''; // Clear previous suggestions
+    if (suggestions.length > 0) {
+        suggestions.forEach(function(suggestion) {
+            var listItem = document.createElement('li');
+            listItem.textContent = suggestion;
+            suggestionsList.appendChild(listItem);
+        });
+    } else {
+        var listItem = document.createElement('li');
+        listItem.textContent = "No suggestions! Your writing looks good.";
+        suggestionsList.appendChild(listItem);
+    }
+}
 </script>
-
-    
-
 	    
 
             <!-- Text-to-Speech Section-->
