@@ -869,6 +869,71 @@ function checkGrammarAndStyle() {
         }
     }
 </script>
+	    <!-- Music and Sound Editing Section -->
+<h3>Upload and Edit Your Audio</h3>
+<input type="file" accept="audio/*" id="audioInput" hidden onchange="loadAudioForEditing(event)">
+<button class="animated-button" onclick="document.getElementById('audioInput').click();">🎵 Upload Audio</button>
+<audio id="audioEditor" controls style="display: none; width: 300px;"></audio>
+
+<!-- Trim and Volume Control -->
+<div id="audioControls" style="display: none;">
+    <label for="audioStartTime">Start Time (seconds):</label>
+    <input type="number" id="audioStartTime" value="0" min="0">
+
+    <label for="audioEndTime">End Time (seconds):</label>
+    <input type="number" id="audioEndTime" value="10" min="0">
+
+    <label for="audioVolume">Volume:</label>
+    <input type="range" id="audioVolume" min="0" max="1" step="0.1" value="1">
+
+    <button class="animated-button" onclick="trimAudio()">✂️ Trim Audio</button>
+</div>
+
+<script>
+    // Load and Play Audio for Editing
+    function loadAudioForEditing(event) {
+        const audioEditor = document.getElementById('audioEditor');
+        audioEditor.src = URL.createObjectURL(event.target.files[0]);
+        audioEditor.style.display = 'block';
+        audioEditor.load();
+
+        // Show trim and volume controls once audio is uploaded
+        document.getElementById('audioControls').style.display = 'block';
+    }
+
+    // Trim Audio
+    function trimAudio() {
+        const audioEditor = document.getElementById('audioEditor');
+        const startTime = parseFloat(document.getElementById('audioStartTime').value);
+        const endTime = parseFloat(document.getElementById('audioEndTime').value);
+
+        if (startTime < 0 || endTime > audioEditor.duration || startTime >= endTime) {
+            alert('Invalid start or end time');
+            return;
+        }
+
+        // Create a new trimmed audio
+        const trimmedAudio = document.createElement('audio');
+        trimmedAudio.src = audioEditor.src;
+        trimmedAudio.currentTime = startTime;
+        trimmedAudio.load();
+        trimmedAudio.play();
+
+        trimmedAudio.addEventListener('timeupdate', () => {
+            if (trimmedAudio.currentTime >= endTime) {
+                trimmedAudio.pause();
+            }
+        });
+
+        document.getElementById('mediaContainer').appendChild(trimmedAudio);
+    }
+
+    // Volume Control
+    document.getElementById('audioVolume').addEventListener('input', function () {
+        const audioEditor = document.getElementById('audioEditor');
+        audioEditor.volume = this.value;
+    });
+</script>
 	    
         <!-- Speech-to-Text Section -->
 <section id="speech-to-text-section">
