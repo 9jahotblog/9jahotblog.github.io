@@ -782,78 +782,125 @@ function checkGrammarAndStyle() {
     <div class="multimedia-container">
         <h2>Enhance Your Writing with Multimedia</h2>
         <p>Incorporate images, music, and videos that inspire your writing or fit within the context of your story.</p>
-
-        <!-- Upload Image -->
-        <div class="multimedia-upload">
-            <h3>Upload Image</h3>
-            <input type="file" id="imageUpload" accept="image/*" onchange="displayImage(event)" />
-            <img id="uploadedImage" src="#" alt="Uploaded Image Preview" style="display: none; max-width: 100%; height: auto; border: 1px solid #ccc; margin-top: 10px;" />
-        </div>
-
-        <!-- Embed Music or Video -->
-        <div class="multimedia-embed">
-            <h3>Embed Music/Video</h3>
-            <label for="mediaUrl">Enter YouTube/SoundCloud URL:</label>
-            <input type="text" id="mediaUrl" placeholder="Paste media URL here" oninput="embedMedia()" style="width: 100%; padding: 10px; margin-top: 10px;" />
-            <div id="mediaPreview" style="margin-top: 10px;"></div>
-        </div>
-
-        <!-- Voice to Text (Dictation) -->
-        <div class="voice-to-text">
-            <h3>Voice to Text (Dictation)</h3>
-            <button onclick="startDictation()" style="padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer;">Start Dictation</button>
-            <p id="dictationResult" style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ccc;"></p>
-        </div>
+    
+    <!-- Drag-and-Drop Media Upload -->
+    <div class="upload-area" id="uploadfile" onclick="document.getElementById('fileInput').click();">
+        <h3>Drag and Drop Media Here or Click to Upload</h3>
+        <input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple onchange="displayMultipleFiles(event)" hidden>
+        <p>You can upload images, videos, or audio files.</p>
     </div>
+    <div id="filePreview" style="display: flex; flex-wrap: wrap;"></div>
+
+    <!-- Real-time Dictation (Speech to Text) -->
+    <h3>Real-time Dictation</h3>
+    <textarea id="dictationText" rows="5" cols="50" placeholder="Start speaking to see the text appear here..."></textarea>
+    <br>
+    <button id="startDictation" onclick="startDictation()">Start Dictation</button>
+    <button id="stopDictation" onclick="stopDictation()">Stop Dictation</button>
+
+    <!-- Text-to-Speech -->
+    <h3>Text-to-Speech</h3>
+    <textarea id="textToRead" rows="3" cols="50" placeholder="Enter text to convert to speech..."></textarea>
+    <br>
+    <button onclick="readText()">Read Text</button>
 </section>
 
 <script>
-    // Display Uploaded Image
-    function displayImage(event) {
-        var image = document.getElementById('uploadedImage');
-        image.src = URL.createObjectURL(event.target.files[0]);
-        image.style.display = 'block';
-    }
+    // File Upload & Preview
+    function displayMultipleFiles(event) {
+        const files = event.target.files;
+        const previewContainer = document.getElementById('filePreview');
+        previewContainer.innerHTML = '';
 
-    // Embed Music or Video from URL
-    function embedMedia() {
-        var url = document.getElementById('mediaUrl').value;
-        var mediaPreview = document.getElementById('mediaPreview');
-        var embedHtml = '';
-
-        if (url.includes('youtube.com') || url.includes('youtu.be')) {
-            embedHtml = `<iframe width="560" height="315" src="${url.replace('watch?v=', 'embed/')}" frameborder="0" allowfullscreen></iframe>`;
-        } else if (url.includes('soundcloud.com')) {
-            embedHtml = `<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
+        for (const file of files) {
+            const fileItem = document.createElement('div');
+            fileItem.className = 'file-item';
+            fileItem.textContent = file.name;
+            
+            const mediaElement = createMediaElement(file);
+            fileItem.appendChild(mediaElement);
+            previewContainer.appendChild(fileItem);
         }
-
-        mediaPreview.innerHTML = embedHtml;
     }
 
-    // Voice to Text (Dictation)
+    function createMediaElement(file) {
+        const mediaElement = document.createElement(file.type.includes('image') ? 'img' : (file.type.includes('video') ? 'video' : 'audio'));
+        mediaElement.src = URL.createObjectURL(file);
+        mediaElement.controls = true;
+        mediaElement.style.width = '200px';
+        return mediaElement;
+    }
+
+    // Speech to Text (Dictation)
+    let recognition;
     function startDictation() {
-        if (window.hasOwnProperty('webkitSpeechRecognition')) {
-            var recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-
-            recognition.lang = "en-US";
-            recognition.start();
-
-            recognition.onresult = function(event) {
-                document.getElementById('dictationResult').innerHTML = event.results[0][0].transcript;
-                recognition.stop();
-            };
-
-            recognition.onerror = function() {
-                recognition.stop();
-                document.getElementById('dictationResult').innerHTML = "Sorry, I couldn't catch that. Please try again.";
-            };
-        } else {
-            alert('Speech recognition is not supported in this browser. Please use Chrome or a compatible browser.');
+        if (!('webkitSpeechRecognition' in window)) {
+            alert('Speech recognition not supported in your browser.');
+            return;
         }
+
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        recognition.onresult = (event) => {
+            const text = Array.from(event.results)
+                .map(result => result[0].transcript)
+                .join('');
+            document.getElementById('dictationText').value = text;
+        };
+
+        recognition.start();
+    }
+
+    function stopDictation() {
+        if (recognition) {
+            recognition.stop();
+        }
+    }
+
+    // Text-to-Speech
+    function readText() {
+        const text = document.getElementById('textToRead').value;
+        const speech = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(speech);
     }
 </script>
+
+<style>
+    /* Styles for the Multimedia Section */
+    .upload-area {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        cursor: pointer;
+    }
+    .upload-area:hover {
+        border-color: #333;
+    }
+    #filePreview {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .file-item {
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    textarea, button {
+        margin-top: 10px;
+    }
+</style>
+
+
+
 	    
 <!-- Project Management Section -->
 <section id="project-management-section">
