@@ -782,27 +782,35 @@ function checkGrammarAndStyle() {
     <div class="multimedia-container">
         <h2>Enhance Your Writing with Multimedia</h2>
         <p>Incorporate images, music, and videos that inspire your writing or fit within the context of your story.</p>
-    
-    <!-- Drag-and-Drop Media Upload -->
-    <div class="upload-area" id="uploadfile" onclick="document.getElementById('fileInput').click();">
-        <h3>Drag and Drop Media Here or Click to Upload</h3>
-        <input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple onchange="displayMultipleFiles(event)" hidden>
-        <p>You can upload images, videos, or audio files.</p>
+
+        <!-- Drag-and-Drop Media Upload -->
+        <div class="upload-area" id="uploadfile" onclick="document.getElementById('fileInput').click();">
+            <h3>Drag and Drop Media Here or Click to Upload</h3>
+            <input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple onchange="displayMultipleFiles(event)" hidden>
+            <p>You can upload images, videos, or audio files.</p>
+        </div>
+        <div id="filePreview" style="display: flex; flex-wrap: wrap;"></div>
+
+        <!-- Real-time Speech-to-Text as Voice Note -->
+        <h3>Real-time Voice Note (Speech to Text)</h3>
+        <textarea id="dictationText" rows="5" cols="50" placeholder="Start speaking to see the text appear here..."></textarea>
+        <br>
+        <button id="startDictation" class="animated-button" onclick="startDictation()">🎤 Start Voice Note</button>
+        <button id="stopDictation" class="animated-button" onclick="stopDictation()">🛑 Stop</button>
+        <div id="listeningIndicator" style="display: none;">🎙️ Listening...</div>
+
+        <!-- YouTube and SoundCloud Embedding -->
+        <h3>Add YouTube Video or SoundCloud Music</h3>
+        <input type="text" id="mediaLink" placeholder="Paste YouTube or SoundCloud URL here" style="width: 300px;">
+        <button class="animated-button" onclick="embedMedia()">Embed Media</button>
+        <div id="mediaContainer"></div>
+
+        <!-- Video Editor (Simple) -->
+        <h3>Edit Your Videos</h3>
+        <input type="file" accept="video/*" id="videoInput" hidden onchange="loadVideo(event)">
+        <button class="animated-button" onclick="document.getElementById('videoInput').click();">🎬 Upload Video</button>
+        <video id="videoPlayer" controls style="display: none; width: 300px;"></video>
     </div>
-    <div id="filePreview" style="display: flex; flex-wrap: wrap;"></div>
-
-    <!-- Real-time Dictation (Speech to Text) -->
-    <h3>Real-time Dictation</h3>
-    <textarea id="dictationText" rows="5" cols="50" placeholder="Start speaking to see the text appear here..."></textarea>
-    <br>
-    <button id="startDictation" onclick="startDictation()">Start Dictation</button>
-    <button id="stopDictation" onclick="stopDictation()">Stop Dictation</button>
-
-    <!-- Text-to-Speech -->
-    <h3>Text-to-Speech</h3>
-    <textarea id="textToRead" rows="3" cols="50" placeholder="Enter text to convert to speech..."></textarea>
-    <br>
-    <button onclick="readText()">Read Text</button>
 </section>
 
 <script>
@@ -831,7 +839,7 @@ function checkGrammarAndStyle() {
         return mediaElement;
     }
 
-    // Speech to Text (Dictation)
+    // Speech to Text (Voice Note Style)
     let recognition;
     function startDictation() {
         if (!('webkitSpeechRecognition' in window)) {
@@ -844,11 +852,19 @@ function checkGrammarAndStyle() {
         recognition.interimResults = true;
         recognition.lang = 'en-US';
 
+        recognition.onstart = function () {
+            document.getElementById('listeningIndicator').style.display = 'block';
+        };
+
         recognition.onresult = (event) => {
             const text = Array.from(event.results)
                 .map(result => result[0].transcript)
                 .join('');
             document.getElementById('dictationText').value = text;
+        };
+
+        recognition.onend = function () {
+            document.getElementById('listeningIndicator').style.display = 'none';
         };
 
         recognition.start();
@@ -860,11 +876,37 @@ function checkGrammarAndStyle() {
         }
     }
 
-    // Text-to-Speech
-    function readText() {
-        const text = document.getElementById('textToRead').value;
-        const speech = new SpeechSynthesisUtterance(text);
-        window.speechSynthesis.speak(speech);
+    // Embedding YouTube and SoundCloud
+    function embedMedia() {
+        const url = document.getElementById('mediaLink').value;
+        const mediaContainer = document.getElementById('mediaContainer');
+        mediaContainer.innerHTML = '';
+
+        if (url.includes('youtube.com')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = url.replace('watch?v=', 'embed/');
+            iframe.width = "560";
+            iframe.height = "315";
+            iframe.frameBorder = "0";
+            mediaContainer.appendChild(iframe);
+        } else if (url.includes('soundcloud.com')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}`;
+            iframe.width = "100%";
+            iframe.height = "166";
+            iframe.frameBorder = "no";
+            mediaContainer.appendChild(iframe);
+        } else {
+            alert('Please enter a valid YouTube or SoundCloud URL.');
+        }
+    }
+
+    // Simple Video Editor
+    function loadVideo(event) {
+        const video = document.getElementById('videoPlayer');
+        video.src = URL.createObjectURL(event.target.files[0]);
+        video.style.display = 'block';
+        video.load();
     }
 </script>
 
@@ -880,6 +922,18 @@ function checkGrammarAndStyle() {
     }
     .upload-area:hover {
         border-color: #333;
+    }
+    .animated-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: transform 0.2s;
+    }
+    .animated-button:hover {
+        transform: scale(1.1);
     }
     #filePreview {
         display: flex;
@@ -898,8 +952,6 @@ function checkGrammarAndStyle() {
         margin-top: 10px;
     }
 </style>
-
-
 
 	    
 <!-- Project Management Section -->
