@@ -18,6 +18,7 @@
         .book-reader-container,
 	.cover-maker-container,
 	.project-management-container,
+	.multimedia-container,
         .library-container {
             text-align: center;
             background-color: #111111;
@@ -775,6 +776,84 @@ function checkGrammarAndStyle() {
     }
 }
 </script>
+
+<!-- Multimedia Integration Section -->
+<section id="multimedia-section">
+    <div class="multimedia-container">
+        <h2>Enhance Your Writing with Multimedia</h2>
+        <p>Incorporate images, music, and videos that inspire your writing or fit within the context of your story.</p>
+
+        <!-- Upload Image -->
+        <div class="multimedia-upload">
+            <h3>Upload Image</h3>
+            <input type="file" id="imageUpload" accept="image/*" onchange="displayImage(event)" />
+            <img id="uploadedImage" src="#" alt="Uploaded Image Preview" style="display: none; max-width: 100%; height: auto; border: 1px solid #ccc; margin-top: 10px;" />
+        </div>
+
+        <!-- Embed Music or Video -->
+        <div class="multimedia-embed">
+            <h3>Embed Music/Video</h3>
+            <label for="mediaUrl">Enter YouTube/SoundCloud URL:</label>
+            <input type="text" id="mediaUrl" placeholder="Paste media URL here" oninput="embedMedia()" style="width: 100%; padding: 10px; margin-top: 10px;" />
+            <div id="mediaPreview" style="margin-top: 10px;"></div>
+        </div>
+
+        <!-- Voice to Text (Dictation) -->
+        <div class="voice-to-text">
+            <h3>Voice to Text (Dictation)</h3>
+            <button onclick="startDictation()" style="padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer;">Start Dictation</button>
+            <p id="dictationResult" style="margin-top: 10px; padding: 10px; background-color: #f9f9f9; border: 1px solid #ccc;"></p>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Display Uploaded Image
+    function displayImage(event) {
+        var image = document.getElementById('uploadedImage');
+        image.src = URL.createObjectURL(event.target.files[0]);
+        image.style.display = 'block';
+    }
+
+    // Embed Music or Video from URL
+    function embedMedia() {
+        var url = document.getElementById('mediaUrl').value;
+        var mediaPreview = document.getElementById('mediaPreview');
+        var embedHtml = '';
+
+        if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            embedHtml = `<iframe width="560" height="315" src="${url.replace('watch?v=', 'embed/')}" frameborder="0" allowfullscreen></iframe>`;
+        } else if (url.includes('soundcloud.com')) {
+            embedHtml = `<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}"></iframe>`;
+        }
+
+        mediaPreview.innerHTML = embedHtml;
+    }
+
+    // Voice to Text (Dictation)
+    function startDictation() {
+        if (window.hasOwnProperty('webkitSpeechRecognition')) {
+            var recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.lang = "en-US";
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                document.getElementById('dictationResult').innerHTML = event.results[0][0].transcript;
+                recognition.stop();
+            };
+
+            recognition.onerror = function() {
+                recognition.stop();
+                document.getElementById('dictationResult').innerHTML = "Sorry, I couldn't catch that. Please try again.";
+            };
+        } else {
+            alert('Speech recognition is not supported in this browser. Please use Chrome or a compatible browser.');
+        }
+    }
+</script>
 	    
 <!-- Project Management Section -->
 <section id="project-management-section">
@@ -954,6 +1033,7 @@ function renderAchievements() {
 renderProjects();
 renderAchievements();
 </script>
+
 		    
             <!-- Text-to-Speech Section-->
                   
