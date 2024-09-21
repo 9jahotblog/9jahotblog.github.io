@@ -783,14 +783,93 @@ function checkGrammarAndStyle() {
         <h2>Enhance Your Writing with Multimedia</h2>
         <p>Incorporate images, music, and videos that inspire your writing or fit within the context of your story.</p>
 
-        <!-- Drag-and-Drop Media Upload -->
-        <div class="upload-area" id="uploadfile" onclick="document.getElementById('fileInput').click();">
-            <h3>Drag and Drop Media Here or Click to Upload</h3>
-            <input type="file" id="fileInput" accept="image/*,video/*,audio/*" multiple onchange="displayMultipleFiles(event)" hidden>
-            <p>You can upload images, videos, or audio files.</p>
-        </div>
-        <div id="filePreview" style="display: flex; flex-wrap: wrap;"></div>
+        <!-- Video Editor Section -->
+<h3>Edit Your Videos</h3>
+<input type="file" accept="video/*" id="videoInput" hidden onchange="loadVideoForEditing(event)">
+<button class="animated-button" onclick="document.getElementById('videoInput').click();">🎬 Upload Video</button>
+<video id="videoEditor" controls style="display: none; width: 300px;"></video>
 
+<!-- Trim Video Section -->
+<div id="trimControls" style="display: none;">
+    <label for="startTime">Start Time (seconds):</label>
+    <input type="number" id="startTime" value="0" min="0">
+    
+    <label for="endTime">End Time (seconds):</label>
+    <input type="number" id="endTime" value="10" min="0">
+    
+    <button class="animated-button" onclick="trimVideo()">✂️ Trim Video</button>
+</div>
+
+<!-- YouTube and SoundCloud Embedding Section -->
+<h3>Add YouTube Video or SoundCloud Music</h3>
+<input type="text" id="mediaLink" placeholder="Paste YouTube or SoundCloud URL here" style="width: 300px;">
+<button class="animated-button" onclick="embedMedia()">Embed Media</button>
+<div id="mediaContainer"></div>
+
+<script>
+    // Video Upload and Editor
+    function loadVideoForEditing(event) {
+        const videoEditor = document.getElementById('videoEditor');
+        videoEditor.src = URL.createObjectURL(event.target.files[0]);
+        videoEditor.style.display = 'block';
+        videoEditor.load();
+
+        // Show trim controls once video is uploaded
+        document.getElementById('trimControls').style.display = 'block';
+    }
+
+    function trimVideo() {
+        const videoEditor = document.getElementById('videoEditor');
+        const startTime = parseFloat(document.getElementById('startTime').value);
+        const endTime = parseFloat(document.getElementById('endTime').value);
+
+        if (startTime < 0 || endTime > videoEditor.duration || startTime >= endTime) {
+            alert('Invalid start or end time');
+            return;
+        }
+
+        // Create a new trimmed video
+        const trimmedVideo = document.createElement('video');
+        trimmedVideo.src = videoEditor.src;
+        trimmedVideo.currentTime = startTime;
+        trimmedVideo.load();
+        trimmedVideo.play();
+
+        trimmedVideo.addEventListener('timeupdate', () => {
+            if (trimmedVideo.currentTime >= endTime) {
+                trimmedVideo.pause();
+            }
+        });
+
+        document.getElementById('mediaContainer').appendChild(trimmedVideo);
+    }
+
+    // Embedding YouTube or SoundCloud media
+    function embedMedia() {
+        const url = document.getElementById('mediaLink').value;
+        const mediaContainer = document.getElementById('mediaContainer');
+        mediaContainer.innerHTML = ''; // Clear previous embeds
+
+        if (url.includes('youtube.com')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = url.replace('watch?v=', 'embed/');
+            iframe.width = "560";
+            iframe.height = "315";
+            iframe.frameBorder = "0";
+            mediaContainer.appendChild(iframe);
+        } else if (url.includes('soundcloud.com')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}`;
+            iframe.width = "100%";
+            iframe.height = "166";
+            iframe.frameBorder = "no";
+            mediaContainer.appendChild(iframe);
+        } else {
+            alert('Please enter a valid YouTube or SoundCloud URL.');
+        }
+    }
+</script>
+	    
         <!-- Speech-to-Text Section -->
 <section id="speech-to-text-section">
     <h2>Real-Time Voice Note (Speech to Text)</h2>
@@ -880,109 +959,6 @@ function checkGrammarAndStyle() {
         <video id="videoPlayer" controls style="display: none; width: 300px;"></video>
     </div>
 </section>
-
-<script>
-    // File Upload & Preview
-    function displayMultipleFiles(event) {
-        const files = event.target.files;
-        const previewContainer = document.getElementById('filePreview');
-        previewContainer.innerHTML = '';
-
-        for (const file of files) {
-            const fileItem = document.createElement('div');
-            fileItem.className = 'file-item';
-            fileItem.textContent = file.name;
-            
-            const mediaElement = createMediaElement(file);
-            fileItem.appendChild(mediaElement);
-            previewContainer.appendChild(fileItem);
-        }
-    }
-
-    function createMediaElement(file) {
-        const mediaElement = document.createElement(file.type.includes('image') ? 'img' : (file.type.includes('video') ? 'video' : 'audio'));
-        mediaElement.src = URL.createObjectURL(file);
-        mediaElement.controls = true;
-        mediaElement.style.width = '200px';
-        return mediaElement;
-    }
-
-    // Embedding YouTube and SoundCloud
-    function embedMedia() {
-        const url = document.getElementById('mediaLink').value;
-        const mediaContainer = document.getElementById('mediaContainer');
-        mediaContainer.innerHTML = '';
-
-        if (url.includes('youtube.com')) {
-            const iframe = document.createElement('iframe');
-            iframe.src = url.replace('watch?v=', 'embed/');
-            iframe.width = "560";
-            iframe.height = "315";
-            iframe.frameBorder = "0";
-            mediaContainer.appendChild(iframe);
-        } else if (url.includes('soundcloud.com')) {
-            const iframe = document.createElement('iframe');
-            iframe.src = `https://w.soundcloud.com/player/?url=${encodeURIComponent(url)}`;
-            iframe.width = "100%";
-            iframe.height = "166";
-            iframe.frameBorder = "no";
-            mediaContainer.appendChild(iframe);
-        } else {
-            alert('Please enter a valid YouTube or SoundCloud URL.');
-        }
-    }
-
-    // Simple Video Editor
-    function loadVideo(event) {
-        const video = document.getElementById('videoPlayer');
-        video.src = URL.createObjectURL(event.target.files[0]);
-        video.style.display = 'block';
-        video.load();
-    }
-</script>
-
-<style>
-    /* Styles for the Multimedia Section */
-    .upload-area {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-        background-color: #f9f9f9;
-        cursor: pointer;
-    }
-    .upload-area:hover {
-        border-color: #333;
-    }
-    .animated-button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        transition: transform 0.2s;
-    }
-    .animated-button:hover {
-        transform: scale(1.1);
-    }
-    #filePreview {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .file-item {
-        padding: 10px;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    textarea, button {
-        margin-top: 10px;
-    }
-</style>
 
 	    
 <!-- Project Management Section -->
