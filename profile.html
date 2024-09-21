@@ -791,14 +791,82 @@ function checkGrammarAndStyle() {
         </div>
         <div id="filePreview" style="display: flex; flex-wrap: wrap;"></div>
 
-        <!-- Real-time Speech-to-Text as Voice Note -->
-        <h3>Real-time Voice Note (Speech to Text)</h3>
-        <textarea id="dictationText" rows="5" cols="50" placeholder="Start speaking to see the text appear here..."></textarea>
-        <br>
-        <button id="startDictation" class="animated-button" onclick="startDictation()">🎤 Start Voice Note</button>
-        <button id="stopDictation" class="animated-button" onclick="stopDictation()">🛑 Stop</button>
-        <div id="listeningIndicator" style="display: none;">🎙️ Listening...</div>
+        <!-- Speech-to-Text Section -->
+<section id="speech-to-text-section">
+    <h2>Real-Time Voice Note (Speech to Text)</h2>
+    <textarea id="dictationText" rows="5" cols="50" placeholder="Start speaking to see the text appear here..."></textarea>
+    <br>
+    <button id="startDictation" class="animated-button" onclick="startDictation()">🎤 Start Voice Note</button>
+    <button id="stopDictation" class="animated-button" onclick="stopDictation()">🛑 Stop</button>
+    <div id="listeningIndicator" style="display: none;">🎙️ Listening...</div>
+</section>
 
+<script>
+    let recognition;
+    let finalTranscript = '';  // Store final transcript separately to avoid duplicates
+    let interimTranscript = '';
+
+    function startDictation() {
+        if (!('webkitSpeechRecognition' in window)) {
+            alert('Speech recognition not supported in your browser.');
+            return;
+        }
+
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        recognition.onstart = function () {
+            document.getElementById('listeningIndicator').style.display = 'block';
+        };
+
+        recognition.onresult = function (event) {
+            interimTranscript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    finalTranscript += event.results[i][0].transcript;
+                } else {
+                    interimTranscript += event.results[i][0].transcript;
+                }
+            }
+            document.getElementById('dictationText').value = finalTranscript + interimTranscript;
+        };
+
+        recognition.onend = function () {
+            document.getElementById('listeningIndicator').style.display = 'none';
+        };
+
+        recognition.start();
+    }
+
+    function stopDictation() {
+        if (recognition) {
+            recognition.stop();
+        }
+    }
+</script>
+
+<style>
+    #speech-to-text-section {
+        margin-top: 20px;
+    }
+
+    .animated-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: transform 0.2s;
+    }
+
+    .animated-button:hover {
+        transform: scale(1.1);
+    }
+</style>
+	    
         <!-- YouTube and SoundCloud Embedding -->
         <h3>Add YouTube Video or SoundCloud Music</h3>
         <input type="text" id="mediaLink" placeholder="Paste YouTube or SoundCloud URL here" style="width: 300px;">
@@ -837,43 +905,6 @@ function checkGrammarAndStyle() {
         mediaElement.controls = true;
         mediaElement.style.width = '200px';
         return mediaElement;
-    }
-
-    // Speech to Text (Voice Note Style)
-    let recognition;
-    function startDictation() {
-        if (!('webkitSpeechRecognition' in window)) {
-            alert('Speech recognition not supported in your browser.');
-            return;
-        }
-
-        recognition = new webkitSpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        recognition.lang = 'en-US';
-
-        recognition.onstart = function () {
-            document.getElementById('listeningIndicator').style.display = 'block';
-        };
-
-        recognition.onresult = (event) => {
-            const text = Array.from(event.results)
-                .map(result => result[0].transcript)
-                .join('');
-            document.getElementById('dictationText').value = text;
-        };
-
-        recognition.onend = function () {
-            document.getElementById('listeningIndicator').style.display = 'none';
-        };
-
-        recognition.start();
-    }
-
-    function stopDictation() {
-        if (recognition) {
-            recognition.stop();
-        }
     }
 
     // Embedding YouTube and SoundCloud
