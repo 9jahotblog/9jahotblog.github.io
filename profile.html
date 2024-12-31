@@ -707,26 +707,41 @@ document.getElementById('fullscreen-btn').addEventListener('click', function() {
     } else if (editorContainer.msRequestFullscreen) { // IE compatibility
         editorContainer.msRequestFullscreen();
     } else {
-        console.warn("Fullscreen API is not supported in this browser.");
+        alert("Fullscreen is not supported in this browser.");
     }
 });
 
 // Handle story submission with Formspree
 document.getElementById('publish-story').addEventListener('click', function(e) {
     e.preventDefault(); // Prevent default form submission
-    var content = quill.root.innerHTML; // Get the editor's HTML content
-    document.getElementById('story-content').value = content; // Add to hidden input
-    document.getElementById('story-form').submit(); // Submit the form
+    const form = document.getElementById('story-form');
+    const content = quill.root.innerHTML; // Get the editor's HTML content
+
+    // Ensure all fields are populated
+    if (!document.getElementById('author-name').value || 
+        !document.getElementById('author-bio').value || 
+        !content.trim()) {
+        alert('Please fill in all fields before submitting!');
+        return;
+    }
+
+    // Set the Quill content in the hidden input
+    document.getElementById('story-content').value = content;
+    form.submit(); // Submit the form
 });
 
 // Download story as text
 document.getElementById('download-story').addEventListener('click', function() {
-    var plainText = quill.getText(); // Get plain text from Quill editor
-    var blob = new Blob([plainText], { type: 'text/plain' });
-    var link = document.createElement('a');
+    const plainText = quill.getText(); // Get plain text from Quill editor
+    if (!plainText.trim()) {
+        alert('Editor is empty! Please write something to download.');
+        return;
+    }
+    const blob = new Blob([plainText], { type: 'text/plain' });
+    const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'your-story.txt'; // The file name
-    link.click(); // Trigger the download
+    link.click();
 });
 
 // Grammar and Style Check Function
@@ -736,43 +751,43 @@ document.getElementById('check-style-btn').addEventListener('click', function(e)
 });
 
 function checkGrammarAndStyle() {
-    var text = quill.getText(); // Get plain text from Quill editor
-    var suggestions = [];
+    const text = quill.getText(); // Get plain text from Quill editor
+    const suggestions = [];
 
     // Check for repeated words (consecutive)
-    var repeatedWords = /\b(\w+)\s+\1\b/gi;
-    var repeatedMatch = text.match(repeatedWords);
+    const repeatedWords = /\b(\w+)\s+\1\b/gi;
+    const repeatedMatch = text.match(repeatedWords);
     if (repeatedMatch) {
         suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
     }
 
     // Check for long sentences (more than 20 words)
-    var sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
-    sentences.forEach(function(sentence) {
-        var wordCount = sentence.trim().split(/\s+/).length;
+    const sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
+    sentences.forEach(sentence => {
+        const wordCount = sentence.trim().split(/\s+/).length;
         if (wordCount > 20) {
-            suggestions.push("Long sentence detected: \"" + sentence.trim().substring(0, 50) + "...\" (" + wordCount + " words)");
+            suggestions.push(`Long sentence: "${sentence.trim().substring(0, 50)}..." (${wordCount} words)`);
         }
     });
 
     // Check for common fillers
-    var fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
-    var fillerMatch = text.match(fillers);
+    const fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
+    const fillerMatch = text.match(fillers);
     if (fillerMatch) {
         suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
     }
 
     // Display suggestions
-    var suggestionsList = document.getElementById('suggestions-list');
+    const suggestionsList = document.getElementById('suggestions-list');
     suggestionsList.innerHTML = ''; // Clear previous suggestions
     if (suggestions.length > 0) {
-        suggestions.forEach(function(suggestion) {
-            var listItem = document.createElement('li');
+        suggestions.forEach(suggestion => {
+            const listItem = document.createElement('li');
             listItem.textContent = suggestion;
             suggestionsList.appendChild(listItem);
         });
     } else {
-        var listItem = document.createElement('li');
+        const listItem = document.createElement('li');
         listItem.textContent = "No suggestions! Your writing looks good.";
         suggestionsList.appendChild(listItem);
     }
