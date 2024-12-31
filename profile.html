@@ -607,31 +607,26 @@
 }
 </style>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.4.0/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.0.2/docx.min.js"></script>
+
 <script>
     // Initialize Quill editor with toolbar
-var quill = new Quill('#editor-container', {
-    modules: {
-        toolbar: '#toolbar'
-    },
-    theme: 'snow'  // Fixed theme to "snow"
-});
+    var quill = new Quill('#editor-container', {
+        modules: { toolbar: '#toolbar' },
+        theme: 'snow'
+    });
 
-// Update word count as user types
-quill.on('text-change', function() {
-    var plainText = quill.getText().trim(); // Extract plain text without formatting
-    var wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
-    document.getElementById('word-count').textContent = "Word count: " + wordCount;
+    // Update word count and show message
+    quill.on('text-change', function() {
+        const plainText = quill.getText().trim();
+        const wordCount = plainText.length > 0 ? plainText.split(/\s+/).length : 0;
+        document.getElementById('word-count').textContent = `Word count: ${wordCount}`;
+        document.getElementById('congratulatory-message').innerText = getMessageForWordCount(wordCount);
+    });
 
-    // Display congratulatory message based on word count
-    let message = getMessageForWordCount(wordCount);
-    document.getElementById('congratulatory-message').innerText = message;
-});
-
-// Function to get congratulatory message based on word count
+    // Function to get congratulatory message based on word count
     function getMessageForWordCount(wordCount) {
         if (wordCount >= 2000) return "Congratulations! You've reached 2000 words! Take a moment to celebrate, then edit and polish.";
         if (wordCount >= 1750) return "You're a rockstar writer! Keep shining!";
@@ -666,134 +661,108 @@ quill.on('text-change', function() {
         if (wordCount >= 10) return "Great job! You're building momentum!";
         if (wordCount >= 1) return "You've started! Keep writing, you've got this!";
         return ""; // No message for 0 words
-    }
+	}
 
-// Download as DOCX
-document.getElementById('download-docx').addEventListener('click', function() {
-    var plainText = quill.getText(); // Get plain text from Quill editor
-    var doc = new docx.Document({
-        sections: [{
-            properties: {},
-            children: [
-                new docx.Paragraph({
-                    children: [new docx.TextRun(plainText)]
-                })
-            ]
-        }]
-    });
-    docx.Packer.toBlob(doc).then(blob => {
-        saveAs(blob, "your-story.docx");
-    });
-});
-
-// Download as PDF
-document.getElementById('download-pdf').addEventListener('click', function() {
-    var plainText = quill.getText(); // Get plain text from Quill editor
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    doc.text(plainText, 10, 10); // Add text to PDF with some padding
-    doc.save('your-story.pdf');
-});
-
-// Full-screen functionality
-document.getElementById('fullscreen-btn').addEventListener('click', function() {
-    const editorContainer = document.getElementById('editor-container');
-    if (editorContainer.requestFullscreen) {
-        editorContainer.requestFullscreen().catch(err => console.error("Fullscreen error:", err));
-    } else if (editorContainer.webkitRequestFullscreen) { // Safari compatibility
-        editorContainer.webkitRequestFullscreen();
-    } else if (editorContainer.mozRequestFullScreen) { // Firefox compatibility
-        editorContainer.mozRequestFullScreen();
-    } else if (editorContainer.msRequestFullscreen) { // IE compatibility
-        editorContainer.msRequestFullscreen();
-    } else {
-        alert("Fullscreen is not supported in this browser.");
-    }
-});
-
-// Handle story submission with Formspree
-document.getElementById('publish-story').addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent default form submission
-    const form = document.getElementById('story-form');
-    const content = quill.root.innerHTML; // Get the editor's HTML content
-
-    // Ensure all fields are populated
-    if (!document.getElementById('author-name').value || 
-        !document.getElementById('author-bio').value || 
-        !content.trim()) {
-        alert('Please fill in all fields before submitting!');
-        return;
-    }
-
-    // Set the Quill content in the hidden input
-    document.getElementById('story-content').value = content;
-    form.submit(); // Submit the form
-});
-
-// Download story as text
-document.getElementById('download-story').addEventListener('click', function() {
-    const plainText = quill.getText(); // Get plain text from Quill editor
-    if (!plainText.trim()) {
-        alert('Editor is empty! Please write something to download.');
-        return;
-    }
-    const blob = new Blob([plainText], { type: 'text/plain' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'your-story.txt'; // The file name
-    link.click();
-});
-
-// Grammar and Style Check Function
-document.getElementById('check-style-btn').addEventListener('click', function(e) {
-    e.preventDefault(); // Prevent form submission
-    checkGrammarAndStyle();
-});
-
-function checkGrammarAndStyle() {
-    const text = quill.getText(); // Get plain text from Quill editor
-    const suggestions = [];
-
-    // Check for repeated words (consecutive)
-    const repeatedWords = /\b(\w+)\s+\1\b/gi;
-    const repeatedMatch = text.match(repeatedWords);
-    if (repeatedMatch) {
-        suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
-    }
-
-    // Check for long sentences (more than 20 words)
-    const sentences = text.split(/[.!?]\s+/); // Split sentences by punctuation
-    sentences.forEach(sentence => {
-        const wordCount = sentence.trim().split(/\s+/).length;
-        if (wordCount > 20) {
-            suggestions.push(`Long sentence: "${sentence.trim().substring(0, 50)}..." (${wordCount} words)`);
+    // Full-screen functionality
+    document.getElementById('fullscreen-btn').addEventListener('click', function() {
+        const editorContainer = document.getElementById('editor-container');
+        if (editorContainer.requestFullscreen) {
+            editorContainer.requestFullscreen().catch(err => console.error("Fullscreen error:", err));
+        } else if (editorContainer.webkitRequestFullscreen) {
+            editorContainer.webkitRequestFullscreen();
+        } else if (editorContainer.mozRequestFullScreen) {
+            editorContainer.mozRequestFullScreen();
+        } else if (editorContainer.msRequestFullscreen) {
+            editorContainer.msRequestFullscreen();
+        } else {
+            alert("Fullscreen is not supported in this browser.");
         }
     });
 
-    // Check for common fillers
-    const fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
-    const fillerMatch = text.match(fillers);
-    if (fillerMatch) {
-        suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
+    // Download as text
+    document.getElementById('download-story').addEventListener('click', function() {
+        const plainText = quill.getText().trim();
+        if (!plainText) {
+            alert('Editor is empty! Please write something before downloading.');
+            return;
+        }
+        const blob = new Blob([plainText], { type: 'text/plain' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'your-story.txt';
+        link.click();
+    });
+
+    // Grammar and Style Check
+    document.getElementById('check-style-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        checkGrammarAndStyle();
+    });
+
+    function checkGrammarAndStyle() {
+        const text = quill.getText();
+        const suggestions = [];
+
+        // Check for repeated words
+        const repeatedWords = /\b(\w+)\s+\1\b/gi;
+        const repeatedMatch = text.match(repeatedWords);
+        if (repeatedMatch) {
+            suggestions.push("Repeated word(s): " + repeatedMatch.join(', '));
+        }
+
+        // Check for long sentences
+        const sentences = text.split(/[.!?]\s+/);
+        sentences.forEach(sentence => {
+            const wordCount = sentence.trim().split(/\s+/).length;
+            if (wordCount > 20) {
+                suggestions.push(`Long sentence detected: "${sentence.trim().substring(0, 50)}..." (${wordCount} words)`);
+            }
+        });
+
+        // Check for common fillers
+        const fillers = /\b(very|really|just|actually|literally|basically|kind of)\b/gi;
+        const fillerMatch = text.match(fillers);
+        if (fillerMatch) {
+            suggestions.push("Consider removing filler words: " + fillerMatch.join(', '));
+        }
+
+        // Display suggestions
+        const suggestionsList = document.getElementById('suggestions-list');
+        suggestionsList.innerHTML = '';
+        if (suggestions.length > 0) {
+            suggestions.forEach(suggestion => {
+                const listItem = document.createElement('li');
+                listItem.textContent = suggestion;
+                suggestionsList.appendChild(listItem);
+            });
+        } else {
+            const listItem = document.createElement('li');
+            listItem.textContent = "No suggestions! Your writing looks good.";
+            suggestionsList.appendChild(listItem);
+        }
     }
 
-    // Display suggestions
-    const suggestionsList = document.getElementById('suggestions-list');
-    suggestionsList.innerHTML = ''; // Clear previous suggestions
-    if (suggestions.length > 0) {
-        suggestions.forEach(suggestion => {
-            const listItem = document.createElement('li');
-            listItem.textContent = suggestion;
-            suggestionsList.appendChild(listItem);
-        });
-    } else {
-        const listItem = document.createElement('li');
-        listItem.textContent = "No suggestions! Your writing looks good.";
-        suggestionsList.appendChild(listItem);
-    }
-}
+    // Handle form submission
+    document.getElementById('publish-story').addEventListener('click', function(e) {
+        e.preventDefault();
+        const authorName = document.getElementById('author-name').value.trim();
+        const authorBio = document.getElementById('author-bio').value.trim();
+        const content = quill.root.innerHTML.trim();
+
+        if (!authorName || !authorBio || !content) {
+            alert('Please fill in all fields before submitting.');
+            return;
+        }
+
+        // Set the Quill content in the hidden input
+        document.getElementById('story-content').value = content;
+
+        // Submit the form
+        document.getElementById('story-form').submit();
+    });
 </script>
 
+		    
 <!-- Multimedia Integration Section -->
 <section id="multimedia-section">
     <div class="multimedia-container">
