@@ -189,25 +189,30 @@
       margin: 10px;
     }
   </style>
-  <h1>Comic Maker</h1>
+   <h1>Comic Maker</h1>
   <div id="workspace">
-    <canvas id="comicCanvas" width="250" height="250"></canvas>
+    <canvas id="comicCanvas" width="800" height="600"></canvas>
   </div>
   <div id="controls">
     <input type="file" id="imageUpload" accept="image/*">
+    <button id="addText">Add Speech Bubble</button>
+    <button id="exportComic">Export Comic</button>
   </div>
-</section>
-		    
+		    </section>
   <script>
     // Select the canvas and its context
     const canvas = document.getElementById("comicCanvas");
     const ctx = canvas.getContext("2d");
 
-    // Select the image upload input
+    // Controls
     const imageUpload = document.getElementById("imageUpload");
+    const addTextButton = document.getElementById("addText");
+    const exportComicButton = document.getElementById("exportComic");
 
-    // Array to store layers (images, text, etc.)
+    // Layers array to manage images and text
     let layers = [];
+    let draggingLayer = null; // Layer being dragged
+    let offsetX, offsetY; // Offset for drag-and-drop
 
     // Add an uploaded image as a new layer
     imageUpload.addEventListener("change", (event) => {
@@ -218,25 +223,78 @@
       img.src = URL.createObjectURL(file);
 
       img.onload = () => {
-        // Add the image to the layers array
-        layers.push({ type: "image", img, x: 0, y: 0 });
+        // Add the image to the layers
+        layers.push({ type: "image", img, x: 50, y: 50, width: img.width / 2, height: img.height / 2 });
         drawLayers();
       };
     });
 
-    // Function to redraw all layers
+    // Add a speech bubble
+    addTextButton.addEventListener("click", () => {
+      const text = prompt("Enter your text:");
+      if (!text) return;
+
+      // Add the text bubble as a new layer
+      layers.push({ type: "text", text, x: 100, y: 100, font: "20px Arial", color: "black" });
+      drawLayers();
+    });
+
+    // Draw all layers on the canvas
     function drawLayers() {
-      // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Redraw each layer
       layers.forEach((layer) => {
         if (layer.type === "image") {
-          ctx.drawImage(layer.img, layer.x, layer.y, canvas.width, canvas.height);
+          ctx.drawImage(layer.img, layer.x, layer.y, layer.width, layer.height);
+        } else if (layer.type === "text") {
+          ctx.font = layer.font;
+          ctx.fillStyle = layer.color;
+          ctx.fillText(layer.text, layer.x, layer.y);
         }
-        // More layer types (e.g., text) can be added here
       });
     }
+
+    // Drag-and-drop functionality
+    canvas.addEventListener("mousedown", (event) => {
+      const mouseX = event.offsetX;
+      const mouseY = event.offsetY;
+
+      // Check if any layer is being clicked
+      draggingLayer = layers.find((layer) => {
+        if (layer.type === "image") {
+          return mouseX >= layer.x && mouseX <= layer.x + layer.width &&
+                 mouseY >= layer.y && mouseY <= layer.y + layer.height;
+        } else if (layer.type === "text") {
+          return mouseX >= layer.x && mouseX <= layer.x + ctx.measureText(layer.text).width &&
+                 mouseY >= layer.y - 20 && mouseY <= layer.y;
+        }
+      });
+
+      if (draggingLayer) {
+        offsetX = mouseX - draggingLayer.x;
+        offsetY = mouseY - draggingLayer.y;
+      }
+    });
+
+    canvas.addEventListener("mousemove", (event) => {
+      if (draggingLayer) {
+        draggingLayer.x = event.offsetX - offsetX;
+        draggingLayer.y = event.offsetY - offsetY;
+        drawLayers();
+      }
+    });
+
+    canvas.addEventListener("mouseup", () => {
+      draggingLayer = null;
+    });
+
+    // Export the canvas as an image
+    exportComicButton.addEventListener("click", () => {
+      const link = document.createElement("a");
+      link.download = "comic.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
   </script>
 
                 <!-- Updated Book Cover Maker Section -->
