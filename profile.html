@@ -14,6 +14,7 @@
         }
 
         .profile-container,
+        .comic-maker-container,
         .writing-container,
         .book-reader-container,
 	.cover-maker-container,
@@ -151,7 +152,93 @@
         <p style="font-size: 0.9em; color: #555;">Don't have a link for an image to display on your profile? Go to <a href="https://postimg.cc" target="_blank">postimg.cc</a>, upload an image, get the link, and paste it here. Your image will automatically display after refreshing.</p>
     </div>
 </section>
-	
+
+
+		    <!-- Comic Maker Section -->
+		    <section id="comic-maker-section">
+    <div class="comic-maker-container">
+        <h2>Create Your Comics</h2>
+        <button class="theme-toggle">🌙</button>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    #workspace {
+      margin: 20px auto;
+      border: 2px solid #ccc;
+      width: 800px;
+      height: 600px;
+      position: relative;
+    }
+
+    canvas {
+      background-color: #f5f5f5;
+      display: block;
+      margin: auto;
+    }
+
+    #controls {
+      margin-top: 20px;
+    }
+
+    #imageUpload {
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Comic Maker</h1>
+  <div id="workspace">
+    <canvas id="comicCanvas" width="800" height="600"></canvas>
+  </div>
+  <div id="controls">
+    <input type="file" id="imageUpload" accept="image/*">
+  </div>
+  <script>
+    // Select the canvas and its context
+    const canvas = document.getElementById("comicCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Select the image upload input
+    const imageUpload = document.getElementById("imageUpload");
+
+    // Array to store layers (images, text, etc.)
+    let layers = [];
+
+    // Add an uploaded image as a new layer
+    imageUpload.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const img = new Image();
+      img.src = URL.createObjectURL(file);
+
+      img.onload = () => {
+        // Add the image to the layers array
+        layers.push({ type: "image", img, x: 0, y: 0 });
+        drawLayers();
+      };
+    });
+
+    // Function to redraw all layers
+    function drawLayers() {
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Redraw each layer
+      layers.forEach((layer) => {
+        if (layer.type === "image") {
+          ctx.drawImage(layer.img, layer.x, layer.y, canvas.width, canvas.height);
+        }
+        // More layer types (e.g., text) can be added here
+      });
+    }
+  </script>
+</body>
 
                 <!-- Updated Book Cover Maker Section -->
 <section id="cover-maker-section">
