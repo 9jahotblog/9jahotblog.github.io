@@ -196,6 +196,8 @@
   <div id="controls">
     <input type="file" id="imageUpload" accept="image/*">
   </div>
+</section>
+		    
   <script>
     // Select the canvas and its context
     const canvas = document.getElementById("comicCanvas");
@@ -3246,7 +3248,7 @@ document.getElementById("congratulatory-message").innerText = message;
     document.querySelectorAll('.theme-toggle').forEach((button) => {
         button.addEventListener("click", (event) => {
             themeIndex = (themeIndex + 1) % themes.length;
-            event.currentTarget.closest('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').style.backgroundColor = themes[themeIndex];
+            event.currentTarget.closest('.profile-container, .comic-maker-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').style.backgroundColor = themes[themeIndex];
         });
     });
 
