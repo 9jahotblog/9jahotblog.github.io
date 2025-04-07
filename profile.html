@@ -154,19 +154,36 @@
 </section>
     
 
-  <!-- Video Player -->
-  <video
-    id="content_video"
-    class="video-js vjs-default-skin"
-    controls
-    preload="auto"
-    poster="https://via.placeholder.com/640x360.png?text=Your+Video"
-  >
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-  </video>
+  
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .video-js {
+      width: 640px;
+      height: 360px;
+    }
+  </style>
+
+  <video id="ad_player" class="video-js vjs-default-skin" playsinline autoplay muted></video>
+
+  <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+  <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-contrib-ads@6.8.0/dist/videojs.ads.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/videojs-ima@1.9.1/dist/videojs.ima.min.js"></script>
 
   <script>
-    var player = videojs('content_video');
+    var player = videojs('ad_player', {
+      autoplay: true,
+      muted: true,
+      controls: true,
+      preload: 'auto'
+    });
 
     player.ima({
       adTagUrl: 'https://runative-syndicate.com/do2/b21a234688e14d86825690b6adb2a7f8/vast?'
@@ -174,10 +191,9 @@
 
     player.ready(function () {
       player.ima.initializeAdDisplayContainer();
-      player.play();
+      player.ima.requestAds();
     });
   </script>
-
 
 		    <!-- Comic Maker Section -->
 		    <section id="comic-maker-section">
