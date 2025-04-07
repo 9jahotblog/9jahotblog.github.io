@@ -156,6 +156,23 @@
 
 		    
 
+
+<div id="video-container"></div>
+
+<script>
+const videoContainer = document.getElementById('video-container');
+const vastUrl = 'https://runative-syndicate.com/do2/78c4fcf733a0475aae5c35dd0a189ac1/vast?';
+
+const player = new VASTPlayer();
+player.init({
+  adTagUrl: vastUrl,
+  container: videoContainer,
+});
+
+player.loadAd();
+
+	    </script>
+
 		    <!-- Comic Maker Section -->
 		    <section id="comic-maker-section">
     <div class="comic-maker-container">
