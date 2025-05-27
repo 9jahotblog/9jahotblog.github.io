@@ -618,7 +618,7 @@
         return;
     }
             
-            const articleId = 'articleId2'; // Unique identifier for the article/page
+            const articleId = 'articleId90'; // Unique identifier for the article/page
 
             const commentData = {
                 text: commentText,
@@ -645,7 +645,7 @@
 
         // Real-time listener for comments
 const commentList = document.getElementById('comment-list');
-const articleId = 'articleId2'; // Unique identifier for the article/page
+const articleId = 'articleId90'; // Unique identifier for the article/page
 const q = query(collection(db, 'comments'), where("articleId", "==", articleId));
 
 onSnapshot(q, (snapshot) => {
