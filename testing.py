@@ -377,44 +377,54 @@ async def philadelphia_vision_command(update: Update, context: ContextTypes.DEFA
 
 
         # ------------------ Chat -------------------->
-async def handle_text(update, context):
-    user = update.effective_user
-    text = update.message.text.strip()
+async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_input = update.message.text
+    increment_stat("text_messages")
+    user_id = update.effective_user.id
 
-    # Initialize conversation memory
-    if "history" not in context.chat_data:
-        context.chat_data["history"] = [
-            {
-                "role": "system",
-                "content": [
-                    {"type": "text", "text": DEFAULT_MEMORY}
-                ]
-            }
-        ]
+    # 1️⃣ Check for links
+    url_match = re.search(r'(https?://\S+)', user_input)
+    if url_match:
+        url = url_match.group(1)
+        await update.message.reply_text("Hold on, I’m reading that page…")
+        try:
+            page = requests.get(url, timeout=10)
+            soup = BeautifulSoup(page.text, 'html.parser')
+            raw_text = soup.get_text().strip()
+            raw_text = raw_text[:3000] if len(raw_text) > 3000 else raw_text
+            summary = text_model.generate_content(
+                f"Summarize this webpage for me in plain English:\n\n{raw_text}"
+            ).text.strip()
+            if user_id not in chat_sessions:
+                chat_sessions[user_id] = {"chat": text_model.start_chat(history=history), "doc_context": ""}
+            chat_sessions[user_id]["doc_context"] = summary
+            await update.message.reply_text(f"Page Summary:\n{summary}")
+            await update.message.reply_text("You can now ask me anything about that page.")
+            return
+        except Exception:
+            await update.message.reply_text("Oops, I couldn’t read that page. Try another link.")
+            return
 
-    # Store user input
-    context.chat_data["history"].append(
-        {"role": "user", "content": [{"type": "text", "text": text}]}
-    )
+    # 2️⃣ Default: Normal chat (with memory)
+    await context.bot.send_chat_action(update.effective_chat.id, ChatAction.TYPING)
+
+    if user_id not in chat_sessions:
+        chat_sessions[user_id] = {"chat": text_model.start_chat(history=history), "doc_context": ""}
+
+    doc_context = chat_sessions[user_id]["doc_context"]
+    full_prompt = f"{doc_context}\n\nUser: {user_input}" if doc_context else user_input
 
     try:
-        response = await client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=context.chat_data["history"],
-        )
+        response = chat_sessions[user_id]["chat"].send_message(full_prompt)
+        text = response.text.strip()
+        # Format cleanup
+        text = text.replace("```", "").replace("*", "").replace("_", "")
+        await update.message.reply_text(text)
+    except Exception:
+        logging.exception("Chat error:")
+        await update.message.reply_text("I couldn’t process that message.")
+            
 
-        reply_text = response.choices[0].message.content[0].text.strip()
-
-        # Save assistant reply
-        context.chat_data["history"].append(
-            {"role": "assistant", "content": [{"type": "text", "text": reply_text}]}
-        )
-
-        await update.message.reply_text(reply_text, disable_web_page_preview=False)
-
-    except Exception as e:
-        await update.message.reply_text(f"⚠️ Error: {str(e)}")
-        
    # ---------------------- Document Handler ----------------------
 
 # Globals used in your bot
