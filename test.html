@@ -1,386 +1,402 @@
- 
-
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>My 9jahotblog</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    <style>
-        /* General Reset */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Elvion AI — Where Assistance Meets Excellence</title>
+  <meta name="description" content="Elvion AI: Where Assistance Meets Excellence. Explore Philadelphia AI and Seraphina AI, learn at Elvion University, read our blog, and try our cutting‑edge AI tools." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#060812;
+      --bg-deep:#040611;
+      --brand:#00d4ff;
+      --brand-2:#0077ff;
+      --glow:rgba(0,212,255,.55);
+      --text:#e6f7ff;
+      --muted:#9cc7db;
+      --card:#0b1022aa; /* glass */
+      --accent:#38bdf8; /* light cyan */
+      --success:#22d3ee;
+      --warn:#f59e0b;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text); background: radial-gradient(1200px 600px at 20% 0%, #0a1a2a 0%, var(--bg) 45%, var(--bg-deep) 100%);
+      overflow-x:hidden;
+    }
+    /* --- Global utility --- */
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid var(--brand);color:white;padding:.85rem 1.25rem;border-radius:999px;text-decoration:none;position:relative;overflow:hidden;transition:.25s ease; backdrop-filter: blur(6px);}
+    .btn:hover{box-shadow:0 0 24px var(--glow), inset 0 0 12px rgba(0,119,255,.25); transform: translateY(-1px);}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2)); border-color:transparent}
+    .btn.ghost{border-color:#1f334b;color:var(--text)}
+    .badge{display:inline-block;padding:.25rem .6rem;border-radius:999px;background:#102940;color:#9fe8ff;font-size:.8rem;border:1px solid #1e435f}
+    .grid{display:grid;gap:24px}
+    .section{padding:90px 0}
+    .subtle{color:var(--muted)}
 
-        #header {
-            background-color: #333;
-            padding: 10px 0;
-            color: white;
-        }
+    /* --- Navigation --- */
+    header{position:sticky;top:0;z-index:30;background:linear-gradient(180deg, rgba(2,10,20,.9), rgba(2,10,20,.6) 60%, rgba(2,10,20,0));backdrop-filter:saturate(140%) blur(6px);border-bottom:1px solid rgba(56,189,248,.12)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .brand img{height:36px;width:auto;filter:drop-shadow(0 0 12px var(--glow))}
+    .brand .wordmark{font-family:Orbitron, Inter, sans-serif; font-weight:800; letter-spacing:.02em; font-size:1.2rem; color:white; text-shadow:0 0 14px rgba(0,212,255,.35)}
 
-        #header #logo {
-            display: inline-block;
-            margin-left: 20px;
-        }
+    nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    nav a{color:#cae9f7;text-decoration:none;padding:10px 12px;border-radius:10px;transition:.25s}
+    nav a:hover{background:#0e2338}
 
-        #header #logo a {
-            color: white;
-            text-decoration: none;
-            font-size: 24px;
-        }
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .burger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+    .burger span{width:26px;height:2px;background:#99e6ff;display:block}
 
-        #nav {
-            display: none;
-        }
+    @media (max-width:920px){
+      nav ul{display:none;position:absolute;left:20px;right:20px;top:64px;background:#07121f;border:1px solid #15314a;border-radius:16px;padding:14px}
+      nav ul.open{display:flex;flex-direction:column}
+      .burger{display:flex}
+      .nav-cta{display:none}
+    }
 
-        #nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+    /* --- Hero --- */
+    .hero{position:relative;padding:120px 0 80px; overflow:hidden}
+    .hero h1{font-family:Orbitron, Inter, sans-serif;font-weight:800;line-height:1.05;margin:0;font-size:clamp(2rem, 4vw + 1rem, 4rem); text-shadow:0 0 24px rgba(0,212,255,.25)}
+    .hero p{max-width:780px;font-size:1.12rem}
+    .hero .cta{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
 
-        #nav ul li {
-            display: block;
-        }
+    /* flamey aurora background */
+    .plasma{position:absolute; inset:-20% -10% auto -10%; height:80vmin; background: radial-gradient(closest-side at 40% 55%, rgba(0,247,255,.35), transparent 60%), radial-gradient(closest-side at 65% 50%, rgba(0,119,255,.35), transparent 55%), radial-gradient(closest-side at 50% 50%, rgba(0,180,255,.25), transparent 65%);
+      filter: blur(40px) saturate(120%); animation: float 12s ease-in-out infinite alternate; opacity:.9; pointer-events:none;}
+    @keyframes float{from{transform:translateY(-20px) scale(1)} to{transform:translateY(10px) scale(1.05)}}
 
-        #nav ul li a {
-            display: block;
-            padding: 10px 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #444;
-            margin-bottom: 1px;
-        }
+    /* --- Feature cards --- */
+    .cards{grid-template-columns:repeat(3,1fr)}
+    .card{position:relative;background:linear-gradient(180deg, rgba(13,25,48,.75), rgba(8,16,32,.65)); border:1px solid rgba(56,189,248,.18); border-radius:18px; padding:22px; overflow:hidden; transition: .3s ease; box-shadow: 0 10px 30px rgba(0,0,0,.25)}
+    .card:hover{transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,.35), 0 0 30px rgba(0,212,255,.12)}
+    .card .title{font-weight:800; font-family:Orbitron; margin:0 0 6px}
+    .card .desc{color:#bfe9ff; margin:0 0 14px}
+    .chip{font-size:.75rem;border:1px solid rgba(56,189,248,.35);padding:.25rem .5rem;border-radius:999px;color:#9fe8ff;background:#0b2136aa}
+    .card .actions{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+    @media (max-width:980px){.cards{grid-template-columns:1fr}}
 
-        #nav ul li a:hover {
-            background-color: #555;
-        }
+    /* --- Product highlight --- */
+    .products{grid-template-columns:repeat(2,1fr)}
+    .product{display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg, rgba(11,20,40,.75), rgba(7,14,28,.65)); padding:24px;border-radius:18px;border:1px solid rgba(56,189,248,.18)}
+    .product h3{font-family:Orbitron;margin:0}
+    .product p{margin:0 0 10px}
+    .product .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+    @media (max-width:980px){.products{grid-template-columns:1fr}}
 
-        /* Mobile-specific styles (max-width: 768px) */
-        @media screen and (max-width: 768px) {
-            #nav {
-                display: none;
-            }
+    /* --- Footer --- */
+    footer{padding:50px 0;border-top:1px solid rgba(56,189,248,.12); background:linear-gradient(180deg, rgba(2,10,20,.3), rgba(2,10,20,.6))}
+    .footgrid{display:grid;gap:24px;grid-template-columns:2fr 1fr 1fr}
+    .footgrid a{color:#9bdcff;text-decoration:none}
+    .footgrid a:hover{text-decoration:underline}
+    @media (max-width:920px){.footgrid{grid-template-columns:1fr}}
 
-            #nav.active {
-                display: block;
-            }
+    /* --- subtle animated stars --- */
+    .stars{position:absolute;inset:0;pointer-events:none;opacity:.4}
+    .star{position:absolute;width:2px;height:2px;background:radial-gradient(circle,#e6faff,transparent 60%); border-radius:50%; animation: twinkle 3.2s ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.2; transform:scale(.8)}50%{opacity:1; transform:scale(1)}}
 
-            /* Hamburger Menu Icon */
-            .mobile-menu-toggle {
-                display: block;
-                font-size: 24px;
-                cursor: pointer;
-                margin-right: 20px;
-                color: white;
-                float: right;
-                margin-top: -35px;
-            }
-        }
-
-        /* Desktop-specific styles (min-width: 768px) */
-        @media screen and (min-width: 768px) {
-            #nav {
-                display: block;
-            }
-
-            #nav ul {
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-            }
-
-            #nav ul li {
-                display: inline-block;
-                margin-right: 20px;
-            }
-
-            #nav ul li a {
-                text-decoration: none;
-                color: white;
-                padding: 10px;
-                background-color: transparent;
-            }
-
-            #nav ul li a:hover {
-                background-color: #555;
-            }
-
-            /* Hide the mobile menu toggle on desktop */
-            .mobile-menu-toggle {
-                display: none;
-            }
-        }
-    </style>
+    /* --- small helpers --- */
+    .sr{position:absolute;left:-9999px}
+  </style>
 </head>
-<body class="is-preload landing">
-    <div id="page-wrapper">
-
-        <!-- Header -->
-        <header id="header">
-            <h1 id="logo"><a href="index.html">9JAHOTBLOG</a></h1>
-             <!-- Mobile Menu Toggle Icon -->
-            <div class="mobile-menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-            <nav id="nav">
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li>
-                        <a href="https://9jahotblog.github.io/News/ronaldo-signs-al-nassr.html">Entertainment</a>
-                        <ul>
-                            <li><a href="#">Articles</a></li>
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Discussions</a></li>
-                            <li>
-                                <a href="#">Novels</a>
-                                <ul>
-                                    <li><a href="#">Fiction</a></li>
-                                    <li><a href="#">Non-fiction</a></li>
-                                    <li><a href="#">Allegory</a></li>
-                                    <li><a href="#">Romance</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Books</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Main Content -->
-        <div id="main" class="wrapper style1">
-            <div class="container">
-                
-
-    
-    <style>
-        /* Basic styles for the comment section */
-        #comments-section {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #111111;
-        }
-
-        #comments-list .comment {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        #comments-list .comment img {
-            margin-right: 10px;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-        }
-
-        #comment-form textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        #comment-form button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-
-<div id="smt-137989758" style="padding: 0px"></div>
-<script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
-<script>
-	function callBackForSmaato(status){
-		if(status == "SUCCESS"){
-			console.log("callBack is being called with status : " + status);
-		} else if (status == "ERROR"){
-			console.log("callBack is being called with status : " + status);
-		}
-	}; 
-	SomaJS.loadAd({
-          "adDivId": "smt-137989758",
-          "publisherId": 1100057727,
-          "adSpaceId": 137989758,
-          "format": "video",
-          "formatstrict": true,
-          "width": 300,
-          "height": 250,
-          "sync": false
-},callBackForSmaato);
-</script>
-
-
-
-		    
 <body>
-    <!-- Comments Section -->
-    <section id="comments-section">
-        <h3>Comments</h3>
-        <div id="comments-list"></div>
-        <div id="comment-form" style="display:none;">
-            <textarea id="comment-text" placeholder="Write a comment..."></textarea>
-            <button id="submit-comment">Post Comment</button>
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Elvion AI home">
+        <!-- Replace src with your actual logo image URL -->
+        <img src="https://via.placeholder.com/120x120.png?text=ELVION" alt="Elvion AI logo" />
+        <span class="wordmark">Elvion AI</span>
+      </a>
+
+      <nav>
+        <div class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span><span></span>
         </div>
-        <p id="login-message" style="display:none;">Please <a href="login-page.html">login</a> to comment.</p>
-    </section>
+        <ul id="menu" aria-label="Primary">
+          <li><a href="#university">University</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#privacy">Privacy Policy</a></li>
+          <li><a href="#signup">Sign Up</a></li>
+          <li><a href="#philadelphia">Try Philadelphia AI</a></li>
+          <li><a href="#seraphina">Try Seraphina AI</a></li>
+        </ul>
+      </nav>
 
-    <!-- Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        const commentsCollection = collection(db, "comments");
-
-        // Function to render comments
-        async function renderComments() {
-            const q = query(commentsCollection, orderBy("timestamp", "desc"));
-            const querySnapshot = await getDocs(q);
-            const commentsList = document.getElementById("comments-list");
-            commentsList.innerHTML = "";
-            querySnapshot.forEach((doc) => {
-                const commentData = doc.data();
-                const commentElement = document.createElement("div");
-                commentElement.innerHTML = `
-                    <div class="comment">
-                        <img src="${commentData.profilePic}" alt="Profile Picture">
-                        <strong>${commentData.username}</strong>
-                        <p>${commentData.text}</p>
-                    </div>
-                `;
-                commentsList.appendChild(commentElement);
-            });
-        }
-
-        // Check if user is logged in and show/hide comment form
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById("comment-form").style.display = "block";
-                document.getElementById("login-message").style.display = "none";
-                document.getElementById("submit-comment").addEventListener("click", async () => {
-                    const commentText = document.getElementById("comment-text").value;
-                    if (commentText.trim() !== "") {
-                        await addDoc(commentsCollection, {
-                            text: commentText,
-                            username: user.displayName,
-                            profilePic: user.photoURL || "https://via.placeholder.com/50",
-                            timestamp: new Date()
-                        });
-                        document.getElementById("comment-text").value = "";
-                        renderComments();
-                    }
-                });
-            } else {
-                document.getElementById("comment-form").style.display = "none";
-                document.getElementById("login-message").style.display = "block";
-            }
-        });
-
-        // Initial render of comments
-        renderComments();
-    </script>
-</body>
-</html>
-    
-        
-                
-
-    
-
- 
-            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-
-
-        
-        <!-- Notification -->
-        <div class="notification" id="login-notification">
-            You're logged in as <span id="username"></span>
-        </div>
-        
-        <!-- Footer -->
-        <footer id="footer">
-            <ul class="icons">
-                <li><a href="https://Twitter.com/koladhino" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="https://www.facebook.com/profile.php?id=100092154756974" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="https://Instagram.com/koladesworld" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="https://github.com/philipsmith617" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-                <li><a href="mailto:9jahotblog2@gmail.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <ul class="copyright">
-                <li>&copy; 9jahotblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2349160331432">Philip</a></li>
-            </ul>
-        </footer>
+      <div class="nav-cta">
+        <a class="btn ghost" href="#philadelphia">Philadelphia AI</a>
+        <a class="btn primary" href="#seraphina">Seraphina AI</a>
+      </div>
     </div>
+  </header>
 
-    <!-- Scripts -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.scrolly.min.js"></script>
-    <script src="assets/js/jquery.dropotron.min.js"></script>
-    <script src="assets/js/jquery.scrollex.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+  <!-- HERO -->
+  <section class="hero section" id="top">
+    <div class="plasma" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true" id="stars"></div>
+    <div class="container">
+      <span class="badge">Where Assistance Meets Excellence</span>
+      <h1>Intelligence for Learning, Creation, and the Future
+      </h1>
+      <p class="subtle">Elvion AI unites assistance and excellence across research, creativity, and education. Chat, generate, and learn with our flagship models — <strong>Philadelphia AI</strong> and <strong>Seraphina AI</strong> — and earn simulated first‑degree style <strong>ELV</strong> certifications through <em>Elvion University</em>.</p>
+      <div class="cta">
+        <a class="btn primary" href="#philadelphia">Try Philadelphia AI</a>
+        <a class="btn" href="#seraphina">Meet Seraphina</a>
+        <a class="btn ghost" href="#university">Explore University</a>
+      </div>
+    </div>
+  </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
-            authDomain: "jahotblog-login.firebaseapp.com",
-            projectId: "jahotblog-login",
-            storageBucket: "jahotblog-login.appspot.com",
-            messagingSenderId: "661526730601",
-            appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
-        };
+  <!-- PRODUCTS: Philadelphia / Seraphina -->
+  <section class="section" id="products">
+    <div class="container">
+      <h2 style="font-family:Orbitron;margin:0 0 14px">Flagship Models</h2>
+      <p class="subtle" style="margin:0 0 30px">Two branches under Elvion AI for creation, conversation, and exploration.</p>
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+      <div class="grid products">
+        <article class="product" id="philadelphia">
+          <span class="chip">Conversational • Multimodal</span>
+          <h3>Philadelphia AI</h3>
+          <p>Chatty, fun, and powerful. Generate text, images, audio, comics, websites — and more.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://t.me/writingurubot" target="_blank" rel="noopener">Open on Telegram</a>
+            <a class="btn ghost" href="#features">See features</a>
+          </div>
+        </article>
 
-        // Check if user is signed in and display their info
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('username').textContent = user.displayName || 'User';
-                document.getElementById('login-notification').style.display = 'block';
-            } else {
-                document.getElementById('login-notification').style.display = 'none';
-            }
-        });
-        document.querySelector('.mobile-menu-toggle').addEventListener('click', function () {
-            document.getElementById('nav').classList.toggle('active');
-        });
-    </script>
+        <article class="product" id="seraphina">
+          <span class="chip">Advanced • 2025–2030 vision</span>
+          <h3>Seraphina AI</h3>
+          <p>Cutting‑edge reasoning and creation with knowledge up to 2025 and a vision tuned for the road to 2030.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="https://t.me/philadelphiaaibot" target="_blank" rel="noopener">Open on Telegram</a>
+            <a class="btn ghost" href="#features">See features</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE GRID -->
+  <section class="section" id="features">
+    <div class="container">
+      <h2 style="font-family:Orbitron;margin:0 0 14px">What you can do with Elvion</h2>
+      <p class="subtle" style="margin:0 0 30px">High‑tech capabilities with a blue‑flame aesthetic and smooth, responsive UX.</p>
+
+      <div class="grid cards">
+        <div class="card">
+          <h3 class="title">Generate Anything</h3>
+          <p class="desc">Text, images, audio, websites, comics, even song ideas — at your fingertips.</p>
+          <div class="actions">
+            <a class="btn ghost" href="#philadelphia">Try now</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="title">Learn with ELV</h3>
+          <p class="desc">Simulated first‑degree style programs. Earn <strong>ELV</strong> certifications from Elvion University.</p>
+          <div class="actions">
+            <a class="btn ghost" href="#university">Explore University</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3 class="title">Responsible AI</h3>
+          <p class="desc">Safety‑minded research and clear privacy practices guided by transparent principles.</p>
+          <div class="actions">
+            <a class="btn ghost" href="#privacy">Read policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIVERSITY PREVIEW -->
+  <section class="section" id="university">
+    <div class="container">
+      <span class="badge">Elvion University</span>
+      <h2 style="font-family:Orbitron;margin:8px 0 10px">ELV Programs & Matriculation</h2>
+      <p class="subtle">A digital skills school that feels like a real university — matric numbers, exams, graduation, and a supportive AI mentor.</p>
+      <div class="grid" style="grid-template-columns:2fr 1fr">
+        <div>
+          <ul style="line-height:1.9;margin:0;padding-left:18px">
+            <li>Faculties: English • Tech • Business • Creative Arts</li>
+            <li>Assessments: quizzes, essays, oral via speech, capstones</li>
+            <li>Certificates: <strong>ELV in &lt;discipline&gt;</strong> with transcripts</li>
+            <li>Community: cohorts, challenges, alumni network</li>
+          </ul>
+          <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+            <a class="btn primary" href="#signup">Get Matric Number</a>
+            <a class="btn ghost" href="#blog">Visit the Blog</a>
+          </div>
+        </div>
+        <div class="card" aria-hidden="true">
+          <div class="subtle">Preview</div>
+          <h3 style="margin:.3rem 0">ELV in English Studies</h3>
+          <p class="subtle" style="margin:0 0 10px">Intro to Grammar → Literature → Communication → Final</p>
+          <div style="height:120px;border-radius:12px;background:radial-gradient(60% 60% at 50% 40%, rgba(0,247,255,.15), transparent), linear-gradient(180deg, rgba(0,119,255,.18), rgba(0,180,255,.08));border:1px solid rgba(56,189,248,.18)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG PREVIEW -->
+  <section class="section" id="blog">
+    <div class="container">
+      <h2 style="font-family:Orbitron;margin:0 0 14px">From the Elvion Blog</h2>
+      <p class="subtle" style="margin:0 0 26px">Research notes, tutorials, stories, and announcements.</p>
+      <div class="grid cards" style="grid-template-columns:repeat(3,1fr)">
+        <article class="card">
+          <span class="chip">Announcement</span>
+          <h3 class="title">Introducing Elvion University</h3>
+          <p class="desc">How ELV programs simulate a real degree experience with AI support.</p>
+          <div class="actions"><a class="btn ghost" href="#">Read</a></div>
+        </article>
+        <article class="card">
+          <span class="chip">Research</span>
+          <h3 class="title">Safety in Generative Systems</h3>
+          <p class="desc">Balancing capability with control: practical guardrails that work.</p>
+          <div class="actions"><a class="btn ghost" href="#">Read</a></div>
+        </article>
+        <article class="card">
+          <span class="chip">Tutorial</span>
+          <h3 class="title">Build with Philadelphia AI</h3>
+          <p class="desc">Quickstart: prompts, APIs, and creative workflows for makers.</p>
+          <div class="actions"><a class="btn ghost" href="#">Read</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 style="font-family:Orbitron;margin:0 0 14px">About Elvion</h2>
+      <p class="subtle" style="max-width:860px">Elvion AI — <em>Emergent Learning & Vision for Intelligent Ontologies</em> — is a home for research, creation, and accessible education. We build helpful AI, simulate first‑degree pathways through ELV programs, and empower people to imagine, learn, and ship.</p>
+      <div class="grid cards" style="grid-template-columns:repeat(3,1fr)">
+        <div class="card"><h3 class="title">Mission</h3><p class="desc">Where assistance meets excellence: tools that uplift creativity, skills, and opportunity.</p></div>
+        <div class="card"><h3 class="title">Vision</h3><p class="desc">An ecosystem where anyone can learn like they’re in a university, build like a pro, and share with the world.</p></div>
+        <div class="card"><h3 class="title">Values</h3><p class="desc">Safety • Openness • Craft • Dignity • Community</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY PREVIEW -->
+  <section class="section" id="privacy">
+    <div class="container">
+      <h2 style="font-family:Orbitron;margin:0 0 10px">Privacy & Safety</h2>
+      <p class="subtle">We’re committed to clear data practices, learner protections, and responsible AI use.</p>
+      <div class="card" style="margin-top:16px">
+        <p class="subtle" style="margin:0">This is a preview. Link your full Privacy Policy page here when ready. Summaries: what we collect, why, how long, your choices, and contacts.</p>
+        <div class="actions" style="margin-top:12px"><a class="btn ghost" href="#">Read full policy</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNUP CTA -->
+  <section class="section" id="signup">
+    <div class="container">
+      <div class="grid" style="grid-template-columns:2fr 1fr; align-items:center">
+        <div>
+          <h2 style="font-family:Orbitron;margin:0 0 10px">Join Elvion</h2>
+          <p class="subtle">Create an account to access Philadelphia AI, Seraphina AI, and Elvion University.</p>
+          <form onsubmit="event.preventDefault(); alert('Sign up flow goes here. Connect to Firebase/Auth.');" style="margin-top:10px">
+            <div class="grid" style="grid-template-columns:1fr 1fr">
+              <input aria-label="Full name" required placeholder="Full name" style="padding:14px;border-radius:12px;border:1px solid #1c334c;background:#0c1828;color:#e6f7ff" />
+              <input aria-label="Email" type="email" required placeholder="Email" style="padding:14px;border-radius:12px;border:1px solid #1c334c;background:#0c1828;color:#e6f7ff" />
+            </div>
+            <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:10px">
+              <input aria-label="Password" type="password" required placeholder="Password" style="padding:14px;border-radius:12px;border:1px solid #1c334c;background:#0c1828;color:#e6f7ff" />
+              <select aria-label="Country" required style="padding:14px;border-radius:12px;border:1px solid #1c334c;background:#0c1828;color:#e6f7ff">
+                <option value="" disabled selected>Country</option>
+                <option>Nigeria</option>
+                <option>Ghana</option>
+                <option>Kenya</option>
+                <option>United States</option>
+                <option>United Kingdom</option>
+              </select>
+            </div>
+            <label style="display:flex;gap:.6rem;align-items:center;margin-top:10px;color:#c7eaff"><input type="checkbox"/> Enable 2‑step verification</label>
+            <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn primary" type="submit">Create account</button>
+              <a class="btn ghost" href="#">Already have an account? Log in</a>
+            </div>
+          </form>
+        </div>
+        <div class="card">
+          <span class="chip">Quick Links</span>
+          <div class="actions" style="margin-top:12px; display:flex; flex-direction:column; gap:10px">
+            <a class="btn" href="https://t.me/writingurubot" target="_blank" rel="noopener">Try Philadelphia AI on Telegram</a>
+            <a class="btn" href="https://t.me/philadelphiaaibot" target="_blank" rel="noopener">Try Seraphina AI on Telegram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container footgrid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <img src="https://via.placeholder.com/80x80.png?text=ELV" alt="Elvion logo small" style="height:28px;width:auto"/>
+          <strong style="font-family:Orbitron">Elvion AI</strong>
+        </div>
+        <p class="subtle">Where Assistance Meets Excellence</p>
+      </div>
+      <div>
+        <strong>Explore</strong>
+        <ul style="list-style:none;padding:0;margin:8px 0 0;line-height:1.9">
+          <li><a href="#university">University</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Legal</strong>
+        <ul style="list-style:none;padding:0;margin:8px 0 0;line-height:1.9">
+          <li><a href="#privacy">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container" style="margin-top:16px;color:#7fbfe0;font-size:.9rem">© <span id="year"></span> Elvion AI. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // mobile menu
+    const burger = document.querySelector('.burger');
+    const menu = document.getElementById('menu');
+    burger?.addEventListener('click', ()=>{
+      menu.classList.toggle('open');
+      const open = menu.classList.contains('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // dynamic year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // create subtle stars
+    const starField = document.getElementById('stars');
+    const makeStar = ()=>{
+      const s = document.createElement('span'); s.className = 'star';
+      const x = Math.random() * 100; const y = Math.random() * 100; const d = 2 + Math.random()*2;
+      s.style.left = x + 'vw'; s.style.top = y + 'vh'; s.style.width = d+'px'; s.style.height = d+'px';
+      s.style.animationDelay = (Math.random()*3)+'s';
+      starField.appendChild(s);
+    };
+    for(let i=0;i<80;i++) makeStar();
+
+    // OPTIONAL: swap in your real logo once you have a URL
+    // document.querySelector('.brand img').src = 'https://your.cdn/elvion-logo.png';
+  </script>
 </body>
 </html>
