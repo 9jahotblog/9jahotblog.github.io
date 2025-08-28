@@ -365,49 +365,42 @@ async def philadelphia_vision_command(update: Update, context: ContextTypes.DEFA
 
         # ------------------ Chat ------------------>
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_input = update.message.text
-    increment_stat("text_messages")
-    user_id = update.effective_user.id
+    user_id = str(update.message.from_user.id)
+    text = update.message.text.strip()
 
-    # Web link check (keep this)
-    url_match = re.search(r'(https?://\S+)', user_input)
-    if url_match:
-        url = url_match.group(1)
-        await update.message.reply_text("Hold on, I’m reading that page…")
-        try:
-            page = requests.get(url, timeout=10)
-            soup = BeautifulSoup(page.text, 'html.parser')
-            raw_text = soup.get_text().strip()
-            raw_text = raw_text[:3000] if len(raw_text) > 3000 else raw_text
-            summary = text_model.generate_content(
-                f"Summarize this webpage for me in plain English:\n\n{raw_text}"
-            ).text.strip()
-            await update.message.reply_text(f"Page Summary:\n{summary}")
-            await update.message.reply_text("You can now ask me anything about that page.")
-            return
-        except Exception:
-            await update.message.reply_text("Oops, I couldn’t read that page. Try another link.")
-            return
-
-    # Setup bot session with default memory (just once per user)
+    # Ensure chat session exists
     if user_id not in chat_sessions:
         chat_sessions[user_id] = {
-            "chat": text_model.start_chat(
-                history=[{"role": "system", "parts": [DEFAULT_MEMORY]}]
-            ),
-            "doc_context": DEFAULT_MEMORY
+            "chat": text_model.start_chat(history=DEFAULT_MEMORY.copy())
         }
 
+    # Detect URLs in message
+    urls = re.findall(r'(https?://\S+)', text)
+    if urls:
+        summaries = []
+        for url in urls:
+            try:
+                response = requests.get(url, timeout=10)
+                soup = BeautifulSoup(response.text, "html.parser")
+                page_text = soup.get_text(" ", strip=True)[:4000]
+                summary = text_model.generate_content(
+                    f"Summarize this webpage text clearly and concisely:\n\n{page_text}"
+                )
+                summaries.append(f"Summary of {url}:\n{summary.text.strip()}")
+            except Exception as e:
+                summaries.append(f"Could not summarize {url}: {str(e)}")
+
+        await update.message.reply_text("\n\n".join(summaries))
+        return
+
+    # Otherwise continue chat with memory
     try:
-        chat = chat_sessions[user_id]["chat"]
-        response = chat.send_message(user_input)
-        text = response.text.strip()
-        if not text:
-            raise Exception("Empty reply")
-        await update.message.reply_text(text[:4000])
+        response = chat_sessions[user_id]["chat"].send_message(text)
+        reply = response.text.strip()
+        await update.message.reply_text(reply)
     except Exception as e:
-        logging.exception("Chat error:")
-        await update.message.reply_text("Sorry, something went wrong with my AI engine. Try again in a few seconds or check your API key.")
+        await update.message.reply_text("Something went wrong processing your request.")
+        print(f"Error in handle_text: {e}")
 
    # ---------------------- Document Handler ----------------------
 
