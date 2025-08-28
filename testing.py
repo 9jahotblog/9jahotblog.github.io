@@ -376,46 +376,43 @@ async def philadelphia_vision_command(update: Update, context: ContextTypes.DEFA
         await update.message.reply_text("Image generation failed. Please try again later.")
 
 
-        # ------------------ Chat ------------------>
-async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = str(update.message.from_user.id)
+        # ------------------ Chat -------------------->
+def handle_text(update, context):
+    user = update.effective_user
     text = update.message.text.strip()
 
-    # Ensure chat session exists
-    if user_id not in chat_sessions:
-        chat_sessions[user_id] = {
-            "chat": text_model.start_chat(
-                history=[{"role": "system", "content": DEFAULT_MEMORY}]
-            )
-        }
+    # Store user message into conversation history
+    if "history" not in context.chat_data:
+        context.chat_data["history"] = [
+            {
+                "role": "system",
+                "content": [
+                    {"type": "text", "text": DEFAULT_MEMORY}
+                ]
+            }
+        ]
 
-    # Detect URLs in message
-    urls = re.findall(r'(https?://\S+)', text)
-    if urls:
-        summaries = []
-        for url in urls:
-            try:
-                response = requests.get(url, timeout=10)
-                soup = BeautifulSoup(response.text, "html.parser")
-                page_text = soup.get_text(" ", strip=True)[:4000]
-                summary = text_model.generate_content(
-                    f"Summarize this webpage text clearly and concisely:\n\n{page_text}"
-                )
-                summaries.append(f"Summary of {url}:\n{summary.text.strip()}")
-            except Exception as e:
-                summaries.append(f"Could not summarize {url}: {str(e)}")
+    context.chat_data["history"].append(
+        {"role": "user", "content": [{"type": "text", "text": text}]}
+    )
 
-        await update.message.reply_text("\n\n".join(summaries))
-        return
-
-    # Otherwise continue chat with memory
     try:
-        response = chat_sessions[user_id]["chat"].send_message(text)
-        reply = response.text.strip()
-        await update.message.reply_text(reply)
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=context.chat_data["history"],
+        )
+
+        reply_text = response.choices[0].message.content[0].text.strip()
+
+        # Save assistant reply to history
+        context.chat_data["history"].append(
+            {"role": "assistant", "content": [{"type": "text", "text": reply_text}]}
+        )
+
+        update.message.reply_text(reply_text, disable_web_page_preview=False)
+
     except Exception as e:
-        await update.message.reply_text("Something went wrong processing your request.")
-        print(f"Error in handle_text: {e}")
+        update.message.reply_text(f"⚠️ Error: {str(e)}")
         
    # ---------------------- Document Handler ----------------------
 
