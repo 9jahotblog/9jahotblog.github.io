@@ -377,11 +377,11 @@ async def philadelphia_vision_command(update: Update, context: ContextTypes.DEFA
 
 
         # ------------------ Chat -------------------->
-def handle_text(update, context):
+async def handle_text(update, context):
     user = update.effective_user
     text = update.message.text.strip()
 
-    # Store user message into conversation history
+    # Initialize conversation memory
     if "history" not in context.chat_data:
         context.chat_data["history"] = [
             {
@@ -392,27 +392,28 @@ def handle_text(update, context):
             }
         ]
 
+    # Store user input
     context.chat_data["history"].append(
         {"role": "user", "content": [{"type": "text", "text": text}]}
     )
 
     try:
-        response = client.chat.completions.create(
+        response = await client.chat.completions.create(
             model="gpt-4o-mini",
             messages=context.chat_data["history"],
         )
 
         reply_text = response.choices[0].message.content[0].text.strip()
 
-        # Save assistant reply to history
+        # Save assistant reply
         context.chat_data["history"].append(
             {"role": "assistant", "content": [{"type": "text", "text": reply_text}]}
         )
 
-        update.message.reply_text(reply_text, disable_web_page_preview=False)
+        await update.message.reply_text(reply_text, disable_web_page_preview=False)
 
     except Exception as e:
-        update.message.reply_text(f"⚠️ Error: {str(e)}")
+        await update.message.reply_text(f"⚠️ Error: {str(e)}")
         
    # ---------------------- Document Handler ----------------------
 
