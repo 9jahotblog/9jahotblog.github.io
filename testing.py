@@ -368,17 +368,8 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_input = update.message.text
     increment_stat("text_messages")
     user_id = update.effective_user.id
-    
-    # Get the user's current context/memory, or default if new
-    if user_id not in chat_sessions:
-        chat_sessions[user_id] = {
-            "chat": text_model.start_chat(
-                history=[{"role": "system", "parts": [DEFAULT_MEMORY]}]
-            ),
-            "doc_context": DEFAULT_MEMORY
-        }
 
-    # Check for web links first
+    # Web link check (keep this)
     url_match = re.search(r'(https?://\S+)', user_input)
     if url_match:
         url = url_match.group(1)
@@ -389,9 +380,8 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
             raw_text = soup.get_text().strip()
             raw_text = raw_text[:3000] if len(raw_text) > 3000 else raw_text
             summary = text_model.generate_content(
-                f"Summarize this webpage for me in plain English:\n\n{raw_text}\n\n{DEFAULT_MEMORY}"
+                f"Summarize this webpage for me in plain English:\n\n{raw_text}"
             ).text.strip()
-            chat_sessions[user_id]["doc_context"] = summary
             await update.message.reply_text(f"Page Summary:\n{summary}")
             await update.message.reply_text("You can now ask me anything about that page.")
             return
@@ -399,18 +389,25 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("Oops, I couldn’t read that page. Try another link.")
             return
 
-    # Otherwise, always prompt Gemini using the default/context
-    doc_context = chat_sessions[user_id]["doc_context"]
-    full_prompt = f"{doc_context}\n\nUser: {user_input}" if doc_context else user_input
-    try:
-        response = chat_sessions[user_id]["chat"].send_message(full_prompt)
-        text = response.text.strip()
-        await update.message.reply_text(text[:4000])
-        # Optionally update memory/context if needed
-        chat_sessions[user_id]["doc_context"] = doc_context
-    except Exception:
-        await update.message.reply_text("Sorry, I couldn't process your message.")
+    # Setup bot session with default memory (just once per user)
+    if user_id not in chat_sessions:
+        chat_sessions[user_id] = {
+            "chat": text_model.start_chat(
+                history=[{"role": "system", "parts": [DEFAULT_MEMORY]}]
+            ),
+            "doc_context": DEFAULT_MEMORY
+        }
 
+    try:
+        chat = chat_sessions[user_id]["chat"]
+        response = chat.send_message(user_input)
+        text = response.text.strip()
+        if not text:
+            raise Exception("Empty reply")
+        await update.message.reply_text(text[:4000])
+    except Exception as e:
+        logging.exception("Chat error:")
+        await update.message.reply_text("Sorry, something went wrong with my AI engine. Try again in a few seconds or check your API key.")
 
    # ---------------------- Document Handler ----------------------
 
