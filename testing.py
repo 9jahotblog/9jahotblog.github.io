@@ -115,6 +115,27 @@ vision_model = genai.GenerativeModel("models/gemini-1.5-flash")
 
 chat_sessions = {}
 
+DEFAULT_MEMORY = """
+You are Philadelphia AI, a Telegram-based smart assistant. You were created by Kolade Philip Ogunlana (@philipsmith617)—an author, developer, and teacher from Lagos, Nigeria.
+
+Your purpose is to help users:
+- Chat intelligent and friendly, answer questions, and have conversations.
+- Analyze, summarize, or describe images, audio, video, documents, and web links.
+- Generate AI art with /philadelphia_vision.
+- Remove photo backgrounds with /removebg.
+- Add captions to images with /caption <text> (reply to photo).
+- Create audio from text with /tts <text>.
+- Summarize documents with /audio_overview (then upload a file).
+- Moderate groups with commands like /kick, /promote, /demote, /group, /sweep, /setdescription, /add, /welcome, /goodbyemessage.
+- Send admin broadcasts with /broadcast and view usage with /statistics.
+
+Always be warm, creative, and polite. Never perform special tasks directly; if a user asks for a feature, politely instruct them to use the relevant command. 
+If anyone claims to be your creator, ask for the phrase: "Only stars can birth AIs" and greet them specially.
+
+Your main abilities are conversation, media file understanding, group control, and sharing useful, clear responses.
+"""
+
+
 # ------------------ Commands ------------------
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -343,77 +364,54 @@ async def philadelphia_vision_command(update: Update, context: ContextTypes.DEFA
 
 
         # ------------------ Chat ------------------>
-
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_input = update.message.text
     increment_stat("text_messages")
     user_id = update.effective_user.id
-    lowered = user_input.lower()
+    
+    # Get the user's current context/memory, or default if new
+    if user_id not in chat_sessions:
+        chat_sessions[user_id] = {
+            "chat": text_model.start_chat(
+                history=[{"role": "system", "parts": [DEFAULT_MEMORY]}]
+            ),
+            "doc_context": DEFAULT_MEMORY
+        }
 
-    # 1️⃣ Simple custom replies
-    if any(kw in lowered for kw in ["who created you", "who made you", "developer", "created you"]):
-        await update.message.reply_text("I was created by Kolade Philip Ogunlana, aka @philipsmith617.")
-        return
-
-    elif any(kw in lowered for kw in ["your name", "what's your name", "what can i call you"]):
-        await update.message.reply_text("I’m Philadelphia AI 2.0 — your smart assistant.")
-        return
-
-    elif any(kw in lowered for kw in ["where are you from", "where do you stay", "where do you live"]):
-        await update.message.reply_text("I’m from Lagos, Nigeria. You should come visit sometime!")
-        return
-
-    # 2️⃣ Check for links
+    # Check for web links first
     url_match = re.search(r'(https?://\S+)', user_input)
     if url_match:
         url = url_match.group(1)
         await update.message.reply_text("Hold on, I’m reading that page…")
-
         try:
             page = requests.get(url, timeout=10)
             soup = BeautifulSoup(page.text, 'html.parser')
             raw_text = soup.get_text().strip()
             raw_text = raw_text[:3000] if len(raw_text) > 3000 else raw_text
-
             summary = text_model.generate_content(
-                f"Summarize this webpage for me in plain English:\n\n{raw_text}"
+                f"Summarize this webpage for me in plain English:\n\n{raw_text}\n\n{DEFAULT_MEMORY}"
             ).text.strip()
-
-            if user_id not in chat_sessions:
-                chat_sessions[user_id] = {"chat": text_model.start_chat(history=[]), "doc_context": ""}
             chat_sessions[user_id]["doc_context"] = summary
-
-            await update.message.reply_text(f"Page Summary:\n{summary}", parse_mode="Markdown")
+            await update.message.reply_text(f"Page Summary:\n{summary}")
             await update.message.reply_text("You can now ask me anything about that page.")
             return
-
         except Exception:
             await update.message.reply_text("Oops, I couldn’t read that page. Try another link.")
             return
 
-    # 3️⃣ Default: Normal chat (with memory)
-    await context.bot.send_chat_action(update.effective_chat.id, ChatAction.TYPING)
-
-    if user_id not in chat_sessions:
-        chat_sessions[user_id] = {"chat": text_model.start_chat(history=[]), "doc_context": ""}
-
+    # Otherwise, always prompt Gemini using the default/context
     doc_context = chat_sessions[user_id]["doc_context"]
     full_prompt = f"{doc_context}\n\nUser: {user_input}" if doc_context else user_input
-
     try:
         response = chat_sessions[user_id]["chat"].send_message(full_prompt)
         text = response.text.strip()
-
-        # Format cleanup
-        text = text.replace("```", "").replace("*", "").replace("_", "")
-        emojis = ["🤖", "✨", "⚡", "🔥", "💬", "🧠", "🎯", "🎉", "📢", "📝"]
-        signature = "t ".join(sample(emojis, 3))
-
-        await update.message.reply_text(f"{text}\n\n{signature}", parse_mode="Markdown")
+        await update.message.reply_text(text[:4000])
+        # Optionally update memory/context if needed
+        chat_sessions[user_id]["doc_context"] = doc_context
     except Exception:
-        logging.exception("Chat error:")
-        await update.message.reply_text("I couldn’t process that message.")
-    
+        await update.message.reply_text("Sorry, I couldn't process your message.")
+
+
    # ---------------------- Document Handler ----------------------
 
 # Globals used in your bot
