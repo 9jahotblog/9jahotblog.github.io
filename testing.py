@@ -371,7 +371,9 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Ensure chat session exists
     if user_id not in chat_sessions:
         chat_sessions[user_id] = {
-            "chat": text_model.start_chat(history=DEFAULT_MEMORY.copy())
+            "chat": text_model.start_chat(
+                history=[{"role": "system", "content": DEFAULT_MEMORY}]
+            )
         }
 
     # Detect URLs in message
@@ -401,7 +403,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text("Something went wrong processing your request.")
         print(f"Error in handle_text: {e}")
-
+        
    # ---------------------- Document Handler ----------------------
 
 # Globals used in your bot
