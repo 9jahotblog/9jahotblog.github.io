@@ -1,38 +1,17 @@
-Okay I've got some areas for improvements. though, this is beautiful. 
-1. the courses should be fitting to the page and more detailed with practical examples. maybe if coding for instance there can be a markdown space for user to code and it even shows coloring. just to prove a point, just practical. 
-2. fitness to page, don't make it too rectangular otherwise user may need to zoom out to see page well. just fitting. 
-3. all courses should be written about, not just computer science. all, properly detailed with relevant examples and how users can execute them may be.  there should even be assignments in some parts, you get? maybe we can integrate a small comment section that's very beautiful. or a form to accept it. 
-4. the dashboard isn't dashboard.html, its actually studyingatelvion.html, so change any redirects to dashboard to studyingatelvion.html 
-5. at the end of every course of which they're even given projects. they should be a form where users submit their personal information to get awarded certificates for participating in getting a pre-degree knowledge of the courses they wish to learn in the university. elvion is not an accredited university with degrees, it awards certificates for just learning ahead. certificates that aren't for school applications. the form action link should be  action="https://formspree.io/f/mldrbpwo" method="post">
-6. maybe a comment section could be integrated incase users need to ask questions, drop anything regarding feedback. or whatsoever. anywhere 
-it could even be in completion page, just casual and alluring, they can say thank you to elvion for completing their courses. 
-think that's it.
-you can add some things you find important too. and if somethings are impossible you can ignore.
-
-Do you understand?
-
-Additionally, I was thinking the occasional assignments may be better yes, and its up to user to do it but before they even scroll to next teaching, there should be quite a number of questions asked, user clicks correct options for each of them before he's even liable to click next page  
-He must get it all, like a timed questionnaire/exam. There are questions that require input too so the site can tell if ita right or wrong. User sees his score, recorded like university form. Can only be filled once though, it's either first class or second class or as the case may be. Until the last page. So he can finish with what he wants so long as he stays serious to each teachings per page.
-
-OR 
-
-At the end of the course after all is done, he can now do his final year exam. Which comes in objective mode with series of questions asked and he sees his scores and its... which is better? Use the better one.
-
-Lastly I wanna add visual arts. Where courses like animations and stuff or paintings or whatever and stuff are studied under it. 
-
-Can you provide the full for all this? No errors please.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elvion University — Course Catalog</title>
-  <meta name="description" content="Explore the comprehensive course catalog for Elvion University. From Computer Science to Mass Communication, our programs are designed to empower students with future-ready skills. Free of Charge." />
+  <title>Course Viewer | Elvion University</title>
+  <meta name="description" content="Learn with interactive courses at Elvion University">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
   <style>
     :root {
       --dark-navy: #00001a;
@@ -43,17 +22,28 @@ Can you provide the full for all this? No errors please.
       --heading-color: #ffffff;
       --gradient-start: #0a1128;
       --gradient-end: #121a30;
-      --card-bg: rgba(18, 26, 48, 0.7);
+      --card-bg: rgba(18, 26, 48, 0.85);
       --border-glow: 0 0 10px var(--cyan-glow), 0 0 20px var(--light-blue-glow);
       --hover-glow: 0 0 15px var(--cyan-glow), 0 0 30px var(--light-blue-glow);
       --button-bg: linear-gradient(45deg, var(--cyan-glow), var(--light-blue-glow));
       --button-text-color: var(--black-bg);
       --star-color: rgba(255, 255, 255, 0.7);
+      --sidebar-width: 300px;
+      --success-color: #4ade80;
+      --warning-color: #fbbf24;
+      --error-color: #f87171;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0; padding: 0;
       background-color: var(--black-bg);
       color: var(--text-color);
       line-height: 1.7;
@@ -61,538 +51,1721 @@ Can you provide the full for all this? No errors please.
       position: relative;
       min-height: 100vh;
     }
+
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Orbitron', sans-serif;
       color: var(--heading-color);
       margin-top: 0;
-      text-shadow: var(--border-glow);
     }
-    h1 { font-size: 3.5rem; }
-    h2 { font-size: 2.5rem; }
-    h3 { font-size: 1.8rem; }
-    strong { color: var(--cyan-glow); font-weight: 600; }
-    a {
-      color: var(--cyan-glow);
-      text-decoration: none;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
+
+    /* Stars Animation */
+    #stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
-    a:hover {
-      color: var(--light-blue-glow);
-      text-shadow: 0 0 5px var(--cyan-glow);
+
+    .star {
+      position: absolute;
+      background-color: var(--star-color);
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 4s infinite ease-in-out;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1); }
     }
-    section {
-      padding: 6rem 0;
+
+    /* Main Layout */
+    .course-viewer-container {
+      display: flex;
+      min-height: 100vh;
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
-    .text-center { text-align: center; }
-    .lead {
+
+    /* Course Sidebar */
+    .course-sidebar {
+      width: var(--sidebar-width);
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(0, 255, 255, 0.2);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    .course-sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      background: rgba(0, 0, 26, 0.8);
+    }
+
+    .course-title {
       font-size: 1.2rem;
-      max-width: 800px;
-      margin: 1rem auto 3rem auto;
-      color: rgba(224, 224, 224, 0.9);
-      line-height: 1.8;
+      color: var(--cyan-glow);
+      margin-bottom: 0.5rem;
     }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--button-bg);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+
+    .lesson-list {
+      padding: 1rem 0;
+    }
+
+    .lesson-item {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .lesson-item:hover {
+      background: rgba(0, 255, 255, 0.1);
+      box-shadow: inset 3px 0 0 var(--cyan-glow);
+    }
+
+    .lesson-item.active {
+      background: rgba(0, 255, 255, 0.15);
+      box-shadow: inset 5px 0 0 var(--cyan-glow);
+    }
+
+    .lesson-item.completed {
+      background: rgba(74, 222, 128, 0.1);
+      box-shadow: inset 3px 0 0 var(--success-color);
+    }
+
+    .lesson-number {
+      font-size: 0.8rem;
+      color: var(--cyan-glow);
+      font-weight: 600;
+    }
+
+    .lesson-title {
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+      color: var(--text-color);
+    }
+
+    .lesson-status {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1rem;
+    }
+
+    /* Main Content Area */
+    .course-content {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 0;
+      background: linear-gradient(to bottom, var(--black-bg), var(--dark-navy) 80%);
+      min-height: 100vh;
+    }
+
+    .content-header {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .content-body {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .lesson-content {
+      display: none;
+    }
+
+    .lesson-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lesson-section {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+    }
+
+    .section-title {
+      color: var(--cyan-glow);
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .code-editor {
+      background: #1e1e1e;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 10px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+
+    .code-editor-header {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+      color: var(--cyan-glow);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+    }
+
+    .code-editor textarea {
+      width: 100%;
+      min-height: 200px;
+      background: #1e1e1e;
+      color: #f8f8f2;
+      border: none;
+      padding: 1rem;
+      font-family: 'Fira Code', 'Consolas', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+    }
+
+    .code-editor pre {
+      margin: 0;
+      padding: 1rem;
+      background: #1e1e1e;
+      overflow-x: auto;
+    }
+
+    .run-code-btn {
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .run-code-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .quiz-container {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 2px solid var(--cyan-glow);
+      box-shadow: var(--border-glow);
+      margin: 2rem 0;
+    }
+
+    .quiz-question {
+      margin-bottom: 2rem;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      border-left: 4px solid var(--cyan-glow);
+    }
+
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--heading-color);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .quiz-option {
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .quiz-option:hover {
+      background: rgba(0, 255, 255, 0.1);
+      border-color: rgba(0, 255, 255, 0.3);
+    }
+
+    .quiz-option.selected {
+      background: rgba(0, 255, 255, 0.2);
+      border-color: var(--cyan-glow);
+    }
+
+    .quiz-option.correct {
+      background: rgba(74, 222, 128, 0.2);
+      border-color: var(--success-color);
+    }
+
+    .quiz-option.incorrect {
+      background: rgba(248, 113, 113, 0.2);
+      border-color: var(--error-color);
+    }
+
+    .quiz-input {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: var(--text-color);
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .quiz-input:focus {
+      outline: none;
+      border-color: var(--cyan-glow);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .quiz-timer {
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--warning-color);
+      margin-bottom: 1rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .quiz-score {
+      text-align: center;
+      font-size: 1.3rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      margin: 1rem 0;
+    }
+
+    .score-excellent { color: var(--success-color); }
+    .score-good { color: var(--cyan-glow); }
+    .score-fair { color: var(--warning-color); }
+    .score-poor { color: var(--error-color); }
+
+    .assignment-section {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 170, 255, 0.1));
+      border-radius: 15px;
+      padding: 2rem;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      margin: 2rem 0;
+    }
+
+    .assignment-title {
+      color: var(--light-blue-glow);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .btn {
       display: inline-block;
-      padding: 0.9rem 2.2rem;
-      border-radius: 50px;
+      padding: 0.9rem 2rem;
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      border: none;
+      border-radius: 25px;
       font-weight: 600;
       font-family: 'Orbitron', sans-serif;
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      border: none;
-      color: var(--button-text-color);
-      background: var(--button-bg);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
       box-shadow: var(--border-glow);
-      text-shadow: none;
     }
+
     .btn:hover {
       transform: translateY(-3px);
       box-shadow: var(--hover-glow);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--cyan-glow);
+      border: 2px solid var(--cyan-glow);
+    }
+
+    .btn-secondary:hover {
+      background: var(--cyan-glow);
       color: var(--black-bg);
     }
-    #stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-    .star { position: absolute; background-color: var(--star-color); border-radius: 50%; opacity: 0; animation: twinkle 4s infinite ease-in-out; }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 1; transform: scale(1); }
+
+    .navigation-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3rem;
+      padding: 1.5rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid rgba(0, 255, 255, 0.1);
     }
-    .navbar {
-      position: sticky; top: 0; width: 100%;
-      background: rgba(0, 0, 26, 0.9); padding: 1rem 0; z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+
+    .comment-section {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(0, 255, 255, 0.2);
     }
-    .navbar .container {
-      display: flex; justify-content: space-between; align-items: center;
+
+    .comment-form {
+      margin-bottom: 2rem;
     }
-    .navbar-brand {
-      font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700;
-      color: var(--heading-color); text-shadow: var(--border-glow);
+
+    .form-group {
+      margin-bottom: 1.5rem;
     }
-    .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
-    .nav-links li { margin-left: 2rem; }
-    .nav-links a { color: var(--text-color); font-weight: 500; padding: 0.5rem 0; position: relative; text-shadow: none; }
-    .nav-links a::after {
-      content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
-      background: var(--cyan-glow); box-shadow: 0 0 5px var(--cyan-glow); transition: width 0.3s ease-in-out;
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--cyan-glow);
+      font-weight: 600;
     }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .hamburger { display: none; flex-direction: column; cursor: pointer; padding: 0.5rem; background: transparent; border: none; }
-    .hamburger .bar {
-      width: 25px; height: 3px; background-color: var(--cyan-glow); margin: 4px 0; transition: 0.4s; box-shadow: 0 0 5px var(--cyan-glow);
+
+    .form-input {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: var(--text-color);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
     }
-    .hamburger.active .bar:nth-child(2) { opacity: 0; }
-    .hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .hero {
-      height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center;
-      position: relative; overflow: hidden; background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--cyan-glow);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
-    .hero::before {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle at 60% 80%, rgba(0,255,255,0.2) 0%, transparent 30%),
-      radial-gradient(circle at 20% 40%, rgba(0,170,255,0.2) 0%, transparent 30%);
-      animation: plasma-effect 15s infinite alternate ease-in-out; z-index: 0;
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+      font-family: 'Inter', sans-serif;
     }
-    @keyframes plasma-effect {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1) translate(5%, 10%); }
+
+    .comments-list {
+      max-height: 400px;
+      overflow-y: auto;
     }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero h1 { font-size: 4rem; text-shadow: 0 0 15px var(--cyan-glow), 0 0 30px var(--light-blue-glow); }
-    .hero p { font-size: 1.5rem; color: var(--text-color); text-shadow: 0 0 5px rgba(0,255,255,0.3); }
-    .course-section { background: linear-gradient(to bottom, var(--black-bg), var(--dark-navy) 80%); padding: 6rem 0; }
-    .course-faculty { text-align: center; margin-bottom: 4rem; }
-    .course-faculty h2 { color: var(--light-blue-glow); text-shadow: 0 0 10px var(--light-blue-glow), 0 0 20px var(--cyan-glow); }
-    .course-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;
+
+    .comment-item {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid var(--cyan-glow);
     }
-    .course-card {
-      background: var(--card-bg); border-radius: 15px; padding: 2.5rem;
-      box-shadow: var(--border-glow); transition: transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(5px);
-      border: 1px solid rgba(0, 255, 255, 0.1); position: relative; cursor: pointer;
+
+    .comment-author {
+      color: var(--light-blue-glow);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
     }
-    .course-card:hover {
-      transform: translateY(-8px) scale(1.03); box-shadow: var(--hover-glow);
+
+    .comment-date {
+      color: rgba(224, 224, 224, 0.6);
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
     }
-    .course-card h3 { font-size: 1.6rem; margin-top: 1rem; margin-bottom: 0.5rem; }
-    .course-card .course-icon { font-size: 3rem; color: var(--cyan-glow); text-shadow: 0 0 10px var(--cyan-glow); }
-    .course-card p { font-size: 1rem; color: rgba(224, 224, 224, 0.9); margin-bottom: 1rem; }
-    .course-meta {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.9rem; color: rgba(224, 224, 224, 0.7); margin-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem;
+
+    .certificate-form {
+      background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 170, 255, 0.1));
+      border-radius: 20px;
+      padding: 3rem;
+      border: 2px solid var(--cyan-glow);
+      box-shadow: var(--hover-glow);
+      margin: 3rem 0;
+      text-align: center;
     }
-    .course-meta span { display: flex; align-items: center; gap: 0.5rem; }
-    .course-card-btn {
-      width: 100%; padding: 0.8rem; margin-top: 1rem; background: var(--button-bg); color: var(--button-text-color);
-      border: none; border-radius: 25px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease;
+
+    .certificate-icon {
+      font-size: 4rem;
+      color: var(--cyan-glow);
+      margin-bottom: 1rem;
     }
-    .course-card-btn:hover { transform: translateY(-2px); box-shadow: 0 0 10px var(--cyan-glow); }
-    .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; }
-    .modal-content {
-      background: var(--gradient-start); border: 2px solid var(--cyan-glow); border-radius: 15px; padding: 2rem;
-      max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: var(--hover-glow);
+
+    .certificate-title {
+      font-size: 2rem;
+      color: var(--heading-color);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--cyan-glow);
     }
-    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--cyan-glow); cursor: pointer; }
-    .modal-video { margin: 1rem 0; }
-    .modal-video iframe { width: 100%; height: 250px; border-radius: 10px; }
-    .modal-section { margin: 1.5rem 0; }
-    .modal-section h4 { color: var(--cyan-glow); margin-bottom: 0.8rem; font-size: 1.2rem; }
-    .course-list { background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
-    .course-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(0, 255, 255, 0.1); }
-    .course-item:last-child { border-bottom: none; }
-    .course-code { color: var(--light-blue-glow); font-weight: 600; font-size: 0.9rem; }
-    .join-us-section { background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end)); padding: 6rem 0; }
-    .footer {
-      background: var(--dark-navy); color: var(--text-color); padding: 4rem 0; font-size: 0.9rem; border-top: 1px solid rgba(0, 255, 255, 0.1);
+
+    .completion-message {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid var(--success-color);
+      box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+      margin: 2rem 0;
     }
-    .footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
-    .footer .col { flex: 1; min-width: 200px; }
-    .footer h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--cyan-glow); }
-    .footer ul { list-style: none; padding: 0; }
-    .footer ul li { margin-bottom: 0.8rem; }
-    .footer .brand-info { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--heading-color); margin-bottom: 1rem; }
-    .footer .legal-info {
-      margin-top: 2rem; text-align: center; width: 100%; border-top: 1px solid rgba(0, 255, 255, 0.1); padding-top: 1.5rem; color: rgba(224, 224, 224, 0.7);
+
+    .completion-icon {
+      font-size: 3rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
     }
-    @media (max-width: 992px) {
-      .nav-links { display: none; flex-direction: column; width: 100%; background: rgba(0, 0, 26, 0.95); position: absolute; top: 100%; left: 0; padding: 1rem 0; border-top: 1px solid rgba(0, 255, 255, 0.2); }
-      .nav-links.active { display: flex; }
-      .nav-links li { margin: 0.5rem 0; text-align: center; }
-      .hamburger { display: flex; }
-    }
+
+    /* Mobile Responsiveness */
     @media (max-width: 768px) {
-      h1 { font-size: 2.8rem; }
-      h2 { font-size: 2rem; }
-      section { padding: 4rem 1rem; }
-      .hero h1 { font-size: 2.8rem; }
-      .hero p { font-size: 1.2rem; }
-      .course-grid { grid-template-columns: 1fr; }
-      .footer .container { flex-direction: column; text-align: center; }
+      .course-sidebar {
+        width: 280px;
+        transform: translateX(-100%);
+      }
+
+      .course-sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .course-content {
+        margin-left: 0;
+      }
+
+      .content-body {
+        padding: 1rem;
+      }
+
+      .lesson-section {
+        padding: 1.5rem;
+      }
+
+      .navigation-controls {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .sidebar-toggle {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 200;
+        background: var(--button-bg);
+        color: var(--button-text-color);
+        border: none;
+        padding: 0.8rem;
+        border-radius: 8px;
+        cursor: pointer;
+        display: block;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .sidebar-toggle {
+        display: none;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cyan-glow);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--light-blue-glow);
     }
   </style>
 </head>
 <body>
   <div id="stars-container"></div>
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="navbar-brand">Elvion AI</a>
-      <button class="hamburger" aria-label="Toggle navigation">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <nav class="nav-links">
-        <li><a href="university.html" class="active">Elvion University</a></li>
-        <li><a href="philadelphia.html">Chat & Explore Philadelphia AI (Website)</a></li>
-        <li><a href="https://t.me/PhiladelphiaAIbot" target="_blank" rel="noopener noreferrer">Chat Philadelphia AI (Telegram)</a></li>
-        <li><a href="https://elvionai.github.io/signup-login.html" target="_blank" rel="noopener noreferrer">Try Seraphina AI (Telegram)</a></li>
-        <li><a href="https://elvionai.github.io/profile.html" target="_blank" rel="noopener noreferrer">Visit Your Profile</a></li>
-        <li><a href="https://elvionai.github.io/signup-login.html" target="_blank" rel="noopener noreferrer">Sign Up / Login</a></li>
-        <li><a href="https://elvionai.github.io/privacy.html">Privacy Policy</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="https://elvionai.github.io/terms.html">Terms and Conditions</a></li>
-      </nav>
+  
+  <button class="sidebar-toggle" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="course-viewer-container">
+    <!-- Course Sidebar -->
+    <div class="course-sidebar" id="courseSidebar">
+      <div class="course-sidebar-header">
+        <div class="course-title" id="courseTitle">Computer Science Fundamentals</div>
+        <div class="progress-info">
+          <small>Progress: <span id="progressText">0/8 Lessons</span></small>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="lesson-list" id="lessonList">
+        <!-- Lessons will be populated by JavaScript -->
+      </div>
     </div>
-  </header>
 
-  <main>
-    <section id="hero" class="hero">
-      <div class="hero-content">
-        <h1>Elvion University</h1>
-        <p>Master the future of technology and human connection. Our accredited programs provide the skills you need to innovate in a world powered by AI. FREE of charge!</p>
-        <a href="#course-catalog" class="btn">Explore Our Curriculum</a>
-      </div>
-    </section>
-
-    <section id="course-catalog" class="course-section">
-      <div class="container">
-
-        <div class="course-faculty">
-          <h2>Faculty of Science & Technology</h2>
-          <p class="lead">Build your future in technology with courses designed to prepare you for the digital economy.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Computer Science',
-            'Learn the fundamentals of computing, programming languages, algorithms, data structures, software engineering, and system design. This comprehensive program prepares students for careers in the rapidly evolving technology sector.',
-            '<strong>Career Opportunities:</strong><ul><li>Software Developer/Engineer</li><li>Systems Analyst</li><li>Database Administrator</li><li>IT Consultant</li><li>Web Developer</li><li>Data Scientist</li></ul>',
-            'https://www.youtube.com/embed/5Qwwjych21o',
-            'CSC 101: Introduction to Programming|CSC 102: Data Structures|CSC 201: Object-Oriented Programming|CSC 202: Database Systems|CSC 301: Software Engineering|CSC 302: Computer Networks|CSC 401: Artificial Intelligence|CSC 402: Final Year Project',
-            'video', ''
-          )">
-            <h3>Computer Science</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Fundamentals of computing, programming, algorithms, and software development.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Software Engineering',
-            'Master the principles of designing, developing, testing, and maintaining large-scale software systems. Learn industry best practices, project management, and modern development methodologies.',
-            '<strong>Career Opportunities:</strong><ul><li>Software Engineer</li><li>Technical Lead</li><li>Product Manager</li><li>DevOps Engineer</li><li>Quality Assurance Engineer</li><li>Solutions Architect</li></ul>',
-            'https://www.youtube.com/embed/jMO9-bEDPq0',
-            'SWE 101: Software Development Fundamentals|SWE 201: Software Design Patterns|SWE 202: Software Testing and Quality Assurance|SWE 301: Project Management|SWE 302: Agile Development|SWE 401: Software Architecture|SWE 402: Capstone Project',
-            'video', ''
-          )">
-            <h3>Software Engineering</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Design, develop, and maintain large-scale software systems using industry best practices.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Law</h2>
-          <p class="lead">Study legal principles, jurisprudence, and advocacy skills. Law courses are highly suitable for online learning through case studies, legal research, and virtual moot courts.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Law (LLB)',
-            'Comprehensive study of legal principles, constitutional law, criminal law, civil law, and legal practice. This program combines theoretical knowledge with practical skills in legal research and advocacy.',
-            '<strong>Career Opportunities:</strong><ul><li>Barrister</li><li>Solicitor</li><li>Legal Advisor</li><li>Judge/Magistrate</li><li>Corporate Lawyer</li><li>Human Rights Advocate</li><li>Legal Researcher</li></ul>',
-            'https://www.youtube.com/embed/_c6iHL2Zd5o',
-            'LAW 101: Introduction to Law|LAW 102: Constitutional Law|LAW 201: Criminal Law|LAW 202: Contract Law|LAW 301: Tort Law|LAW 302: Property Law|LAW 401: Legal Practice and Procedure|LAW 402: Jurisprudence|LAW 501: Law Clinic',
-            'video', 'ELV in Law'
-          )">
-            <h3>Law (LLB)</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Comprehensive study of legal principles, constitutional law, and legal practice.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Arts & Humanities</h2>
-          <p class="lead">Develop critical thinking, communication skills, and cultural understanding through comprehensive liberal arts education.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'English & Literary Studies',
-            'In-depth study of English language structure, literary analysis, composition, and communication skills. Explore works from various periods and develop advanced writing and critical thinking abilities.',
-            '<strong>Career Opportunities:</strong><ul><li>Writer/Author</li><li>Editor</li><li>Teacher/Professor</li><li>Journalist</li><li>Content Creator</li><li>Literary Critic</li><li>Communications Specialist</li></ul>',
-            '/university/a081468d-c79a-4912-9f49-764fb70ef1c7.wav',
-            'ENG 101: English Composition|ENG 102: Semantics|ENG 201: World Literature|ENG 202: Phonetics and Phonology|ENG 301: Contemporary Literature|ENG 302: Syntax|ENG 401: Literary Criticism|ENG 402: Research Project',
-            'audio', ''
-          )">
-            <h3>English & Literary Studies</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Study of English language, literature, composition, and critical analysis.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'History & Strategic Studies',
-            'Comprehensive study of world history, Nigerian history, international relations, and strategic analysis. Develop skills in research, analysis, and understanding of global affairs.',
-            '<strong>Career Opportunities:</strong><ul><li>Historian</li><li>Research Analyst</li><li>Diplomatic Officer</li><li>Policy Analyst</li><li>Museum Curator</li><li>Archivist</li><li>International Relations Specialist</li></ul>',
-            'university/elegant_man_voice.mp3',
-            'HIS 101: Introduction to History|HIS 102: African History|HIS 201: Modern World History|HIS 202: Nigerian History|HIS 301: International Relations|HIS 302: Strategic Studies|HIS 401: Historical Research Methods|HIS 402: Thesis',
-            'audio', ''
-          )">
-            <h3>History & Strategic Studies</h3>
-            <b><i>Click here to view details</i></b>
-            <p>World history, Nigerian history, and strategic studies for understanding global affairs.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Management & Social Sciences</h2>
-          <p class="lead">Prepare for leadership roles in business, government, and society with comprehensive management and social science education.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Business Administration',
-            'Learn essential business principles including management, marketing, finance, human resources, and entrepreneurship. Develop skills needed to lead organizations and start your own business.',
-            '<strong>Career Opportunities:</strong><ul><li>Business Manager</li><li>Entrepreneur</li><li>Marketing Manager</li><li>Operations Manager</li><li>Business Consultant</li><li>Project Manager</li><li>Sales Manager</li></ul>',
-            'university/wise_woman_voice.mp3',
-            'BUS 101: Principles of Management|BUS 102: Marketing Fundamentals|BUS 201: Financial Management|BUS 202: Human Resource Management|BUS 301: Strategic Management|BUS 302: Entrepreneurship|BUS 401: Business Ethics|BUS 402: Capstone Project',
-            'audio', ''
-          )">
-            <h3>Business Administration</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Principles of management, marketing, finance, and entrepreneurship.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Mass Communication',
-            'Study journalism, broadcasting, public relations, advertising, and digital media. Learn to create compelling content and communicate effectively across various media platforms.',
-            '<strong>Career Opportunities:</strong><ul><li>Journalist</li><li>PR Specialist</li><li>Media Producer</li><li>Broadcaster</li><li>Content Creator</li><li>Social Media Manager</li><li>Communications Director</li></ul>',
-            'university/wise_woman_voice (1).mp3',
-            'MASS 101: Introduction to Mass Communication|MASS 102: News Writing and Reporting|MASS 201: Broadcast Journalism|MASS 202: Public Relations|MASS 301: Digital Media Production|MASS 302: Media Ethics and Law|MASS 401: Investigative Journalism|MASS 402: Media Research Project',
-            'audio', ''
-          )">
-            <h3>Mass Communication</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Journalism, public relations, broadcasting, and digital media communication.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-        
-        <div class="course-faculty">
-          <h2>Faculty of Education</h2>
-          <p class="lead">Prepare for careers in teaching and educational leadership with comprehensive pedagogical training.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Mathematics Education',
-            'Learn effective methods and strategies for teaching mathematics at various educational levels. Combine mathematical knowledge with pedagogical skills.',
-            '<strong>Career Opportunities:</strong><ul><li>Mathematics Teacher</li><li>Curriculum Specialist</li><li>Education Consultant</li><li>Math Tutor</li><li>Educational Coordinator</li><li>Academic Support Specialist</li></ul>',
-            'university/abbess_voice.mp3',
-            'MATED 101: Foundations of Mathematics Teaching|MTH 101: Calculus I|MATED 201: Mathematics Curriculum and Instruction|MTH 201: Abstract Algebra|MATED 301: Assessment in Mathematics Education|MATED 302: Technology in Mathematics Teaching|MATED 401: Research in Mathematics Education|MATED 402: Student Teaching',
-            'audio', ''
-          )">
-            <h3>Mathematics Education</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Methods and strategies for teaching mathematics at various educational levels.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Adult Education',
-            'Focus on teaching and learning strategies for adult learners, continuing education, and professional development programs.',
-            '<strong>Career Opportunities:</strong><ul><li>Adult Education Instructor</li><li>Training and Development Specialist</li><li>Corporate Trainer</li><li>Community Education Coordinator</li><li>Literacy Program Director</li><li>Professional Development Specialist</li></ul>',
-            'university/friendly_person_voice (1).mp3',
-            'AED 101: Foundations of Adult Learning|AED 201: Adult Learning Theories|AED 202: Program Planning and Evaluation|AED 301: Community Education|AED 302: Literacy and Numeracy|AED 401: Research in Adult Education|AED 402: Practicum',
-            'audio', ''
-          )">
-            <h3>Adult Education</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Teaching and learning strategies for adult learners and continuing education.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
+    <!-- Main Content -->
+    <div class="course-content">
+      <div class="content-header">
+        <div>
+          <h1 id="currentLessonTitle">Introduction to Programming</h1>
+          <p id="currentLessonSubtitle">Learn the basics of programming and computational thinking</p>
         </div>
       </div>
-    </section>
 
-    <section id="enrollment" class="join-us-section">
-      <div class="container text-center">
-        <h2>Your Future Starts Here</h2>
-        <p class="lead">Ready to learn, grow, and lead in the digital age? Enroll in a program that prepares you for tomorrow's challenges. Your journey to mastery begins now.</p>
-        <a href="signup-login.html" class="btn">Enroll Now</a>
-      </div>
-    </section>
-  </main>
+      <div class="content-body">
+        <!-- Lesson Content Container -->
+        <div id="lessonContainer">
+          <!-- Lesson content will be populated by JavaScript -->
+        </div>
 
-  <div id="modal" class="modal" onclick="hideModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <span class="close-modal" onclick="hideModal()">&times;</span>
-      <h3 id="modal-title"></h3>
-      <div class="modal-section">
-        <h4>Course Introduction</h4>
-        <div id="modal-description"></div>
-      </div>
-      <div id="modal-video" class="modal-video"></div>
-      <div class="modal-section">
-        <div><strong>Duration:</strong> <span id="modal-duration"></span></div>
-        <div id="modal-jobs"></div>
-      </div>
-      <div class="modal-section">
-        <h4>Courses & Course Codes</h4>
-        <div class="course-list" id="modal-courses"></div>
-      </div>
-      <div style="text-align: center; margin-top: 2rem;">
-        <a class="btn" id="modal-take-course-btn" href="#">Take this course</a>
+        <!-- Navigation Controls -->
+        <div class="navigation-controls">
+          <button class="btn btn-secondary" id="prevBtn" onclick="previousLesson()" disabled>
+            <i class="fas fa-arrow-left"></i> Previous
+          </button>
+          <span id="lessonCounter">Lesson 1 of 8</span>
+          <button class="btn" id="nextBtn" onclick="nextLesson()" disabled>
+            Next <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comment-section">
+          <h3><i class="fas fa-comments"></i> Discussion & Feedback</h3>
+          <div class="comment-form">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input type="text" class="form-input" id="commentName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Comment</label>
+              <textarea class="form-input form-textarea" id="commentText" placeholder="Share your thoughts, ask questions, or provide feedback..."></textarea>
+            </div>
+            <button class="btn" onclick="addComment()">
+              <i class="fas fa-paper-plane"></i> Post Comment
+            </button>
+          </div>
+          <div class="comments-list" id="commentsList">
+            <!-- Comments will be populated by JavaScript -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="col">
-        <span class="brand-info">Elvion AI</span>
-        <p>Where Assistance Meets Excellence.</p>
-      </div>
-      <div class="col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="index.html#products">Products</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="about.html#">Careers</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div class="legal-info">
-        &copy; <span id="current-year"></span> Elvion AI. All rights reserved.
-      </div>
+  <!-- Certificate Form Modal -->
+  <div id="certificateModal" class="modal" style="display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center;">
+    <div style="background: var(--gradient-start); border: 2px solid var(--cyan-glow); border-radius: 20px; padding: 3rem; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: var(--hover-glow);">
+      <div class="certificate-icon">🏆</div>
+      <h2 class="certificate-title">Congratulations!</h2>
+      <p style="margin-bottom: 2rem; color: var(--text-color);">You've completed the course! Fill out this form to receive your certificate and submit your final project.</p>
+      
+      <form action="https://formspree.io/f/mldrbpwo" method="post" id="certificateForm">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="fullName" class="form-input" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-input" required placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Course Completed</label>
+          <input type="text" name="course" class="form-input" id="completedCourse" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Final Score</label>
+          <input type="text" name="finalScore" class="form-input" id="finalScoreInput" readonly>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Final Year Project Title</label>
+          <input type="text" name="projectTitle" class="form-input" required placeholder="Enter your project title">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Description</label>
+          <textarea name="projectDescription" class="form-input form-textarea" required placeholder="Describe your final project in detail..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number (Optional)</label>
+          <input type="tel" name="phone" class="form-input" placeholder="Enter your phone number">
+        </div>
+        <input type="hidden" name="_subject" value="Certificate Request - Elvion University">
+        <input type="hidden" name="_next" value="studyingatelvion.html">
+        
+        <div style="text-align: center; margin-top: 2rem;">
+          <button type="submit" class="btn" style="margin-right: 1rem;">
+            <i class="fas fa-certificate"></i> Get Certificate
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeCertificateModal()">
+            Later
+          </button>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(0, 255, 255, 0.1); border-radius: 10px; font-size: 0.9rem;">
+          <strong>📧 Next Steps:</strong><br>
+          1. Submit your project details to <strong>elvionailabs@gmail.com</strong><br>
+          2. Include project files, documentation, and source code<br>
+          3. Your certificate and project results will be emailed to you within 7-10 business days
+        </div>
+      </form>
     </div>
-  </footer>
+  </div>
 
+ <script>
+     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const hamburger = document.querySelector('.hamburger');
-      const navLinks = document.querySelector('.nav-links');
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyROm0aBGjry6NUfhNM3e0qwPcCDoIqSk",
+      authDomain: "elvionai.firebaseapp.com",
+      projectId: "elvionai",
+      storageBucket: "elvionai.firebasestorage.app",
+      messagingSenderId: "161078300830",
+      appId: "1:161078300830:web:f460df8591704eb0e96b8f"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Global Variables
+    let currentCourseId = null;
+    let currentLessonIndex = 0;
+    let courseProgress = {};
+    let quizScores = {};
+    let comments = [];
+    let currentUser = {
+      name: localStorage.getItem('userName') || 'Anonymous',
+      email: localStorage.getItem('userEmail') || ''
+    };
+
+    // Course Data Structure (Extended with all subjects)
+    const courseData = {
+      'Computer Science': {
+        title: 'Computer Science Fundamentals',
+        lessons: [
+          {
+            id: 1,
+            title: 'Introduction to Programming',
+            subtitle: 'Learn the basics of programming and computational thinking',
+            content: `
+              <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-play-circle"></i> What is Programming?</h2>
+                <p>Programming is the process of creating instructions for computers to execute. Think of it as teaching a computer how to solve problems step by step.</p>
+                
+                <h3>Key Concepts:</h3>
+                <ul>
+                  <li><strong>Algorithm:</strong> A step-by-step procedure to solve a problem</li>
+                  <li><strong>Code:</strong> Instructions written in a programming language</li>
+                  <li><strong>Debugging:</strong> Finding and fixing errors in code</li>
+                  <li><strong>Variables:</strong> Storage containers for data</li>
+                </ul>
+
+                <div class="code-editor">
+                  <div class="code-editor-header">💻 Try It: Your First Program</div>
+                  <textarea id="code-editor-1" placeholder="// Type your code here
+console.log('Hello, World!');
+let name = 'Student';
+console.log('Welcome, ' + name + '!');">// Type your code here
+console.log('Hello, World!');
+let name = 'Student';
+console.log('Welcome, ' + name + '!');</textarea>
+                  <button class="run-code-btn" onclick="runCode('code-editor-1', 'output-1')">▶ Run Code</button>
+                  <div id="output-1" style="background: #0f0f0f; padding: 1rem; margin-top: 1rem; border-radius: 8px; font-family: monospace; min-height: 50px; color: #00ff00;"></div>
+                </div>
+
+                <h3>🎯 Practice Exercise:</h3>
+                <p>Modify the code above to:</p>
+                <ol>
+                  <li>Change the greeting message</li>
+                  <li>Add a variable for your age</li>
+                  <li>Print both name and age</li>
+                </ol>
+              </div>
+
+              <div class="assignment-section">
+                <h3 class="assignment-title"><i class="fas fa-tasks"></i> Assignment</h3>
+                <p><strong>Create a Simple Calculator:</strong></p>
+                <ul>
+                  <li>Write a program that adds two numbers</li>
+                  <li>Include variables for both numbers</li>
+                  <li>Display the result with a meaningful message</li>
+                  <li>Add comments explaining each step</li>
+                </ul>
+                <p><em>Submit your solution in the comments section below!</em></p>
+              </div>
+            `,
+            quiz: [
+              {
+                question: "What is an algorithm?",
+                type: "multiple",
+                options: [
+                  "A programming language",
+                  "A step-by-step procedure to solve a problem",
+                  "A type of computer",
+                  "A debugging tool"
+                ],
+                correct: 1
+              },
+              {
+                question: "What does 'console.log()' do in JavaScript?",
+                type: "multiple",
+                options: [
+                  "Deletes code",
+                  "Creates variables",
+                  "Prints output to the console",
+                  "Runs a loop"
+                ],
+                correct: 2
+              },
+              {
+                question: "Complete this code: let age = ____; (to store the number 25)",
+                type: "input",
+                correct: "25"
+              }
+            ]
+          },
+          // Additional lessons for Computer Science...
+          {
+            id: 2,
+            title: 'Variables and Data Types',
+            subtitle: 'Understanding how to store and manipulate different types of data',
+            content: `
+              <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-database"></i> Variables and Data Types</h2>
+                <p>Variables are containers that store data values. Different types of data require different data types.</p>
+                
+                <h3>Common Data Types:</h3>
+                <ul>
+                  <li><strong>String:</strong> Text data (e.g., "Hello World")</li>
+                  <li><strong>Number:</strong> Numeric data (e.g., 42, 3.14)</li>
+                  <li><strong>Boolean:</strong> True or false values</li>
+                  <li><strong>Array:</strong> List of values</li>
+                  <li><strong>Object:</strong> Complex data structures</li>
+                </ul>
+
+                <div class="code-editor">
+                  <div class="code-editor-header">💻 Data Types in Action</div>
+                  <textarea id="code-editor-2">// String variables
+let firstName = "John";
+let lastName = "Doe";
+
+// Number variables
+let age = 25;
+let height = 5.9;
+
+// Boolean variables
+let isStudent = true;
+let hasGraduated = false;
+
+// Array
+let hobbies = ["reading", "coding", "gaming"];
+
+// Object
+let person = {
+  name: firstName + " " + lastName,
+  age: age,
+  isStudent: isStudent
+};
+
+console.log("Name:", person.name);
+console.log("Age:", person.age);
+console.log("Hobbies:", hobbies);
+console.log("First hobby:", hobbies[0]);</textarea>
+                  <button class="run-code-btn" onclick="runCode('code-editor-2', 'output-2')">▶ Run Code</button>
+                  <div id="output-2" style="background: #0f0f0f; padding: 1rem; margin-top: 1rem; border-radius: 8px; font-family: monospace; min-height: 50px; color: #00ff00;"></div>
+                </div>
+
+                <h3>🔍 Variable Naming Rules:</h3>
+                <ul>
+                  <li>Start with a letter, underscore (_), or dollar sign ($)</li>
+                  <li>Can contain letters, numbers, underscores, and dollar signs</li>
+                  <li>Case-sensitive (myVar and myvar are different)</li>
+                  <li>Use descriptive names (e.g., userName instead of x)</li>
+                </ul>
+              </div>
+
+              <div class="assignment-section">
+                <h3 class="assignment-title"><i class="fas fa-tasks"></i> Assignment</h3>
+                <p><strong>Student Information System:</strong></p>
+                <ul>
+                  <li>Create variables for student information (name, age, grade, subjects)</li>
+                  <li>Use different data types appropriately</li>
+                  <li>Create an object that contains all student information</li>
+                  <li>Display the information in a formatted way</li>
+                </ul>
+              </div>
+            `,
+            quiz: [
+              {
+                question: "Which of these is a valid variable name?",
+                type: "multiple",
+                options: ["2ndNumber", "user-name", "firstName", "class"],
+                correct: 2
+              },
+              {
+                question: "What data type is 'true'?",
+                type: "multiple",
+                options: ["String", "Number", "Boolean", "Array"],
+                correct: 2
+              },
+              {
+                question: "How do you access the first element of an array called 'colors'?",
+                type: "input",
+                correct: "colors[0]"
+              }
+            ]
+          }
+          // ... Continue with remaining Computer Science lessons
+        ]
+      },
+      'Business Administration': {
+        title: 'Business Administration Fundamentals',
+        lessons: [
+          {
+            id: 1,
+            title: 'Introduction to Business',
+            subtitle: 'Understanding the fundamentals of business and entrepreneurship',
+            content: `
+              <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-briefcase"></i> What is Business?</h2>
+                <p>Business is the activity of making, buying, or selling goods or providing services in exchange for money. It involves identifying opportunities, managing resources, and creating value for customers.</p>
+                
+                <h3>Key Business Concepts:</h3>
+                <ul>
+                  <li><strong>Value Creation:</strong> Providing products or services that customers need</li>
+                  <li><strong>Profit:</strong> Revenue minus expenses</li>
+                  <li><strong>Market:</strong> The environment where buyers and sellers interact</li>
+                  <li><strong>Competition:</strong> Other businesses offering similar products or services</li>
+                  <li><strong>Stakeholders:</strong> All parties affected by business decisions</li>
+                </ul>
+
+                <h3>Types of Businesses:</h3>
+                <div style="background: rgba(0, 255, 255, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                  <h4>By Size:</h4>
+                  <ul>
+                    <li><strong>Small Business:</strong> Usually under 100 employees</li>
+                    <li><strong>Medium Business:</strong> 100-500 employees</li>
+                    <li><strong>Large Corporation:</strong> Over 500 employees</li>
+                  </ul>
+                  
+                  <h4>By Sector:</h4>
+                  <ul>
+                    <li><strong>Primary:</strong> Natural resources (agriculture, mining)</li>
+                    <li><strong>Secondary:</strong> Manufacturing and construction</li>
+                    <li><strong>Tertiary:</strong> Services (retail, hospitality, finance)</li>
+                  </ul>
+                </div>
+
+                <h3>🎯 Business Planning Exercise:</h3>
+                <p>Let's practice business thinking with a simple scenario:</p>
+                <div style="background: rgba(0, 170, 255, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                  <h4>Scenario: Starting a Food Truck Business</h4>
+                  <p><strong>Initial Investment:</strong> $50,000</p>
+                  <p><strong>Monthly Operating Costs:</strong> $8,000</p>
+                  <p><strong>Average Sale per Customer:</strong> $12</p>
+                  <p><strong>Customers per Day:</strong> 80</p>
+                  
+                  <p><strong>Calculate:</strong></p>
+                  <ul>
+                    <li>Daily Revenue: 80 customers × $12 = $960</li>
+                    <li>Monthly Revenue: $960 × 30 days = $28,800</li>
+                    <li>Monthly Profit: $28,800 - $8,000 = $20,800</li>
+                    <li>Break-even time: $50,000 ÷ $20,800 = 2.4 months</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="assignment-section">
+                <h3 class="assignment-title"><i class="fas fa-tasks"></i> Assignment</h3>
+                <p><strong>Business Idea Development:</strong></p>
+                <ul>
+                  <li>Choose a business idea that interests you</li>
+                  <li>Identify your target customers</li>
+                  <li>List the main products or services you'll offer</li>
+                  <li>Estimate startup costs and monthly expenses</li>
+                  <li>Calculate potential revenue and break-even point</li>
+                </ul>
+              </div>
+            `,
+            quiz: [
+              {
+                question: "What is the primary goal of most businesses?",
+                type: "multiple",
+                options: ["To help society", "To create jobs", "To generate profit", "To use resources"],
+                correct: 2
+              },
+              {
+                question: "Which sector involves manufacturing?",
+                type: "multiple",
+                options: ["Primary", "Secondary", "Tertiary", "Quaternary"],
+                correct: 1
+              },
+              {
+                question: "If a business has revenue of $100,000 and expenses of $70,000, what is the profit?",
+                type: "input",
+                correct: "30000"
+              }
+            ]
+          }
+          // ... Continue with remaining Business Administration lessons
+        ]
+      },
+      'Visual Arts': {
+        title: 'Visual Arts and Design',
+        lessons: [
+          {
+            id: 1,
+            title: 'Introduction to Visual Arts',
+            subtitle: 'Understanding the fundamentals of visual communication and design',
+            content: `
+              <div class="lesson-section">
+                <h2 class="section-title"><i class="fas fa-palette"></i> What is Visual Arts?</h2>
+                <p>Visual arts encompass creative works that are primarily visual in nature, including drawing, painting, sculpture, photography, digital art, animation, and graphic design. It's about communicating ideas, emotions, and stories through visual elements.</p>
+                
+                <h3>Elements of Visual Design:</h3>
+                <ul>
+                  <li><strong>Line:</strong> The foundation of all drawing - can be straight, curved, thick, thin</li>
+                  <li><strong>Shape:</strong> Two-dimensional areas defined by lines or color changes</li>
+                  <li><strong>Form:</strong> Three-dimensional objects with height, width, and depth</li>
+                  <li><strong>Color:</strong> Hue, saturation, and brightness that evoke emotions</li>
+                  <li><strong>Texture:</strong> The surface quality - smooth, rough, soft, hard</li>
+                  <li><strong>Space:</strong> The area around, between, and within objects</li>
+                  <li><strong>Value:</strong> The lightness or darkness of colors</li>
+                </ul>
+
+                <h3>Principles of Design:</h3>
+                <div style="background: rgba(0, 255, 255, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                  <ul>
+                    <li><strong>Balance:</strong> Equal visual weight on both sides</li>
+                    <li><strong>Contrast:</strong> Differences that create visual interest</li>
+                    <li><strong>Emphasis:</strong> Making certain elements stand out</li>
+                    <li><strong>Movement:</strong> Leading the viewer's eye through the composition</li>
+                    <li><strong>Pattern:</strong> Repeated elements that create rhythm</li>
+                    <li><strong>Proportion:</strong> Size relationships between elements</li>
+                    <li><strong>Unity:</strong> How well all elements work together</li>
+                  </ul>
+                </div>
+
+                <h3>🎨 Digital Art Tools:</h3>
+                <div style="background: rgba(0, 170, 255, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                  <h4>Professional Software:</h4>
+                  <ul>
+                    <li><strong>Adobe Creative Suite:</strong> Photoshop, Illustrator, InDesign, After Effects</li>
+                    <li><strong>Procreate:</strong> iPad illustration and painting app</li>
+                    <li><strong>Blender:</strong> Free 3D modeling and animation software</li>
+                    <li><strong>Figma:</strong> Web-based design and prototyping tool</li>
+                  </ul>
+                  
+                  <h4>Free Alternatives:</h4>
+                  <ul>
+                    <li><strong>GIMP:</strong> Free image editing (Photoshop alternative)</li>
+                    <li><strong>Inkscape:</strong> Free vector graphics (Illustrator alternative)</li>
+                    <li><strong>Canva:</strong> Easy-to-use design platform</li>
+                    <li><strong>Krita:</strong> Free digital painting software</li>
+                  </ul>
+                </div>
+
+                <h3>Color Theory Basics:</h3>
+                <div style="background: rgba(0, 255, 255, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                  <h4>Color Wheel:</h4>
+                  <ul>
+                    <li><strong>Primary Colors:</strong> Red, Blue, Yellow (cannot be mixed)</li>
+                    <li><strong>Secondary Colors:</strong> Green, Orange, Purple (mix of primaries)</li>
+                    <li><strong>Tertiary Colors:</strong> Mix of primary and secondary</li>
+                  </ul>
+                  
+                  <h4>Color Schemes:</h4>
+                  <ul>
+                    <li><strong>Complementary:</strong> Opposite colors on the wheel (high contrast)</li>
+                    <li><strong>Analogous:</strong> Adjacent colors (harmonious)</li>
+                    <li><strong>Triadic:</strong> Three evenly spaced colors (vibrant)</li>
+                    <li><strong>Monochromatic:</strong> Different shades of one color</li>
+                  </ul>
+                </div>
+
+                <h3>🖌️ Practice Exercise: Create a Color Palette</h3>
+                <p>Using any digital art tool or even colored pencils:</p>
+                <ol>
+                  <li>Choose a mood or emotion (calm, energetic, mysterious)</li>
+                  <li>Select 5 colors that represent this mood</li>
+                  <li>Create a simple composition using only these colors</li>
+                  <li>Experiment with different color schemes</li>
+                </ol>
+              </div>
+
+              <div class="assignment-section">
+                <h3 class="assignment-title"><i class="fas fa-tasks"></i> Assignment</h3>
+                <p><strong>Visual Identity Design:</strong></p>
+                <ul>
+                  <li>Choose a fictional brand or business</li>
+                  <li>Design a simple logo using basic shapes</li>
+                  <li>Create a color palette for the brand</li>
+                  <li>Design a business card or poster</li>
+                  <li>Explain your design choices and color psychology</li>
+                </ul>
+              </div>
+            `,
+            quiz: [
+              {
+                question: "What are the three primary colors?",
+                type: "multiple",
+                options: ["Red, Green, Blue", "Red, Blue, Yellow", "Blue, Yellow, Orange", "Red, Yellow, Green"],
+                correct: 1
+              },
+              {
+                question: "Which design principle creates visual interest through differences?",
+                type: "multiple",
+                options: ["Balance", "Contrast", "Unity", "Pattern"],
+                correct: 1
+              },
+              {
+                question: "Name two free digital art software alternatives:",
+                type: "input",
+                correct: "GIMP, Inkscape"
+              }
+            ]
+          }
+          // ... Continue with remaining Visual Arts lessons
+        ]
+      }
+      // Add all other subjects following the same pattern...
+    };
+
+    // Initialize Application
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeStars();
+      initializeCourse();
+      loadComments();
+      setupEventListeners();
+    });
+
+    function initializeCourse() {
+      // Get course from URL parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      currentCourseId = urlParams.get('course') || 'Computer Science';
+      
+      if (!courseData[currentCourseId]) {
+        currentCourseId = 'Computer Science';
+      }
+      
+      loadCourseData();
+      renderSidebar();
+      loadLesson(0);
+      updateProgress();
+    }
+
+    function loadCourseData() {
+      const course = courseData[currentCourseId];
+      document.getElementById('courseTitle').textContent = course.title;
+      document.getElementById('progressText').textContent = `0/${course.lessons.length} Lessons`;
+      
+      // Load progress from localStorage
+      const savedProgress = localStorage.getItem(`course_progress_${currentCourseId}`);
+      if (savedProgress) {
+        courseProgress = JSON.parse(savedProgress);
+      } else {
+        courseProgress = {};
+        course.lessons.forEach(lesson => {
+          courseProgress[lesson.id] = { completed: false, quizScore: 0 };
+        });
+      }
+
+      // Load quiz scores
+      const savedScores = localStorage.getItem(`quiz_scores_${currentCourseId}`);
+      if (savedScores) {
+        quizScores = JSON.parse(savedScores);
+      }
+    }
+
+    function renderSidebar() {
+      const course = courseData[currentCourseId];
+      const lessonList = document.getElementById('lessonList');
+      lessonList.innerHTML = '';
+
+      course.lessons.forEach((lesson, index) => {
+        const lessonItem = document.createElement('div');
+        lessonItem.className = 'lesson-item';
+        lessonItem.onclick = () => loadLesson(index);
+
+        const isCompleted = courseProgress[lesson.id]?.completed || false;
+        const isActive = index === currentLessonIndex;
+
+        if (isCompleted) lessonItem.classList.add('completed');
+        if (isActive) lessonItem.classList.add('active');
+
+        lessonItem.innerHTML = `
+          <div class="lesson-number">Lesson ${lesson.id}</div>
+          <div class="lesson-title">${lesson.title}</div>
+          <div class="lesson-status">
+            ${isCompleted ? '<i class="fas fa-check" style="color: var(--success-color);"></i>' : 
+              isActive ? '<i class="fas fa-play" style="color: var(--cyan-glow);"></i>' : 
+              '<i class="fas fa-circle" style="color: rgba(255,255,255,0.3);"></i>'}
+          </div>
+        `;
+
+        lessonList.appendChild(lessonItem);
       });
-      document.getElementById('current-year').textContent = new Date().getFullYear();
+    }
+
+    function loadLesson(index) {
+      const course = courseData[currentCourseId];
+      if (index < 0 || index >= course.lessons.length) return;
+
+      currentLessonIndex = index;
+      const lesson = course.lessons[index];
+
+      // Update header
+      document.getElementById('currentLessonTitle').textContent = lesson.title;
+      document.getElementById('currentLessonSubtitle').textContent = lesson.subtitle;
+      document.getElementById('lessonCounter').textContent = `Lesson ${index + 1} of ${course.lessons.length}`;
+
+      // Clear previous lesson
+      const container = document.getElementById('lessonContainer');
+      container.innerHTML = '';
+
+      // Add lesson content
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'lesson-content active';
+      contentDiv.innerHTML = lesson.content;
+      container.appendChild(contentDiv);
+
+      // Add quiz if exists
+      if (lesson.quiz && lesson.quiz.length > 0) {
+        const quizDiv = document.createElement('div');
+        quizDiv.innerHTML = createQuizHTML(lesson.quiz, lesson.id);
+        container.appendChild(quizDiv);
+      }
+
+      // Update navigation buttons
+      updateNavigationButtons();
+      renderSidebar();
+      
+      // Initialize code editors
+      setTimeout(() => {
+        initializeCodeEditors();
+        Prism.highlightAll();
+      }, 100);
+
+      // Scroll to top
+      document.querySelector('.course-content').scrollTop = 0;
+    }
+
+    function createQuizHTML(questions, lessonId) {
+      let html = `
+        <div class="quiz-container">
+          <h3><i class="fas fa-question-circle"></i> Knowledge Check</h3>
+          <div class="quiz-timer" id="quiz-timer-${lessonId}" style="display: none;">
+            Time remaining: <span id="timer-display-${lessonId}">05:00</span>
+          </div>
+          <div id="quiz-questions-${lessonId}">
+      `;
+
+      questions.forEach((q, index) => {
+        html += `
+          <div class="quiz-question" data-question="${index}">
+            <div class="question-text">${index + 1}. ${q.question}</div>
+        `;
+
+        if (q.type === 'multiple') {
+          html += '<div class="quiz-options">';
+          q.options.forEach((option, optIndex) => {
+            html += `
+              <div class="quiz-option" onclick="selectOption(${lessonId}, ${index}, ${optIndex})">
+                <input type="radio" name="q${lessonId}-${index}" value="${optIndex}" id="q${lessonId}-${index}-${optIndex}">
+                <label for="q${lessonId}-${index}-${optIndex}">${option}</label>
+              </div>
+            `;
+          });
+          html += '</div>';
+        } else if (q.type === 'input') {
+          html += `<input type="text" class="quiz-input" id="input-${lessonId}-${index}" placeholder="Type your answer here...">`;
+        }
+
+        html += '</div>';
+      });
+
+      html += `
+          </div>
+          <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn" onclick="submitQuiz(${lessonId})">Submit Quiz</button>
+            <button class="btn btn-secondary" onclick="startTimedQuiz(${lessonId})" style="margin-left: 1rem;">
+              <i class="fas fa-clock"></i> Timed Mode (5 min)
+            </button>
+          </div>
+          <div id="quiz-results-${lessonId}" style="display: none;"></div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function selectOption(lessonId, questionIndex, optionIndex) {
+      const options = document.querySelectorAll(`input[name="q${lessonId}-${questionIndex}"]`);
+      options.forEach(opt => opt.parentElement.classList.remove('selected'));
+      
+      const selectedOption = document.getElementById(`q${lessonId}-${questionIndex}-${optionIndex}`);
+      selectedOption.checked = true;
+      selectedOption.parentElement.classList.add('selected');
+    }
+
+    function startTimedQuiz(lessonId) {
+      const timerElement = document.getElementById(`quiz-timer-${lessonId}`);
+      const displayElement = document.getElementById(`timer-display-${lessonId}`);
+      timerElement.style.display = 'block';
+      
+      let timeLeft = 300; // 5 minutes in seconds
+      
+      const timer = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        displayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 30) {
+          displayElement.style.color = 'var(--error-color)';
+        }
+        
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          submitQuiz(lessonId);
+          alert('Time\'s up! Quiz submitted automatically.');
+        }
+        
+        timeLeft--;
+      }, 1000);
+      
+      // Store timer ID to clear it if quiz is submitted manually
+      window[`quizTimer_${lessonId}`] = timer;
+    }
+
+    function submitQuiz(lessonId) {
+      // Clear timer if it exists
+      if (window[`quizTimer_${lessonId}`]) {
+        clearInterval(window[`quizTimer_${lessonId}`]);
+        delete window[`quizTimer_${lessonId}`];
+      }
+
+      const course = courseData[currentCourseId];
+      const lesson = course.lessons.find(l => l.id === lessonId);
+      const questions = lesson.quiz;
+      let score = 0;
+      let totalQuestions = questions.length;
+      let results = [];
+
+      questions.forEach((q, index) => {
+        let userAnswer;
+        let isCorrect = false;
+
+        if (q.type === 'multiple') {
+          const selectedOption = document.querySelector(`input[name="q${lessonId}-${index}"]:checked`);
+          if (selectedOption) {
+            userAnswer = parseInt(selectedOption.value);
+            isCorrect = userAnswer === q.correct;
+          }
+        } else if (q.type === 'input') {
+          const inputElement = document.getElementById(`input-${lessonId}-${index}`);
+          userAnswer = inputElement.value.trim().toLowerCase();
+          const correctAnswer = q.correct.toLowerCase();
+          isCorrect = userAnswer === correctAnswer || userAnswer.includes(correctAnswer);
+        }
+
+        if (isCorrect) score++;
+        results.push({ question: index, correct: isCorrect, userAnswer });
+      });
+
+      // Display results
+      displayQuizResults(lessonId, score, totalQuestions, questions, results);
+      
+      // Save score
+      quizScores[lessonId] = score;
+      localStorage.setItem(`quiz_scores_${currentCourseId}`, JSON.stringify(quizScores));
+
+      // Mark lesson as completed if score is >= 70%
+      if (score / totalQuestions >= 0.7) {
+        courseProgress[lessonId] = { completed: true, quizScore: score };
+        saveProgress();
+        updateProgress();
+        renderSidebar();
+      }
+    }
+
+    function displayQuizResults(lessonId, score, total, questions, results) {
+      const percentage = Math.round((score / total) * 100);
+      let gradeClass = 'score-poor';
+      let grade = 'F';
+      let message = 'Keep studying and try again!';
+
+      if (percentage >= 90) {
+        gradeClass = 'score-excellent';
+        grade = 'A';
+        message = 'Excellent work! Outstanding understanding!';
+      } else if (percentage >= 80) {
+        gradeClass = 'score-good';
+        grade = 'B';
+        message = 'Great job! You have a good grasp of the material.';
+      } else if (percentage >= 70) {
+        gradeClass = 'score-fair';
+        grade = 'C';
+        message = 'Good effort! You passed with satisfactory understanding.';
+      } else if (percentage >= 60) {
+        gradeClass = 'score-fair';
+        grade = 'D';
+        message = 'You need more practice. Review the material and try again.';
+      }
+
+      const resultsDiv = document.getElementById(`quiz-results-${lessonId}`);
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = `
+        <div class="quiz-score ${gradeClass}">
+          <h4>Quiz Results</h4>
+          <div style="font-size: 2rem; margin: 1rem 0;">
+            ${score}/${total} (${percentage}%) - Grade: ${grade}
+          </div>
+          <p>${message}</p>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+          <h4>Question Review:</h4>
+          ${questions.map((q, index) => `
+            <div style="margin: 1rem 0; padding: 1rem; border-radius: 8px; background: ${results[index].correct ? 'rgba(74, 222, 128, 0.1)' : 'rgba(248, 113, 113, 0.1)'};">
+              <strong>${index + 1}. ${q.question}</strong><br>
+              ${results[index].correct ? 
+                '<span style="color: var(--success-color);"><i class="fas fa-check"></i> Correct!</span>' : 
+                `<span style="color: var(--error-color);"><i class="fas fa-times"></i> Incorrect</span><br>
+                 <small>Correct answer: ${q.type === 'multiple' ? q.options[q.correct] : q.correct}</small>`
+              }
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Show certificate form if this is the last lesson and all lessons are completed
+      if (isLastLesson() && allLessonsCompleted()) {
+        setTimeout(() => showCertificateModal(), 2000);
+      }
+    }
+
+    function runCode(editorId, outputId) {
+      const editor = document.getElementById(editorId);
+      const output = document.getElementById(outputId);
+      const code = editor.value;
+
+      // Clear previous output
+      output.innerHTML = '';
+
+      // Create a safe execution environment
+      try {
+        // Override console.log to capture output
+        const originalLog = console.log;
+        const logs = [];
+        console.log = function(...args) {
+          logs.push(args.map(arg => 
+            typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+          ).join(' '));
+        };
+
+        // Execute the code
+        eval(code);
+
+        // Restore original console.log
+        console.log = originalLog;
+
+        // Display output
+        if (logs.length > 0) {
+          output.innerHTML = logs.map(log => `<div style="color: #00ff00;">> ${log}</div>`).join('');
+        } else {
+          output.innerHTML = '<div style="color: #888;">No output</div>';
+        }
+      } catch (error) {
+        output.innerHTML = `<div style="color: #ff6b6b;">Error: ${error.message}</div>`;
+      }
+    }
+
+    function initializeCodeEditors() {
+      const editors = document.querySelectorAll('.code-editor textarea');
+      editors.forEach(editor => {
+        editor.addEventListener('keydown', function(e) {
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            this.value = this.value.substring(0, start) + '  ' + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 2;
+          }
+        });
+      });
+    }
+
+    function updateNavigationButtons() {
+      const course = courseData[currentCourseId];
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      prevBtn.disabled = currentLessonIndex === 0;
+      
+      // Enable next button if current lesson is completed or if it's the first lesson
+      const currentLesson = course.lessons[currentLessonIndex];
+      const isCompleted = courseProgress[currentLesson.id]?.completed || currentLessonIndex === 0;
+      nextBtn.disabled = currentLessonIndex === course.lessons.length - 1 || !isCompleted;
+
+      if (currentLessonIndex === course.lessons.length - 1 && isCompleted) {
+        nextBtn.innerHTML = '<i class="fas fa-graduation-cap"></i> Complete Course';
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
+      }
+    }
+
+    function previousLesson() {
+      if (currentLessonIndex > 0) {
+        loadLesson(currentLessonIndex - 1);
+      }
+    }
+
+    function nextLesson() {
+      const course = courseData[currentCourseId];
+      if (currentLessonIndex < course.lessons.length - 1) {
+        loadLesson(currentLessonIndex + 1);
+      } else if (currentLessonIndex === course.lessons.length - 1) {
+        // Course completed
+        showCertificateModal();
+      }
+    }
+
+    function updateProgress() {
+      const course = courseData[currentCourseId];
+      const completedLessons = Object.values(courseProgress).filter(p => p.completed).length;
+      const totalLessons = course.lessons.length;
+      const percentage = (completedLessons / totalLessons) * 100;
+
+      document.getElementById('progressText').textContent = `${completedLessons}/${totalLessons} Lessons`;
+      document.getElementById('progressFill').style.width = `${percentage}%`;
+    }
+
+    function saveProgress() {
+      localStorage.setItem(`course_progress_${currentCourseId}`, JSON.stringify(courseProgress));
+    }
+
+    function isLastLesson() {
+      const course = courseData[currentCourseId];
+      return currentLessonIndex === course.lessons.length - 1;
+    }
+
+    function allLessonsCompleted() {
+      const course = courseData[currentCourseId];
+      return course.lessons.every(lesson => courseProgress[lesson.id]?.completed);
+    }
+
+    function showCertificateModal() {
+      const modal = document.getElementById('certificateModal');
+      const course = courseData[currentCourseId];
+      
+      // Calculate final score
+      const scores = Object.values(quizScores);
+      const totalQuestions = course.lessons.reduce((sum, lesson) => sum + (lesson.quiz ? lesson.quiz.length : 0), 0);
+      const totalCorrect = scores.reduce((sum, score) => sum + score, 0);
+      const finalScore = Math.round((totalCorrect / totalQuestions) * 100);
+      
+      document.getElementById('completedCourse').value = course.title;
+      document.getElementById('finalScoreInput').value = `${finalScore}% (${totalCorrect}/${totalQuestions})`;
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeCertificateModal() {
+      document.getElementById('certificateModal').style.display = 'none';
+      // Redirect to dashboard
+      window.location.href = 'studyingatelvion.html';
+    }
+
+    // Comments functionality
+    function loadComments() {
+      const savedComments = localStorage.getItem(`comments_${currentCourseId}`);
+      if (savedComments) {
+        comments = JSON.parse(savedComments);
+      }
+      renderComments();
+    }
+
+    function addComment() {
+      const nameInput = document.getElementById('commentName');
+      const textInput = document.getElementById('commentText');
+      
+      if (!nameInput.value.trim() || !textInput.value.trim()) {
+        alert('Please fill in both name and comment fields.');
+        return;
+      }
+
+      const comment = {
+        id: Date.now(),
+        name: nameInput.value.trim(),
+        text: textInput.value.trim(),
+        date: new Date().toLocaleDateString(),
+        lesson: currentLessonIndex + 1
+      };
+
+      comments.unshift(comment);
+      localStorage.setItem(`comments_${currentCourseId}`, JSON.stringify(comments));
+      
+      // Clear form
+      nameInput.value = '';
+      textInput.value = '';
+      
+      renderComments();
+    }
+
+    function renderComments() {
+      const commentsList = document.getElementById('commentsList');
+      if (comments.length === 0) {
+        commentsList.innerHTML = '<p style="text-align: center; color: rgba(224, 224, 224, 0.6);">No comments yet. Be the first to share your thoughts!</p>';
+        return;
+      }
+
+      commentsList.innerHTML = comments.map(comment => `
+        <div class="comment-item">
+          <div class="comment-author">${comment.name}</div>
+          <div class="comment-date">${comment.date} - Lesson ${comment.lesson}</div>
+          <div class="comment-text">${comment.text}</div>
+        </div>
+      `).join('');
+    }
+
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('courseSidebar');
+      sidebar.classList.toggle('mobile-open');
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Certificate form submission
+      document.getElementById('certificateForm').addEventListener('submit', function(e) {
+        // Allow form to submit normally to Formspree
+        setTimeout(() => {
+          closeCertificateModal();
+        }, 1000);
+      });
+
+      // Close modal when clicking outside
+      document.getElementById('certificateModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeCertificateModal();
+        }
+      });
+    }
+
+    // Stars animation
+    function initializeStars() {
       const starsContainer = document.getElementById('stars-container');
-      const numStars = 100, minSize = 1, maxSize = 3;
+      const numStars = 100;
+      const minSize = 1;
+      const maxSize = 3;
+
       function createStar() {
-        const star = document.createElement('div'); star.className = 'star'; starsContainer.appendChild(star);
+        const star = document.createElement('div');
+        star.className = 'star';
+        starsContainer.appendChild(star);
+
         const size = Math.random() * (maxSize - minSize) + minSize;
-        star.style.width = `${size}px`; star.style.height = `${size}px`;
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
         star.style.animationDelay = `${Math.random() * 4}s`;
         star.style.animationDuration = `${3 + Math.random() * 2}s`;
       }
-      for (let i = 0; i < numStars; i++) createStar();
-    });
 
-    function showModal(title, description, jobs, mediaPath, courses, mediaType, degree) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-description').innerHTML = description;
-      document.getElementById('modal-jobs').innerHTML = jobs;
-      document.getElementById('modal-duration').textContent = "1 Semester";
-      if (mediaType === "audio") {
-        document.getElementById('modal-video').innerHTML = `
-          <audio controls style="width:100%;outline:none;border-radius:10px;box-shadow:0 0 8px #00ffff;">
-            <source src="${mediaPath}" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>`;
-      } else {
-        document.getElementById('modal-video').innerHTML = `<iframe src="${mediaPath}" frameborder="0" allowfullscreen></iframe>`;
+      for (let i = 0; i < numStars; i++) {
+        createStar();
       }
-      const courseList = courses.split('|');
-      let coursesHtml = '';
-      courseList.forEach(course => {
-        const [code, name] = course.split(': ');
-        coursesHtml += `
-          <div class="course-item">
-            <span>${name}</span>
-            <span class="course-code">${code}</span>
-          </div>
-        `;
-      });
-      coursesHtml += `<div style="margin-top:1em;color:var(--cyan-glow);font-weight:600;">Duration outside Elvion: 4 years, 2 years masters.</div>`;
-      if(degree){ coursesHtml += `<div style="margin-top:0.5em;">Degree: ${degree}</div>`; }
-      document.getElementById('modal-courses').innerHTML = coursesHtml;
-      // Link goes to a simple enroll page with course name
-      document.getElementById('modal-take-course-btn').setAttribute('href', `/enroll.html?course=${encodeURIComponent(title)}`);
-      document.getElementById('modal').style.display = "flex";
     }
-    function hideModal() {
-      document.getElementById('modal').style.display = "none";
+
+    // Firebase functions for storing comments and progress (optional)
+    function saveToFirebase(data, collection) {
+      if (typeof firebase !== 'undefined' && db) {
+        db.collection(collection).add({
+          ...data,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          course: currentCourseId
+        }).then(() => {
+          console.log('Data saved to Firebase');
+        }).catch(error => {
+          console.error('Error saving to Firebase:', error);
+        });
+      }
     }
-    function takeCourse(courseName) {
-      location.href = '/enroll.html?course=' + encodeURIComponent(courseName);
-    }
+
+    // Auto-save progress every 30 seconds
+    setInterval(() => {
+      if (Object.keys(courseProgress).length > 0) {
+        saveProgress();
+        saveToFirebase({
+          userId: currentUser.email || 'anonymous',
+          progress: courseProgress,
+          scores: quizScores
+        }, 'user_progress');
+      }
+    }, 30000);
   </script>
 </body>
 </html>
-
-This is the University page, it should give you a perception of the courses I want in the lesson-viewer now you can draft the entire courses lessons and implement the changes as suggested. 
-
-Don't forget the form for certificates as well, after they fill they should submit their final year projects to elvionailabs@gmail.com  
-
-They will get their certificates by mail. And results of their projects.
