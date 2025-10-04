@@ -1,34 +1,10 @@
-Okay I've got some areas for improvements. though, this is beautiful. 
-1. the courses should be fitting to the page and more detailed with practical examples. maybe if coding for instance there can be a markdown space for user to code and it even shows coloring. just to prove a point, just practical. 
-2. fitness to page, don't make it too rectangular otherwise user may need to zoom out to see page well. just fitting. 
-3. all courses should be written about, not just computer science. all, properly detailed with relevant examples and how users can execute them may be.  there should even be assignments in some parts, you get? maybe we can integrate a small comment section that's very beautiful. or a form to accept it. 
-4. the dashboard isn't dashboard.html, its actually studyingatelvion.html, so change any redirects to dashboard to studyingatelvion.html 
-5. at the end of every course of which they're even given projects. they should be a form where users submit their personal information to get awarded certificates for participating in getting a pre-degree knowledge of the courses they wish to learn in the university. elvion is not an accredited university with degrees, it awards certificates for just learning ahead. certificates that aren't for school applications. the form action link should be  action="https://formspree.io/f/mldrbpwo" method="post">
-6. maybe a comment section could be integrated incase users need to ask questions, drop anything regarding feedback. or whatsoever. anywhere 
-it could even be in completion page, just casual and alluring, they can say thank you to elvion for completing their courses. 
-think that's it.
-you can add some things you find important too. and if somethings are impossible you can ignore.
-
-Do you understand?
-
-Additionally, I was thinking the occasional assignments may be better yes, and its up to user to do it but before they even scroll to next teaching, there should be quite a number of questions asked, user clicks correct options for each of them before he's even liable to click next page  
-He must get it all, like a timed questionnaire/exam. There are questions that require input too so the site can tell if ita right or wrong. User sees his score, recorded like university form. Can only be filled once though, it's either first class or second class or as the case may be. Until the last page. So he can finish with what he wants so long as he stays serious to each teachings per page.
-
-OR 
-
-At the end of the course after all is done, he can now do his final year exam. Which comes in objective mode with series of questions asked and he sees his scores and its... which is better? Use the better one.
-
-Lastly I wanna add visual arts. Where courses like animations and stuff or paintings or whatever and stuff are studied under it. 
-
-Can you provide the full for all this? No errors please.
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elvion University — Course Catalog</title>
-  <meta name="description" content="Explore the comprehensive course catalog for Elvion University. From Computer Science to Mass Communication, our programs are designed to empower students with future-ready skills. Free of Charge." />
+  <title>Course Viewer | Elvion University</title>
+  <meta name="description" content="Learn with interactive courses at Elvion University">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -43,17 +19,28 @@ Can you provide the full for all this? No errors please.
       --heading-color: #ffffff;
       --gradient-start: #0a1128;
       --gradient-end: #121a30;
-      --card-bg: rgba(18, 26, 48, 0.7);
+      --card-bg: rgba(18, 26, 48, 0.85);
       --border-glow: 0 0 10px var(--cyan-glow), 0 0 20px var(--light-blue-glow);
       --hover-glow: 0 0 15px var(--cyan-glow), 0 0 30px var(--light-blue-glow);
       --button-bg: linear-gradient(45deg, var(--cyan-glow), var(--light-blue-glow));
       --button-text-color: var(--black-bg);
       --star-color: rgba(255, 255, 255, 0.7);
+      --sidebar-width: 300px;
+      --success-color: #4ade80;
+      --warning-color: #fbbf24;
+      --error-color: #f87171;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0; padding: 0;
       background-color: var(--black-bg);
       color: var(--text-color);
       line-height: 1.7;
@@ -61,538 +48,2004 @@ Can you provide the full for all this? No errors please.
       position: relative;
       min-height: 100vh;
     }
+
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Orbitron', sans-serif;
       color: var(--heading-color);
       margin-top: 0;
-      text-shadow: var(--border-glow);
     }
-    h1 { font-size: 3.5rem; }
-    h2 { font-size: 2.5rem; }
-    h3 { font-size: 1.8rem; }
-    strong { color: var(--cyan-glow); font-weight: 600; }
-    a {
-      color: var(--cyan-glow);
-      text-decoration: none;
-      transition: color 0.3s ease, text-shadow 0.3s ease;
+
+    /* Stars Animation */
+    #stars-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
     }
-    a:hover {
-      color: var(--light-blue-glow);
-      text-shadow: 0 0 5px var(--cyan-glow);
+
+    .star {
+      position: absolute;
+      background-color: var(--star-color);
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 4s infinite ease-in-out;
     }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-    section {
-      padding: 6rem 0;
-      position: relative;
-      z-index: 2;
-    }
-    .text-center { text-align: center; }
-    .lead {
-      font-size: 1.2rem;
-      max-width: 800px;
-      margin: 1rem auto 3rem auto;
-      color: rgba(224, 224, 224, 0.9);
-      line-height: 1.8;
-    }
-    .btn {
-      display: inline-block;
-      padding: 0.9rem 2.2rem;
-      border-radius: 50px;
-      font-weight: 600;
-      font-family: 'Orbitron', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-      border: none;
-      color: var(--button-text-color);
-      background: var(--button-bg);
-      box-shadow: var(--border-glow);
-      text-shadow: none;
-    }
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--hover-glow);
-      color: var(--black-bg);
-    }
-    #stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-    .star { position: absolute; background-color: var(--star-color); border-radius: 50%; opacity: 0; animation: twinkle 4s infinite ease-in-out; }
+
     @keyframes twinkle {
       0%, 100% { opacity: 0; transform: scale(0.5); }
       50% { opacity: 1; transform: scale(1); }
     }
-    .navbar {
-      position: sticky; top: 0; width: 100%;
-      background: rgba(0, 0, 26, 0.9); padding: 1rem 0; z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0, 255, 255, 0.1);
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+
+    /* Main Layout */
+    .course-viewer-container {
+      display: flex;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
     }
-    .navbar .container {
-      display: flex; justify-content: space-between; align-items: center;
+
+    /* Course Sidebar */
+    .course-sidebar {
+      width: var(--sidebar-width);
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-right: 1px solid rgba(0, 255, 255, 0.2);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      transition: transform 0.3s ease;
     }
-    .navbar-brand {
-      font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700;
-      color: var(--heading-color); text-shadow: var(--border-glow);
+
+    .course-sidebar-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.1);
     }
-    .nav-links { display: flex; list-style: none; margin: 0; padding: 0; }
-    .nav-links li { margin-left: 2rem; }
-    .nav-links a { color: var(--text-color); font-weight: 500; padding: 0.5rem 0; position: relative; text-shadow: none; }
-    .nav-links a::after {
-      content: ''; position: absolute; width: 0; height: 2px; bottom: 0; left: 0;
-      background: var(--cyan-glow); box-shadow: 0 0 5px var(--cyan-glow); transition: width 0.3s ease-in-out;
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--cyan-glow);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.8rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      margin-bottom: 1rem;
     }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
-    .hamburger { display: none; flex-direction: column; cursor: pointer; padding: 0.5rem; background: transparent; border: none; }
-    .hamburger .bar {
-      width: 25px; height: 3px; background-color: var(--cyan-glow); margin: 4px 0; transition: 0.4s; box-shadow: 0 0 5px var(--cyan-glow);
+
+    .back-btn:hover {
+      background: rgba(0, 255, 255, 0.1);
     }
-    .hamburger.active .bar:nth-child(2) { opacity: 0; }
-    .hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .hero {
-      height: 90vh; display: flex; align-items: center; justify-content: center; text-align: center;
-      position: relative; overflow: hidden; background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+
+    .course-info {
+      text-align: center;
     }
-    .hero::before {
-      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle at 60% 80%, rgba(0,255,255,0.2) 0%, transparent 30%),
-      radial-gradient(circle at 20% 40%, rgba(0,170,255,0.2) 0%, transparent 30%);
-      animation: plasma-effect 15s infinite alternate ease-in-out; z-index: 0;
+
+    .course-icon-large {
+      font-size: 3rem;
+      color: var(--cyan-glow);
+      text-shadow: var(--border-glow);
+      margin-bottom: 1rem;
     }
-    @keyframes plasma-effect {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.1) translate(5%, 10%); }
+
+    .course-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--heading-color);
     }
-    .hero-content { position: relative; z-index: 1; max-width: 900px; }
-    .hero h1 { font-size: 4rem; text-shadow: 0 0 15px var(--cyan-glow), 0 0 30px var(--light-blue-glow); }
-    .hero p { font-size: 1.5rem; color: var(--text-color); text-shadow: 0 0 5px rgba(0,255,255,0.3); }
-    .course-section { background: linear-gradient(to bottom, var(--black-bg), var(--dark-navy) 80%); padding: 6rem 0; }
-    .course-faculty { text-align: center; margin-bottom: 4rem; }
-    .course-faculty h2 { color: var(--light-blue-glow); text-shadow: 0 0 10px var(--light-blue-glow), 0 0 20px var(--cyan-glow); }
-    .course-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem;
+
+    .course-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.8;
+      margin-bottom: 1rem;
     }
-    .course-card {
-      background: var(--card-bg); border-radius: 15px; padding: 2.5rem;
-      box-shadow: var(--border-glow); transition: transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(5px);
-      border: 1px solid rgba(0, 255, 255, 0.1); position: relative; cursor: pointer;
+
+    .overall-progress {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
     }
-    .course-card:hover {
-      transform: translateY(-8px) scale(1.03); box-shadow: var(--hover-glow);
+
+    .progress-label {
+      font-size: 0.85rem;
+      color: var(--text-color);
+      margin-bottom: 0.5rem;
     }
-    .course-card h3 { font-size: 1.6rem; margin-top: 1rem; margin-bottom: 0.5rem; }
-    .course-card .course-icon { font-size: 3rem; color: var(--cyan-glow); text-shadow: 0 0 10px var(--cyan-glow); }
-    .course-card p { font-size: 1rem; color: rgba(224, 224, 224, 0.9); margin-bottom: 1rem; }
-    .course-meta {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.9rem; color: rgba(224, 224, 224, 0.7); margin-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1rem;
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
     }
-    .course-meta span { display: flex; align-items: center; gap: 0.5rem; }
-    .course-card-btn {
-      width: 100%; padding: 0.8rem; margin-top: 1rem; background: var(--button-bg); color: var(--button-text-color);
-      border: none; border-radius: 25px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s ease;
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--button-bg);
+      border-radius: 10px;
+      transition: width 0.8s ease;
+      box-shadow: 0 0 10px var(--cyan-glow);
     }
-    .course-card-btn:hover { transform: translateY(-2px); box-shadow: 0 0 10px var(--cyan-glow); }
-    .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center; }
-    .modal-content {
-      background: var(--gradient-start); border: 2px solid var(--cyan-glow); border-radius: 15px; padding: 2rem;
-      max-width: 700px; width: 90%; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: var(--hover-glow);
+
+    .progress-text {
+      font-size: 0.85rem;
+      color: var(--cyan-glow);
+      font-weight: 600;
     }
-    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--cyan-glow); cursor: pointer; }
-    .modal-video { margin: 1rem 0; }
-    .modal-video iframe { width: 100%; height: 250px; border-radius: 10px; }
-    .modal-section { margin: 1.5rem 0; }
-    .modal-section h4 { color: var(--cyan-glow); margin-bottom: 0.8rem; font-size: 1.2rem; }
-    .course-list { background: rgba(0, 0, 0, 0.3); padding: 1rem; border-radius: 8px; margin-top: 1rem; }
-    .course-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid rgba(0, 255, 255, 0.1); }
-    .course-item:last-child { border-bottom: none; }
-    .course-code { color: var(--light-blue-glow); font-weight: 600; font-size: 0.9rem; }
-    .join-us-section { background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end)); padding: 6rem 0; }
-    .footer {
-      background: var(--dark-navy); color: var(--text-color); padding: 4rem 0; font-size: 0.9rem; border-top: 1px solid rgba(0, 255, 255, 0.1);
+
+    /* Lessons List */
+    .lessons-list {
+      padding: 1rem 0;
     }
-    .footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; }
-    .footer .col { flex: 1; min-width: 200px; }
-    .footer h4 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--cyan-glow); }
-    .footer ul { list-style: none; padding: 0; }
-    .footer ul li { margin-bottom: 0.8rem; }
-    .footer .brand-info { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--heading-color); margin-bottom: 1rem; }
-    .footer .legal-info {
-      margin-top: 2rem; text-align: center; width: 100%; border-top: 1px solid rgba(0, 255, 255, 0.1); padding-top: 1.5rem; color: rgba(224, 224, 224, 0.7);
+
+    .lessons-header {
+      padding: 0 1.5rem 1rem 1.5rem;
+      font-size: 1.1rem;
+      color: var(--heading-color);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.1);
     }
+
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-left: 3px solid transparent;
+    }
+
+    .lesson-item:hover {
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .lesson-item.active {
+      background: rgba(0, 255, 255, 0.1);
+      border-left-color: var(--cyan-glow);
+    }
+
+    .lesson-item.completed {
+      opacity: 0.8;
+    }
+
+    .lesson-status {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .lesson-status.completed {
+      background: var(--success-color);
+      color: var(--black-bg);
+    }
+
+    .lesson-status.current {
+      background: var(--cyan-glow);
+      color: var(--black-bg);
+    }
+
+    .lesson-status.locked {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+    }
+
+    .lesson-details {
+      flex: 1;
+    }
+
+    .lesson-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--heading-color);
+      margin-bottom: 0.3rem;
+    }
+
+    .lesson-duration {
+      font-size: 0.8rem;
+      color: var(--text-color);
+      opacity: 0.7;
+    }
+
+    /* Mobile Menu Toggle */
+    .mobile-menu-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 101;
+      background: var(--card-bg);
+      border: 1px solid var(--cyan-glow);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      color: var(--cyan-glow);
+      cursor: pointer;
+      box-shadow: var(--border-glow);
+    }
+
+    /* Content Area */
+    .content-area {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .content-header {
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .lesson-info h1 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .lesson-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+
+    .lesson-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .content-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .action-btn {
+      padding: 0.8rem 1.5rem;
+      background: var(--button-bg);
+      color: var(--button-text-color);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn:hover {
+      box-shadow: var(--border-glow);
+      transform: scale(1.05);
+    }
+
+    .action-btn.secondary {
+      background: transparent;
+      border: 2px solid var(--cyan-glow);
+      color: var(--cyan-glow);
+    }
+
+    .action-btn.secondary:hover {
+      background: var(--cyan-glow);
+      color: var(--black-bg);
+    }
+
+    .action-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    }
+
+    .content-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: var(--border-glow);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .lesson-content {
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+
+    .lesson-content h2 {
+      color: var(--cyan-glow);
+      margin: 2rem 0 1rem 0;
+      font-size: 1.4rem;
+    }
+
+    .lesson-content h3 {
+      color: var(--heading-color);
+      margin: 1.5rem 0 0.8rem 0;
+      font-size: 1.2rem;
+    }
+
+    .lesson-content p {
+      margin-bottom: 1.2rem;
+    }
+
+    .lesson-content ul, .lesson-content ol {
+      margin: 1rem 0 1rem 2rem;
+    }
+
+    .lesson-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .lesson-content code {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      color: var(--cyan-glow);
+      font-family: 'Courier New', monospace;
+    }
+
+    .lesson-content pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--cyan-glow);
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    .lesson-content pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-color);
+    }
+
+    /* Video Player Placeholder */
+    .video-player {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+
+    .video-placeholder {
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    .video-placeholder i {
+      font-size: 4rem;
+      color: var(--cyan-glow);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    /* Navigation Controls */
+    .lesson-navigation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 255, 255, 0.1);
+    }
+
+    .nav-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+
+    .lesson-indicator {
+      background: rgba(0, 255, 255, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* Quiz/Assessment Styles */
+    .quiz-container {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: var(--border-glow);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .quiz-question {
+      font-size: 1.2rem;
+      color: var(--heading-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .quiz-option {
+      padding: 1rem 1.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(0, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--text-color);
+    }
+
+    .quiz-option:hover {
+      border-color: var(--cyan-glow);
+      background: rgba(0, 255, 255, 0.05);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--cyan-glow);
+      background: rgba(0, 255, 255, 0.1);
+      color: var(--cyan-glow);
+    }
+
+    .quiz-option.correct {
+      border-color: var(--success-color);
+      background: rgba(74, 222, 128, 0.1);
+      color: var(--success-color);
+    }
+
+    .quiz-option.incorrect {
+      border-color: var(--error-color);
+      background: rgba(248, 113, 113, 0.1);
+      color: var(--error-color);
+    }
+
+    .quiz-feedback {
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .quiz-feedback.correct {
+      background: rgba(74, 222, 128, 0.1);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      color: var(--success-color);
+    }
+
+    .quiz-feedback.incorrect {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      color: var(--error-color);
+    }
+
+    /* Completion Modal */
+    .completion-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .completion-content {
+      background: var(--card-bg);
+      padding: 3rem;
+      border-radius: 15px;
+      text-align: center;
+      max-width: 500px;
+      box-shadow: var(--hover-glow);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+
+    .completion-icon {
+      font-size: 4rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
+    }
+
+    .completion-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--heading-color);
+    }
+
+    .completion-message {
+      color: var(--text-color);
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .points-earned {
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      color: #ffd700;
+    }
+
+    /* Loading State */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 50vh;
+    }
+
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(0, 255, 255, 0.1);
+      border-top-color: var(--cyan-glow);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      margin-top: 1rem;
+      color: var(--text-color);
+      font-size: 1.1rem;
+    }
+
+    /* Responsive Design */
     @media (max-width: 992px) {
-      .nav-links { display: none; flex-direction: column; width: 100%; background: rgba(0, 0, 26, 0.95); position: absolute; top: 100%; left: 0; padding: 1rem 0; border-top: 1px solid rgba(0, 255, 255, 0.2); }
-      .nav-links.active { display: flex; }
-      .nav-links li { margin: 0.5rem 0; text-align: center; }
-      .hamburger { display: flex; }
+      .course-sidebar {
+        transform: translateX(-100%);
+      }
+
+      .course-sidebar.active {
+        transform: translateX(0);
+      }
+
+      .content-area {
+        margin-left: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .main-content {
+        padding: 1rem;
+        padding-top: 4rem;
+      }
+
+      .content-header {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .content-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .action-btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .lesson-navigation {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-buttons {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .nav-buttons .action-btn {
+        flex: 1;
+      }
     }
+
     @media (max-width: 768px) {
-      h1 { font-size: 2.8rem; }
-      h2 { font-size: 2rem; }
-      section { padding: 4rem 1rem; }
-      .hero h1 { font-size: 2.8rem; }
-      .hero p { font-size: 1.2rem; }
-      .course-grid { grid-template-columns: 1fr; }
-      .footer .container { flex-direction: column; text-align: center; }
+      .video-player {
+        height: 250px;
+      }
+
+      .content-card {
+        padding: 1.5rem;
+      }
+
+      .completion-content {
+        margin: 1rem;
+        padding: 2rem;
+      }
+
+      .quiz-option {
+        padding: 0.8rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <div id="stars-container"></div>
-  <header class="navbar">
-    <div class="container">
-      <a href="index.html" class="navbar-brand">Elvion AI</a>
-      <button class="hamburger" aria-label="Toggle navigation">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-      </button>
-      <nav class="nav-links">
-        <li><a href="university.html" class="active">Elvion University</a></li>
-        <li><a href="philadelphia.html">Chat & Explore Philadelphia AI (Website)</a></li>
-        <li><a href="https://t.me/PhiladelphiaAIbot" target="_blank" rel="noopener noreferrer">Chat Philadelphia AI (Telegram)</a></li>
-        <li><a href="https://elvionai.github.io/signup-login.html" target="_blank" rel="noopener noreferrer">Try Seraphina AI (Telegram)</a></li>
-        <li><a href="https://elvionai.github.io/profile.html" target="_blank" rel="noopener noreferrer">Visit Your Profile</a></li>
-        <li><a href="https://elvionai.github.io/signup-login.html" target="_blank" rel="noopener noreferrer">Sign Up / Login</a></li>
-        <li><a href="https://elvionai.github.io/privacy.html">Privacy Policy</a></li>
-        <li><a href="blog.html">Blog</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="https://elvionai.github.io/terms.html">Terms and Conditions</a></li>
-      </nav>
-    </div>
-  </header>
 
-  <main>
-    <section id="hero" class="hero">
-      <div class="hero-content">
-        <h1>Elvion University</h1>
-        <p>Master the future of technology and human connection. Our accredited programs provide the skills you need to innovate in a world powered by AI. FREE of charge!</p>
-        <a href="#course-catalog" class="btn">Explore Our Curriculum</a>
-      </div>
-    </section>
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
 
-    <section id="course-catalog" class="course-section">
-      <div class="container">
-
-        <div class="course-faculty">
-          <h2>Faculty of Science & Technology</h2>
-          <p class="lead">Build your future in technology with courses designed to prepare you for the digital economy.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Computer Science',
-            'Learn the fundamentals of computing, programming languages, algorithms, data structures, software engineering, and system design. This comprehensive program prepares students for careers in the rapidly evolving technology sector.',
-            '<strong>Career Opportunities:</strong><ul><li>Software Developer/Engineer</li><li>Systems Analyst</li><li>Database Administrator</li><li>IT Consultant</li><li>Web Developer</li><li>Data Scientist</li></ul>',
-            'https://www.youtube.com/embed/5Qwwjych21o',
-            'CSC 101: Introduction to Programming|CSC 102: Data Structures|CSC 201: Object-Oriented Programming|CSC 202: Database Systems|CSC 301: Software Engineering|CSC 302: Computer Networks|CSC 401: Artificial Intelligence|CSC 402: Final Year Project',
-            'video', ''
-          )">
-            <h3>Computer Science</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Fundamentals of computing, programming, algorithms, and software development.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Software Engineering',
-            'Master the principles of designing, developing, testing, and maintaining large-scale software systems. Learn industry best practices, project management, and modern development methodologies.',
-            '<strong>Career Opportunities:</strong><ul><li>Software Engineer</li><li>Technical Lead</li><li>Product Manager</li><li>DevOps Engineer</li><li>Quality Assurance Engineer</li><li>Solutions Architect</li></ul>',
-            'https://www.youtube.com/embed/jMO9-bEDPq0',
-            'SWE 101: Software Development Fundamentals|SWE 201: Software Design Patterns|SWE 202: Software Testing and Quality Assurance|SWE 301: Project Management|SWE 302: Agile Development|SWE 401: Software Architecture|SWE 402: Capstone Project',
-            'video', ''
-          )">
-            <h3>Software Engineering</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Design, develop, and maintain large-scale software systems using industry best practices.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Law</h2>
-          <p class="lead">Study legal principles, jurisprudence, and advocacy skills. Law courses are highly suitable for online learning through case studies, legal research, and virtual moot courts.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Law (LLB)',
-            'Comprehensive study of legal principles, constitutional law, criminal law, civil law, and legal practice. This program combines theoretical knowledge with practical skills in legal research and advocacy.',
-            '<strong>Career Opportunities:</strong><ul><li>Barrister</li><li>Solicitor</li><li>Legal Advisor</li><li>Judge/Magistrate</li><li>Corporate Lawyer</li><li>Human Rights Advocate</li><li>Legal Researcher</li></ul>',
-            'https://www.youtube.com/embed/_c6iHL2Zd5o',
-            'LAW 101: Introduction to Law|LAW 102: Constitutional Law|LAW 201: Criminal Law|LAW 202: Contract Law|LAW 301: Tort Law|LAW 302: Property Law|LAW 401: Legal Practice and Procedure|LAW 402: Jurisprudence|LAW 501: Law Clinic',
-            'video', 'ELV in Law'
-          )">
-            <h3>Law (LLB)</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Comprehensive study of legal principles, constitutional law, and legal practice.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Arts & Humanities</h2>
-          <p class="lead">Develop critical thinking, communication skills, and cultural understanding through comprehensive liberal arts education.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'English & Literary Studies',
-            'In-depth study of English language structure, literary analysis, composition, and communication skills. Explore works from various periods and develop advanced writing and critical thinking abilities.',
-            '<strong>Career Opportunities:</strong><ul><li>Writer/Author</li><li>Editor</li><li>Teacher/Professor</li><li>Journalist</li><li>Content Creator</li><li>Literary Critic</li><li>Communications Specialist</li></ul>',
-            '/university/a081468d-c79a-4912-9f49-764fb70ef1c7.wav',
-            'ENG 101: English Composition|ENG 102: Semantics|ENG 201: World Literature|ENG 202: Phonetics and Phonology|ENG 301: Contemporary Literature|ENG 302: Syntax|ENG 401: Literary Criticism|ENG 402: Research Project',
-            'audio', ''
-          )">
-            <h3>English & Literary Studies</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Study of English language, literature, composition, and critical analysis.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'History & Strategic Studies',
-            'Comprehensive study of world history, Nigerian history, international relations, and strategic analysis. Develop skills in research, analysis, and understanding of global affairs.',
-            '<strong>Career Opportunities:</strong><ul><li>Historian</li><li>Research Analyst</li><li>Diplomatic Officer</li><li>Policy Analyst</li><li>Museum Curator</li><li>Archivist</li><li>International Relations Specialist</li></ul>',
-            'university/elegant_man_voice.mp3',
-            'HIS 101: Introduction to History|HIS 102: African History|HIS 201: Modern World History|HIS 202: Nigerian History|HIS 301: International Relations|HIS 302: Strategic Studies|HIS 401: Historical Research Methods|HIS 402: Thesis',
-            'audio', ''
-          )">
-            <h3>History & Strategic Studies</h3>
-            <b><i>Click here to view details</i></b>
-            <p>World history, Nigerian history, and strategic studies for understanding global affairs.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
-
-        <div class="course-faculty">
-          <h2>Faculty of Management & Social Sciences</h2>
-          <p class="lead">Prepare for leadership roles in business, government, and society with comprehensive management and social science education.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Business Administration',
-            'Learn essential business principles including management, marketing, finance, human resources, and entrepreneurship. Develop skills needed to lead organizations and start your own business.',
-            '<strong>Career Opportunities:</strong><ul><li>Business Manager</li><li>Entrepreneur</li><li>Marketing Manager</li><li>Operations Manager</li><li>Business Consultant</li><li>Project Manager</li><li>Sales Manager</li></ul>',
-            'university/wise_woman_voice.mp3',
-            'BUS 101: Principles of Management|BUS 102: Marketing Fundamentals|BUS 201: Financial Management|BUS 202: Human Resource Management|BUS 301: Strategic Management|BUS 302: Entrepreneurship|BUS 401: Business Ethics|BUS 402: Capstone Project',
-            'audio', ''
-          )">
-            <h3>Business Administration</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Principles of management, marketing, finance, and entrepreneurship.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Mass Communication',
-            'Study journalism, broadcasting, public relations, advertising, and digital media. Learn to create compelling content and communicate effectively across various media platforms.',
-            '<strong>Career Opportunities:</strong><ul><li>Journalist</li><li>PR Specialist</li><li>Media Producer</li><li>Broadcaster</li><li>Content Creator</li><li>Social Media Manager</li><li>Communications Director</li></ul>',
-            'university/wise_woman_voice (1).mp3',
-            'MASS 101: Introduction to Mass Communication|MASS 102: News Writing and Reporting|MASS 201: Broadcast Journalism|MASS 202: Public Relations|MASS 301: Digital Media Production|MASS 302: Media Ethics and Law|MASS 401: Investigative Journalism|MASS 402: Media Research Project',
-            'audio', ''
-          )">
-            <h3>Mass Communication</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Journalism, public relations, broadcasting, and digital media communication.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-        </div>
+  <div class="course-viewer-container">
+    <!-- Course Sidebar -->
+    <aside class="course-sidebar" id="courseSidebar">
+      <div class="course-sidebar-header">
+        <a href="studyingatelvion.html" class="back-btn">
+          <i class="fas fa-arrow-left"></i>
+          Back to Dashboard
+        </a>
         
-        <div class="course-faculty">
-          <h2>Faculty of Education</h2>
-          <p class="lead">Prepare for careers in teaching and educational leadership with comprehensive pedagogical training.</p>
-        </div>
-        <div class="course-grid">
-          <div class="course-card" onclick="showModal(
-            'Mathematics Education',
-            'Learn effective methods and strategies for teaching mathematics at various educational levels. Combine mathematical knowledge with pedagogical skills.',
-            '<strong>Career Opportunities:</strong><ul><li>Mathematics Teacher</li><li>Curriculum Specialist</li><li>Education Consultant</li><li>Math Tutor</li><li>Educational Coordinator</li><li>Academic Support Specialist</li></ul>',
-            'university/abbess_voice.mp3',
-            'MATED 101: Foundations of Mathematics Teaching|MTH 101: Calculus I|MATED 201: Mathematics Curriculum and Instruction|MTH 201: Abstract Algebra|MATED 301: Assessment in Mathematics Education|MATED 302: Technology in Mathematics Teaching|MATED 401: Research in Mathematics Education|MATED 402: Student Teaching',
-            'audio', ''
-          )">
-            <h3>Mathematics Education</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Methods and strategies for teaching mathematics at various educational levels.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
+        <div class="course-info">
+          <i id="courseIconLarge" class="course-icon-large"></i>
+          <h2 id="courseTitle" class="course-title">Loading...</h2>
+          <p id="courseSubtitle" class="course-subtitle">Please wait...</p>
+          
+          <div class="overall-progress">
+            <div class="progress-label">Overall Progress</div>
+            <div class="progress-bar-container">
+              <div id="overallProgressBar" class="progress-bar-fill" style="width: 0%"></div>
             </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
-          </div>
-          <div class="course-card" onclick="showModal(
-            'Adult Education',
-            'Focus on teaching and learning strategies for adult learners, continuing education, and professional development programs.',
-            '<strong>Career Opportunities:</strong><ul><li>Adult Education Instructor</li><li>Training and Development Specialist</li><li>Corporate Trainer</li><li>Community Education Coordinator</li><li>Literacy Program Director</li><li>Professional Development Specialist</li></ul>',
-            'university/friendly_person_voice (1).mp3',
-            'AED 101: Foundations of Adult Learning|AED 201: Adult Learning Theories|AED 202: Program Planning and Evaluation|AED 301: Community Education|AED 302: Literacy and Numeracy|AED 401: Research in Adult Education|AED 402: Practicum',
-            'audio', ''
-          )">
-            <h3>Adult Education</h3>
-            <b><i>Click here to view details</i></b>
-            <p>Teaching and learning strategies for adult learners and continuing education.</p>
-            <div class="course-meta">
-              <span><strong>Duration:</strong> 1 Semester</span>
-            </div>
-            <button class="course-card-btn" onclick="event.stopPropagation(); location.href='enroll.html'">Take this course</button>
+            <div id="overallProgressText" class="progress-text">0% Complete</div>
           </div>
         </div>
       </div>
-    </section>
 
-    <section id="enrollment" class="join-us-section">
-      <div class="container text-center">
-        <h2>Your Future Starts Here</h2>
-        <p class="lead">Ready to learn, grow, and lead in the digital age? Enroll in a program that prepares you for tomorrow's challenges. Your journey to mastery begins now.</p>
-        <a href="signup-login.html" class="btn">Enroll Now</a>
+      <div class="lessons-list">
+        <div class="lessons-header">Course Lessons</div>
+        <div id="lessonsContainer">
+          <!-- Lessons will be populated here -->
+        </div>
       </div>
-    </section>
-  </main>
+    </aside>
 
-  <div id="modal" class="modal" onclick="hideModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <span class="close-modal" onclick="hideModal()">&times;</span>
-      <h3 id="modal-title"></h3>
-      <div class="modal-section">
-        <h4>Course Introduction</h4>
-        <div id="modal-description"></div>
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- Loading State -->
+      <div class="loading-container" id="loadingContainer">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading course content...</p>
       </div>
-      <div id="modal-video" class="modal-video"></div>
-      <div class="modal-section">
-        <div><strong>Duration:</strong> <span id="modal-duration"></span></div>
-        <div id="modal-jobs"></div>
+
+      <!-- Content Header -->
+      <header class="content-header" id="contentHeader" style="display: none;">
+        <div class="lesson-info">
+          <h1 id="lessonTitle">Lesson Title</h1>
+          <div class="lesson-meta">
+            <span><i class="fas fa-clock"></i> <span id="lessonDuration">45 min</span></span>
+            <span><i class="fas fa-book"></i> Lesson <span id="currentLessonNumber">1</span> of <span id="totalLessons">8</span></span>
+            <span><i class="fas fa-star"></i> <span id="lessonPoints">10</span> Points</span>
+          </div>
+        </div>
+        <div class="content-actions">
+          <button id="markCompleteBtn" class="action-btn">
+            <i class="fas fa-check"></i>
+            Mark Complete
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <section class="main-content" id="mainContent" style="display: none;">
+        <!-- Video Player (Placeholder) -->
+        <div class="video-player" id="videoPlayer">
+          <div class="video-placeholder">
+            <i class="fas fa-play-circle"></i>
+            <p>Video content coming soon</p>
+            <p style="font-size: 0.9rem; opacity: 0.7;">For now, please read the lesson content below</p>
+          </div>
+        </div>
+
+        <!-- Lesson Content -->
+        <div class="content-card">
+          <div id="lessonContent" class="lesson-content">
+            <!-- Content will be populated here -->
+          </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quizContainer" style="display: none;">
+          <!-- Quiz content will be populated here -->
+        </div>
+      </section>
+
+      <!-- Navigation Controls -->
+      <nav class="lesson-navigation" id="lessonNavigation" style="display: none;">
+        <div class="nav-info">
+          <div class="lesson-indicator">
+            Lesson <span id="navCurrentLesson">1</span> of <span id="navTotalLessons">8</span>
+          </div>
+          <span><i class="fas fa-trophy"></i> <span id="totalPointsEarned">0</span> Points Earned</span>
+        </div>
+        <div class="nav-buttons">
+          <button id="prevLessonBtn" class="action-btn secondary">
+            <i class="fas fa-chevron-left"></i>
+            Previous
+          </button>
+          <button id="nextLessonBtn" class="action-btn">
+            Next
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </nav>
+    </main>
+  </div>
+
+  <!-- Completion Modal -->
+  <div id="completionModal" class="completion-modal">
+    <div class="completion-content">
+      <i class="fas fa-trophy completion-icon"></i>
+      <h2 class="completion-title">Lesson Complete!</h2>
+      <p class="completion-message">
+        Congratulations! You've successfully completed this lesson.
+      </p>
+      <div class="points-earned">
+        <i class="fas fa-star"></i>
+        You earned <span id="pointsEarned">10</span> points!
       </div>
-      <div class="modal-section">
-        <h4>Courses & Course Codes</h4>
-        <div class="course-list" id="modal-courses"></div>
-      </div>
-      <div style="text-align: center; margin-top: 2rem;">
-        <a class="btn" id="modal-take-course-btn" href="#">Take this course</a>
+      <div style="display: flex; gap: 1rem;">
+        <button id="continueBtn" class="action-btn" style="flex: 1;">
+          Continue Learning
+        </button>
+        <button id="backToDashboardBtn" class="action-btn secondary" style="flex: 1;">
+          Back to Dashboard
+        </button>
       </div>
     </div>
   </div>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="col">
-        <span class="brand-info">Elvion AI</span>
-        <p>Where Assistance Meets Excellence.</p>
-      </div>
-      <div class="col">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="index.html#features">Features</a></li>
-          <li><a href="index.html#products">Products</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Company</h4>
-        <ul>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="about.html#">Careers</a></li>
-        </ul>
-      </div>
-      <div class="col">
-        <h4>Legal</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="terms.html">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div class="legal-info">
-        &copy; <span id="current-year"></span> Elvion AI. All rights reserved.
-      </div>
-    </div>
-  </footer>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      updateDoc,
+      arrayUnion
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
-  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyROm0aBGjry6NUfhNM3e0qwPcCDoIqSk",
+      authDomain: "elvionai.firebaseapp.com",
+      projectId: "elvionai",
+      storageBucket: "elvionai.firebasestorage.app",
+      messagingSenderId: "161078300830",
+      appId: "1:161078300830:web:f460df8591704eb0e96b8f"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Course Database - Same as dashboard
+    const coursesDatabase = {
+      'science-tech': {
+        facultyName: 'Faculty of Science & Technology',
+        courses: [
+          {
+            id: 'cs101',
+            title: 'Computer Science',
+            description: 'Fundamentals of computing, programming, and algorithms',
+            icon: 'fas fa-laptop-code',
+            totalLessons: 8,
+            estimatedHours: 120,
+            lessons: [
+              { 
+                id: 1, 
+                title: 'Introduction to Programming', 
+                duration: '45 min', 
+                content: `
+                  <h2>Welcome to Programming!</h2>
+                  <p>Programming is the process of creating a set of instructions that tell a computer how to perform a task. In this lesson, we'll explore the fundamental concepts that form the foundation of all programming languages.</p>
+                  
+                  <h3>What is Programming?</h3>
+                  <p>Programming is essentially problem-solving using a computer. It involves:</p>
+                  <ul>
+                    <li>Breaking down complex problems into smaller, manageable parts</li>
+                    <li>Creating step-by-step instructions (algorithms) to solve these problems</li>
+                    <li>Writing these instructions in a language that computers can understand</li>
+                    <li>Testing and refining your solutions</li>
+                  </ul>
+
+                  <h3>Basic Programming Concepts</h3>
+                  <p><strong>Variables:</strong> Think of variables as containers that store data. Just like a box can hold different items, a variable can hold different values.</p>
+                  <pre><code>name = "Alice"
+age = 25
+height = 5.6</code></pre>
+
+                  <p><strong>Data Types:</strong> Different types of information require different storage methods:</p>
+                  <ul>
+                    <li><code>String</code> - Text data like names, addresses</li>
+                    <li><code>Integer</code> - Whole numbers like 1, 100, -5</li>
+                    <li><code>Float</code> - Decimal numbers like 3.14, 98.6</li>
+                    <li><code>Boolean</code> - True or False values</li>
+                  </ul>
+
+                  <h3>Your First Program</h3>
+                  <p>Every programmer's journey begins with a simple "Hello, World!" program:</p>
+                  <pre><code>print("Hello, World!")</code></pre>
+                  <p>This simple line of code instructs the computer to display the text "Hello, World!" on the screen.</p>
+
+                  <h3>Programming Languages</h3>
+                  <p>There are many programming languages, each with its own strengths:</p>
+                  <ul>
+                    <li><strong>Python</strong> - Great for beginners, used in data science and web development</li>
+                    <li><strong>JavaScript</strong> - Powers web pages and interactive websites</li>
+                    <li><strong>Java</strong> - Used for large applications and Android apps</li>
+                    <li><strong>C++</strong> - Used for system programming and game development</li>
+                  </ul>
+
+                  <h3>Next Steps</h3>
+                  <p>In our next lesson, we'll dive deeper into data structures and learn how to organize and manipulate data efficiently. Remember, programming is a skill that improves with practice, so don't worry if everything doesn't click immediately!</p>
+                `
+              },
+              { 
+                id: 2, 
+                title: 'Data Structures', 
+                duration: '60 min', 
+                content: `
+                  <h2>Understanding Data Structures</h2>
+                  <p>Data structures are ways of organizing and storing data so that it can be accessed and modified efficiently. Think of them as different types of containers, each optimized for specific tasks.</p>
+
+                  <h3>Arrays</h3>
+                  <p>Arrays are like a row of boxes, each numbered and able to hold one piece of data:</p>
+                  <pre><code>fruits = ["apple", "banana", "orange", "grape"]
+numbers = [1, 2, 3, 4, 5]</code></pre>
+                  <p>You can access elements by their position (index): <code>fruits[0]</code> gives you "apple"</p>
+
+                  <h3>Lists (Dynamic Arrays)</h3>
+                  <p>Lists are like arrays but can grow and shrink as needed:</p>
+                  <pre><code>shopping_list = []
+shopping_list.append("milk")
+shopping_list.append("bread")
+# shopping_list is now ["milk", "bread"]</code></pre>
+
+                  <h3>Dictionaries (Hash Maps)</h3>
+                  <p>Dictionaries store data in key-value pairs, like a real dictionary where you look up words (keys) to find their meanings (values):</p>
+                  <pre><code>student = {
+    "name": "John",
+    "age": 20,
+    "grade": "A"
+}
+print(student["name"])  # Output: John</code></pre>
+
+                  <h3>Stacks</h3>
+                  <p>Stacks follow the "Last In, First Out" (LIFO) principle, like a stack of plates:</p>
+                  <ul>
+                    <li>Push: Add an element to the top</li>
+                    <li>Pop: Remove the top element</li>
+                    <li>Peek: Look at the top element without removing it</li>
+                  </ul>
+
+                  <h3>Queues</h3>
+                  <p>Queues follow the "First In, First Out" (FIFO) principle, like a line at a store:</p>
+                  <ul>
+                    <li>Enqueue: Add an element to the back</li>
+                    <li>Dequeue: Remove an element from the front</li>
+                  </ul>
+
+                  <h3>When to Use Each Structure</h3>
+                  <p><strong>Use Arrays/Lists when:</strong> You need to store a collection of similar items and access them by position.</p>
+                  <p><strong>Use Dictionaries when:</strong> You need to quickly look up values based on unique keys.</p>
+                  <p><strong>Use Stacks when:</strong> You need to reverse order or implement undo functionality.</p>
+                  <p><strong>Use Queues when:</strong> You need to process items in the order they arrive.</p>
+                `
+              },
+              { 
+                id: 3, 
+                title: 'Object-Oriented Programming', 
+                duration: '55 min', 
+                content: `
+                  <h2>Object-Oriented Programming (OOP)</h2>
+                  <p>Object-Oriented Programming is a programming paradigm that organizes code into objects - bundles of data and methods that work on that data. Think of objects as real-world entities with properties and behaviors.</p>
+
+                  <h3>Classes and Objects</h3>
+                  <p>A <strong>class</strong> is like a blueprint or template, while an <strong>object</strong> is an instance created from that blueprint:</p>
+                  <pre><code>class Car:
+    def __init__(self, brand, model, year):
+        self.brand = brand
+        self.model = model
+        self.year = year
+        self.speed = 0
+    
+    def accelerate(self):
+        self.speed += 10
+    
+    def brake(self):
+        self.speed = max(0, self.speed - 10)
+
+# Creating objects
+my_car = Car("Toyota", "Camry", 2022)
+your_car = Car("Honda", "Civic", 2023)</code></pre>
+
+                  <h3>The Four Pillars of OOP</h3>
+                  
+                  <h4>1. Encapsulation</h4>
+                  <p>Encapsulation bundles data and methods together and restricts direct access to some components. It's like having private and public parts of an object:</p>
+                  <pre><code>class BankAccount:
+    def __init__(self, initial_balance):
+        self._balance = initial_balance  # Protected attribute
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self._balance += amount
+    
+    def get_balance(self):
+        return self._balance</code></pre>
+
+                  <h4>2. Inheritance</h4>
+                  <p>Inheritance allows a class to inherit properties and methods from another class:</p>
+                  <pre><code>class Vehicle:
+    def __init__(self, brand):
+        self.brand = brand
+    
+    def start_engine(self):
+        print("Engine started!")
+
+class Car(Vehicle):  # Car inherits from Vehicle
+    def __init__(self, brand, doors):
+        super().__init__(brand)  # Call parent constructor
+        self.doors = doors</code></pre>
+
+                  <h4>3. Polymorphism</h4>
+                  <p>Polymorphism allows objects of different classes to be treated as objects of a common base class:</p>
+                  <pre><code>class Dog:
+    def make_sound(self):
+        return "Woof!"
+
+class Cat:
+    def make_sound(self):
+        return "Meow!"
+
+animals = [Dog(), Cat()]
+for animal in animals:
+    print(animal.make_sound())  # Different sounds for different animals</code></pre>
+
+                  <h4>4. Abstraction</h4>
+                  <p>Abstraction hides complex implementation details and shows only the necessary features:</p>
+                  <pre><code>from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height</code></pre>
+
+                  <h3>Benefits of OOP</h3>
+                  <ul>
+                    <li><strong>Modularity:</strong> Code is organized into separate, manageable units</li>
+                    <li><strong>Reusability:</strong> Classes can be reused across different programs</li>
+                    <li><strong>Maintainability:</strong> Changes to one part don't affect other parts</li>
+                    <li><strong>Scalability:</strong> Easy to add new features without breaking existing code</li>
+                  </ul>
+                `
+              },
+              { 
+                id: 4, 
+                title: 'Database Systems', 
+                duration: '50 min', 
+                content: `
+                  <h2>Introduction to Database Systems</h2>
+                  <p>A database is an organized collection of data that can be easily accessed, managed, and updated. Think of it as a digital filing cabinet where information is stored in a structured way.</p>
+
+                  <h3>Why Do We Need Databases?</h3>
+                  <ul>
+                    <li><strong>Data Organization:</strong> Keep related information together</li>
+                    <li><strong>Data Integrity:</strong> Ensure data is accurate and consistent</li>
+                    <li><strong>Concurrent Access:</strong> Multiple users can access data simultaneously</li>
+                    <li><strong>Security:</strong> Control who can access what data</li>
+                    <li><strong>Backup and Recovery:</strong> Protect against data loss</li>
+                  </ul>
+
+                  <h3>Types of Databases</h3>
+                  
+                  <h4>Relational Databases (SQL)</h4>
+                  <p>Data is stored in tables with rows and columns, like a spreadsheet:</p>
+                  <pre><code>Students Table:
+ID | Name     | Age | Email
+1  | Alice    | 20  | alice@email.com
+2  | Bob      | 22  | bob@email.com
+3  | Charlie  | 19  | charlie@email.com</code></pre>
+
+                  <h4>NoSQL Databases</h4>
+                  <p>More flexible storage for different types of data:</p>
+                  <ul>
+                    <li><strong>Document Databases:</strong> Store data as documents (like JSON)</li>
+                    <li><strong>Key-Value Stores:</strong> Simple key-value pairs</li>
+                    <li><strong>Graph Databases:</strong> Store relationships between data</li>
+                  </ul>
+
+                  <h3>SQL Basics</h3>
+                  <p>SQL (Structured Query Language) is used to communicate with relational databases:</p>
+                  
+                  <h4>Creating a Table</h4>
+                  <pre><code>CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT,
+    email VARCHAR(100)
+);</code></pre>
+
+                  <h4>Inserting Data</h4>
+                  <pre><code>INSERT INTO students (id, name, age, email)
+VALUES (1, 'Alice', 20, 'alice@email.com');</code></pre>
+
+                  <h4>Querying Data</h4>
+                  <pre><code>-- Get all students
+SELECT * FROM students;
+
+-- Get students older than 20
+SELECT name, age FROM students WHERE age > 20;
+
+-- Get students ordered by age
+SELECT * FROM students ORDER BY age DESC;</code></pre>
+
+                  <h4>Updating Data</h4>
+                  <pre><code>UPDATE students 
+SET age = 21 
+WHERE name = 'Alice';</code></pre>
+
+                  <h4>Deleting Data</h4>
+                  <pre><code>DELETE FROM students WHERE id = 1;</code></pre>
+
+                  <h3>Database Design Principles</h3>
+                  <p><strong>Normalization:</strong> Organize data to reduce redundancy and improve integrity</p>
+                  <p><strong>Primary Keys:</strong> Unique identifiers for each row</p>
+                  <p><strong>Foreign Keys:</strong> Links between tables</p>
+                  <p><strong>Indexes:</strong> Speed up data retrieval</p>
+
+                  <h3>Popular Database Systems</h3>
+                  <ul>
+                    <li><strong>MySQL:</strong> Popular open-source relational database</li>
+                    <li><strong>PostgreSQL:</strong> Advanced open-source database with many features</li>
+                    <li><strong>MongoDB:</strong> Popular NoSQL document database</li>
+                    <li><strong>SQLite:</strong> Lightweight database for small applications</li>
+                  </ul>
+                `
+              },
+              { 
+                id: 5, 
+                title: 'Software Engineering', 
+                duration: '60 min', 
+                content: `
+                  <h2>Software Engineering Fundamentals</h2>
+                  <p>Software Engineering is the systematic approach to designing, developing, testing, and maintaining software systems. It combines engineering principles with programming to create reliable, efficient, and maintainable software.</p>
+
+                  <h3>Software Development Life Cycle (SDLC)</h3>
+                  <p>The SDLC is a framework that describes the stages involved in software development:</p>
+                  
+                  <h4>1. Planning and Analysis</h4>
+                  <ul>
+                    <li>Understand the problem and requirements</li>
+                    <li>Analyze feasibility and resources needed</li>
+                    <li>Create project timeline and budget</li>
+                  </ul>
+
+                  <h4>2. Design</h4>
+                  <ul>
+                    <li>Create system architecture</li>
+                    <li>Design user interfaces</li>
+                    <li>Plan database structure</li>
+                    <li>Define APIs and data flow</li>
+                  </ul>
+
+                  <h4>3. Implementation (Coding)</h4>
+                  <ul>
+                    <li>Write the actual code</li>
+                    <li>Follow coding standards and best practices</li>
+                    <li>Conduct code reviews</li>
+                  </ul>
+
+                  <h4>4. Testing</h4>
+                  <ul>
+                    <li>Unit testing: Test individual components</li>
+                    <li>Integration testing: Test how components work together</li>
+                    <li>System testing: Test the complete system</li>
+                    <li>User acceptance testing: Ensure it meets user needs</li>
+                  </ul>
+
+                  <h4>5. Deployment</h4>
+                  <ul>
+                    <li>Release the software to users</li>
+                    <li>Set up production environment</li>
+                    <li>Monitor system performance</li>
+                  </ul>
+
+                  <h4>6. Maintenance</h4>
+                  <ul>
+                    <li>Fix bugs and issues</li>
+                    <li>Add new features</li>
+                    <li>Update security and performance</li>
+                  </ul>
+
+                  <h3>Development Methodologies</h3>
+                  
+                  <h4>Waterfall Model</h4>
+                  <p>Sequential approach where each phase must be completed before the next begins:</p>
+                  <ul>
+                    <li><strong>Pros:</strong> Clear structure, good documentation</li>
+                    <li><strong>Cons:</strong> Inflexible, difficult to change requirements</li>
+                  </ul>
+
+                  <h4>Agile Methodology</h4>
+                  <p>Iterative approach with short development cycles (sprints):</p>
+                  <ul>
+                    <li><strong>Pros:</strong> Flexible, customer collaboration, quick delivery</li>
+                    <li><strong>Cons:</strong> Less documentation, requires experienced team</li>
+                  </ul>
+
+                  <h3>Software Engineering Principles</h3>
+                  
+                  <h4>DRY (Don't Repeat Yourself)</h4>
+                  <p>Avoid duplicating code or logic. If you need to do something more than once, create a reusable function or component.</p>
+
+                  <h4>SOLID Principles</h4>
+                  <ul>
+                    <li><strong>S</strong>ingle Responsibility: Each class should have one reason to change</li>
+                    <li><strong>O</strong>pen/Closed: Open for extension, closed for modification</li>
+                    <li><strong>L</strong>iskov Substitution: Objects should be replaceable with instances of their subtypes</li>
+                    <li><strong>I</strong>nterface Segregation: Many specific interfaces are better than one general-purpose interface</li>
+                    <li><strong>D</strong>ependency Inversion: Depend on abstractions, not concretions</li>
+                  </ul>
+
+                  <h4>KISS (Keep It Simple, Stupid)</h4>
+                  <p>Simple solutions are usually better than complex ones. Write code that others can easily understand and maintain.</p>
+
+                  <h3>Version Control</h3>
+                  <p>Version control systems track changes to code over time:</p>
+                  <pre><code># Git basics
+git init                    # Initialize a repository
+git add file.py            # Stage changes
+git commit -m "Add feature" # Save changes
+git push origin main       # Upload to remote repository</code></pre>
+
+                  <h3>Code Quality</h3>
+                  <ul>
+                    <li><strong>Readability:</strong> Code should be easy to read and understand</li>
+                    <li><strong>Documentation:</strong> Comments and documentation help others understand your code</li>
+                    <li><strong>Testing:</strong> Write tests to ensure your code works correctly</li>
+                    <li><strong>Code Reviews:</strong> Have others review your code for improvements</li>
+                  </ul>
+                `
+              },
+              { 
+                id: 6, 
+                title: 'Computer Networks', 
+                duration: '50 min', 
+                content: `
+                  <h2>Introduction to Computer Networks</h2>
+                  <p>A computer network is a collection of interconnected devices that can communicate and share resources. From the internet to your home Wi-Fi, networks are everywhere in our digital world.</p>
+
+                  <h3>Why Do We Need Networks?</h3>
+                  <ul>
+                    <li><strong>Resource Sharing:</strong> Share files, printers, and internet connections</li>
+                    <li><strong>Communication:</strong> Email, messaging, video calls</li>
+                    <li><strong>Data Access:</strong> Access information from anywhere</li>
+                    <li><strong>Collaboration:</strong> Work together on projects remotely</li>
+                    <li><strong>Cost Efficiency:</strong> Share expensive resources like servers</li>
+                  </ul>
+
+                  <h3>Types of Networks</h3>
+                  
+                  <h4>By Size and Scope</h4>
+                  <ul>
+                    <li><strong>PAN (Personal Area Network):</strong> Bluetooth connections between your devices</li>
+                    <li><strong>LAN (Local Area Network):</strong> Home or office networks</li>
+                    <li><strong>MAN (Metropolitan Area Network):</strong> City-wide networks</li>
+                    <li><strong>WAN (Wide Area Network):</strong> Large-scale networks like the internet</li>
+                  </ul>
+
+                  <h4>By Topology</h4>
+                  <ul>
+                    <li><strong>Star:</strong> All devices connect to a central hub</li>
+                    <li><strong>Bus:</strong> All devices connect to a single cable</li>
+                    <li><strong>Ring:</strong> Devices form a circular connection</li>
+                    <li><strong>Mesh:</strong> Every device connects to every other device</li>
+                  </ul>
+
+                  <h3>How Networks Work: The OSI Model</h3>
+                  <p>The OSI (Open Systems Interconnection) model describes how network communication works in 7 layers:</p>
+                  
+                  <h4>7. Application Layer</h4>
+                  <p>What you interact with directly (web browsers, email clients)</p>
+                  
+                  <h4>6. Presentation Layer</h4>
+                  <p>Data formatting, encryption, compression</p>
+                  
+                  <h4>5. Session Layer</h4>
+                  <p>Manages connections between applications</p>
+                  
+                  <h4>4. Transport Layer</h4>
+                  <p>Ensures reliable data delivery (TCP/UDP protocols)</p>
+                  
+                  <h4>3. Network Layer</h4>
+                  <p>Routing data between networks (IP addresses)</p>
+                  
+                  <h4>2. Data Link Layer</h4>
+                  <p>Direct communication between connected devices</p>
+                  
+                  <h4>1. Physical Layer</h4>
+                  <p>Actual hardware: cables, radio waves, fiber optics</p>
+
+                  <h3>IP Addresses and Protocols</h3>
+                  
+                  <h4>IP Addresses</h4>
+                  <p>Every device on a network has a unique identifier:</p>
+                  <ul>
+                    <li><strong>IPv4:</strong> 192.168.1.1 (32-bit addresses)</li>
+                    <li><strong>IPv6:</strong> 2001:0db8:85a3:0000:0000:8a2e:0370:7334 (128-bit addresses)</li>
+                  </ul>
+
+                  <h4>Common Protocols</h4>
+                  <ul>
+                    <li><strong>HTTP/HTTPS:</strong> Web page transfer</li>
+                    <li><strong>FTP:</strong> File transfer</li>
+                    <li><strong>SMTP:</strong> Email sending</li>
+                    <li><strong>DNS:</strong> Domain name resolution</li>
+                    <li><strong>DHCP:</strong> Automatic IP address assignment</li>
+                  </ul>
+
+                  <h3>Network Security</h3>
+                  
+                  <h4>Common Threats</h4>
+                  <ul>
+                    <li><strong>Malware:</strong> Viruses, worms, trojans</li>
+                    <li><strong>Phishing:</strong> Fake websites to steal information</li>
+                    <li><strong>Man-in-the-Middle:</strong> Intercepting communications</li>
+                    <li><strong>DDoS:</strong> Overwhelming servers with traffic</li>
+                  </ul>
+
+                  <h4>Security Measures</h4>
+                  <ul>
+                    <li><strong>Firewalls:</strong> Filter incoming and outgoing traffic</li>
+                    <li><strong>VPN:</strong> Secure connections over public networks</li>
+                    <li><strong>Encryption:</strong> Scramble data to prevent unauthorized access</li>
+                    <li><strong>Authentication:</strong> Verify user identity</li>
+                  </ul>
+
+                  <h3>Network Devices</h3>
+                  <ul>
+                    <li><strong>Router:</strong> Connects different networks together</li>
+                    <li><strong>Switch:</strong> Connects devices within a network</li>
+                    <li><strong>Hub:</strong> Simple connection point (mostly obsolete)</li>
+                    <li><strong>Access Point:</strong> Provides wireless network access</li>
+                    <li><strong>Modem:</strong> Converts digital signals for internet transmission</li>
+                  </ul>
+
+                  <h3>The Internet</h3>
+                  <p>The internet is a global network of networks. When you type a web address:</p>
+                  <ol>
+                    <li>Your computer asks a DNS server for the IP address</li>
+                    <li>Your request travels through multiple routers</li>
+                    <li>The destination server receives your request</li>
+                    <li>The server sends back the web page</li>
+                    <li>Your browser displays the content</li>
+                  </ol>
+                `
+              },
+              { 
+                id: 7, 
+                title: 'Artificial Intelligence', 
+                duration: '65 min', 
+                content: `
+                  <h2>Introduction to Artificial Intelligence</h2>
+                  <p>Artificial Intelligence (AI) is the simulation of human intelligence in machines that are programmed to think and learn like humans. It's one of the most exciting and rapidly evolving fields in computer science.</p>
+
+                  <h3>What is AI?</h3>
+                  <p>AI refers to the ability of machines to perform cognitive tasks that we associate with human minds, such as:</p>
+                  <ul>
+                    <li>Learning from experience</li>
+                    <li>Understanding natural language</li>
+                    <li>Recognizing patterns</li>
+                    <li>Solving problems</li>
+                    <li>Making decisions</li>
+                  </ul>
+
+                  <h3>Types of AI</h3>
+                  
+                  <h4>Narrow AI (Weak AI)</h4>
+                  <p>AI that is designed and trained for a specific task:</p>
+                  <ul>
+                    <li>Voice assistants (Siri, Alexa)</li>
+                    <li>Recommendation systems (Netflix, Amazon)</li>
+                    <li>Image recognition</li>
+                    <li>Game playing (Chess, Go)</li>
+                  </ul>
+
+                  <h4>General AI (Strong AI)</h4>
+                  <p>AI that can understand, learn, and apply knowledge across a wide range of tasks like humans. This doesn't exist yet but is the ultimate goal.</p>
+
+                  <h4>Superintelligence</h4>
+                  <p>AI that surpasses human intelligence in all domains. This is still theoretical and the subject of much debate.</p>
+
+                  <h3>Machine Learning</h3>
+                  <p>Machine Learning (ML) is a subset of AI that enables computers to learn and improve from experience without being explicitly programmed.</p>
+
+                  <h4>Types of Machine Learning</h4>
+                  
+                  <h5>1. Supervised Learning</h5>
+                  <p>Learning from labeled examples:</p>
+                  <pre><code># Example: Predicting house prices
+Training Data:
+House Size | Bedrooms | Price
+1000 sq ft | 2        | $200,000
+1500 sq ft | 3        | $300,000
+2000 sq ft | 4        | $400,000
+
+# The algorithm learns the pattern and can predict prices for new houses</code></pre>
+
+                  <h5>2. Unsupervised Learning</h5>
+                  <p>Finding patterns in data without labels:</p>
+                  <ul>
+                    <li>Customer segmentation</li>
+                    <li>Anomaly detection</li>
+                    <li>Data compression</li>
+                  </ul>
+
+                  <h5>3. Reinforcement Learning</h5>
+                  <p>Learning through trial and error with rewards and penalties:</p>
+                  <ul>
+                    <li>Game playing (AlphaGo)</li>
+                    <li>Autonomous vehicles</li>
+                    <li>Robot control</li>
+                  </ul>
+
+                  <h3>Deep Learning</h3>
+                  <p>Deep Learning is a subset of ML inspired by the human brain, using artificial neural networks with multiple layers.</p>
+
+                  <h4>Neural Networks</h4>
+                  <p>Simplified structure of a neural network:</p>
+                  <pre><code>Input Layer → Hidden Layers → Output Layer
+    |              |              |
+  [Data]      [Processing]    [Prediction]</code></pre>
+
+                  <h4>Applications of Deep Learning</h4>
+                  <ul>
+                    <li><strong>Computer Vision:</strong> Image classification, object detection</li>
+                    <li><strong>Natural Language Processing:</strong> Language translation, chatbots</li>
+                    <li><strong>Speech Recognition:</strong> Voice-to-text conversion</li>
+                    <li><strong>Generative AI:</strong> Creating new content (images, text, music)</li>
+                  </ul>
+
+                  <h3>Popular AI Applications</h3>
+                  
+                  <h4>In Daily Life</h4>
+                  <ul>
+                    <li><strong>Search Engines:</strong> Google's search algorithms</li>
+                    <li><strong>Social Media:</strong> News feed algorithms, content moderation</li>
+                    <li><strong>E-commerce:</strong> Product recommendations</li>
+                    <li><strong>Transportation:</strong> GPS navigation, ride-sharing</li>
+                    <li><strong>Entertainment:</strong> Content recommendations on streaming platforms</li>
+                  </ul>
+
+                  <h4>In Industries</h4>
+                  <ul>
+                    <li><strong>Healthcare:</strong> Medical diagnosis, drug discovery</li>
+                    <li><strong>Finance:</strong> Fraud detection, algorithmic trading</li>
+                    <li><strong>Manufacturing:</strong> Quality control, predictive maintenance</li>
+                    <li><strong>Agriculture:</strong> Crop monitoring, precision farming</li>
+                  </ul>
+
+                  <h3>AI Development Process</h3>
+                  <ol>
+                    <li><strong>Problem Definition:</strong> Clearly define what you want to solve</li>
+                    <li><strong>Data Collection:</strong> Gather relevant, high-quality data</li>
+                    <li><strong>Data Preprocessing:</strong> Clean and prepare data for training</li>
+                    <li><strong>Model Selection:</strong> Choose appropriate algorithms</li>
+                    <li><strong>Training:</strong> Feed data to the model to learn patterns</li>
+                    <li><strong>Evaluation:</strong> Test the model's performance</li>
+                    <li><strong>Deployment:</strong> Put the model into production</li>
+                    <li><strong>Monitoring:</strong> Continuously monitor and improve</li>
+                  </ol>
+
+                  <h3>Ethical Considerations</h3>
+                  <ul>
+                    <li><strong>Bias:</strong> AI systems can perpetuate or amplify human biases</li>
+                    <li><strong>Privacy:</strong> AI often requires large amounts of personal data</li>
+                    <li><strong>Job Displacement:</strong> Automation may replace human workers</li>
+                    <li><strong>Accountability:</strong> Who is responsible when AI makes mistakes?</li>
+                    <li><strong>Transparency:</strong> Many AI systems are "black boxes"</li>
+                  </ul>
+
+                  <h3>The Future of AI</h3>
+                  <p>AI continues to advance rapidly, with exciting developments in:</p>
+                  <ul>
+                    <li>Large Language Models (like ChatGPT)</li>
+                    <li>Autonomous vehicles</li>
+                    <li>Quantum computing and AI</li>
+                    <li>AI in space exploration</li>
+                    <li>Brain-computer interfaces</li>
+                  </ul>
+
+                  <p>As AI becomes more powerful, it's crucial to develop it responsibly, ensuring it benefits humanity while minimizing risks.</p>
+                `
+              },
+              { 
+                id: 8, 
+                title: 'Final Year Project', 
+                duration: '120 min', 
+                content: `
+                  <h2>Final Year Project: Building Your Portfolio</h2>
+                  <p>Your final year project is the culmination of everything you've learned. It's your opportunity to demonstrate your skills, creativity, and problem-solving abilities while building something meaningful for your portfolio.</p>
+
+                  <h3>Project Planning Phase</h3>
+                  
+                  <h4>Choosing Your Project</h4>
+                  <p>Select a project that:</p>
+                  <ul>
+                    <li>Aligns with your interests and career goals</li>
+                    <li>Demonstrates multiple skills you've learned</li>
+                    <li>Solves a real problem or need</li>
+                    <li>Is challenging but achievable within your timeframe</li>
+                    <li>Has clear, measurable outcomes</li>
+                  </ul>
+
+                  <h4>Project Ideas</h4>
+                  <ul>
+                    <li><strong>Web Application:</strong> E-commerce site, social platform, productivity tool</li>
+                    <li><strong>Mobile App:</strong> Task manager, fitness tracker, educational game</li>
+                    <li><strong>Data Analysis:</strong> Business intelligence dashboard, predictive analytics</li>
+                    <li><strong>AI/ML Project:</strong> Recommendation system, image classifier, chatbot</li>
+                    <li><strong>System Software:</strong> Database system, compiler, operating system component</li>
+                  </ul>
+
+                  <h3>Project Documentation</h3>
+                  
+                  <h4>Project Proposal</h4>
+                  <p>Create a comprehensive proposal including:</p>
+                  <ul>
+                    <li><strong>Problem Statement:</strong> What problem are you solving?</li>
+                    <li><strong>Objectives:</strong> What do you want to achieve?</li>
+                    <li><strong>Scope:</strong> What will and won't be included?</li>
+                    <li><strong>Methodology:</strong> How will you approach the problem?</li>
+                    <li><strong>Timeline:</strong> Project milestones and deadlines</li>
+                    <li><strong>Resources:</strong> Tools, technologies, and data needed</li>
+                  </ul>
+
+                  <h4>Technical Specifications</h4>
+                  <pre><code>System Architecture Example:
+Frontend: React.js with TypeScript
+Backend: Node.js with Express
+Database: PostgreSQL
+Authentication: JWT tokens
+Hosting: AWS/Heroku
+Version Control: Git/GitHub</code></pre>
+
+                  <h3>Development Process</h3>
+                  
+                  <h4>Phase 1: Setup and Foundation (Week 1-2)</h4>
+                  <ul>
+                    <li>Set up development environment</li>
+                    <li>Create project repository</li>
+                    <li>Design database schema</li>
+                    <li>Create basic project structure</li>
+                    <li>Set up CI/CD pipeline</li>
+                  </ul>
+
+                  <h4>Phase 2: Core Development (Week 3-8)</h4>
+                  <ul>
+                    <li>Implement core functionality</li>
+                    <li>Create user interface</li>
+                    <li>Integrate database operations</li>
+                    <li>Add authentication and authorization</li>
+                    <li>Write unit tests</li>
+                  </ul>
+
+                  <h4>Phase 3: Advanced Features (Week 9-11)</h4>
+                  <ul>
+                    <li>Add advanced features</li>
+                    <li>Optimize performance</li>
+                    <li>Implement security measures</li>
+                    <li>Add error handling</li>
+                    <li>Conduct integration testing</li>
+                  </ul>
+
+                  <h4>Phase 4: Finalization (Week 12)</h4>
+                  <ul>
+                    <li>User acceptance testing</li>
+                    <li>Bug fixes and refinements</li>
+                    <li>Documentation completion</li>
+                    <li>Deployment to production</li>
+                    <li>Presentation preparation</li>
+                  </ul>
+
+                  <h3>Best Practices</h3>
+                  
+                  <h4>Code Quality</h4>
+                  <pre><code># Example: Clean, documented code
+class UserManager:
+                      """Handles user-related operations."""
+                      
+                      def __init__(self, database_connection):
+                          self.db = database_connection
+                      
+                      def create_user(self, email, password):
+                          """
+                          Creates a new user account.
+                          
+                          Args:
+                              email (str): User's email address
+                              password (str): User's password (will be hashed)
+                          
+                          Returns:
+                              dict: User object with id and email
+                          
+                          Raises:
+                              ValueError: If email already exists
+                          """
+                          if self.user_exists(email):
+                              raise ValueError("User already exists")
+                          
+                          hashed_password = self.hash_password(password)
+                          user_id = self.db.insert_user(email, hashed_password)
+                          
+                          return {"id": user_id, "email": email}</code></pre>
+
+                  <h4>Testing Strategy</h4>
+                  <ul>
+                    <li><strong>Unit Tests:</strong> Test individual functions and components</li>
+                    <li><strong>Integration Tests:</strong> Test how components work together</li>
+                    <li><strong>End-to-End Tests:</strong> Test complete user workflows</li>
+                    <li><strong>Performance Tests:</strong> Ensure system can handle expected load</li>
+                  </ul>
+
+                  <h4>Version Control</h4>
+                  <pre><code># Git workflow for project
+git checkout -b feature/user-authentication
+# Make changes
+git add .
+git commit -m "Add user authentication system"
+git push origin feature/user-authentication
+# Create pull request for code review</code></pre>
+
+                  <h3>Project Presentation</h3>
+                  
+                  <h4>Presentation Structure</h4>
+                  <ol>
+                    <li><strong>Introduction (2 min):</strong> Problem statement and motivation</li>
+                    <li><strong>Solution Overview (3 min):</strong> Your approach and architecture</li>
+                    <li><strong>Demo (5 min):</strong> Live demonstration of key features</li>
+                    <li><strong>Technical Details (3 min):</strong> Interesting challenges and solutions</li>
+                    <li><strong>Results and Impact (2 min):</strong> What you achieved and learned</li>
+                    <li><strong>Q&A (5 min):</strong> Answer questions from audience</li>
+                  </ol>
+
+                  <h4>Demo Tips</h4>
+                  <ul>
+                    <li>Practice your demo multiple times</li>
+                    <li>Have backup plans if technology fails</li>
+                    <li>Focus on user experience, not just features</li>
+                    <li>Explain what you're doing as you demo</li>
+                    <li>Be prepared to show code if asked</li>
+                  </ul>
+
+                  <h3>Portfolio Integration</h3>
+                  
+                  <h4>Project Documentation</h4>
+                  <p>Create comprehensive documentation for your portfolio:</p>
+                  <ul>
+                    <li><strong>README.md:</strong> Project overview and setup instructions</li>
+                    <li><strong>Live Demo:</strong> Deployed version for employers to try</li>
+                    <li><strong>Screenshots:</strong> Visual showcase of your application</li>
+                    <li><strong>Video Demo:</strong> 2-3 minute walkthrough</li>
+                    <li><strong>Code Repository:</strong> Clean, well-organized GitHub repo</li>
+                  </ul>
+
+                  <h4>Reflection and Learning</h4>
+                  <p>Document your learning journey:</p>
+                  <ul>
+                    <li>What challenges did you face and how did you overcome them?</li>
+                    <li>What would you do differently next time?</li>
+                    <li>What new technologies or concepts did you learn?</li>
+                    <li>How does this project demonstrate your growth as a developer?</li>
+                  </ul>
+
+                  <h3>Career Impact</h3>
+                  <p>Your final project can significantly boost your career prospects:</p>
+                  <ul>
+                    <li><strong>Portfolio Centerpiece:</strong> Showcase your best work</li>
+                    <li><strong>Interview Talking Point:</strong> Demonstrate problem-solving skills</li>
+                    <li><strong>GitHub Contribution:</strong> Show consistent coding activity</li>
+                    <li><strong>Learning Evidence:</strong> Prove you can learn new technologies</li>
+                    <li><strong>Professional Network:</strong> Share your work with industry contacts</li>
+                  </ul>
+
+                  <p>Remember: This project represents not just what you've learned, but your potential as a software developer. Make it count!</p>
+                `
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    let currentUser = null;
+    let userData = null;
+    let currentCourse = null;
+    let currentLesson = 1;
+    let totalLessons = 0;
+
+    // URL Parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const courseId = urlParams.get('courseId');
+    const lessonParam = urlParams.get('lesson');
+
+    // Stars Animation
     document.addEventListener('DOMContentLoaded', () => {
-      const hamburger = document.querySelector('.hamburger');
-      const navLinks = document.querySelector('.nav-links');
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('active');
-      });
-      document.getElementById('current-year').textContent = new Date().getFullYear();
       const starsContainer = document.getElementById('stars-container');
-      const numStars = 100, minSize = 1, maxSize = 3;
-      function createStar() {
-        const star = document.createElement('div'); star.className = 'star'; starsContainer.appendChild(star);
-        const size = Math.random() * (maxSize - minSize) + minSize;
-        star.style.width = `${size}px`; star.style.height = `${size}px`;
+      const numStars = 100;
+
+      for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = `${1 + Math.random() * 2}px`;
+        star.style.height = star.style.width;
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
         star.style.animationDelay = `${Math.random() * 4}s`;
-        star.style.animationDuration = `${3 + Math.random() * 2}s`;
+        starsContainer.appendChild(star);
       }
-      for (let i = 0; i < numStars; i++) createStar();
     });
 
-    function showModal(title, description, jobs, mediaPath, courses, mediaType, degree) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-description').innerHTML = description;
-      document.getElementById('modal-jobs').innerHTML = jobs;
-      document.getElementById('modal-duration').textContent = "1 Semester";
-      if (mediaType === "audio") {
-        document.getElementById('modal-video').innerHTML = `
-          <audio controls style="width:100%;outline:none;border-radius:10px;box-shadow:0 0 8px #00ffff;">
-            <source src="${mediaPath}" type="audio/mpeg">
-            Your browser does not support the audio element.
-          </audio>`;
-      } else {
-        document.getElementById('modal-video').innerHTML = `<iframe src="${mediaPath}" frameborder="0" allowfullscreen></iframe>`;
+    // Mobile Menu Toggle
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const courseSidebar = document.getElementById('courseSidebar');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      courseSidebar.classList.toggle('active');
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 992) {
+        if (!courseSidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+          courseSidebar.classList.remove('active');
+        }
       }
-      const courseList = courses.split('|');
-      let coursesHtml = '';
-      courseList.forEach(course => {
-        const [code, name] = course.split(': ');
-        coursesHtml += `
-          <div class="course-item">
-            <span>${name}</span>
-            <span class="course-code">${code}</span>
+    });
+
+    // Auth State Management
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        currentUser = user;
+        await loadUserData();
+        await initializeCourseViewer();
+      } else {
+        window.location.href = 'enroll.html';
+      }
+    });
+
+    async function loadUserData() {
+      try {
+        const userDocRef = doc(db, 'users', currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+          userData = userDoc.data();
+        } else {
+          window.location.href = 'dashboard.html';
+        }
+      } catch (error) {
+        console.error('Error loading user data:', error);
+        alert('Error loading user data. Please try again.');
+      }
+    }
+
+    async function initializeCourseViewer() {
+      if (!courseId) {
+        alert('No course specified');
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      currentCourse = findCourseById(courseId);
+      if (!currentCourse) {
+        alert('Course not found');
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      totalLessons = currentCourse.totalLessons;
+      currentLesson = parseInt(lessonParam) || 1;
+
+      // Check if user is enrolled
+      const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
+      if (!enrolledCourse) {
+        alert('You are not enrolled in this course');
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      setupCourseInterface();
+      renderLessonsList();
+      loadLesson(currentLesson);
+      
+      document.getElementById('loadingContainer').style.display = 'none';
+      document.getElementById('contentHeader').style.display = 'flex';
+      document.getElementById('mainContent').style.display = 'block';
+      document.getElementById('lessonNavigation').style.display = 'flex';
+    }
+
+    function findCourseById(courseId) {
+      for (const facultyKey in coursesDatabase) {
+        const course = coursesDatabase[facultyKey].courses.find(c => c.id === courseId);
+        if (course) return course;
+      }
+      return null;
+    }
+
+    function setupCourseInterface() {
+      document.getElementById('courseIconLarge').className = `course-icon-large ${currentCourse.icon}`;
+      document.getElementById('courseTitle').textContent = currentCourse.title;
+      document.getElementById('courseSubtitle').textContent = currentCourse.description;
+      
+      updateOverallProgress();
+    }
+
+    function updateOverallProgress() {
+      const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
+      const progress = enrolledCourse?.progress || 0;
+      const completedLessons = enrolledCourse?.completedLessons?.length || 0;
+      
+      document.getElementById('overallProgressBar').style.width = `${progress}%`;
+      document.getElementById('overallProgressText').textContent = `${progress}% Complete (${completedLessons}/${totalLessons} lessons)`;
+    }
+
+    function renderLessonsList() {
+      const container = document.getElementById('lessonsContainer');
+      const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
+      const completedLessons = enrolledCourse?.completedLessons || [];
+      
+      container.innerHTML = '';
+      
+      currentCourse.lessons.forEach((lesson, index) => {
+        const lessonNumber = lesson.id;
+        const isCompleted = completedLessons.includes(lessonNumber);
+        const isCurrent = lessonNumber === currentLesson;
+        const isAccessible = lessonNumber <= (enrolledCourse?.currentLesson || 1);
+        
+        const lessonItem = document.createElement('div');
+        lessonItem.className = `lesson-item ${isCurrent ? 'active' : ''} ${isCompleted ? 'completed' : ''}`;
+        
+        let statusIcon, statusClass;
+        if (isCompleted) {
+          statusIcon = '<i class="fas fa-check"></i>';
+          statusClass = 'completed';
+        } else if (isCurrent) {
+          statusIcon = lessonNumber;
+          statusClass = 'current';
+        } else if (isAccessible) {
+          statusIcon = lessonNumber;
+          statusClass = 'current';
+        } else {
+          statusIcon = '<i class="fas fa-lock"></i>';
+          statusClass = 'locked';
+        }
+        
+        lessonItem.innerHTML = `
+          <div class="lesson-status ${statusClass}">${statusIcon}</div>
+          <div class="lesson-details">
+            <div class="lesson-title">${lesson.title}</div>
+            <div class="lesson-duration">${lesson.duration}</div>
           </div>
         `;
+        
+        if (isAccessible) {
+          lessonItem.style.cursor = 'pointer';
+          lessonItem.addEventListener('click', () => {
+            if (lessonNumber !== currentLesson) {
+              loadLesson(lessonNumber);
+            }
+          });
+        } else {
+          lessonItem.style.opacity = '0.5';
+          lessonItem.style.cursor = 'not-allowed';
+        }
+        
+        container.appendChild(lessonItem);
       });
-      coursesHtml += `<div style="margin-top:1em;color:var(--cyan-glow);font-weight:600;">Duration outside Elvion: 4 years, 2 years masters.</div>`;
-      if(degree){ coursesHtml += `<div style="margin-top:0.5em;">Degree: ${degree}</div>`; }
-      document.getElementById('modal-courses').innerHTML = coursesHtml;
-      // Link goes to a simple enroll page with course name
-      document.getElementById('modal-take-course-btn').setAttribute('href', `/enroll.html?course=${encodeURIComponent(title)}`);
-      document.getElementById('modal').style.display = "flex";
     }
-    function hideModal() {
-      document.getElementById('modal').style.display = "none";
+
+    function loadLesson(lessonNumber) {
+      const lesson = currentCourse.lessons.find(l => l.id === lessonNumber);
+      if (!lesson) return;
+      
+      currentLesson = lessonNumber;
+      
+      // Update URL without reloading
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('lesson', lessonNumber);
+      window.history.pushState({}, '', newUrl);
+      
+      // Update header
+      document.getElementById('lessonTitle').textContent = lesson.title;
+      document.getElementById('lessonDuration').textContent = lesson.duration;
+      document.getElementById('currentLessonNumber').textContent = lessonNumber;
+      document.getElementById('totalLessons').textContent = totalLessons;
+      document.getElementById('lessonPoints').textContent = '10';
+      
+      // Update navigation
+      document.getElementById('navCurrentLesson').textContent = lessonNumber;
+      document.getElementById('navTotalLessons').textContent = totalLessons;
+      
+      // Update content
+      document.getElementById('lessonContent').innerHTML = lesson.content;
+      
+      // Update navigation buttons
+      const prevBtn = document.getElementById('prevLessonBtn');
+      const nextBtn = document.getElementById('nextLessonBtn');
+      
+      prevBtn.disabled = lessonNumber === 1;
+      nextBtn.disabled = lessonNumber === totalLessons;
+      
+      // Update mark complete button
+      const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
+      const isCompleted = enrolledCourse?.completedLessons?.includes(lessonNumber);
+      const markCompleteBtn = document.getElementById('markCompleteBtn');
+      
+      if (isCompleted) {
+        markCompleteBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+        markCompleteBtn.disabled = true;
+      } else {
+        markCompleteBtn.innerHTML = '<i class="fas fa-check"></i> Mark Complete';
+        markCompleteBtn.disabled = false;
+      }
+      
+      // Update sidebar
+      renderLessonsList();
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
     }
-    function takeCourse(courseName) {
-      location.href = '/enroll.html?course=' + encodeURIComponent(courseName);
+
+    // Event Listeners
+    document.getElementById('markCompleteBtn').addEventListener('click', async () => {
+      await markLessonComplete();
+    });
+
+    document.getElementById('prevLessonBtn').addEventListener('click', () => {
+      if (currentLesson > 1) {
+        loadLesson(currentLesson - 1);
+      }
+    });
+
+    document.getElementById('nextLessonBtn').addEventListener('click', () => {
+      if (currentLesson < totalLessons) {
+        loadLesson(currentLesson + 1);
+      }
+    });
+
+    document.getElementById('continueBtn').addEventListener('click', () => {
+      document.getElementById('completionModal').style.display = 'none';
+      if (currentLesson < totalLessons) {
+        loadLesson(currentLesson + 1);
+      }
+    });
+
+    document.getElementById('backToDashboardBtn').addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    async function markLessonComplete() {
+      try {
+        const enrolledCourseIndex = userData.enrolledCourses.findIndex(c => c.courseId === courseId);
+        if (enrolledCourseIndex === -1) return;
+        
+        const enrolledCourse = userData.enrolledCourses[enrolledCourseIndex];
+        
+        // Add to completed lessons if not already completed
+        if (!enrolledCourse.completedLessons?.includes(currentLesson)) {
+          if (!enrolledCourse.completedLessons) {
+            enrolledCourse.completedLessons = [];
+          }
+          enrolledCourse.completedLessons.push(currentLesson);
+          
+          // Update current lesson
+          enrolledCourse.currentLesson = Math.max(enrolledCourse.currentLesson || 1, currentLesson + 1);
+          
+          // Calculate progress
+          const completedCount = enrolledCourse.completedLessons.length;
+          enrolledCourse.progress = Math.round((completedCount / totalLessons) * 100);
+          
+          // Update user data
+          userData.enrolledCourses[enrolledCourseIndex] = enrolledCourse;
+          userData.completedLessons = (userData.completedLessons || 0) + 1;
+          userData.totalPoints = (userData.totalPoints || 0) + 10;
+          
+          // Save to database
+          await updateDoc(doc(db, 'users', currentUser.uid), {
+            enrolledCourses: userData.enrolledCourses,
+            completedLessons: userData.completedLessons,
+            totalPoints: userData.totalPoints
+          });
+          
+          // Update UI
+          updateOverallProgress();
+          renderLessonsList();
+          
+          // Update mark complete button
+          const markCompleteBtn = document.getElementById('markCompleteBtn');
+          markCompleteBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+          markCompleteBtn.disabled = true;
+          
+          // Show completion modal
+          document.getElementById('pointsEarned').textContent = '10';
+          document.getElementById('completionModal').style.display = 'flex';
+          
+          // Update total points display
+          document.getElementById('totalPointsEarned').textContent = userData.totalPoints;
+        }
+      } catch (error) {
+        console.error('Error marking lesson complete:', error);
+        alert('Error updating progress. Please try again.');
+      }
     }
   </script>
 </body>
-</html>
+  </html>
 
-This is the University page, it should give you a perception of the courses I want in the lesson-viewer now you can draft the entire courses lessons and implement the changes as suggested. 
-
-Don't forget the form for certificates as well, after they fill they should submit their final year projects to elvionailabs@gmail.com  
-
-They will get their certificates by mail. And results of their projects.
+Whatd yiu think?
