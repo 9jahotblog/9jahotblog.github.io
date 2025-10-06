@@ -1,9 +1,3 @@
-Okay then i guess its the course viewer page were editing to uss appropriate link. Please fix. 
-Also, can you add othr detailed content for ALL courses entirely? Lets finish up once and for all. Follow the ending format and certification like that of computer science please. 
-Also you can add improvements as you like. Please, detailed, quizes should be animated, come one by one and alluring as user clicks. 
-
-Lets go! 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -967,7 +961,7 @@ Lets go!
             <div class="certificate-form-card">
                 <h2>Certificate & Project Submission</h2>
                 <p style="margin-bottom: 1.5rem; color: var(--warning-color);">
-                    To receive your certificate, please fill in your details below. For courses with a project (**e.g., Computer Science**), please **email your Final Project** (as outlined in the last lesson) to: <strong style="color: var(--cyan-glow);">elvionailabs@gmail.com</strong>.
+                    To receive your certificate, please fill in your details below. For courses with a project (e.g., Computer Science, Software Engineering, Visual Arts), please **email your Final Project** (as outlined in the last lesson) to: <strong style="color: var(--cyan-glow);">elvionailabs@gmail.com</strong>.
                 </p>
                 <form id="certificateForm" action="https://formspree.io/f/mldrbpwo" method="post">
                     <input type="hidden" name="_subject" id="formSubject">
@@ -1141,13 +1135,31 @@ Lets go!
                 content = `<h2>${lessonTitle}</h2>
                     <p>Congratulations on reaching the final lesson of the ${coursePrefix} course!</p>
                     <p>This course's final requirement is a **Project Submission** (if \`isProject\` is true) or a final reflection. Follow the certificate steps on the next page.</p>
+                    ${isProject ? `<p style="color: var(--cyan-glow);">**Project Submission Required:** Please check the last lesson for specific instructions and remember to **email your project to elvionailabs@gmail.com**.</p>` : ''}
                 `;
+                
+                // Final lesson quiz should be specific if it's a project
+                const finalQuiz = isProject ? [
+                    { type: 'mcq', question: `For the ${coursePrefix} course, what is the final deliverable requirement?`, options: ['A final written exam', 'A Project/Capstone Submission', 'A face-to-face interview', 'A group presentation'], answer: 'A Project/Capstone Submission' },
+                    { type: 'text', question: 'What is the email address to which you must submit your project for certificate review? (Enter exactly)', answer: 'elvionailabs@gmail.com' },
+                ] : [
+                    { type: 'mcq', question: `How many lessons did you complete in the ${coursePrefix} course?`, options: ['1', '5', '8', count.toString()], answer: count.toString() },
+                    { type: 'mcq', question: 'What is the next suggested step after completing this course?', options: ['Retake the first lesson', 'Explore another Elvion course or request your certificate', 'Close the browser', 'Nothing'], answer: 'Explore another Elvion course or request your certificate' },
+                ];
+                
+                return {
+                    id: i + 1,
+                    title: `${coursePrefix} ${lessonTitle}`,
+                    duration: `${40 + Math.floor(Math.random() * 20)} min`, // Varied duration
+                    content: content,
+                    quiz: finalQuiz,
+                };
             }
             
             // Simplified, universal quiz for placeholder lessons after the first one
             const simpleQuiz = [
-                { type: 'mcq', question: 'How many lessons are in the ${coursePrefix} course?', options: ['1', '5', '8', count.toString()], answer: count.toString() },
-                { type: 'mcq', question: 'What is the most important skill for a ${coursePrefix} professional?', options: ['Memorization', 'Critical Thinking & Problem Solving', 'Speed Reading', 'Ignoring details'], answer: 'Critical Thinking & Problem Solving' },
+                { type: 'mcq', question: `How many lessons are in the ${coursePrefix} course? (Hint: The answer is in the course metadata)`, options: ['1', '5', '8', count.toString()], answer: count.toString() },
+                { type: 'mcq', question: `What is the most important skill for a ${coursePrefix} professional?`, options: ['Memorization', 'Critical Thinking & Problem Solving', 'Speed Reading', 'Ignoring details'], answer: 'Critical Thinking & Problem Solving' },
             ];
 
             return {
@@ -1187,7 +1199,7 @@ Lets go!
                 <p><strong>Variables:</strong> Containers that store data. Every variable has a <strong>data type</strong> that defines what kind of information it holds.</p>
                 <ul>
                     <li><code>String</code> (Text): <code class="language-python">name = "Elvion"</code></li>
-                    <li><code>Integer</code> (Whole Number): <code class="language-python">age = 25</code></li>
+                    <li><li><code>Integer</code> (Whole Number): <code class="language-python">age = 25</code></li>
                     <li><code>Float</code> (Decimal Number): <code class="language-python">pi = 3.14159</code></li>
                     <li><code>Boolean</code> (True/False): <code class="language-python">is_learning = True</code></li>
                 </ul>
@@ -1310,7 +1322,7 @@ SELECT * FROM Users WHERE UserName LIKE 'A%';</textarea>
                 { type: 'mcq', question: 'Which SQL command is used to retrieve data from a database?', options: ['INSERT', 'UPDATE', 'SELECT', 'DELETE'], answer: 'SELECT' },
             ]
         },
-        { id: 5, title: 'Software Engineering', duration: '60 min', content: `<h2>Software Development Life Cycle (SDLC)</h2><p>The SDLC outlines the stages of software creation: Planning, Design, Implementation, Testing, Deployment, and Maintenance. **Agile** is a popular, iterative methodology.</p>
+        { id: 5, title: 'Software Engineering Principles', duration: '60 min', content: `<h2>Software Development Life Cycle (SDLC)</h2><p>The SDLC outlines the stages of software creation: Planning, Design, Implementation, Testing, Deployment, and Maintenance. **Agile** is a popular, iterative methodology.</p>
             <h3>Testing Phases</h3>
             <ul>
                 <li><strong>Unit Testing:</strong> Testing individual components/functions.</li>
@@ -1391,7 +1403,7 @@ TCP: Connection-oriented, reliable data transfer</code></pre>
     ];
     
     // --- NEW SOFTWARE ENGINEERING COURSE CONTENT ---
-    const se101Lessons = [
+    const swe101Lessons = [
         {
             id: 1, 
             title: 'Foundations of Software Engineering', 
@@ -1538,17 +1550,17 @@ function test_add_numbers() {
     const allCourses = [
       { id: 'cs101', title: 'Computer Science', description: 'Fundamentals of computing, programming, and algorithms', icon: 'fas fa-laptop-code', totalLessons: 8, estimatedHours: 120, mediaType: 'video', lessons: cs101Lessons },
       // NEW SOFTWARE ENGINEERING COURSE
-      { id: 'se101', title: 'Software Engineering', description: 'Design, develop, and maintain large-scale software systems.', icon: 'fas fa-cogs', totalLessons: 5, estimatedHours: 80, mediaType: 'video', lessons: se101Lessons },
+      { id: 'swe101', title: 'Software Engineering', description: 'Design, develop, and maintain large-scale software systems.', icon: 'fas fa-cogs', totalLessons: 5, estimatedHours: 80, mediaType: 'video', lessons: se101Lessons },
       // OTHER COURSES WITH GENERATED PLACEHOLDERS
       { id: 'law101', title: 'Law (LLB)', description: 'Comprehensive study of legal principles and practice.', icon: 'fas fa-balance-scale', totalLessons: 6, estimatedHours: 90, mediaType: 'video', lessons: generateDefaultLessons(6, 'LAW', false) },
       { id: 'eng101', title: 'English & Literary Studies', description: 'Study of English language, literature, and critical analysis.', icon: 'fas fa-pen-nib', totalLessons: 4, estimatedHours: 60, mediaType: 'audio', lessons: generateDefaultLessons(4, 'ENG', false) },
       { id: 'his101', title: 'History & Strategic Studies', description: 'World history, Nigerian history, and strategic studies.', icon: 'fas fa-globe-africa', totalLessons: 5, estimatedHours: 75, mediaType: 'audio', lessons: generateDefaultLessons(5, 'HIS', false) },
       { id: 'bus101', title: 'Business Administration', description: 'Principles of management, marketing, finance, and entrepreneurship.', icon: 'fas fa-chart-line', totalLessons: 7, estimatedHours: 100, mediaType: 'audio', lessons: generateDefaultLessons(7, 'BUS', true) },
       { id: 'mass101', title: 'Mass Communication', description: 'Journalism, public relations, broadcasting, and digital media communication.', icon: 'fas fa-bullhorn', totalLessons: 6, estimatedHours: 90, mediaType: 'audio', lessons: generateDefaultLessons(6, 'MASS', false) },
-      { id: 'mated101', title: 'Mathematics Education', description: 'Methods and strategies for teaching mathematics.', icon: 'fas fa-calculator', totalLessons: 5, estimatedHours: 70, mediaType: 'audio', lessons: generateDefaultLessons(5, 'MATED', false) },
-      { id: 'adulte101', title: 'Adult Education', description: 'Teaching and learning strategies for adult learners.', icon: 'fas fa-chalkboard-teacher', totalLessons: 4, estimatedHours: 60, mediaType: 'audio', lessons: generateDefaultLessons(4, 'ADULT', false) },
+      { id: 'math101', title: 'Mathematics Education', description: 'Methods and strategies for teaching mathematics.', icon: 'fas fa-calculator', totalLessons: 5, estimatedHours: 70, mediaType: 'audio', lessons: generateDefaultLessons(5, 'MATED', false) },
+      { id: 'aed101', title: 'Adult Education', description: 'Teaching and learning strategies for adult learners.', icon: 'fas fa-chalkboard-teacher', totalLessons: 4, estimatedHours: 60, mediaType: 'audio', lessons: generateDefaultLessons(4, 'ADULT', false) },
       { 
-          id: 'visuarts101', 
+          id: 'visart101', 
           title: 'Visual Arts & Digital Media', 
           description: 'A study of animation, painting, graphic design, and digital art.', 
           icon: 'fas fa-palette', 
@@ -1838,9 +1850,12 @@ function test_add_numbers() {
           }
           
           // Render Quiz
+          const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
+          const isCompleted = enrolledCourse?.completedLessons?.includes(currentLesson);
+          
           if (lesson.quiz) {
             quizContainer.style.display = 'block';
-            renderQuiz(lesson.quiz);
+            renderQuiz(lesson.quiz, isCompleted);
           } else {
             quizContainer.style.display = 'none';
           }
@@ -1870,7 +1885,7 @@ function test_add_numbers() {
       if (currentLesson === totalLessons) {
           nextBtn.textContent = 'Final Exam/Certificate';
           // Enable only if all lessons are completed (progress 100%)
-          nextBtn.disabled = !isCourseFullyCompleted; 
+          nextBtn.disabled = !isCourseFullyCompleted && !isCompleted; // Use isCompleted as a fallback if progress hasn't updated immediately
       } else if (currentLesson === totalLessons + 1) {
           // On Final Page, next is always disabled
           nextBtn.textContent = 'Course Completed';
@@ -1886,35 +1901,62 @@ function test_add_numbers() {
     
     // --- QUIZ LOGIC (Updated to include animation/feedback) ---
 
-    function renderQuiz(quizData) {
+    function renderQuiz(quizData, isLessonCompleted) {
         const quizQuestionsContainer = document.getElementById('quizQuestions');
         quizQuestionsContainer.innerHTML = '';
         document.getElementById('quizResult').innerHTML = ''; // Clear result area
-        document.getElementById('submitQuizBtn').style.display = 'block';
         
+        // Hide submit button if lesson is already completed
+        const submitBtn = document.getElementById('submitQuizBtn');
+        submitBtn.style.display = isLessonCompleted ? 'none' : 'block';
+
         quizData.forEach((q, index) => {
             const questionElement = document.createElement('div');
             questionElement.className = 'quiz-question-wrapper';
+            questionElement.style.marginBottom = '2rem'; // Separating questions
+
             questionElement.innerHTML = `
                 <div class="quiz-question">Question ${index + 1}: ${q.question}</div>
                 <div class="quiz-options" data-question-index="${index}">
-                    ${q.type === 'mcq' ? q.options.map(option => `<div class="quiz-option" data-answer="${option}">${option}</div>`).join('') : ''}
-                    ${q.type === 'text' ? `<input type="text" class="text-input-answer" placeholder="Type your answer here..." style="width: 100%; padding: 1rem; border-radius: 8px; border: 2px solid rgba(0, 255, 255, 0.3); background: rgba(0, 0, 0, 0.5); color: var(--text-color); font-size: 1rem;">` : ''}
+                    ${q.type === 'mcq' ? q.options.map(option => `
+                        <div class="quiz-option" data-answer="${option}" ${isLessonCompleted ? 'style="cursor: default;"' : ''}>${option}</div>
+                    `).join('') : ''}
+                    ${q.type === 'text' ? `
+                        <input type="text" class="text-input-answer" placeholder="Type your answer here..." style="width: 100%; padding: 1rem; border-radius: 8px; border: 2px solid rgba(0, 255, 255, 0.3); background: rgba(0, 0, 0, 0.5); color: var(--text-color); font-size: 1rem;" ${isLessonCompleted ? 'disabled' : ''}>
+                    ` : ''}
                 </div>
             `;
             quizQuestionsContainer.appendChild(questionElement);
         });
 
-        // Add event listeners for MCQ selection
-        quizQuestionsContainer.querySelectorAll('.quiz-option').forEach(option => {
-            option.addEventListener('click', function() {
-                const optionsGroup = this.closest('.quiz-options');
-                // Deselect all others in the group
-                optionsGroup.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
-                // Select the clicked one
-                this.classList.add('selected');
+        // Add event listeners for MCQ selection only if not completed
+        if (!isLessonCompleted) {
+            quizQuestionsContainer.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const optionsGroup = this.closest('.quiz-options');
+                    // Deselect all others in the group
+                    optionsGroup.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+                    // Select the clicked one
+                    this.classList.add('selected');
+                });
             });
-        });
+        } else {
+             // If completed, visually mark the correct answer on load
+            quizData.forEach((q, index) => {
+                if (q.type === 'mcq') {
+                    const optionsGroup = document.querySelector(`.quiz-options[data-question-index="${index}"]`);
+                    // Mark the correct answer
+                    optionsGroup.querySelector(`.quiz-option[data-answer="${q.answer}"]`)?.classList.add('correct');
+                } else if (q.type === 'text') {
+                     const input = document.querySelector(`.quiz-options[data-question-index="${index}"] .text-input-answer`);
+                     input.value = q.answer;
+                     input.style.border = `2px solid var(--success-color)`;
+                }
+            });
+             document.getElementById('quizResult').innerHTML = `<div class="quiz-feedback correct"><i class="fas fa-check-circle"></i> **Lesson Already Completed!** You may move to the next lesson.</div>`;
+             quizPassed = true;
+             updateNavigationControls();
+        }
     }
 
     document.getElementById('submitQuizBtn').addEventListener('click', () => {
@@ -1931,7 +1973,7 @@ function test_add_numbers() {
             if (q.type === 'mcq') {
                 const selectedOption = optionsGroup.querySelector('.quiz-option.selected');
                 
-                // Clear all result classes first
+                // Clear all previous result classes and animation classes first
                 optionsGroup.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect'));
 
                 if (selectedOption) {
@@ -1945,7 +1987,7 @@ function test_add_numbers() {
                     }
                 } else {
                     // User did not select an answer, fail and highlight correct answer
-                    optionsGroup.querySelector(`.quiz-option[data-answer="${q.answer}"]`).classList.add('correct');
+                    optionsGroup.querySelector(`.quiz-option[data-answer="${q.answer}"]`)?.classList.add('correct');
                 }
             } else if (q.type === 'text') {
                 const input = optionsGroup.querySelector('.text-input-answer');
@@ -1957,6 +1999,7 @@ function test_add_numbers() {
                     input.style.border = `2px solid var(--success-color)`;
                 } else {
                     input.style.border = `2px solid var(--error-color)`;
+                    // Note: No easy way to show correct text answer without disrupting the UI, just show error
                 }
             }
 
@@ -2010,7 +2053,7 @@ function test_add_numbers() {
       } else if (currentLesson === totalLessons) {
           // Go to final page (Only enabled if progress is 100)
           const enrolledCourse = userData.enrolledCourses?.find(c => c.courseId === courseId);
-          if (enrolledCourse?.progress === 100) {
+          if (enrolledCourse?.progress === 100 || enrolledCourse?.completedLessons?.includes(totalLessons)) {
               loadLesson(currentLesson + 1);
           }
       }
@@ -2113,5 +2156,3 @@ function test_add_numbers() {
   </script>
 </body>
   </html>
-
-Practical, step by step, remember all dashboard links should be redirecting to studyingatelvion.html not dashboard.html 
